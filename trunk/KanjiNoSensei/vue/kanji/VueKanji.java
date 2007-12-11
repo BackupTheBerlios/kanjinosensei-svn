@@ -16,15 +16,15 @@ import vue.kanji.KanjiQuizConfigPanel.ETypeAff;
  */
 public class VueKanji extends VueElement
 {
-	private Kanji				kanji				= null;
+	private Kanji					kanji				= null;
 
 	private KanjiVueDetaillePanel	jVueDetaillePanel	= null;
 
-	private KanjiEditionDialog	jEditionDialog		= null;
-	
-	private KanjiQuizAffPanel	jQuizAffPanel	= null;
+	private KanjiEditionDialog		jEditionDialog		= null;
 
-	private KanjiQuizAffPanel	jQuizSolutionPanel = null;
+	private QuizQuestionPanel		jQuizQuestionPanel	= null;
+
+	private QuizSolutionPanel		jQuizSolutionPanel	= null;
 
 	public VueKanji(KanjiNoSensei app, Kanji kanji)
 	{
@@ -54,11 +54,19 @@ public class VueKanji extends VueElement
 	 */
 	public QuizQuestionPanel getQuizQuestionPanel() throws NoAffException
 	{
-		if (jQuizAffPanel == null)
+		if (jQuizQuestionPanel == null)
 		{
-			jQuizAffPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageElementQuiz());
+			if (KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageElementQuiz() == ETypeAff.Detaille)
+			{
+				jQuizQuestionPanel = getVueDetaillePanel();
+			}
+			else
+			{
+				jQuizQuestionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel()
+						.getAffichageElementQuiz());
+			}
 		}
-		return jQuizAffPanel;
+		return jQuizQuestionPanel;
 	}
 
 	/*
@@ -73,12 +81,12 @@ public class VueKanji extends VueElement
 
 	public synchronized QuizSolutionPanel getQuizSolutionPanelCopy()
 	{
-		KanjiQuizAffPanel ref = jQuizSolutionPanel;
+		QuizSolutionPanel ref = jQuizSolutionPanel;
 		QuizSolutionPanel copy = getQuizSolutionPanel();
 		jQuizSolutionPanel = ref;
 		return copy;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -88,19 +96,27 @@ public class VueKanji extends VueElement
 	{
 		if (jQuizSolutionPanel == null)
 		{
-			try
+			if (KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageReponseQuiz() == ETypeAff.Detaille)
 			{
-				jQuizSolutionPanel  = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageReponseQuiz());
+				jQuizSolutionPanel = getVueDetaillePanel();
 			}
-			catch (NoAffException e)
+			else
 			{
 				try
 				{
-					jQuizSolutionPanel = new KanjiQuizAffPanel(this, ETypeAff.Kanji);
+					jQuizSolutionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel()
+							.getAffichageReponseQuiz());
 				}
-				catch (NoAffException e1)
+				catch (NoAffException e)
 				{
-					e1.printStackTrace();
+					try
+					{
+						jQuizSolutionPanel = new KanjiQuizAffPanel(this, ETypeAff.Kanji);
+					}
+					catch (NoAffException e1)
+					{
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
@@ -112,7 +128,7 @@ public class VueKanji extends VueElement
 	 * 
 	 * @see vue.VueElement#getVueDetaille()
 	 */
-	public VueDetaillePanel getVueDetaillePanel()
+	public KanjiVueDetaillePanel getVueDetaillePanel()
 	{
 		if (jVueDetaillePanel == null)
 		{
@@ -138,7 +154,9 @@ public class VueKanji extends VueElement
 		this.kanji = kanji;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getQuizConfigPanel()
 	 */
 	@Override
@@ -147,7 +165,9 @@ public class VueKanji extends VueElement
 		return KanjiQuizConfigPanel.getKanjiQuizConfigPanel();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getElement()
 	 */
 	@Override

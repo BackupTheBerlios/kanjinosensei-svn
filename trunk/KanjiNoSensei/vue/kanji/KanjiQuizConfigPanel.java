@@ -39,7 +39,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	 */
 	public enum ETypeAff
 	{
-		Kanji, LectureOrigineChinoise, LectureJaponaise, ImageTrace, Signification;
+		Kanji, LectureOrigineChinoise, LectureJaponaise, ImageTrace, Signification, Detaille;
 	}
 
 	public enum ETypeSaisie

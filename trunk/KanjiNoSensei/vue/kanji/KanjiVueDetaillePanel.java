@@ -23,6 +23,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import vue.JPanelImageBg;
+import vue.VueElement.QuizQuestionPanel;
+import vue.VueElement.QuizSolutionPanel;
 import vue.VueElement.VueDetaillePanel;
 
 
@@ -43,7 +45,7 @@ import vue.VueElement.VueDetaillePanel;
  * @author Axan
  *
  */
-class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel
+class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQuestionPanel, QuizSolutionPanel
 {
 
 	private static final long	serialVersionUID	= 1L;

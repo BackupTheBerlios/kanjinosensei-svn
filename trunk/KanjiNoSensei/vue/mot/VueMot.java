@@ -12,17 +12,17 @@ import vue.mot.MotQuizConfigPanel.ETypeAff;
 
 /**
  * @author Axan
- *
+ * 
  */
 public class VueMot extends VueElement
 {
 
-	private Mot mot = null;
-	private MotEditionDialog	jEditionDialog = null;
-	private MotQuizAffPanel jQuizAffPanel = null;
-	private MotQuizAffPanel jQuizSolutionPanel = null;
-	private MotVueDetaillePanel jVueDetaillePanel = null;
-	
+	private Mot					mot					= null;
+	private MotEditionDialog	jEditionDialog		= null;
+	private QuizQuestionPanel	jQuizQuestionPanel	= null;
+	private QuizSolutionPanel	jQuizSolutionPanel	= null;
+	private MotVueDetaillePanel	jVueDetaillePanel	= null;
+
 	/**
 	 * @param app
 	 */
@@ -32,13 +32,15 @@ public class VueMot extends VueElement
 		this.mot = mot;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getEditionDialog()
 	 */
 	@Override
 	public EditionDialog getEditionDialog()
 	{
-		if (jEditionDialog  == null)
+		if (jEditionDialog == null)
 		{
 			jEditionDialog = new MotEditionDialog(this);
 		}
@@ -46,20 +48,32 @@ public class VueMot extends VueElement
 		return jEditionDialog;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getQuizQuestionPanel()
 	 */
 	@Override
 	public QuizQuestionPanel getQuizQuestionPanel() throws NoAffException
 	{
-		if (jQuizAffPanel == null)
+		if (jQuizQuestionPanel == null)
 		{
-			jQuizAffPanel = new MotQuizAffPanel(this, MotQuizConfigPanel.getMotQuizConfigPanel().getAffichageElementQuiz());
+			if (MotQuizConfigPanel.getMotQuizConfigPanel().getAffichageElementQuiz() == ETypeAff.Detaille)
+			{
+				jQuizQuestionPanel = getVueDetaillePanel();
+			}
+			else
+			{
+				jQuizQuestionPanel = new MotQuizAffPanel(this, MotQuizConfigPanel.getMotQuizConfigPanel()
+						.getAffichageElementQuiz());
+			}
 		}
-		return jQuizAffPanel;
+		return jQuizQuestionPanel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getQuizSaisieReponsePanel(metier.Dictionnaire)
 	 */
 	@Override
@@ -70,45 +84,57 @@ public class VueMot extends VueElement
 
 	public synchronized QuizSolutionPanel getQuizSolutionPanelCopy()
 	{
-		MotQuizAffPanel ref = jQuizSolutionPanel;
+		QuizSolutionPanel ref = jQuizSolutionPanel;
 		QuizSolutionPanel copy = getQuizSolutionPanel();
 		jQuizSolutionPanel = ref;
 		return copy;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getQuizSolutionPanel()
 	 */
 	@Override
 	public QuizSolutionPanel getQuizSolutionPanel()
-	{	
+	{
 		if (jQuizSolutionPanel == null)
 		{
-			try
+			if (MotQuizConfigPanel.getMotQuizConfigPanel().getAffichageReponseQuiz() == ETypeAff.Detaille)
 			{
-				jQuizSolutionPanel  = new MotQuizAffPanel(this, MotQuizConfigPanel.getMotQuizConfigPanel().getAffichageReponseQuiz());
+				jQuizSolutionPanel = getVueDetaillePanel();
 			}
-			catch (NoAffException e)
+			else
 			{
 				try
 				{
-					jQuizSolutionPanel = new MotQuizAffPanel(this, ETypeAff.Kanji);
+					jQuizSolutionPanel = new MotQuizAffPanel(this, MotQuizConfigPanel.getMotQuizConfigPanel()
+							.getAffichageReponseQuiz());
 				}
-				catch (NoAffException e1)
+				catch (NoAffException e)
 				{
-					e1.printStackTrace();
+					try
+					{
+						jQuizSolutionPanel = new MotQuizAffPanel(this, ETypeAff.Kanji);
+					}
+					catch (NoAffException e1)
+					{
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
-		
+
 		return jQuizSolutionPanel;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getVueDetaillePanel()
 	 */
 	@Override
-	public VueDetaillePanel getVueDetaillePanel()
+	public MotVueDetaillePanel getVueDetaillePanel()
 	{
 		if (jVueDetaillePanel == null)
 		{
@@ -122,7 +148,7 @@ public class VueMot extends VueElement
 	{
 		return mot;
 	}
-	
+
 	/**
 	 * @param mot
 	 */
@@ -131,7 +157,9 @@ public class VueMot extends VueElement
 		this.mot = mot;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getQuizConfigPanel()
 	 */
 	@Override
@@ -140,7 +168,9 @@ public class VueMot extends VueElement
 		return MotQuizConfigPanel.getMotQuizConfigPanel();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see vue.VueElement#getElement()
 	 */
 	@Override

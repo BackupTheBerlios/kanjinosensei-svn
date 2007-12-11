@@ -1,4 +1,4 @@
-package vue.mot;
+package vue.phrase;
 
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
@@ -24,7 +24,7 @@ import javax.swing.filechooser.FileFilter;
 import metier.Dictionnaire;
 import metier.elements.Element;
 import metier.elements.Kanji;
-import metier.elements.Mot;
+import metier.elements.Phrase;
 import utils.MyUtils;
 import vue.VueElement.EditionDialog;
 
@@ -38,14 +38,14 @@ import vue.VueElement.EditionDialog;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
+class PhraseEditionDialog extends javax.swing.JDialog implements EditionDialog
 {
 	/**
 	 * 
 	 */
 	private static final long	serialVersionUID	= 1L;
 	
-	private VueMot				vue				= null;
+	private VuePhrase				vue				= null;
 	private JTextField			jTextFieldThemes;
 	private JLabel				jLabelThemes;
 	private JTextField			jTextFieldSignifications;
@@ -59,19 +59,19 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 	private JPanel				jPanelMsg;
 	private JButton				jButtonAnnuler;
 	private JButton				jButtonValider;
-	private JTextField			jTextFieldMot;
-	private JLabel				jLabelMot;
+	private JTextField			jTextFieldPhrase;
+	private JLabel				jLabelPhrase;
 	private JPanel				jPanelBtns;
-	private JPanel				ajouterMotFormPanel;
-	private JPanel				ajouterMotContentPane;
+	private JPanel				ajouterPhraseFormPanel;
+	private JPanel				ajouterPhraseContentPane;
 	private Dictionnaire		dictionnaire;
 	
-	private boolean motEdite = false;
+	private boolean phraseEdite = false;
 
 	static private String[]		extFilterSons = {"wav", "mp3"};
 	static private FileFilter	fileFilterSons = MyUtils.generateFileFilter("Sons", extFilterSons);
 	
-	public MotEditionDialog(VueMot vue)
+	public PhraseEditionDialog(VuePhrase vue)
 	{
 		super();
 		this.vue = vue;
@@ -85,23 +85,23 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 		{
 			this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			this.setMinimumSize(new Dimension(400, 150));
-			this.setPreferredSize(new java.awt.Dimension(390, 200));
+			this.setPreferredSize(new java.awt.Dimension(504, 170));
 			this.setResizable(true);
-			this.setTitle("Edition d'un mot");
+			this.setTitle("Edition d'un phrase");
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setModal(true);
-			this.setSize(390, 135);
+			this.setSize(504, 170);
 
 			{
-				ajouterMotContentPane = new JPanel();
-				BorderLayout ajouterMotContentPaneLayout = new BorderLayout();
-				ajouterMotContentPane.setLayout(ajouterMotContentPaneLayout);
-				getContentPane().add(ajouterMotContentPane, BorderLayout.CENTER);
-				ajouterMotContentPane.setPreferredSize(new java.awt.Dimension(422, 150));
-				ajouterMotContentPane.setSize(422, 150);
+				ajouterPhraseContentPane = new JPanel();
+				BorderLayout ajouterPhraseContentPaneLayout = new BorderLayout();
+				ajouterPhraseContentPane.setLayout(ajouterPhraseContentPaneLayout);
+				getContentPane().add(ajouterPhraseContentPane, BorderLayout.CENTER);
+				ajouterPhraseContentPane.setPreferredSize(new java.awt.Dimension(422, 150));
+				ajouterPhraseContentPane.setSize(422, 150);
 				{
 					jPanelMsg = new JPanel();
-					ajouterMotContentPane.add(jPanelMsg, BorderLayout.NORTH);
+					ajouterPhraseContentPane.add(jPanelMsg, BorderLayout.NORTH);
 					BorderLayout jPanelMsgLayout = new BorderLayout();
 					jPanelMsg.setLayout(jPanelMsgLayout);
 					jPanelMsg.setPreferredSize(new java.awt.Dimension(422, 20));
@@ -114,42 +114,38 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 				}
 				{
-					ajouterMotFormPanel = new JPanel();
-					GridBagLayout ajouterMotFormPanelLayout = new GridBagLayout();
-					ajouterMotFormPanelLayout.columnWidths = new int[] {7, 100, 7};
-					ajouterMotFormPanelLayout.rowHeights = new int[] {7, 20, 7, 7, 7};
-					ajouterMotFormPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1};
-					ajouterMotFormPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1};
-					ajouterMotContentPane.add(ajouterMotFormPanel, BorderLayout.CENTER);
-					ajouterMotFormPanel.setLayout(ajouterMotFormPanelLayout);
-					ajouterMotFormPanel.setSize(422, 120);
-					ajouterMotFormPanel.setPreferredSize(new java.awt.Dimension(422, 120));
+					ajouterPhraseFormPanel = new JPanel();
+					GridBagLayout ajouterPhraseFormPanelLayout = new GridBagLayout();
+					ajouterPhraseFormPanelLayout.columnWidths = new int[] {7, 100, 7};
+					ajouterPhraseFormPanelLayout.rowHeights = new int[] {7, 20, 7, 7, 7};
+					ajouterPhraseFormPanelLayout.columnWeights = new double[] {0.1, 0.1, 0.1};
+					ajouterPhraseFormPanelLayout.rowWeights = new double[] {0.1, 0.1, 0.1, 0.1, 0.1};
+					ajouterPhraseContentPane.add(ajouterPhraseFormPanel, BorderLayout.CENTER);
+					ajouterPhraseFormPanel.setLayout(ajouterPhraseFormPanelLayout);
+					ajouterPhraseFormPanel.setSize(422, 120);
+					ajouterPhraseFormPanel.setPreferredSize(new java.awt.Dimension(422, 120));
 					{
-						jLabelMot = new JLabel();
-						jLabelMot.setText("Mot :");
-						jLabelMot.setPreferredSize(new java.awt.Dimension(100, 20));
-						ajouterMotFormPanel.add(jLabelMot, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						jLabelPhrase = new JLabel();
+						jLabelPhrase.setText("Phrase :");
+						jLabelPhrase.setPreferredSize(new java.awt.Dimension(100, 20));
+						ajouterPhraseFormPanel.add(jLabelPhrase, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelMot.setSize(100, 20);
+						jLabelPhrase.setSize(100, 20);
 					}
 					{
-						jTextFieldMot = new JTextField();
-						ajouterMotFormPanel.add(jTextFieldMot, new GridBagConstraints(1, 0, 1, 1, 1.0, 0.0,
-								GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-						jTextFieldMot.setSize(184, 20);
-						jTextFieldMot.addCaretListener(new CaretListener()
+						jTextFieldPhrase = new JTextField();
+						ajouterPhraseFormPanel.add(jTextFieldPhrase, new GridBagConstraints(1, 0, 2, 1, 1.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+						jTextFieldPhrase.setSize(184, 20);
+						jTextFieldPhrase.addCaretListener(new CaretListener()
 						{
 							public void caretUpdate(CaretEvent evt)
 							{
-								System.out.println("jTextFieldMot.caretUpdate, event=" + evt);
+								System.out.println("jTextFieldPhrase.caretUpdate, event=" + evt);
 								jLabelMsg.setText("");
-								for (Character c : jTextFieldMot.getText().toCharArray())
+								for (Character c : jTextFieldPhrase.getText().toCharArray())
 								{
-									if (Character.isSpaceChar(c) || Character.isWhitespace(c))
-									{
-										jLabelMsg.setText(jLabelMsg.getText() + "\t" + "Caractère blanc détecté");
-									}
-									
+									if (Character.isSpaceChar(c)) continue;
+									if (Character.isWhitespace(c)) continue;
 
 									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null)
 									{
@@ -164,14 +160,14 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelSon = new JLabel();
 						jLabelSon.setText("Son :");
 						jLabelSon.setPreferredSize(new java.awt.Dimension(100, 20));
-						ajouterMotFormPanel.add(jLabelSon, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+						ajouterPhraseFormPanel.add(jLabelSon, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
 						jLabelSon.setSize(100, 20);
 					}
 					{
 						jTextFieldSon = new JTextField();
 						jTextFieldSon.setEditable(false);
-						ajouterMotFormPanel.add(jTextFieldSon, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0,
+						ajouterPhraseFormPanel.add(jTextFieldSon, new GridBagConstraints(1, 2, 1, 1, 1.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 						jTextFieldSon.setSize(184, 20);
 					}
@@ -179,7 +175,7 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jButtonParcourir = new JButton();
 						jButtonParcourir.setText("Parcourir...");
 						jButtonParcourir.setPreferredSize(new java.awt.Dimension(100, 20));
-						ajouterMotFormPanel.add(jButtonParcourir, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
+						ajouterPhraseFormPanel.add(jButtonParcourir, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 						jButtonParcourir.setSize(100, 20);
 						jButtonParcourir.addActionListener(new ActionListener()
@@ -201,46 +197,46 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 					{
 						jLabelSignification = new JLabel();
-						ajouterMotFormPanel.add(jLabelSignification, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
+						ajouterPhraseFormPanel.add(jLabelSignification, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
 						jLabelSignification.setText("Significations :");
 						jLabelSignification.setSize(69, 20);
 					}
 					{
 						jTextFieldSignifications = new JTextField();
-						ajouterMotFormPanel.add(jTextFieldSignifications, new GridBagConstraints(1, 3, 1, 1, 1.0, 0.0,
+						ajouterPhraseFormPanel.add(jTextFieldSignifications, new GridBagConstraints(1, 3, 1, 1, 1.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 						jTextFieldSignifications.setSize(184, 20);
 					}
 					{
 						jLabelThemes = new JLabel();
-						ajouterMotFormPanel.add(jLabelThemes, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+						ajouterPhraseFormPanel.add(jLabelThemes, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
 						jLabelThemes.setText("Thèmes :");
 						jLabelThemes.setSize(44, 20);
 					}
 					{
 						jTextFieldThemes = new JTextField();
-						ajouterMotFormPanel.add(jTextFieldThemes, new GridBagConstraints(1, 4, 1, 1, 1.0, 0.0,
+						ajouterPhraseFormPanel.add(jTextFieldThemes, new GridBagConstraints(1, 4, 1, 1, 1.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 						jTextFieldThemes.setSize(184, 20);
 					}
 					{
 						jLabelLecture = new JLabel();
-						ajouterMotFormPanel.add(jLabelLecture, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						ajouterPhraseFormPanel.add(jLabelLecture, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
 						jLabelLecture.setText("Lecture :");
 					}
 					{
 						jTextFieldLecture = new JTextField();
-						ajouterMotFormPanel.add(jTextFieldLecture, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0,
+						ajouterPhraseFormPanel.add(jTextFieldLecture, new GridBagConstraints(1, 1, 1, 1, 1.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					}
 				}
 				{
 					jPanelBtns = new JPanel();
 					GridBagLayout jPanelBtnsLayout = new GridBagLayout();
-					ajouterMotContentPane.add(jPanelBtns, BorderLayout.SOUTH);
+					ajouterPhraseContentPane.add(jPanelBtns, BorderLayout.SOUTH);
 					jPanelBtns.setLayout(jPanelBtnsLayout);
 					jPanelBtns.setPreferredSize(new java.awt.Dimension(422, 20));
 					{
@@ -261,8 +257,8 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 										return;
 									}
 								}
-								motEdite = true;
-								vue.setMot(new Mot(jTextFieldMot.getText(), jTextFieldLecture.getText(), jTextFieldSon
+								phraseEdite = true;
+								vue.setPhrase(new Phrase(jTextFieldPhrase.getText(), jTextFieldLecture.getText(), jTextFieldSon
 										.getText(), jTextFieldSignifications.getText(), jTextFieldThemes.getText()));
 								dispose();
 							}
@@ -285,14 +281,14 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 			}
 			
 			//<NoJigloo>
-			Mot mot = vue.getMot();
-			if (mot != null)
+			Phrase phrase = vue.getPhrase();
+			if (phrase != null)
 			{
-				jTextFieldMot.setText(mot.getMot());
-				jTextFieldLecture.setText(mot.getLecture());
-				jTextFieldSon.setText(mot.getSon());
-				jTextFieldSignifications.setText(mot.getSignifications());
-				jTextFieldThemes.setText(mot.getThemes());
+				jTextFieldPhrase.setText(phrase.getPhrase());
+				jTextFieldLecture.setText(phrase.getLecture());
+				jTextFieldSon.setText(phrase.getSon());
+				jTextFieldSignifications.setText(phrase.getSignifications());
+				jTextFieldThemes.setText(phrase.getThemes());
 				
 			}
 			//</NoJigloo>
@@ -311,10 +307,10 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 	@Override
 	public synchronized boolean afficher()
 	{
-		motEdite = false;
+		phraseEdite = false;
 		pack();
 		setVisible(true);
-		return motEdite;
+		return phraseEdite;
 	}
 
 	/*
@@ -325,7 +321,7 @@ class MotEditionDialog extends javax.swing.JDialog implements EditionDialog
 	@Override
 	public Element getElementEdite()
 	{
-		return vue.getMot();
+		return vue.getPhrase();
 	}
 
 }

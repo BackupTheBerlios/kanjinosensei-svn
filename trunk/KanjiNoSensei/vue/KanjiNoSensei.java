@@ -61,6 +61,7 @@ import metier.Dictionnaire.DictionnaireNoMoreElementException;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Mot;
+import metier.elements.Phrase;
 import utils.MyUtils;
 import vue.VueElement.NoAffException;
 import vue.VueElement.NoSaisieException;
@@ -136,6 +137,7 @@ public class KanjiNoSensei
 	private JButton				jButtonSelectionnerTous			= null;
 
 	private JButton				jButtonDeselectionner			= null;
+	private JMenuItem ajouterPhraseMenuItem;
 	private JMenuItem			importMenuItem;
 	private JMenuItem			exportDicoMenuItem;
 	private JMenuItem			ajouterMotMenuItem;
@@ -162,6 +164,7 @@ public class KanjiNoSensei
 
 	final private VueElement	vueKanjiBlank;
 	final private VueElement	vueMotBlank;
+	final private VueElement	vuePhraseBlank;
 
 	public Dictionnaire getDictionnaire()
 	{
@@ -227,6 +230,7 @@ public class KanjiNoSensei
 	{
 		this.vueKanjiBlank = VueElement.genererVueElement(this, Kanji.BLANK);
 		this.vueMotBlank = VueElement.genererVueElement(this, Mot.BLANK);
+		this.vuePhraseBlank = VueElement.genererVueElement(this, Phrase.BLANK);
 
 		this.dictionnaire = new Dictionnaire(fic_dico);
 		this.dictionnaireQuiz = this.dictionnaire.clone();
@@ -1139,6 +1143,7 @@ public class KanjiNoSensei
 			editMenu.setText("Edit");
 			editMenu.add(getAjouterKanjiMenuItem());
 			editMenu.add(getAjouterMotMenuItem());
+			editMenu.add(getAjouterPhraseMenuItem());
 		}
 		return editMenu;
 	}
@@ -1324,6 +1329,9 @@ public class KanjiNoSensei
 
 			configPanel = vueMotBlank.getQuizConfigPanel().getPanel();
 			getJConfigDialogTabbedPane().add("Mots", configPanel);
+			
+			configPanel = vuePhraseBlank.getQuizConfigPanel().getPanel();
+			getJConfigDialogTabbedPane().add("Phrases", configPanel);
 
 			configPanel.setDoubleBuffered(false);
 		}
@@ -1450,7 +1458,7 @@ public class KanjiNoSensei
 		{
 			jQuizDialog = new JDialog();
 			jQuizDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			jQuizDialog.setPreferredSize(new java.awt.Dimension(600, 480));
+			jQuizDialog.setPreferredSize(new java.awt.Dimension(745, 450));
 			jQuizDialog.setTitle("Quiz");
 			jQuizDialog.setModal(true);
 			jQuizDialog.setName("Quiz");
@@ -1464,7 +1472,7 @@ public class KanjiNoSensei
 				}
 			});
 			jQuizDialog.getContentPane().add(getJSplitPaneTopMiddleBottom(), BorderLayout.CENTER);
-			jQuizDialog.setSize(600, 480);
+			jQuizDialog.setSize(745, 450);
 		}
 		return jQuizDialog;
 	}
@@ -1611,9 +1619,8 @@ public class KanjiNoSensei
 			jSplitPaneTopMiddleBottom = new JSplitPane();
 			jSplitPaneTopMiddleBottom.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			jSplitPaneTopMiddleBottom.setPreferredSize(new java.awt.Dimension(0, 0));
-			jSplitPaneTopMiddleBottom.setDividerLocation(200);
+			jSplitPaneTopMiddleBottom.setDividerLocation(240);
 			jSplitPaneTopMiddleBottom.setSize(0, 0);
-			jSplitPaneTopMiddleBottom.setDividerSize(10);
 			jSplitPaneTopMiddleBottom.setMinimumSize(new java.awt.Dimension(0, 0));
 			jSplitPaneTopMiddleBottom.add(getJSplitPaneTopMiddle(), JSplitPane.TOP);
 			jSplitPaneTopMiddleBottom.add(getJScrollPaneBottom(), JSplitPane.BOTTOM);
@@ -1627,7 +1634,7 @@ public class KanjiNoSensei
 		{
 			jSplitPaneTopMiddle = new JSplitPane();
 			jSplitPaneTopMiddle.setOrientation(JSplitPane.VERTICAL_SPLIT);
-			jSplitPaneTopMiddle.setDividerLocation(100);
+			jSplitPaneTopMiddle.setDividerLocation(120);
 			jSplitPaneTopMiddle.add(getJScrollPaneTop(), JSplitPane.TOP);
 			jSplitPaneTopMiddle.add(getJScrollPaneMiddle(), JSplitPane.BOTTOM);
 		}
@@ -1841,6 +1848,25 @@ public class KanjiNoSensei
 			});
 		}
 		return importMenuItem;
+	}
+	
+	private JMenuItem getAjouterPhraseMenuItem() {
+		if(ajouterPhraseMenuItem == null) {
+			ajouterPhraseMenuItem = new JMenuItem();
+			ajouterPhraseMenuItem.setText("Ajouter une phrase");
+			ajouterPhraseMenuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					Phrase nouvellePhrase = (Phrase) vuePhraseBlank.editerElement();
+
+					if (nouvellePhrase != null)
+					{
+						System.out.println("Phrase edité : '" + nouvellePhrase + "'");
+						dictionnaire.ajouterElement(nouvellePhrase);
+					}
+				}
+			});
+		}
+		return ajouterPhraseMenuItem;
 	}
 
 }

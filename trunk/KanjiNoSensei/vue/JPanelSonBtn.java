@@ -28,6 +28,11 @@ public class JPanelSonBtn extends JToggleButton
 	
 	private String nomFichierSon = null;
 	
+	public JPanelSonBtn()
+	{
+		nomFichierSon = "none";
+	}
+	
 	public JPanelSonBtn(String fileName, boolean play)
 	{
 		nomFichierSon = fileName;

@@ -1,4 +1,4 @@
-package vue.mot;
+package vue.phrase;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -22,6 +22,7 @@ import metier.Dictionnaire;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Mot;
+import metier.elements.Phrase;
 import vue.JPanelSonBtn;
 import vue.VueElement;
 import vue.VueElement.QuizQuestionPanel;
@@ -38,17 +39,17 @@ import vue.VueElement.VueDetaillePanel;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel, QuizQuestionPanel, QuizSolutionPanel
+class PhraseVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel, QuizQuestionPanel, QuizSolutionPanel
 {
 
 	/**
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
-	private VueMot				vue								= null;
+	private VuePhrase				vue								= null;
 	private JPanel				jPanelCentre;
 	private JToggleButton		jButtonJouerSon;
-	private JTextField			jTextFieldMot;
+	private JTextField			jTextFieldPhrase;
 	private JLabel				jLabelSignifications;
 	private JLabel				jLabelThemes;
 	private JPanel				jPanelSouth;
@@ -72,7 +73,7 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 
 																};
 
-	public MotVueDetaillePanel(VueMot vue)
+	public PhraseVueDetaillePanel(VuePhrase vue)
 	{
 		super();
 		this.vue = vue;
@@ -109,7 +110,7 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 					jLabelLecture.setText("Lecture : neko");
 				}
 				{
-					jButtonJouerSon = new JPanelSonBtn(vue.getMot().getSon(), false);
+					jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSon(), false);
 					jPanelNorth.add(jButtonJouerSon, BorderLayout.EAST);
 					jButtonJouerSon.setText("Lire");
 					jButtonJouerSon.setSize(35, 20);
@@ -133,7 +134,7 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 				{
 					jLabelThemes = new JLabel();
 					jPanelSouth.add(jLabelThemes);
-					jLabelThemes.setText("Thèmes : mot, patin, coufin");
+					jLabelThemes.setText("Thèmes : phrase, patin, coufin");
 				}
 			}
 			{
@@ -146,36 +147,41 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 				jPanelCentre.setSize(600, 45);
 				jPanelCentre.setPreferredSize(new java.awt.Dimension(10, 45));
 				{
-					jTextFieldMot = new JTextField();
-					jPanelCentre.add(jTextFieldMot);
-					jTextFieldMot.setText("\u7f8e\u5c11\u5973");
-					jTextFieldMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44));
-					jTextFieldMot.setHorizontalAlignment(SwingConstants.CENTER);
-					jTextFieldMot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					jTextFieldMot.setEditable(false);
-					jTextFieldMot.setPreferredSize(new java.awt.Dimension(47, 47));
-					jTextFieldMot.setSize(0, 47);
-					jTextFieldMot.addMouseListener(vueDetaillePanelMouseAdapter);
-					jTextFieldMot.addCaretListener(new CaretListener() {
+					jTextFieldPhrase = new JTextField();
+					jPanelCentre.add(jTextFieldPhrase);
+					jTextFieldPhrase.setText("\u7f8e\u5c11\u5973");
+					jTextFieldPhrase.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44));
+					jTextFieldPhrase.setHorizontalAlignment(SwingConstants.CENTER);
+					jTextFieldPhrase.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					jTextFieldPhrase.setEditable(false);
+					jTextFieldPhrase.setPreferredSize(new java.awt.Dimension(47, 47));
+					jTextFieldPhrase.setSize(0, 47);
+					jTextFieldPhrase.addMouseListener(vueDetaillePanelMouseAdapter);
+					jTextFieldPhrase.addCaretListener(new CaretListener() {
 						public void caretUpdate(CaretEvent evt) {
-							System.out.println("jTextFieldMot.caretUpdate, event="+evt);
-							String sel = jTextFieldMot.getSelectedText();
+							System.out.println("jTextFieldPhrase.caretUpdate, event="+evt);
+							String sel = jTextFieldPhrase.getSelectedText();
 							if ((sel != null) && (!sel.isEmpty()))
 							{
 								System.out.println("Selection '"+sel+"'");
 								Dictionnaire dictionnaire = vue.getApp().getDictionnaire();
 								
-								Element e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey());
+								Element e = dictionnaire.chercherElement(new Mot(sel, "", "", "", "").getKey());
 								
 								if (e == null)
 								{
-									System.err.println("Kanji '" + sel.charAt(0) + "' non présent dans le dictionnaire");
+									e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey());
+								}
+								
+								if (e == null)
+								{
+									System.err.println("Le mot '"+sel+"' et le kanji '" + sel.charAt(0) + "' sont absent du dictionnaire");
 									return;
 								}
 					
-								if (!Kanji.class.isInstance(e))
+								if ((!Kanji.class.isInstance(e)) && (!Mot.class.isInstance(e)))
 								{
-									System.err.println("La sélection correspond à un élément qui n'est pas un Kanji : "+e.toString());
+									System.err.println("La sélection correspond à un élément qui n'est ni un mot ni un kanji : "+e.toString());
 									return;
 								}
 								
@@ -190,10 +196,10 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 									return;
 								}
 								
-								JDialog kanjiDetail = new JDialog((JDialog) null, "Détail Kanji '"+e.toString()+"'", true);
-								kanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
-								kanjiDetail.pack();
-								kanjiDetail.setVisible(true);
+								JDialog motkanjiDetail = new JDialog((JDialog) null, "Détail "+e.getClass().getSimpleName()+" '"+e.toString()+"'", true);
+								motkanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
+								motkanjiDetail.pack();
+								motkanjiDetail.setVisible(true);
 							}
 						}
 					});
@@ -209,12 +215,12 @@ class MotVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel
 	// <NoJigloo>
 	private void dynamicInitialize()
 	{
-		Mot mot = vue.getMot();
-		jLabelLecture.setText("Lecture : " + mot.getLecture());
-		jTextFieldMot.setText(mot.getMot());
-		jTextFieldMot.setColumns(jTextFieldMot.getText().length() * 2);
-		jLabelSignifications.setText("Significations : " + mot.getSignifications());
-		jLabelThemes.setText("Thèmes : " + mot.getThemes());
+		Phrase phrase = vue.getPhrase();
+		jLabelLecture.setText("Lecture : " + phrase.getLecture());
+		jTextFieldPhrase.setText(phrase.getPhrase());
+		jTextFieldPhrase.setColumns(jTextFieldPhrase.getText().length() * 2);
+		jLabelSignifications.setText("Significations : " + phrase.getSignifications());
+		jLabelThemes.setText("Thèmes : " + phrase.getThemes());
 	}
 
 	// </NoJigloo>

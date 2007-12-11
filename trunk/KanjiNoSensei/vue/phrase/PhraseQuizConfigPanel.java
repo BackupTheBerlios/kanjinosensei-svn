@@ -1,4 +1,4 @@
-package vue.mot;
+package vue.phrase;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -16,7 +16,7 @@ import vue.VueElement.QuizConfigPanel;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
-class MotQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
+class PhraseQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 {
 
 	/**
@@ -34,21 +34,21 @@ class MotQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 		Kanji, Lecture, Signification, ListeChoix, AttenteClick;
 	}
 	
-	private static MotQuizConfigPanel	MotQuizConfigPanelSingleton	= null;
+	private static PhraseQuizConfigPanel	PhraseQuizConfigPanelSingleton	= null;
 
-	public static MotQuizConfigPanel getMotQuizConfigPanel()
+	public static PhraseQuizConfigPanel getPhraseQuizConfigPanel()
 	{
-		if (MotQuizConfigPanelSingleton == null)
+		if (PhraseQuizConfigPanelSingleton == null)
 		{
-			MotQuizConfigPanelSingleton = new MotQuizConfigPanel();
+			PhraseQuizConfigPanelSingleton = new PhraseQuizConfigPanel();
 		}
 
-		MotQuizConfigPanelSingleton.miseAJourForm();
-		return MotQuizConfigPanelSingleton;
+		PhraseQuizConfigPanelSingleton.miseAJourForm();
+		return PhraseQuizConfigPanelSingleton;
 	}
 
 	private JLabel	jLabelTitre;
-	private JLabel	jLabelAffMot;
+	private JLabel	jLabelAffPhrase;
 	private JComboBox	jComboBoxAffQuiz;
 	private JLabel	jLabelMethodeSaisie;
 	private JComboBox	jComboBoxSaisieReponse;
@@ -70,7 +70,7 @@ class MotQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 		jComboBoxAffReponse.setSelectedItem(affichageReponseQuiz);
 	}
 
-	private MotQuizConfigPanel()
+	private PhraseQuizConfigPanel()
 	{
 		super();
 		initGUI();
@@ -94,13 +94,13 @@ class MotQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 			{
 				jLabelTitre = new JLabel();
 				this.add(jLabelTitre, new CellConstraints("1, 1, 1, 1, right, default"));
-				jLabelTitre.setText("Configuration Mots");
+				jLabelTitre.setText("Configuration Phrases");
 				jLabelTitre.setFont(new java.awt.Font("SimSun", 1, 16));
 			}
 			{
-				jLabelAffMot = new JLabel();
-				this.add(jLabelAffMot, new CellConstraints("1, 2, 1, 1, default, default"));
-				jLabelAffMot.setText("Affichage quiz");
+				jLabelAffPhrase = new JLabel();
+				this.add(jLabelAffPhrase, new CellConstraints("1, 2, 1, 1, default, default"));
+				jLabelAffPhrase.setText("Affichage quiz");
 			}
 			{
 				ComboBoxModel jComboBoxAffQuizModel = new DefaultComboBoxModel(ETypeAff.values());
