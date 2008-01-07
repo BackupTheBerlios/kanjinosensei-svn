@@ -1,0 +1,32 @@
+	-----
+	Kanji no Sensei | 漢字の先生
+	-----
+	Escallier Pierre <p.escallier@laposte.net>
+	-----					
+	26/12/2007
+
+TODO List
+	
+	Workflow passé et en cours.
+	
+	* Ajouter la tolérence de sasie des réponses sous forme d'option aux panneaux de config (générale ? kanji ?)
+	
+	* Implémenter les méthodes de saisies "liste de choix".
+	
+	* Ajouter méthode de saisie "au hasard" qui pour chaque question tire une méthode de saisie au hasard (excluant la méthode d'affichage).
+	
+	* Pouvoir sauvegarder/charger la sélection dans la base de connaissance.
+	
+	* Pouvoir sauvegarder/charger une configuration de Quiz.
+	
+	* Revoir les labels sur l'ihm, internationaliser.
+	
+	* Rédiger les commentaires javadoc pour tout le projet.
+		
+	* Rédiger les tests unitaires.
+	
+	* Avoir la possibilité, lors d'un quiz, de jouer les phrases d'une leçon dans l'ordre.
+	
+Bugs connus
+	
+	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.

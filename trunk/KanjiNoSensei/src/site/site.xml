@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="KanjiNoSensei" xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/maven-navigation-1.0.xsd">
+	<bannerLeft>
+		<name>KanjiNoSensei</name>
+		<src>
+			images/banniere.png
+		</src>
+		<href>http://kanjinosensei.berlios.de/</href>
+	</bannerLeft>
+	<!-- 
+	<bannerRight>
+		<src>http://maven.apache.org/images/maven-small.gif</src>
+	</bannerRight>
+	 -->
+	<body>
+		<links>
+			<item name="Projet sur BerliOS" href="http://developer.berlios.de/projects/kanjinosensei/" />
+			<item name="Site Usage" href="usage/" />
+		</links>
+
+		<menu name="KanjiNoSensei project">
+			<item name="Présentation" href="/index.html" />
+			<item name="Screenshots" href="https://developer.berlios.de/screenshots/?group_id=${berliOSid}" />
+			<!-- <item name="Téléchargement" href="http://developer.berlios.de/project/filelist.php?group_id=${berliOSid}" /> -->
+			<item name="Téléchargement" href="releases/" />
+			<item name="FAQ" href="/faq.html" />
+			<item name="TODO list" href="/todolist.html" />
+		</menu>
+
+
+		<menu ref="reports" />
+
+
+	</body>
+</project>

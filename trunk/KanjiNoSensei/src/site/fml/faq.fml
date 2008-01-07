@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="FAQ Kanji No Sensei">
+
+	<part id="a propos">
+		<faq>
+			<question>Comment ça marche ?</question>
+			<answer>
+				<p>
+					La doc est en cours de rédaction.
+				</p>
+			</answer>
+		</faq>
+	</part>
+</faqs>

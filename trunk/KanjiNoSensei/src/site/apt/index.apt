@@ -1,0 +1,42 @@
+	-----
+	Kanji no Sensei | 漢字の先生
+	-----
+	Escallier Pierre <p.escallier@laposte.net>
+	-----					
+	25/12/2007
+
+Présentation brève
+
+	Kanji no Sensei est un moteur de flashcard amélioré dont le but est d'aider l'apprentissage des kanjis et du vocabulaire de la langue japonaise.
+	Un logiciel dit "flashcard" est un logiciel qui se propose d'aider les utilisateurs à étudier, apprendre ou réviser des connaissances, celles-ci étant généralement scolaires.
+	L'étude se fait par des exercices interactifs et souvent répétitifs qui doivent permettre à l'utilisateur de mémoriser les connaissances.
+	
+	Ce type de logiciel est dont spécialement adapté pour les connaissances à aquérir par le "par coeur", et l'exercice de base pour celà est le Quiz. 
+	Le Quiz permet d'interroger l'utilisateur sur les connaissances à apprendre, de façon aléatoire et automatique de sorte que les connaissances soit assimilées naturellement à force de les répéter.
+
+Un moteur de flashcard évolutif
+
+	Le moteur de flashcard de Kanji no Sensei permet de manière générale :
+	
+		* De naviguer parmis la base de connaissances des éléments d'apprentissage.
+		
+		* De sélectionner ceux que l'ont souhaite intégrer au prochain Quiz.
+		
+		* De configurer le Quiz pour chaque type d'élements :
+			
+			* Choisir parmis les différentes vues disponible pour l'affichage de la question.
+			
+			* Choisir parmis les différents modes de saisie de la réponse.
+			
+			* Choisir parmis les différentes vues disponibles pour l'affichage de la solution.
+		
+		* De jouer en Quiz les éléments sélectionnés dans la base de connaissance.
+	 
+	Les types d'éléments disponibles sont définis dans des plugins, ce qui rend le moteur évolutif et adaptable à tout type de données.
+
+	Des plugins sont développés initialement pour l'apprentissage des kanjis et du vocabulaire japonais.
+
+Contenu pour l'apprentissage du Japonais
+
+	Kanji no Sensei est développé de sorte que le moteur soit découplé du contenu (grace à un systeme de plugins), mais un contenu de base pour l'apprentissage de kanjis et de vocabulaire japonais est constitué en parallèle.
+	Ce contenu se base sur les cours délivrés en section LEA à l'Université Toulouse le Mirail.
