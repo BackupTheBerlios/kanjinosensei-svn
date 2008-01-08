@@ -148,6 +148,8 @@
 							<tasks>
 								<property name="finalReleaseDirectory"
 									value="${project.build.directory}/${versionedReleaseDirectory}" />
+
+								<!-- Copie du dictionnaire et 7Zipage du package -->
 								<copy
 									todir="${finalReleaseDirectory}/dico">
 									<fileset dir="${basedir}/dico">
@@ -166,6 +168,20 @@
 									<arg
 										line="a ${project.build.directory}/${project.name}-${project.version}.7z ${finalReleaseDirectory}/*" />
 								</exec>
+
+								<!-- 
+									mvn install:install-file -DgroupId=GROUPID -DartifactId=ARTIFACTID -Dversion=VERSION -Dpackaging=jar -Dfile=/path/to/file
+								TODO: Générer un script capable d'installer toutes les libs sur un environnement maven vierge.
+								Comment avoir une ANT pour "FOR" !?
+
+								<echo
+									message="The first five letters of the alphabet are:" />
+								<ac:for list="a,b,c,d,e" param="letter">
+									<ac:sequential>
+										<echo>Letter @{letter}</echo>
+									</ac:sequential>
+								</ac:for>
+								-->
 							</tasks>
 						</configuration>
 						<goals>

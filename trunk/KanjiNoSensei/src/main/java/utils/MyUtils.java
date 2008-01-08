@@ -1,5 +1,6 @@
 package utils;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.LookAndFeel;
@@ -938,9 +940,23 @@ public abstract class MyUtils
 
 		private static final long	serialVersionUID	= 1L;
 		
+		private static final Component getFirstComponent(Window window)
+		{
+			if (window == null) return null;
+			
+			if (window.getComponentCount() <= 0)
+			{
+				JButton jButton = new JButton("FAKE");
+				jButton.setVisible(true);
+				window.add(jButton, BorderLayout.CENTER);
+			}
+			
+			return window.getComponent(0);
+		}
+		
 		public MyModalFrame(Window owner, boolean modal)
 		{
-			super(owner, modal);
+			super(owner, getFirstComponent(owner), modal);
 		}
 		
 	}

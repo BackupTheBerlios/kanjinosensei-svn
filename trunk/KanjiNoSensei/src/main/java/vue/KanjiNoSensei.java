@@ -66,7 +66,7 @@ import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Sentence;
 import metier.elements.Word;
-import nl.jj.swingx.gui.modal.JModalConfiguration;
+import nl.jj.swingx.gui.modal.JModalFrame;
 import utils.MyCheckBoxTree;
 import utils.MyUtils;
 import utils.MyCheckBoxTree.MyCheckBoxTreeEvent;
@@ -82,18 +82,6 @@ import com.jgoodies.forms.layout.FormLayout;
 
 
 
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
 /**
  * @author Axan
  * 
@@ -1265,19 +1253,18 @@ public class KanjiNoSensei
 	{
 		if (jFrame == null)
 		{
-			JModalConfiguration.disableBusyCursor();
+			//JModalConfiguration.disableBusyCursor();
 			
 			jFrame = new JFrame();
 			//<NoJigloo>
 			jFrame = new MyModalFrame(null, false);
 			//</NoJigloo>
-			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			//jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(getJJMenuBar());
 			jFrame.setSize(300, 200);
 			jFrame.setContentPane(getJContentPane());
 			jFrame.setTitle("Application");
 			jFrame.setPreferredSize(new java.awt.Dimension(300, 200));	
-			jFrame.setTitle(JModalConfiguration.isBusyCursorEnabled()?"enabled":"disabled");
 		}
 		return jFrame;
 	}
@@ -1417,10 +1404,6 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					jFrame.setFocusable(false);
-					jFrame.setFocusableWindowState(false);
-					jFrame.setVisible(false);
-					jFrame.setVisible(true);
 					JFrame aboutFrame = getAboutFrame();
 					aboutFrame.pack();
 					Point loc = getJFrame().getLocation();
@@ -1438,15 +1421,16 @@ public class KanjiNoSensei
 	 * 
 	 * @return {@link javax.swing.JFrame}
 	 */
-	private synchronized JFrame getAboutFrame()
+	private JFrame getAboutFrame()
 	{
 		if (aboutFrame == null)
 		{
 			aboutFrame = new JFrame();
 			// <NoJigloo>
-			aboutFrame = new MyModalFrame(getJFrame(), true);
+			aboutFrame = new JModalFrame(getJFrame(), getJFrame(), true);
+			//aboutFrame = new MyModalFrame(getJFrame(), true);
 			// </NoJigloo>
-			aboutFrame.setTitle("About");
+			aboutFrame.setTitle("A propos");
 			aboutFrame.setContentPane(getAboutContentPane());
 		}
 		return aboutFrame;
@@ -1743,8 +1727,13 @@ public class KanjiNoSensei
 		getJPanelQuizAffReponse().setBackground(defaultBgColor);
 
 		miseAJourQuizTitle();
+		/*
 		getJQuizFrame().setVisible(false);
 		getJQuizFrame().setVisible(true);
+		*/
+		getJQuizFrame().invalidate();
+		getJQuizFrame().validate();
+		getJQuizFrame().repaint();
 	}
 
 	private void miseAJourQuizTitle()
