@@ -18,6 +18,7 @@ import java.util.TreeSet;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -381,6 +382,12 @@ public abstract class VueElement
 			{	
 				saisie.clear();
 				saisie.addFromString(jSaisie.getText());
+			
+				if (saisie.isEmpty())
+				{
+					JOptionPane.showMessageDialog(jSaisie, "Vous n'avez pas saisie de réponse", "Aucune saisie", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				
 				boolean result = false;
 				

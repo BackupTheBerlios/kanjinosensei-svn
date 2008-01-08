@@ -2,7 +2,9 @@ package utils;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Frame;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.Comparator;
@@ -12,18 +14,16 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.LookAndFeel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import nl.jj.swingx.gui.modal.JModalFrame;
 
 /**
  * Utilities class, provide lot of functions.
@@ -264,7 +264,7 @@ public abstract class MyUtils
 	 *            number of elements to offset.
 	 * @return
 	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	public static <T> T[] offsetObjectElements(T[] elements, int offset)
 	{
 		if (elements.length <= 0) return elements;
@@ -301,35 +301,35 @@ public abstract class MyUtils
 	/** Romaji standard table. */
 	private static final String[]	tRomaji		= {"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$
 			"ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "wo", "n", "ga", "gi", "gu", "ge", "go", "za", "ji", "zu", "ze", "zo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$
-			"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
+			"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
 
 	/** Romaji composed characters table. */
 	private static final String[]	tRomaYaYuYo	= {"kya", "kyu", "kyo", "sha", "shu", "sho", "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu", "ryo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$
-			"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+			"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};					//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Hiragana standard table. */
 	private static final String[]	tHiragana	= {"あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 			"ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-			"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"				}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"				};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Hiragana composed characters table. */
 	private static final String[]	tHiraYaYuYo	= {"きゃ", "きゅ", "きょ", "しゃ", "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ", "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ", "りょ", "ぎゃ", "ぎゅ", "ぎょ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-			"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+			"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};												//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Hiragana little TSU character. */
-	private static final String		hiraTsu		= "っ"; //$NON-NLS-1$
+	private static final String		hiraTsu		= "っ";															//$NON-NLS-1$
 
 	/** Katakana standard table. */
 	private static final String[]	tKatakana	= {"ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 			"ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-			"パ", "ピ", "プ", "ペ", "ポ"				}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+			"パ", "ピ", "プ", "ペ", "ポ"				};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Katakana composed characters table. */
 	private static final String[]	tKataYaYuYo	= {"キャ", "キュ", "キョ", "シャ", "シュ", "ショ", "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ", "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-			"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+			"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};												//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Katakana little TSU character. */
-	private static final String		kataTsu		= "ッ"; //$NON-NLS-1$
+	private static final String		kataTsu		= "ッ";															//$NON-NLS-1$
 
 	/** Kanas punctuation. */
 	private static final String[]	tKanaPunc	= {"　", "、", "。", "？", "！", "；", "−", "ー", "（", "）", "「", "」"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
@@ -933,160 +933,100 @@ public abstract class MyUtils
 		trace("Fin sleep " + millis); //$NON-NLS-1$
 	}
 
-	// @author Santhosh Kumar T - santhosh@in.fiorano.com
-	public static class ModalFrameUtil
+	public static class MyModalFrame extends JModalFrame
 	{
-		static class EventPump implements InvocationHandler
+
+		private static final long	serialVersionUID	= 1L;
+		
+		public MyModalFrame(Window owner, boolean modal)
 		{
-			Frame	frame;
+			super(owner, modal);
+		}
+		
+	}
 
-			public EventPump(Frame frame)
-			{
-				this.frame = frame;
-			}
+	public static interface DoItToThisComponent
+	{
+		void doIt(Component c);
+	};
 
-			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
-			{
-				return frame.isShowing() ? Boolean.TRUE : Boolean.FALSE;
-			}
+	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt)
+	{
+		doIt.doIt(c);
 
-			// when the reflection calls in this method has to be
-			// replaced once Sun provides a public API to pump events.
-			public void start() throws Exception
+		if (Container.class.isInstance(c))
+		{
+			for (Component sc : ((Container) c).getComponents())
 			{
-				Class<?> clazz = Class.forName("java.awt.Conditional"); //$NON-NLS-1$
-				Object conditional = Proxy.newProxyInstance(clazz.getClassLoader(), new Class[] {clazz}, this);
-				Method pumpMethod = Class.forName("java.awt.EventDispatchThread").getDeclaredMethod("pumpEvents", new Class[] {clazz}); //$NON-NLS-1$ //$NON-NLS-2$
-				pumpMethod.setAccessible(true);
-				pumpMethod.invoke(Thread.currentThread(), new Object[] {conditional});
+				doItToAllSubComponents(sc, doIt);
 			}
 		}
 
-		// show the given frame as modal to the specified owner.
-		// NOTE: this method returns only after the modal frame is closed.
-		public static void showAsModal(final Frame frame, final Frame owner)
+		if (Window.class.isInstance(c))
 		{
-			frame.addWindowListener(new WindowAdapter()
+			for (Window w : ((Window) c).getOwnedWindows())
 			{
-				public void windowActivated(WindowEvent e)
-				{
-					trace("modal windowActivated"); //$NON-NLS-1$
-					owner.setEnabled(false);
-				}
-
-				public void windowOpened(WindowEvent e)
-				{
-					trace("modal windowOpened"); //$NON-NLS-1$
-					owner.setEnabled(false);
-				}
-
-				public void windowDeactivated(WindowEvent e)
-				{
-					trace("modal windowDeactivated"); //$NON-NLS-1$
-					owner.setEnabled(true);
-					frame.removeWindowListener(this);
-				}
-
-				public void windowClosed(WindowEvent e)
-				{
-					trace("modal windowClosed"); //$NON-NLS-1$
-					owner.setEnabled(true);
-					frame.removeWindowListener(this);
-				}
-			});
-
-			owner.addWindowListener(new WindowAdapter()
-			{
-				public void windowActivated(WindowEvent e)
-				{
-					if (frame.isShowing())
-					{
-						frame.setExtendedState(JFrame.NORMAL);
-						frame.toFront();
-					}
-					else
-						owner.removeWindowListener(this);
-				}
-			});
-
-			frame.setVisible(true);
-			try
-			{
-				new EventPump(frame).start();
-			}
-			catch (Throwable throwable)
-			{
-				throw new RuntimeException(throwable);
+				doItToAllSubComponents(w, doIt);
 			}
 		}
 	}
 
-	public static class MyModalFrame extends JFrame
+	public static DoItToThisComponent	DO_UPDATEUI_REFRESH	= new DoItToThisComponent()
+															{
+
+																@Override
+																public void doIt(Component c)
+																{
+																	SwingUtilities.updateComponentTreeUI(c);
+																	c.invalidate();
+																	c.validate();
+																	c.repaint();
+																}
+
+															};
+
+	public static JMenu getUIMenu(final Component rootComponent)
 	{
-		/**
-		 * 
-		 */
-		private static final long	serialVersionUID	= 1L;
+		Component[] roots = {rootComponent};
+		return getUIMenu(roots);
+	}
+	public static JMenu getUIMenu(final Component[] rootComponents)
+	{
+		final HashMap<String, String> vLFclass = listLookAndFeels();
 
-		// <NoJigloo>
-		private boolean	isModal		= true;
+		JMenu jMenuUI = new JMenu("Look&Feels");
 
-		private Boolean	isLocked	= false;
-
-		private Frame	owner		= null;
-
-		public void setDefaultCloseOperation(int operation)
+		Iterator<String> it = vLFclass.keySet().iterator();
+		while (it.hasNext())
 		{
-			System.err.println("Can't change defaultCloseOperation, must be HIDE_ON_CLOSE"); //$NON-NLS-1$
-		}
-
-		public MyModalFrame(Frame owner, boolean isModal)
-		{
-			super();
-			this.owner = owner;
-			this.isModal = isModal;
-			super.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		}
-
-		public void setVisible(boolean b)
-		{
-			boolean showAsModal = false;
-
-			synchronized (this)
+			final String lf = it.next();
+			JMenuItem jMenuItemLF = new JMenuItem(lf);
+			jMenuItemLF.addActionListener(new ActionListener()
 			{
-				if ((isModal) && ( !this.isLocked()))
+
+				@Override
+				public void actionPerformed(ActionEvent e)
 				{
-					setLock(true);
-					showAsModal = true;
+					try
+					{
+						UIManager.setLookAndFeel(vLFclass.get(lf));
+					}
+					catch (Exception e1)
+					{
+						e1.printStackTrace();
+					}
+
+					for(Component c : rootComponents)
+					{
+						doItToAllSubComponents(c, DO_UPDATEUI_REFRESH);
+					}
 				}
-			}
 
-			if (showAsModal)
-			{
-				ModalFrameUtil.showAsModal(this, owner);
-				setLock(false);
-			}
-			else
-			{
-				super.setVisible(b);
-			}
+			});
+
+			jMenuUI.add(jMenuItemLF);
 		}
 
-		private void setLock(boolean isLocked)
-		{
-			synchronized (this.isLocked)
-			{
-				this.isLocked = isLocked;
-			}
-		}
-
-		private boolean isLocked()
-		{
-			synchronized (this.isLocked)
-			{
-				return isLocked;
-			}
-		}
-		// </NoJigloo>
+		return jMenuUI;
 	}
 }

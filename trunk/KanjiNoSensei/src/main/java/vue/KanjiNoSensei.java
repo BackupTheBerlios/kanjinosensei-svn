@@ -55,7 +55,6 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileFilter;
@@ -67,6 +66,7 @@ import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Sentence;
 import metier.elements.Word;
+import nl.jj.swingx.gui.modal.JModalConfiguration;
 import utils.MyCheckBoxTree;
 import utils.MyUtils;
 import utils.MyCheckBoxTree.MyCheckBoxTreeEvent;
@@ -79,6 +79,7 @@ import vue.VueElement.VueDetaillePanel;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+
 
 
 /**
@@ -99,6 +100,16 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public class KanjiNoSensei
 {
+
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public final String KanjiNoSensei_VERSION = "1.0c";
 	
 	static boolean											USE_ROMAJI						= false;
@@ -107,7 +118,7 @@ public class KanjiNoSensei
 
 	private Set<String>										themesSelectionnes				= new TreeSet<String>();										// @jve:decl-index=0:
 
-	private JFrame											jConfigModalFrame;
+	private JFrame									jConfigModalFrame;
 
 	private JMenuItem										ConfigMenuItem;
 
@@ -131,13 +142,13 @@ public class KanjiNoSensei
 
 	private JMenuItem										aboutMenuItem					= null;
 
-	private JFrame											aboutFrame						= null;														// @jve:decl-index=0:visual-constraint="433,15"
+	private JFrame									aboutFrame						= null;														// @jve:decl-index=0:visual-constraint="433,15"
 
 	private JPanel											aboutContentPane				= null;
 
 	private JLabel											aboutVersionLabel				= null;
 
-	private JFrame											afficherBaseFrame			= null;														// @jve:decl-index=0:visual-constraint="23,536"
+	private JFrame							afficherBaseFrame				= null;														// @jve:decl-index=0:visual-constraint="23,536"
 
 	private JPanel											afficherBaseContentPane			= null;
 
@@ -190,7 +201,7 @@ public class KanjiNoSensei
 
 	private JSplitPane										jSplitPaneTopMiddleBottom;
 
-	private JFrame											jFrameQuizz;
+	private JFrame									jFrameQuizz;
 
 	private JButton											jButtonBaseConnaissanceAnnuler;
 
@@ -401,7 +412,7 @@ public class KanjiNoSensei
 		{
 			afficherBaseFrame = new JFrame();
 			// <NoJigloo>
-			afficherBaseFrame = new MyModalFrame(getJFrame(), false);
+			afficherBaseFrame = new MyModalFrame(getJFrame(), true);
 			// </NoJigloo>
 			Dimension d = new Dimension(800, 600);
 			afficherBaseFrame.setSize(d);
@@ -427,6 +438,7 @@ public class KanjiNoSensei
 			});
 			afficherBaseFrame.setContentPane(getAfficherBaseContentPane());
 			// <JiglooProtected>
+			
 			afficherBaseFrame.addWindowListener(new WindowAdapter()
 			{
 				// </JiglooProtected>
@@ -896,12 +908,13 @@ public class KanjiNoSensei
 		{
 			jSplitPaneCentre = new JSplitPane();
 			jSplitPaneCentre.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jSplitPaneCentre.setOneTouchExpandable(true);
 			jSplitPaneCentre.setPreferredSize(new Dimension(0, 0));
 			jSplitPaneCentre.setDividerLocation(200);
 			jSplitPaneCentre.setTopComponent(getJPanelThemesInSplit());
 			jSplitPaneCentre.setBottomComponent(getJPanelElementsInSplit());
 			jSplitPaneCentre.setOrientation(JSplitPane.VERTICAL_SPLIT);
+			jSplitPaneCentre.setContinuousLayout(true);
+			jSplitPaneCentre.setOneTouchExpandable(true);
 		}
 		return jSplitPaneCentre;
 	}
@@ -1138,8 +1151,8 @@ public class KanjiNoSensei
 		{
 			jSplitPaneThemes = new JSplitPane();
 			jSplitPaneThemes.setDividerLocation(600);
-			jSplitPaneThemes.setContinuousLayout(true);
 			jSplitPaneThemes.setOneTouchExpandable(true);
+			jSplitPaneThemes.setContinuousLayout(true);
 			jSplitPaneThemes.setRightComponent(getJPanelThemesSelection());
 			jSplitPaneThemes.setLeftComponent(getJScrollPaneThemes());
 		}
@@ -1229,7 +1242,6 @@ public class KanjiNoSensei
 				KanjiNoSensei application;
 				try
 				{
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					application = new KanjiNoSensei(ficDico);
 				}
 				catch (Exception e)
@@ -1253,13 +1265,19 @@ public class KanjiNoSensei
 	{
 		if (jFrame == null)
 		{
+			JModalConfiguration.disableBusyCursor();
+			
 			jFrame = new JFrame();
+			//<NoJigloo>
+			jFrame = new MyModalFrame(null, false);
+			//</NoJigloo>
 			jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			jFrame.setJMenuBar(getJJMenuBar());
 			jFrame.setSize(300, 200);
 			jFrame.setContentPane(getJContentPane());
 			jFrame.setTitle("Application");
-			jFrame.setPreferredSize(new java.awt.Dimension(300, 200));
+			jFrame.setPreferredSize(new java.awt.Dimension(300, 200));	
+			jFrame.setTitle(JModalConfiguration.isBusyCursorEnabled()?"enabled":"disabled");
 		}
 		return jFrame;
 	}
@@ -1291,6 +1309,8 @@ public class KanjiNoSensei
 			jJMenuBar = new JMenuBar();
 			jJMenuBar.add(getFileMenu());
 			jJMenuBar.add(getEditMenu());
+			Component[] roots = {getJFrame(), getAboutFrame(), getAfficherBaseFrame(), getJConfigFrame(), getJQuizFrame()};
+			jJMenuBar.add(MyUtils.getUIMenu(roots));
 			jJMenuBar.add(getHelpMenu());
 		}
 		return jJMenuBar;
@@ -1809,6 +1829,8 @@ public class KanjiNoSensei
 			jSplitPaneTopMiddleBottom.setDividerLocation(240);
 			jSplitPaneTopMiddleBottom.setSize(0, 0);
 			jSplitPaneTopMiddleBottom.setMinimumSize(new java.awt.Dimension(0, 0));
+			jSplitPaneTopMiddleBottom.setOneTouchExpandable(true);
+			jSplitPaneTopMiddleBottom.setContinuousLayout(true);
 			jSplitPaneTopMiddleBottom.add(getJSplitPaneTopMiddle(), JSplitPane.TOP);
 			jSplitPaneTopMiddleBottom.add(getJScrollPaneBottom(), JSplitPane.BOTTOM);
 		}
@@ -1822,6 +1844,8 @@ public class KanjiNoSensei
 			jSplitPaneTopMiddle = new JSplitPane();
 			jSplitPaneTopMiddle.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			jSplitPaneTopMiddle.setDividerLocation(120);
+			jSplitPaneTopMiddle.setContinuousLayout(true);
+			jSplitPaneTopMiddle.setOneTouchExpandable(true);
 			jSplitPaneTopMiddle.add(getJScrollPaneTop(), JSplitPane.TOP);
 			jSplitPaneTopMiddle.add(getJScrollPaneMiddle(), JSplitPane.BOTTOM);
 		}
