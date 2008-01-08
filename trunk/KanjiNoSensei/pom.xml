@@ -112,9 +112,7 @@
 					<outputDirectory>
 						${project.build.directory}/${versionedReleaseDirectory}
 					</outputDirectory>
-					<includes>
-						*.properties
-					</includes>
+					<includes>*.properties</includes>
 					<archive>
 						<index>true</index>
 						<manifest>
@@ -204,6 +202,11 @@
 			<groupId>com.jgoodies</groupId>
 			<artifactId>forms</artifactId>
 			<version>1.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>jmodalwindow</groupId>
+			<artifactId>jmodalwindow</artifactId>
+			<version>0203</version>
 		</dependency>
 	</dependencies>
 	<reporting>

@@ -6,7 +6,5 @@
 	<classpathentry excluding="**" kind="src" output="src/test/resources" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER/modules"/>
-	<classpathentry exported="true" kind="lib" path="/home/axan/eclipse/features/JMF-2.1.1e/lib/jmf.jar"/>
-	<classpathentry exported="true" kind="lib" path="/home/axan/eclipse/features/JLayer1.0/jl1.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
