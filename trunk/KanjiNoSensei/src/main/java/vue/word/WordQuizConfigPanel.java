@@ -1,7 +1,5 @@
 package vue.word;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -86,11 +84,6 @@ class WordQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(400, 119));
 			this.setMinimumSize(new java.awt.Dimension(600, 300));
-			this.addComponentListener(new ComponentAdapter() {
-				public void componentShown(ComponentEvent evt) {
-					miseAJourForm();
-				}
-			});
 			{
 				jLabelTitre = new JLabel();
 				this.add(jLabelTitre, new CellConstraints("1, 1, 1, 1, right, default"));
@@ -201,6 +194,15 @@ class WordQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	{
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see vue.VueElement.QuizConfigPanel#resetDisplay()
+	 */
+	@Override
+	public void resetDisplay()
+	{
+		miseAJourForm();
 	}
 
 }

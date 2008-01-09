@@ -35,8 +35,7 @@ import nl.jj.swingx.gui.modal.JModalFrame;
 public abstract class MyUtils
 {
 	/**
-	 * Test the system fonts and report which ones are able to display testing
-	 * character (unicode).
+	 * Test the system fonts and report which ones are able to display testing character (unicode).
 	 */
 	static public void testFonts()
 	{
@@ -302,33 +301,33 @@ public abstract class MyUtils
 
 	/** Romaji standard table. */
 	private static final String[]	tRomaji		= {"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$
-			"ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "wo", "n", "ga", "gi", "gu", "ge", "go", "za", "ji", "zu", "ze", "zo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$
-			"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
+		"ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "wo", "n", "ga", "gi", "gu", "ge", "go", "za", "ji", "zu", "ze", "zo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$
+		"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
 
 	/** Romaji composed characters table. */
 	private static final String[]	tRomaYaYuYo	= {"kya", "kyu", "kyo", "sha", "shu", "sho", "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu", "ryo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$
-			"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};					//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+		"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};						//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Hiragana standard table. */
 	private static final String[]	tHiragana	= {"あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
-			"ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-			"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"				};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
+		"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"					};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Hiragana composed characters table. */
 	private static final String[]	tHiraYaYuYo	= {"きゃ", "きゅ", "きょ", "しゃ", "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ", "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ", "りょ", "ぎゃ", "ぎゅ", "ぎょ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-			"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};												//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+		"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};													//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Hiragana little TSU character. */
 	private static final String		hiraTsu		= "っ";															//$NON-NLS-1$
 
 	/** Katakana standard table. */
 	private static final String[]	tKatakana	= {"ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
-			"ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-			"パ", "ピ", "プ", "ペ", "ポ"				};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
+		"パ", "ピ", "プ", "ペ", "ポ"					};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Katakana composed characters table. */
 	private static final String[]	tKataYaYuYo	= {"キャ", "キュ", "キョ", "シャ", "シュ", "ショ", "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ", "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-			"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};												//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+		"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};													//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Katakana little TSU character. */
 	private static final String		kataTsu		= "ッ";															//$NON-NLS-1$
@@ -340,9 +339,7 @@ public abstract class MyUtils
 	private static final String[]	tRomaPunc	= {" ", ",", ".", "?", "!", ";", "-", "-", "(", ")", "[", "]"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/**
-	 * Private method used to convert romaji to kana. This method is not
-	 * perfect, because it uses algorithms to replace characters, instead of a
-	 * real knowledge of the language.
+	 * Private method used to convert romaji to kana. This method is not perfect, because it uses algorithms to replace characters, instead of a real knowledge of the language.
 	 * 
 	 * @param subject
 	 *            String to convert.
@@ -428,9 +425,7 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Private method used to convert kana to romaji. This method is not
-	 * perfect, because it uses algorithms to replace characters, instead of a
-	 * real knowledge of the language.
+	 * Private method used to convert kana to romaji. This method is not perfect, because it uses algorithms to replace characters, instead of a real knowledge of the language.
 	 * 
 	 * @param subject
 	 *            Kana string to convert.
@@ -506,8 +501,7 @@ public abstract class MyUtils
 	/**
 	 * List available Look&Feels.
 	 * 
-	 * @return HashMap of available Look&Feels, key is the look&feels name,
-	 *         value is the look&feels class name.
+	 * @return HashMap of available Look&Feels, key is the look&feels name, value is the look&feels class name.
 	 */
 	public static HashMap<String, String> listLookAndFeels()
 	{
@@ -534,8 +528,7 @@ public abstract class MyUtils
 	 * 
 	 * @param requiredVersion
 	 *            Required JRE version, ex: "1.6"
-	 * @return true if the current JRE version is >= the required one, false if
-	 *         not.
+	 * @return true if the current JRE version is >= the required one, false if not.
 	 */
 	public static boolean checkJREVersion(String requiredVersion)
 	{
@@ -569,8 +562,7 @@ public abstract class MyUtils
 	 * list : List the available look&feels.<br>
 	 * system : Try to use the system look&feels.<br>
 	 * default : Try to use the default (cross platform) look&feels.<br>
-	 * a look&feels name : Try to use the look&feels name in the look&feels
-	 * list.<br>
+	 * a look&feels name : Try to use the look&feels name in the look&feels list.<br>
 	 * 
 	 * @param arg
 	 *            Argument of the application.
@@ -616,10 +608,7 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Fix '\' and '/' to the current system separator, then look if the
-	 * fileName exists. If it does not, try to look at it in the
-	 * defaultDirectory. If file can't be found, error message is printed.
-	 * Return the fixed fileName anyway.
+	 * Fix '\' and '/' to the current system separator, then look if the fileName exists. If it does not, try to look at it in the defaultDirectory. If file can't be found, error message is printed. Return the fixed fileName anyway.
 	 * 
 	 * @param fileName
 	 *            File to check.
@@ -661,10 +650,7 @@ public abstract class MyUtils
 																													};
 
 	/**
-	 * String comparator which allow kana or romaji strings. Each string is
-	 * converted to romaji and compared to the other one, but if both are kana
-	 * and not naturaly equal, that is to say one is in katakana and the other
-	 * in hiragana, the comparison is false.
+	 * String comparator which allow kana or romaji strings. Each string is converted to romaji and compared to the other one, but if both are kana and not naturaly equal, that is to say one is in katakana and the other in hiragana, the comparison is false.
 	 */
 	public static final Comparator<String>	STRING_COMPARATOR_IgnoreCase_AllowRomajiKana							= new Comparator<String>()
 																													{
@@ -673,62 +659,26 @@ public abstract class MyUtils
 																														{
 																															int natural = o1.compareToIgnoreCase(o2);
 
-																															// Naturaly
-																															// equals
-																															// (ignore
-																															// case)
+																															// Naturaly equals (ignore case)
 																															if (natural == 0) return 0;
 
-																															// o1
-																															// in
-																															// kanas,
-																															// o2
-																															// romaji
-																															if (kanasToRomaji(o1).compareToIgnoreCase(o2) == 0) return 0;
+																															// o1 in kanas, o2 romaji
+																															String wo1 = kanasToRomaji(o1);
+																															if (( !wo1.isEmpty()) && (wo1.compareToIgnoreCase(o2) == 0)) return 0;
 
-																															// o1
-																															// in
-																															// romaji,
-																															// o2
-																															// in
-																															// kanas
-																															if (kanasToRomaji(o2).compareToIgnoreCase(o1) == 0) return 0;
+																															// o1 in romaji, o2 in kanas
+																															String wo2 = kanasToRomaji(o2);
+																															if (( !wo2.isEmpty()) && (wo2.compareToIgnoreCase(o1) == 0)) return 0;
 
-																															// o1
-																															// and
-																															// o2
-																															// in
-																															// kanas
-																															// (one
-																															// in
-																															// hiragana,
-																															// the
-																															// other
-																															// in
-																															// katakana),
-																															// we
-																															// assume
-																															// it
-																															// is
-																															// not
-																															// ok.
-
-																															// no
-																															// condition
-																															// met,
-																															// return
-																															// natural
-																															// comparison
-																															// result.
+																															// o1 and o2 in kanas (one in hiragana, the other in katakana),
+																															// we assume it is not ok.
+																															// no condition met, return natural comparison result.
 																															return natural;
 																														}
 																													};
 
 	/**
-	 * String comparator like STRING_COMPARATOR_IgnoreCase_AllowRomajiKana with
-	 * punctuation tolerance, the comparator first remove all punctuation and
-	 * then compare using STRING_COMPARATOR_IgnoreCase_AllowRomajiKana
-	 * comparator.
+	 * String comparator like STRING_COMPARATOR_IgnoreCase_AllowRomajiKana with punctuation tolerance, the comparator first remove all punctuation and then compare using STRING_COMPARATOR_IgnoreCase_AllowRomajiKana comparator.
 	 * 
 	 * @see STRING_COMPARATOR_IgnoreCase_AllowRomajiKana
 	 */
@@ -737,82 +687,30 @@ public abstract class MyUtils
 																														@Override
 																														public int compare(String o1, String o2)
 																														{
-																															// Get
-																															// o1
-																															// without
-																															// any
-																															// punctuation.
-																															o1 = replaceAll(replaceAll(o1, tKanaPunc, ""), tRomaPunc, ""); //$NON-NLS-1$ //$NON-NLS-2$
+																															// Get o1 without any punctuation.
+																															String wo1 = replaceAll(replaceAll(o1, tKanaPunc, ""), tRomaPunc, ""); //$NON-NLS-1$ //$NON-NLS-2$
 
-																															// Get
-																															// o2
-																															// without
-																															// any
-																															// punctuation.
-																															o2 = replaceAll(replaceAll(o2, tKanaPunc, ""), tRomaPunc, ""); //$NON-NLS-1$ //$NON-NLS-2$
+																															// Get o2 without any punctuation.
+																															String wo2 = replaceAll(replaceAll(o2, tKanaPunc, ""), tRomaPunc, ""); //$NON-NLS-1$ //$NON-NLS-2$
 
-																															return STRING_COMPARATOR_IgnoreCase_AllowRomajiKana.compare(o1, o2);
+																															if (wo1.isEmpty()) wo1 = o1;
+																															if (wo2.isEmpty()) wo2 = o2;
+
+																															return STRING_COMPARATOR_IgnoreCase_AllowRomajiKana.compare(wo1, wo2);
 																														}
 																													};
 
 	/**
-	 * String comparator which support optional ending element (marked with
-	 * braces '(', ')' ). ex: mana(bu) will match "mana" and "manabu". Warning,
-	 * this support only one optional element (only one couple of parenthesis).
+	 * String comparator which support optional ending element (marked with braces '(', ')' ). ex: mana(bu) will match "mana" and "manabu". Warning, this support only one optional element (only one couple of parenthesis).
 	 */
 	public static final Comparator<String>	STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd	= new Comparator<String>()
 																													{
 																														/**
-																														 * Return
-																														 * s
-																														 * string
-																														 * without
-																														 * the
-																														 * last ( )
-																														 * marked
-																														 * substring.
-																														 * If
-																														 * the
-																														 * entire
-																														 * string
-																														 * is
-																														 * between
-																														 * only
-																														 * one
-																														 * couple
-																														 * of ( ),
-																														 * then
-																														 * the
-																														 * string
-																														 * without ( )
-																														 * is
-																														 * returned
-																														 * (not
-																														 * empty
-																														 * string).
+																														 * Return s string without the last ( ) marked substring. If the entire string is between only one couple of ( ), then the string without ( ) is returned (not empty string).
 																														 * 
-																														 * @param
-																														 * s
-																														 * String
-																														 * to
-																														 * work
-																														 * on.
-																														 * @return s
-																														 *         string
-																														 *         without
-																														 *         the
-																														 *         last ( )
-																														 *         marked
-																														 *         substring,
-																														 *         or
-																														 *         s
-																														 *         without ( )
-																														 *         if
-																														 *         the
-																														 *         whole
-																														 *         string
-																														 *         is
-																														 *         between ( ).
+																														 * @param s
+																														 *            String to work on.
+																														 * @return s string without the last ( ) marked substring, or s without ( ) if the whole string is between ( ).
 																														 */
 																														private String withoutEndingBracedSubstring(String s)
 																														{
@@ -829,22 +727,16 @@ public abstract class MyUtils
 																														@Override
 																														public int compare(String o1, String o2)
 																														{
-																															int natural = STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation
-																																	.compare(o1, o2);
+																															int natural = STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(o1, o2);
 																															if (natural == 0) return 0;
 
 																															String wo1 = withoutEndingBracedSubstring(o1);
-
-																															if (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(wo1,
-																																	o2) == 0) return 0;
+																															if (( !wo1.isEmpty()) && (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(wo1, o2) == 0)) return 0;
 
 																															String wo2 = withoutEndingBracedSubstring(o2);
+																															if (( !wo2.isEmpty()) && (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(o1, wo2) == 0)) return 0;
 
-																															if (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(o1,
-																																	wo2) == 0) return 0;
-
-																															if (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(wo1,
-																																	wo2) == 0) return 0;
+																															if (( !wo1.isEmpty()) && ( !wo2.isEmpty()) && (STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation.compare(wo1, wo2) == 0)) return 0;
 
 																															return natural;
 																														}
@@ -871,8 +763,7 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Replace all searches substring in the subject with it's corresponding
-	 * replace string.<br>
+	 * Replace all searches substring in the subject with it's corresponding replace string.<br>
 	 * <code>subject = subject.replace(searches[i], replaces[i]);</code>
 	 * 
 	 * @param subject
@@ -939,26 +830,26 @@ public abstract class MyUtils
 	{
 
 		private static final long	serialVersionUID	= 1L;
-		
+
 		private static final Component getFirstComponent(Window window)
 		{
 			if (window == null) return null;
-			
+
 			if (window.getComponentCount() <= 0)
 			{
 				JButton jButton = new JButton("FAKE");
 				jButton.setVisible(true);
 				window.add(jButton, BorderLayout.CENTER);
 			}
-			
+
 			return window.getComponent(0);
 		}
-		
+
 		public MyModalFrame(Window owner, boolean modal)
 		{
 			super(owner, getFirstComponent(owner), modal);
 		}
-		
+
 	}
 
 	public static interface DoItToThisComponent
@@ -1006,6 +897,7 @@ public abstract class MyUtils
 		Component[] roots = {rootComponent};
 		return getUIMenu(roots);
 	}
+
 	public static JMenu getUIMenu(final Component[] rootComponents)
 	{
 		final HashMap<String, String> vLFclass = listLookAndFeels();
@@ -1032,7 +924,7 @@ public abstract class MyUtils
 						e1.printStackTrace();
 					}
 
-					for(Component c : rootComponents)
+					for (Component c : rootComponents)
 					{
 						doItToAllSubComponents(c, DO_UPDATEUI_REFRESH);
 					}
@@ -1044,5 +936,12 @@ public abstract class MyUtils
 		}
 
 		return jMenuUI;
+	}
+	
+	public static void refreshComponent(Component c)
+	{
+		c.invalidate();
+		c.validate();
+		c.repaint();
 	}
 }

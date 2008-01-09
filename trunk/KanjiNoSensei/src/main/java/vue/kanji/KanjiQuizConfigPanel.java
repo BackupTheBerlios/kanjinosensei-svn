@@ -1,7 +1,5 @@
 package vue.kanji;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -29,6 +27,16 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 {
+
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -95,11 +103,6 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(400, 150));
 			this.setMinimumSize(new java.awt.Dimension(600, 300));
-			this.addComponentListener(new ComponentAdapter() {
-				public void componentShown(ComponentEvent evt) {
-					miseAJourForm();
-				}
-			});
 			{
 				jLabelTitre = new JLabel();
 				this.add(jLabelTitre, new CellConstraints("1, 1, 1, 1, right, default"));
@@ -141,7 +144,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 							break;
 							
 							default:
-								jCheckBoxSaisieReponseComplete.setEnabled(true);
+								jCheckBoxSaisieReponseComplete.setEnabled(false);
 						}
 					}
 				});
@@ -242,6 +245,15 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 			jCheckBoxSaisieReponseComplete.setText("Réponse complète");
 		}
 		return jCheckBoxSaisieReponseComplete;
+	}
+
+	/* (non-Javadoc)
+	 * @see vue.VueElement.QuizConfigPanel#resetDisplay()
+	 */
+	@Override
+	public void resetDisplay()
+	{
+		miseAJourForm();
 	}
 
 }

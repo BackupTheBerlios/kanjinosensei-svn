@@ -6,6 +6,7 @@ package vue.kanji;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -162,11 +163,13 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jPanelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jPanelCodeUTF8.setSize(100, 100);
 			jPanelCodeUTF8.setPreferredSize(new Dimension(100, 0));
-			jPanelCodeUTF8.addMouseListener(new MouseAdapter()
+			jLabelCodeUTF8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			jLabelCodeUTF8.addMouseListener(new MouseAdapter()
 			{
 				public void mouseClicked(java.awt.event.MouseEvent e)
 				{
-					synchronized (jPanelCodeUTF8)
+					MyUtils.trace("jLabelCodeUTF8.mouseClicked");
+					synchronized (jLabelCodeUTF8)
 					{
 						if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 2))
 						{
@@ -176,7 +179,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 							Point loc = e.getLocationOnScreen();
 							loc.translate(20, 20);
 							imageTraceDialog.setLocation(loc);
-							MyUtils.trace("jPanelCodeUTF8 double clicked should display imageTraceDialog");
+							MyUtils.trace("jLabelCodeUTF8 double clicked should display imageTraceDialog");
 							
 							imageTraceDialog.setVisible(true);
 						}

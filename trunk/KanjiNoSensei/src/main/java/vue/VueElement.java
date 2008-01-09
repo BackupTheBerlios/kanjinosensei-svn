@@ -150,6 +150,12 @@ public abstract class VueElement
 		 * Valide le formulaire de config.
 		 */
 		public void valider();
+		
+		/**
+		 * Redéfini le formulaire avec les valeurs en cours.
+		 */
+		public void resetDisplay();
+		
 	};
 
 	public static class NoAffException extends Exception
@@ -399,7 +405,7 @@ public abstract class VueElement
 				else
 				{
 					// All inputs must be valid answers
-					result = reponses.containsAll(reponses, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd);
+					result = reponses.containsAll(saisie, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd);
 				}
 				
 				vue.getApp().validerReponseQuiz(result, false);

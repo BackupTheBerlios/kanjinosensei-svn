@@ -9,7 +9,7 @@ TODO List
 	
 	Workflow passé et en cours.
 	
-	* Ajouter la tolérence de sasie des réponses sous forme d'option aux panneaux de config (générale ? kanji ?)
+	* Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.
 	
 	* Implémenter les méthodes de saisies "liste de choix".
 	
@@ -28,5 +28,7 @@ TODO List
 	* Avoir la possibilité, lors d'un quiz, de jouer les phrases d'une leçon dans l'ordre.
 	
 Bugs connus
+
+	* Détection de version de la JRE: si la version de la JRE n'est pas celle attendue, le programme crash avant de pouvoir faire le contrôle et afficher un message d'erreur décent.
 	
 	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.

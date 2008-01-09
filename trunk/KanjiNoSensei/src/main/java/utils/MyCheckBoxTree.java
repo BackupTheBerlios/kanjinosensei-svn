@@ -15,30 +15,34 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 /**
- * This class represent a Tree view with checkbox on each node.
- * It support adding node by string path, tree listener to fire on tree change (item [un]checked) and automatic subs [de]selection.
+ * This class represent a Tree view with checkbox on each node. It support adding node by string path, tree listener to fire on tree change (item [un]checked) and automatic subs [de]selection.
+ * 
  * @author Escallier Pierre
  */
 public class MyCheckBoxTree extends CheckboxTree
 {
 	/** Serialization version. */
 	private static final long				serialVersionUID	= 1L;
-	
+
 	/** Allowed separator for nodes paths. */
-	private static final String[]			NODEPATH_SEPARATORS	= {">", ";", "/", "\"", ":", ","}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-	
+	private static final String[]			NODEPATH_SEPARATORS	= {">", ";", "/", "\"", ":", ","};	//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+
 	/** Root node. */
 	private final DefaultMutableTreeNode	root;
-	
+
 	/** Current tree listener. */
 	private MyCheckBoxTreeListener			listener			= null;
-	
+
+	/** State flag. */
+	private Boolean							isTreeStable		= true;
+
 	/**
-	 * Add a node given by its path, to the current tree.
-	 * All non existing parents nodes are created.
-	 * If the node already exists, this method only update the selection value.
-	 * @param completeNodePath New node given by its full node path.
-	 * @param isSelected Selection state for the given node.
+	 * Add a node given by its path, to the current tree. All non existing parents nodes are created. If the node already exists, this method only update the selection value.
+	 * 
+	 * @param completeNodePath
+	 *            New node given by its full node path.
+	 * @param isSelected
+	 *            Selection state for the given node.
 	 */
 	public void addNode(String completeNodePath, boolean isSelected)
 	{
@@ -61,11 +65,15 @@ public class MyCheckBoxTree extends CheckboxTree
 
 	/**
 	 * Private recursive method used to add Node.
-	 * @param nodesLabels Array of nodes in the path.
-	 * @param parentNode Curent parent node.
-	 * @param isSelected Is the path selected.
+	 * 
+	 * @param nodesLabels
+	 *            Array of nodes in the path.
+	 * @param parentNode
+	 *            Curent parent node.
+	 * @param isSelected
+	 *            Is the path selected.
 	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	private void addNode(String[] nodesLabels, DefaultMutableTreeNode parentNode, boolean isSelected)
 	{
 		if (nodesLabels.length == 0)
@@ -78,7 +86,7 @@ public class MyCheckBoxTree extends CheckboxTree
 			{
 				getCheckingModel().removeCheckingPath(new TreePath(parentNode.getPath()));
 			}
-			
+
 			return;
 		}
 
@@ -86,7 +94,7 @@ public class MyCheckBoxTree extends CheckboxTree
 		while (children.hasMoreElements())
 		{
 			DefaultMutableTreeNode sub = children.nextElement();
-			
+
 			if (sub.toString().compareToIgnoreCase(nodesLabels[0]) == 0)
 			{
 				nodesLabels = MyUtils.offsetObjectElements(nodesLabels, 1);
@@ -103,8 +111,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	}
 
 	/**
-	 * Constructor.
-	 * Create the CheckBoxTree with a default tree root.
+	 * Constructor. Create the CheckBoxTree with a default tree root.
 	 */
 	public MyCheckBoxTree()
 	{
@@ -153,7 +160,9 @@ public class MyCheckBoxTree extends CheckboxTree
 
 	/**
 	 * Private method called to fire {@link MyCheckBoxTreeListener#treeNodesChanged(utils.MyCheckBoxTree.MyCheckBoxTreeEvent)} on listener.
-	 * @param path The path who changed.
+	 * 
+	 * @param path
+	 *            The path who changed.
 	 */
 	private void processTreeNodesChanged(TreePath path)
 	{
@@ -174,7 +183,7 @@ public class MyCheckBoxTree extends CheckboxTree
 			item = path.getLastPathComponent().toString();
 			selected = (getCheckingModel().isPathChecked(path));
 
-			MyCheckBoxTreeEvent chkEvent = new MyCheckBoxTreeEvent(completeNodePath, item, selected);
+			MyCheckBoxTreeEvent chkEvent = new MyCheckBoxTreeEvent(completeNodePath, item, selected, isTreeStable);
 			listener.treeNodesChanged(chkEvent);
 
 		}
@@ -182,7 +191,9 @@ public class MyCheckBoxTree extends CheckboxTree
 
 	/**
 	 * Set the TreeListener, there can be only one tree listener, the previous one is automaticaly unbind.
-	 * @param l Listener object to bind to this CheckBoxTree.
+	 * 
+	 * @param l
+	 *            Listener object to bind to this CheckBoxTree.
 	 */
 	public void setTreeListener(MyCheckBoxTreeListener l)
 	{
@@ -190,58 +201,73 @@ public class MyCheckBoxTree extends CheckboxTree
 	}
 
 	/**
-	 * Event class used to fire {@link MyCheckBoxTreeListener} methods.
-	 * This event provide item path wich fire the event, its label and selection state.
+	 * Event class used to fire {@link MyCheckBoxTreeListener} methods. This event provide item path wich fire the event, its label and selection state.
+	 * 
 	 * @author Escallier Pierre
 	 */
 	public static class MyCheckBoxTreeEvent
 	{
 		/** Item complete path. */
 		public final String		itemPath;
-		
+
 		/** Item label. */
 		public final String		itemLabel;
-		
+
 		/** Item selection state. */
 		public final boolean	itemIsSelected;
 
+		/** When event was processed Tree was in stable state, this mean it is not processing a setSubTreeSelected() or some kind of work. */
+		public final boolean	isTreeStable;
+
 		/**
 		 * Event constructor, needs all fields.
-		 * @param itemPath Item full path.
-		 * @param itemLabel Item label.
-		 * @param itemIsSelected Item selection state.
+		 * 
+		 * @param itemPath
+		 *            Item full path.
+		 * @param itemLabel
+		 *            Item label.
+		 * @param itemIsSelected
+		 *            Item selection state.
 		 */
-		MyCheckBoxTreeEvent(String itemPath, String itemLabel, boolean itemIsSelected)
+		MyCheckBoxTreeEvent(String itemPath, String itemLabel, boolean itemIsSelected, boolean isTreeStable)
 		{
 			this.itemPath = itemPath;
 			this.itemLabel = itemLabel;
 			this.itemIsSelected = itemIsSelected;
+			this.isTreeStable = isTreeStable;
 		}
 	}
 
 	/**
 	 * Listener interface for MyCheckBoxTree.
+	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface MyCheckBoxTreeListener
 	{
 		/**
 		 * Fire when a tree node has changed (check state changed).
-		 * @param e MyCheckBoxTreeEvent providing usefull informations.
+		 * 
+		 * @param e
+		 *            MyCheckBoxTreeEvent providing usefull informations.
 		 */
 		void treeNodesChanged(MyCheckBoxTreeEvent e);
 	}
-	
+
 	/**
 	 * Set the selection state of all the given path subnodes.
-	 * @param path Parent path from where to set the selection state.
-	 * @param selected Selection state to set.
-	 * @param subLevel Maximum sublevel depth to visit.
+	 * 
+	 * @param path
+	 *            Parent path from where to set the selection state.
+	 * @param selected
+	 *            Selection state to set.
+	 * @param subLevel
+	 *            Maximum sublevel depth to visit.
 	 */
-	public void setSubTreeSelected(TreePath path, boolean selected, int subLevel)
+	public synchronized void setSubTreeSelected(TreePath path, boolean selected, int subLevel)
 	{
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-		
+
 		checkSubsFrom(node, selected, node.getLevel(), subLevel);
 		treeDidChange();
 		repaint();
@@ -249,18 +275,45 @@ public class MyCheckBoxTree extends CheckboxTree
 
 	/**
 	 * Private recursive method used to set subnodes selection state.
-	 * @param node Current visited node.
-	 * @param parentState Current parent selection state.
-	 * @param level Current depth level.
-	 * @param subLevel Maxmimum sublevel depth to visit.
+	 * 
+	 * @param node
+	 *            Current visited node.
+	 * @param parentState
+	 *            Current parent selection state.
+	 * @param level
+	 *            Current depth level.
+	 * @param subLevel
+	 *            Maxmimum sublevel depth to visit.
 	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	private void checkSubsFrom(DefaultMutableTreeNode node, boolean parentState, int level, int subLevel)
 	{
 		TreePath path = new TreePath(node.getPath());
-		
+
 		if (subLevel < 0) subLevel = Integer.MAX_VALUE;
 
+		// If this is parent call, we mark this tree as UnStable (because we will scan and change all the sub tree).
+		if (node.getLevel() == level)
+		{
+			isTreeStable = false;
+		}
+
+		if ((node.getLevel() - level) <= subLevel)
+		{
+			Enumeration<DefaultMutableTreeNode> children = node.children();
+			while (children.hasMoreElements())
+			{
+				DefaultMutableTreeNode sub = children.nextElement();
+				checkSubsFrom(sub, parentState, level, subLevel);
+			}
+		}
+		
+		// If this is parent call, then we can mark this tree Stable again just BEFORE to fire the last "nodesChange" event.
+		if (node.getLevel() == level)
+		{
+			isTreeStable = true;
+		}
+		
 		if (parentState)
 		{
 			getCheckingModel().addCheckingPath(path);
@@ -270,20 +323,11 @@ public class MyCheckBoxTree extends CheckboxTree
 			getCheckingModel().removeCheckingPath(path);
 		}
 		
-		/* Useless untill getCheckingModel().add/removeCheckingPath() fire treeModelListener.treeNodesChanged.
-		processTreeNodesChanged(path);
-		*/
-
-		if ((node.getLevel() - level) > subLevel) return;
-
-		Enumeration<DefaultMutableTreeNode> children = node.children();
-		while (children.hasMoreElements())
-		{
-			DefaultMutableTreeNode sub = children.nextElement();
-			checkSubsFrom(sub, parentState, level, subLevel);
-		}
+		/*
+		 * Useless untill getCheckingModel().add/removeCheckingPath() fire treeModelListener.treeNodesChanged. processTreeNodesChanged(path);
+		 */
 	}
-	
+
 	/**
 	 * Remove all root subnodes.
 	 */
