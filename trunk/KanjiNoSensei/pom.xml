@@ -171,16 +171,16 @@
 
 								<!-- 
 									mvn install:install-file -DgroupId=GROUPID -DartifactId=ARTIFACTID -Dversion=VERSION -Dpackaging=jar -Dfile=/path/to/file
-								TODO: Générer un script capable d'installer toutes les libs sur un environnement maven vierge.
-								Comment avoir une ANT pour "FOR" !?
-
-								<echo
+									TODO: Générer un script capable d'installer toutes les libs sur un environnement maven vierge.
+									Comment avoir une ANT pour "FOR" !?
+									
+									<echo
 									message="The first five letters of the alphabet are:" />
-								<ac:for list="a,b,c,d,e" param="letter">
+									<ac:for list="a,b,c,d,e" param="letter">
 									<ac:sequential>
-										<echo>Letter @{letter}</echo>
+									<echo>Letter @{letter}</echo>
 									</ac:sequential>
-								</ac:for>
+									</ac:for>
 								-->
 							</tasks>
 						</configuration>
@@ -264,6 +264,9 @@
 					<locales>fr</locales>
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
+					<templateFile>
+						${basedir}/src/site/site.vm
+					</templateFile>
 				</configuration>
 			</plugin>
 			<plugin>

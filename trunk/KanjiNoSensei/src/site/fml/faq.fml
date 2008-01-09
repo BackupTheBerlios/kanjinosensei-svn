@@ -1,13 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs title="FAQ Kanji No Sensei">
-
-	<part id="a propos">
-		<faq>
+<faqs
+	xsi:schemaLocation="http://maven.apache.org/maven-1.x/plugins/faq/faq.xsd"
+	title="FAQ Kanji No Sensei" toplink="true">
+	<part id="partIdInstall">
+		<title>Installation</title>
+		<faq id="faqIdDecompression">
+			<question>
+				Comment on fait une fois qu'on a téléchargé le fichier ?
+				C'est quoi *.7z ?
+			</question>
+			<answer>
+				Pour décompresser le fichier, il faut utiliser l'outil
+				<a href="http://www.7-zip.org/fr/" target="_blank">
+					7-zip
+				</a>
+				, logiciel gratuit et libre disponible pour la pluspart
+				des OS.
+				<br />
+				C'est un des rares formats de compressions qui ne pose
+				pas de problèmes avec les noms de fichiers contenants
+				des kanjis, et qui soit disponible sur autant de
+				plateforme.
+			</answer>
+		</faq>
+		<faq id="faqIdLancement">
+			<question>
+				Comment je fais pour lancer l'application ?
+			</question>
+			<answer>
+				Une fois décompressé, il suffit de lancer le fichier
+				"run.bat" (windows) ou "run.sh" (unix-like) selon votre
+				système.
+				<p />
+				Si le logiciel ne se lance pas, vérifiez que vous avez
+				bien
+				<a href="http://www.java.com/" target="_blank">Java</a>
+				(JRE) en version 1.6 ou suppérieure.
+			</answer>
+		</faq>
+		<faq id="faqIdJRE">
+			<question>Java (JRE) 1.6 ?</question>
+			<answer>
+				KanjiNoSensei est écrit en JAVA, il nécéssite donc que
+				l'environnement JAVA soit installé. Il vous est
+				conseillé de télécharger la dernière version disponible
+				directement sur le site officiel :
+				<a href="http://www.java.com/" target="_blank">
+					http://www.java.com/
+				</a>
+				<p />
+			</answer>
+		</faq>
+	</part>
+	<part id="partIdUtilisation">
+		<title>Utilisation</title>
+		<faq id="faqIdUtilisation">
 			<question>Comment ça marche ?</question>
 			<answer>
-				<p>
-					La doc est en cours de rédaction.
-				</p>
+				La doc est en cours de rédaction.
+				<p />
 			</answer>
 		</faq>
 	</part>

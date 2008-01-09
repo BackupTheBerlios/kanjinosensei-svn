@@ -7,12 +7,12 @@
 
 Présentation brève
 
-	Kanji no Sensei est un moteur de flashcard amélioré dont le but est d'aider l'apprentissage des kanjis et du vocabulaire de la langue japonaise.
+	Kanji no Sensei est un moteur de flashcard amélioré dont le but est d'aider à l'apprentissage des kanjis et du vocabulaire de la langue japonaise.
 	Un logiciel dit "flashcard" est un logiciel qui se propose d'aider les utilisateurs à étudier, apprendre ou réviser des connaissances, celles-ci étant généralement scolaires.
 	L'étude se fait par des exercices interactifs et souvent répétitifs qui doivent permettre à l'utilisateur de mémoriser les connaissances.
 	
 	Ce type de logiciel est dont spécialement adapté pour les connaissances à aquérir par le "par coeur", et l'exercice de base pour celà est le Quiz. 
-	Le Quiz permet d'interroger l'utilisateur sur les connaissances à apprendre, de façon aléatoire et automatique de sorte que les connaissances soit assimilées naturellement à force de les répéter.
+	Le Quiz permet d'interroger l'utilisateur sur les connaissances à apprendre, de façon aléatoire et automatique de sorte que les connaissances soient assimilées naturellement à force de les répéter.
 
 Un moteur de flashcard évolutif
 
@@ -39,4 +39,4 @@ Un moteur de flashcard évolutif
 Contenu pour l'apprentissage du Japonais
 
 	Kanji no Sensei est développé de sorte que le moteur soit découplé du contenu (grace à un systeme de plugins), mais un contenu de base pour l'apprentissage de kanjis et de vocabulaire japonais est constitué en parallèle.
-	Ce contenu se base sur les cours délivrés en section LEA à l'Université Toulouse le Mirail.
+	Ce contenu se base sur les cours délivrés en section LEA de l'Université Toulouse le Mirail.
