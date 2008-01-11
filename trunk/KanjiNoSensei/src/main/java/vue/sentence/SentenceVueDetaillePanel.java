@@ -19,6 +19,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import metier.Dictionary;
+import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Word;
@@ -104,12 +105,12 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 				{
 					jLabelLecture = new JLabel();
 					jPanelNorth.add(jLabelLecture, BorderLayout.WEST);
-					jLabelLecture.setText("Lecture : neko");
+					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
 				}
 				{
 					jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSound(), false);
 					jPanelNorth.add(jButtonJouerSon, BorderLayout.EAST);
-					jButtonJouerSon.setText("Lire");
+					jButtonJouerSon.setText(Messages.getString("SentenceVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
 					jButtonJouerSon.setSize(35, 20);
 				}
 			}
@@ -126,12 +127,12 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 				{
 					jLabelSignifications = new JLabel();
 					jPanelSouth.add(jLabelSignifications);
-					jLabelSignifications.setText("Significations : chat, ...");
+					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$
 				}
 				{
 					jLabelThemes = new JLabel();
 					jPanelSouth.add(jLabelThemes);
-					jLabelThemes.setText("Thèmes : phrase, patin, coufin");
+					jLabelThemes.setText("Thèmes : phrase, patin, coufin"); //$NON-NLS-1$
 				}
 			}
 			{
@@ -146,8 +147,8 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 				{
 					jTextFieldPhrase = new JTextField();
 					jPanelCentre.add(jTextFieldPhrase);
-					jTextFieldPhrase.setText("\u7f8e\u5c11\u5973");
-					jTextFieldPhrase.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44));
+					jTextFieldPhrase.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
+					jTextFieldPhrase.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
 					jTextFieldPhrase.setHorizontalAlignment(SwingConstants.CENTER);
 					jTextFieldPhrase.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					jTextFieldPhrase.setEditable(false);
@@ -159,25 +160,25 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 							String sel = jTextFieldPhrase.getSelectedText();
 							if ((sel != null) && (!sel.isEmpty()))
 							{
-								System.out.println("Selection '"+sel+"'");
+								System.out.println("Selection '"+sel+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 								Dictionary dictionnaire = vue.getApp().getDictionnaire();
 								
-								Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey());
+								Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 								
 								if (e == null)
 								{
-									e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey());
+									e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 								}
 								
 								if (e == null)
 								{
-									System.err.println("Le mot '"+sel+"' et le kanji '" + sel.charAt(0) + "' sont absent du dictionnaire");
+									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorMissingWordOrKanji") + " : \"" + sel.charAt(0) + "("+sel.substring(1)+")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									return;
 								}
 					
 								if ((!Kanji.class.isInstance(e)) && (!Word.class.isInstance(e)))
 								{
-									System.err.println("La sélection correspond à un élément qui n'est ni un mot ni un kanji : "+e.toString());
+									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorSelectionIsNotCorrect")+ " : "+e.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 									return;
 								}
 								
@@ -188,11 +189,11 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 								}
 								catch (Exception e1)
 								{
-									System.err.println("Impossible de créer la vue pour l'élément sélectionné : \""+e.toString()+"\"\tMessage : "+e1.getMessage());
+									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorViewGeneration")+e.toString()+"\"\tMessage : "+e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 									return;
 								}
 								
-								JDialog motkanjiDetail = new JDialog((JDialog) null, "Détail "+e.getClass().getSimpleName()+" '"+e.toString()+"'", true);
+								JDialog motkanjiDetail = new JDialog((JDialog) null, Messages.getString("SentenceVueDetaillePanel.Detail")+" : ("+Messages.getString(e.getClass().getSimpleName())+") \""+e.toString()+"\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 								motkanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
 								motkanjiDetail.pack();
 								motkanjiDetail.setVisible(true);
@@ -212,11 +213,11 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	private void dynamicInitialize()
 	{
 		Sentence phrase = vue.getPhrase();
-		jLabelLecture.setText("Lecture : " + vue.toRomajiIfNeeded(phrase.getLecture()));
+		jLabelLecture.setText(Messages.getString("SentenceVueDetaillePanel.LabelLecture") + " : " + vue.toRomajiIfNeeded(phrase.getLecture())); //$NON-NLS-1$ //$NON-NLS-2$
 		jTextFieldPhrase.setText(phrase.getSentence());
 		jTextFieldPhrase.setColumns(jTextFieldPhrase.getText().length() * 2);
-		jLabelSignifications.setText("Significations : " + phrase.getSignifications());
-		jLabelThemes.setText("Thèmes : " + phrase.getThemes());
+		jLabelSignifications.setText(Messages.getString("SentenceVueDetaillePanel.LabelSignifications") + " : " + phrase.getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelThemes.setText(Messages.getString("SentenceVueDetaillePanel.LabelThemes") + " : "+ phrase.getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	// </NoJigloo>

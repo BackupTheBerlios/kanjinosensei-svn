@@ -26,6 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
+import metier.Messages;
+
 import utils.MyUtils;
 import vue.JPanelImageBg;
 import vue.VueElement.QuizQuestionPanel;
@@ -122,7 +124,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		this.setPreferredSize(new Dimension(0, vueHeight));
 		this.setSize(0, vueHeight);
 
-		getJPanelCodeUTF8().setFont(new Font("SimSun", Font.PLAIN, vueHeight));
+		getJPanelCodeUTF8().setFont(new Font("SimSun", Font.PLAIN, vueHeight)); //$NON-NLS-1$
 		jPanelCodeUTF8.setPreferredSize(new java.awt.Dimension(100, 100));
 
 		miseAJourInfos();
@@ -131,11 +133,10 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	protected void miseAJourInfos()
 	{
 		jLabelCodeUTF8.setText(vue.getKanji().getCodeUTF8().toString());
-		jLabelLecturesChinoises.setText("Lectures Chinoises : " + vue.toRomajiIfNeeded(vue.getKanji().getLecturesON()));
-		jLabelLecturesJaponaises.setText("Lectures Japonaises : "
-				+ vue.toRomajiIfNeeded(vue.getKanji().getLecturesKUN()));
-		jLabelSignifications.setText("Significations : " + vue.getKanji().getSignifications());
-		jLabelThemes.setText("Thèmes : " + vue.getKanji().getThemes());
+		jLabelLecturesChinoises.setText(Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : " + vue.toRomajiIfNeeded(vue.getKanji().getLecturesON())); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelLecturesJaponaises.setText(Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : " + vue.toRomajiIfNeeded(vue.getKanji().getLecturesKUN())); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelSignifications.setText(Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : "+ vue.getKanji().getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelThemes.setText(Messages.getString("KanjiVueDetaillePanel.LabelThemes") + " : " + vue.getKanji().getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		setVisible(false);
 		setVisible(true);
@@ -153,10 +154,10 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		if (jPanelCodeUTF8 == null)
 		{
 			jLabelCodeUTF8 = new JLabel();
-			jLabelCodeUTF8.setText("猫");
+			jLabelCodeUTF8.setText("猫"); //$NON-NLS-1$
 			jLabelCodeUTF8.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelCodeUTF8.setPreferredSize(new java.awt.Dimension(100, 100));
-			jLabelCodeUTF8.setFont(new Font("Kochi Mincho", Font.PLAIN, 98));
+			jLabelCodeUTF8.setFont(new Font("Kochi Mincho", Font.PLAIN, 98)); //$NON-NLS-1$
 			jLabelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jPanelCodeUTF8 = new JPanel();
 			jPanelCodeUTF8.setLayout(new BorderLayout());
@@ -168,7 +169,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			{
 				public void mouseClicked(java.awt.event.MouseEvent e)
 				{
-					MyUtils.trace("jLabelCodeUTF8.mouseClicked");
+					MyUtils.trace("jLabelCodeUTF8.mouseClicked"); //$NON-NLS-1$
 					synchronized (jLabelCodeUTF8)
 					{
 						if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 2))
@@ -179,7 +180,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 							Point loc = e.getLocationOnScreen();
 							loc.translate(20, 20);
 							imageTraceDialog.setLocation(loc);
-							MyUtils.trace("jLabelCodeUTF8 double clicked should display imageTraceDialog");
+							MyUtils.trace("jLabelCodeUTF8 double clicked should display imageTraceDialog"); //$NON-NLS-1$
 							
 							imageTraceDialog.setVisible(true);
 						}
@@ -231,23 +232,23 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		if (jPanelInfos == null)
 		{
 			jLabelThemes = new JLabel();
-			jLabelThemes.setText("Thèmes");
+			jLabelThemes.setText(Messages.getString("KanjiVueDetaillePanel.LabelThemes")); //$NON-NLS-1$
 			jLabelThemes.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelThemes.setVerticalAlignment(SwingConstants.TOP);
 			jLabelThemes.setPreferredSize(new Dimension(0, 0));
 			jLabelThemes.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jLabelSignifications = new JLabel();
-			jLabelSignifications.setText("Significations");
+			jLabelSignifications.setText(Messages.getString("KanjiVueDetaillePanel.LabelSignifications")); //$NON-NLS-1$
 			jLabelSignifications.setPreferredSize(new Dimension(0, 0));
 			jLabelSignifications.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelSignifications.setVerticalAlignment(SwingConstants.TOP);
 			jLabelSignifications.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jLabelLecturesJaponaises = new JLabel();
-			jLabelLecturesJaponaises.setText("Lectures Japonaises");
+			jLabelLecturesJaponaises.setText(Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures")); //$NON-NLS-1$
 			jLabelLecturesJaponaises.setVerticalAlignment(SwingConstants.TOP);
 			jLabelLecturesJaponaises.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelLecturesChinoises = new JLabel();
-			jLabelLecturesChinoises.setText("Lectures Chinoises");
+			jLabelLecturesChinoises.setText(Messages.getString("KanjiVueDetaillePanel.LabelONLectures")); //$NON-NLS-1$
 			jLabelLecturesChinoises.setPreferredSize(new java.awt.Dimension(600, 25));
 			jLabelLecturesChinoises.setVerticalAlignment(SwingConstants.TOP);
 			jLabelLecturesChinoises.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -277,10 +278,10 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		if (ImgTraceDialog == null)
 		{
-			MyUtils.trace("[1] ImgTraceDialog creation");
+			MyUtils.trace("[1] ImgTraceDialog creation"); //$NON-NLS-1$
 			ImgTraceDialog = new JDialog();
 			ImgTraceDialog.setSize(new Dimension(0, 0));
-			ImgTraceDialog.setTitle("Ordre des traits");
+			ImgTraceDialog.setTitle(Messages.getString("KanjiVueDetaillePanel.LabelStrokesOrder")); //$NON-NLS-1$
 			ImgTraceDialog.setModal(true);
 			ImgTraceDialog.setMinimumSize(new Dimension(100, 100));
 			ImgTraceDialog.setPreferredSize(new Dimension(0, 0));
@@ -294,12 +295,12 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 				@Override
 				public void componentShown(ComponentEvent e)
 				{
-					MyUtils.trace("[4] ImgTraceDialog < componentShown");
-					MyUtils.assertTrue((ImgTraceDialog.getContentPane() == getImgTraceContentPane()) && (ImgTraceDialog.getContentPane() != null), "ImgTraceDialog unexpected contentPane");
+					MyUtils.trace("[4] ImgTraceDialog < componentShown"); //$NON-NLS-1$
+					MyUtils.assertTrue((ImgTraceDialog.getContentPane() == getImgTraceContentPane()) && (ImgTraceDialog.getContentPane() != null), "ImgTraceDialog unexpected contentPane"); //$NON-NLS-1$
 
 					Dimension d = getJPanelImageBg().getImageDimension();
 					MyUtils.assertFalse((d.width <= 10) || (d.height <= 10),
-							"ImgTraceDialog.windowOpened : incorrect image dimension");
+							"ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
 
 					ImgTraceDialog.setPreferredSize(new Dimension(d.width + 20, d.height + 30));
 					ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
@@ -309,8 +310,8 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 					ImgTraceContentPane.revalidate();
 					ImgTraceContentPane.setVisible(true);
 					
-					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isDisplayable(), "ContentPane not displayable");
-					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isVisible(), "ContentPane not visible");
+					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isDisplayable(), "ContentPane not displayable"); //$NON-NLS-1$
+					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isVisible(), "ContentPane not visible"); //$NON-NLS-1$
 					
 					super.componentShown(e);
 				}
@@ -330,7 +331,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		if (ImgTraceContentPane == null)
 		{
-			MyUtils.trace("[2] ImgTraceContentPane creation");
+			MyUtils.trace("[2] ImgTraceContentPane creation"); //$NON-NLS-1$
 			ImgTraceContentPane = new JPanel();
 			ImgTraceContentPane.setLayout(new BorderLayout());
 			ImgTraceContentPane.add(getJPanelImageBg(), BorderLayout.CENTER);

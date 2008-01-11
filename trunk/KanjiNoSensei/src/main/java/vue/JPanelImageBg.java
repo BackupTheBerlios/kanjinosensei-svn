@@ -15,6 +15,8 @@ import java.awt.image.ImageObserver;
 
 import javax.swing.JComponent;
 
+import metier.Messages;
+
 import utils.MyUtils;
 
 public class JPanelImageBg extends JComponent
@@ -48,7 +50,7 @@ public class JPanelImageBg extends JComponent
 
 	public JPanelImageBg(final String fileName, final eImageDisplayMode mode)
 	{
-		MyUtils.trace("[3.1] JPanelImageBg creation");
+		MyUtils.trace("[3.1] JPanelImageBg creation"); //$NON-NLS-1$
 
 		this.mode = mode;
 		this.fileName = fileName;
@@ -60,7 +62,7 @@ public class JPanelImageBg extends JComponent
 			@Override
 			public void componentShown(ComponentEvent e)
 			{
-				MyUtils.trace("[5] JPanelImageBg < componentShown");
+				MyUtils.trace("[5] JPanelImageBg < componentShown"); //$NON-NLS-1$
 
 				try
 				{
@@ -69,7 +71,7 @@ public class JPanelImageBg extends JComponent
 				}
 				catch (ImageLoadingException e1)
 				{
-					System.err.println("Erreur de chargement du fichier image '" + fileName + "' en mode " + mode);
+					System.err.println(Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \""+fileName + "\"\t(" + mode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 					thisPanel.mode = eImageDisplayMode.NONE;
 					// return;
 				}
@@ -82,7 +84,7 @@ public class JPanelImageBg extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		// <NoJigloo>
-		MyUtils.trace("[6] JPanelImageBg.paintComponent");
+		MyUtils.trace("[6] JPanelImageBg.paintComponent"); //$NON-NLS-1$
 
 		switch (this.mode)
 		{
@@ -110,7 +112,7 @@ public class JPanelImageBg extends JComponent
 		// <NoJigloo>
 		if (bufferedImage == null)
 		{
-			MyUtils.trace("[5.1] bufferedImage creation");
+			MyUtils.trace("[5.1] bufferedImage creation"); //$NON-NLS-1$
 
 			sourceImage = Toolkit.getDefaultToolkit().getImage(fileName);
 
@@ -139,30 +141,30 @@ public class JPanelImageBg extends JComponent
 				if (aborted || error)
 				{
 					mode = eImageDisplayMode.NONE;
-					throw new ImageLoadingException("Image loaing aborted : " + sourceImage.toString());
+					throw new ImageLoadingException(Messages.getString("JPanelImageBg.ExceptionLoadingImage") + " : \""+sourceImage.toString()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 
 			} while ( !complete);
 
 			int width = sourceImage.getWidth(this);
 			int height = sourceImage.getHeight(this);
-			MyUtils.assertFalse((width <= 10) || (height <= 10), "image dimension is small: (" + width + ";" + height
-					+ ")");
+			MyUtils.assertFalse((width <= 10) || (height <= 10), "image dimension is small: (" + width + ";" + height //$NON-NLS-1$ //$NON-NLS-2$
+					+ ")"); //$NON-NLS-1$
 
 			bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-			MyUtils.assertFalse(bufferedImage == null, "toBufferedImage: bufferedImage is null");
+			MyUtils.assertFalse(bufferedImage == null, "toBufferedImage: bufferedImage is null"); //$NON-NLS-1$
 
 			Graphics g = bufferedImage.createGraphics();
 
 			g.setColor(Color.white);
 			g.fillRect(0, 0, width, height);
 			g.setColor(Color.black);
-			g.drawString("loading...", 5, 5);
+			g.drawString("loading...", 5, 5); //$NON-NLS-1$
 			boolean result = g.drawImage(sourceImage, 0, 0, this);
 			g.dispose();
 
-			MyUtils.assertTrue(result, "toBufferedImage: drawImage returned false");
+			MyUtils.assertTrue(result, "toBufferedImage: drawImage returned false"); //$NON-NLS-1$
 
 			texture = new TexturePaint(bufferedImage, new Rectangle(0, 0, width, height));
 		}

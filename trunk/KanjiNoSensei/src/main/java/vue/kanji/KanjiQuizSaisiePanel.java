@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 import metier.Dictionary;
+import metier.Messages;
 import vue.VueElement;
 import vue.VueElement.NoSaisieException;
 import vue.VueElement.QuizSaisieReponsePanel;
@@ -97,25 +98,25 @@ class KanjiQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRepon
 				
 				case Kanji:
 				{
-					VueElement.addInputMethodTextField("kanji", solution, singleton, solution.getKanji().getCodeUTF8().toString());
+					VueElement.addInputMethodTextField(Messages.getString("KanjiQuizSaisiePanel.IM.Kanji"), solution, singleton, solution.getKanji().getCodeUTF8().toString()); //$NON-NLS-1$
 					break;
 				}
 				
 				case LectureOrigineChinoise:
 				{
-					VueElement.addInputMethodTextField("lectures ON", solution, this, solution.getKanji().getLecturesONSet(), saisieReponseComplete);
+					VueElement.addInputMethodTextField(Messages.getString("KanjiQuizSaisiePanel.IM.ONLectures"), solution, this, solution.getKanji().getLecturesONSet(), saisieReponseComplete); //$NON-NLS-1$
 					break;
 				}
 				
 				case LectureJaponaise:
 				{
-					VueElement.addInputMethodTextField("lectures KUN", solution, this, solution.getKanji().getLecturesKUNSet(), saisieReponseComplete);
+					VueElement.addInputMethodTextField(Messages.getString("KanjiQuizSaisiePanel.IM.KUNLectures"), solution, this, solution.getKanji().getLecturesKUNSet(), saisieReponseComplete); //$NON-NLS-1$
 					break;
 				}
 				
 				case Signification:
 				{
-					VueElement.addInputMethodTextField("significations", solution, this, solution.getKanji().getSignificationsSet(), saisieReponseComplete);
+					VueElement.addInputMethodTextField(Messages.getString("KanjiQuizSaisiePanel.IM.Significations"), solution, this, solution.getKanji().getSignificationsSet(), saisieReponseComplete); //$NON-NLS-1$
 					break;
 				}
 				

@@ -19,6 +19,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 import metier.Dictionary;
+import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Word;
@@ -103,12 +104,12 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				{
 					jLabelLecture = new JLabel();
 					jPanelNorth.add(jLabelLecture, BorderLayout.WEST);
-					jLabelLecture.setText("Lecture : neko");
+					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
 				}
 				{
 					jButtonJouerSon = new JPanelSonBtn(vue.getMot().getSoundFile(), false);
 					jPanelNorth.add(jButtonJouerSon, BorderLayout.EAST);
-					jButtonJouerSon.setText("Lire");
+					jButtonJouerSon.setText(Messages.getString("WordVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
 					jButtonJouerSon.setSize(35, 20);
 				}
 			}
@@ -125,12 +126,12 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				{
 					jLabelSignifications = new JLabel();
 					jPanelSouth.add(jLabelSignifications);
-					jLabelSignifications.setText("Significations : chat, ...");
+					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$
 				}
 				{
 					jLabelThemes = new JLabel();
 					jPanelSouth.add(jLabelThemes);
-					jLabelThemes.setText("Thèmes : mot, patin, coufin");
+					jLabelThemes.setText("Thèmes : mot, patin, coufin"); //$NON-NLS-1$
 				}
 			}
 			{
@@ -145,8 +146,8 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				{
 					jTextFieldMot = new JTextField();
 					jPanelCentre.add(jTextFieldMot);
-					jTextFieldMot.setText("\u7f8e\u5c11\u5973");
-					jTextFieldMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44));
+					jTextFieldMot.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
+					jTextFieldMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
 					jTextFieldMot.setHorizontalAlignment(SwingConstants.CENTER);
 					jTextFieldMot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					jTextFieldMot.setEditable(false);
@@ -158,20 +159,20 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 							String sel = jTextFieldMot.getSelectedText();
 							if ((sel != null) && (!sel.isEmpty()))
 							{
-								System.out.println("Selection '"+sel+"'");
+								System.out.println("Selection '"+sel+"'"); //$NON-NLS-1$ //$NON-NLS-2$
 								Dictionary dictionnaire = vue.getApp().getDictionnaire();
 								
-								Element e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey());
+								Element e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 								
 								if (e == null)
 								{
-									System.err.println("Kanji '" + sel.charAt(0) + "' non présent dans le dictionnaire");
+									System.err.println(Messages.getString("WordVueDetaillePanel.WarningKanjiMissing") + " : \"" + sel.charAt(0) + "(" + sel.substring(1) + ")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									return;
 								}
 					
 								if (!Kanji.class.isInstance(e))
 								{
-									System.err.println("La sélection correspond à un élément qui n'est pas un Kanji : "+e.toString());
+									System.err.println(Messages.getString("WordVueDetaillePanel.WarningNotAKanji")+ " : \"" + e.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 									return;
 								}
 								
@@ -182,11 +183,11 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 								}
 								catch (Exception e1)
 								{
-									System.err.println("Impossible de créer la vue pour l'élément sélectionné : \""+e.toString()+"\"\tMessage : "+e1.getMessage());
+									System.err.println(Messages.getString("WordVueDetaillePanel.ErrorViewGeneration")+" : \""+e.toString()+"\"\t"+e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 									return;
 								}
 								
-								JDialog kanjiDetail = new JDialog((JDialog) null, "Détail Kanji '"+e.toString()+"'", true);
+								JDialog kanjiDetail = new JDialog((JDialog) null, Messages.getString("WordVueDetaillePanel.Detail")+" : \""+e.toString()+"\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 								kanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
 								kanjiDetail.pack();
 								kanjiDetail.setVisible(true);
@@ -206,11 +207,11 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	private void dynamicInitialize()
 	{
 		Word mot = vue.getMot();
-		jLabelLecture.setText("Lecture : " + vue.toRomajiIfNeeded(mot.getLecture()));
+		jLabelLecture.setText(Messages.getString("WordVueDetaillePanel.LabelLecture") + " : "+ vue.toRomajiIfNeeded(mot.getLecture())); //$NON-NLS-1$ //$NON-NLS-2$
 		jTextFieldMot.setText(mot.getWord());
-		jTextFieldMot.setColumns(jTextFieldMot.getText().length() * 2);
-		jLabelSignifications.setText("Significations : " + mot.getSignifications());
-		jLabelThemes.setText("Thèmes : " + mot.getThemes());
+		jTextFieldMot.setColumns(Math.min(2, jTextFieldMot.getText().length()) * 2);
+		jLabelSignifications.setText(Messages.getString("WordVueDetaillePanel.LabelSignifications") + " : "+mot.getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelThemes.setText(Messages.getString("WordVueDetaillePanel.LabelThemes") + " : " +mot.getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	// </NoJigloo>

@@ -2,6 +2,7 @@ package vue.kanji;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.HashMap;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -10,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import metier.elements.Kanji;
+import utils.Messages;
 import vue.VueElement.QuizConfigPanel;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -31,7 +34,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	{
 		//Set Look & Feel
 		try {
-			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); //$NON-NLS-1$
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -46,14 +49,28 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	 * @author Axan
 	 * 
 	 */
-	public enum ETypeAff
+	static public enum ETypeAff
 	{
-		Kanji, LectureOrigineChinoise, LectureJaponaise, ImageTrace, Signification, Detaille;
+		Kanji, LectureOrigineChinoise, LectureJaponaise, ImageTrace, Signification, KanjiEtSignification, KanjiEtLectures, Detaille;
+	}
+	static private HashMap<String, ETypeAff> typesAff = new HashMap<String, ETypeAff>();
+	{
+		for(ETypeAff type : ETypeAff.values())
+		{
+			typesAff.put(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+type.toString()), type);
+		}
 	}
 
 	public enum ETypeSaisie
 	{
-		LectureOrigineChinoise, LectureJaponaise, Kanji, Signification, ListeChoix, AttenteClick;
+		Kanji, LectureOrigineChinoise, LectureJaponaise, Signification, ListeChoix, AttenteClick;
+	}
+	static private HashMap<String, ETypeSaisie> typesSaisie = new HashMap<String, ETypeSaisie>();
+	{
+		for(ETypeSaisie type : ETypeSaisie.values())
+		{
+			typesSaisie.put(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+type.toString()), type);
+		}
 	}
 
 	private JLabel						jLabelTitre;
@@ -98,44 +115,44 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 		try
 		{
 			FormLayout thisLayout = new FormLayout(
-					"min(m;73dlu):grow, min(p;200dlu):grow", 
-					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu)");
+					"min(m;73dlu):grow, min(p;200dlu):grow",  //$NON-NLS-1$
+					"max(p;5dlu), max(p;5dlu), max(p;5dlu), max(p;15dlu), max(p;15dlu), max(p;5dlu)"); //$NON-NLS-1$
 			this.setLayout(thisLayout);
 			this.setPreferredSize(new java.awt.Dimension(400, 150));
 			this.setMinimumSize(new java.awt.Dimension(600, 300));
 			{
 				jLabelTitre = new JLabel();
-				this.add(jLabelTitre, new CellConstraints("1, 1, 1, 1, right, default"));
-				jLabelTitre.setText("Configuration \u6f22\u5b57");
-				jLabelTitre.setFont(new java.awt.Font("SimSun", 1, 16));
+				this.add(jLabelTitre, new CellConstraints("1, 1, 1, 1, right, default")); //$NON-NLS-1$
+				jLabelTitre.setText(Messages.getString("KanjiQuizConfigPanel.LabelTitle")); //$NON-NLS-1$
+				jLabelTitre.setFont(new java.awt.Font("SimSun", 1, 16)); //$NON-NLS-1$
 			}
 			{
 				jLabelAffKanji = new JLabel();
-				this.add(jLabelAffKanji, new CellConstraints("1, 2, 1, 1, default, default"));
-				jLabelAffKanji.setText("Affichage quiz");
+				this.add(jLabelAffKanji, new CellConstraints("1, 2, 1, 1, default, default")); //$NON-NLS-1$
+				jLabelAffKanji.setText(Messages.getString("KanjiQuizConfigPanel.LabelQuizDisplay")); //$NON-NLS-1$
 			}
-			{
-				ComboBoxModel jComboBoxAffQuizModel = new DefaultComboBoxModel(ETypeAff.values());
+			{	
+				ComboBoxModel jComboBoxAffQuizModel = new DefaultComboBoxModel(typesAff.keySet().toArray());
 				jComboBoxAffQuiz = new JComboBox();
-				this.add(jComboBoxAffQuiz, new CellConstraints("2, 2, 1, 1, left, default"));
+				this.add(jComboBoxAffQuiz, new CellConstraints("2, 2, 1, 1, left, default")); //$NON-NLS-1$
 				jComboBoxAffQuiz.setModel(jComboBoxAffQuizModel);
 			}
 			{
 				jLabelMethodeSaisie = new JLabel();
-				this.add(jLabelMethodeSaisie, new CellConstraints("1, 3, 1, 1, left, default"));
-				jLabelMethodeSaisie.setText("Saisie de la réponse");
+				this.add(jLabelMethodeSaisie, new CellConstraints("1, 3, 1, 1, left, default")); //$NON-NLS-1$
+				jLabelMethodeSaisie.setText(Messages.getString("KanjiQuizConfigPanel.LabelAnswerInputMethod")); //$NON-NLS-1$
 			}
 			{
-				ComboBoxModel jComboBoxSaisieReponseModel = new DefaultComboBoxModel(ETypeSaisie.values());
+				ComboBoxModel jComboBoxSaisieReponseModel = new DefaultComboBoxModel(typesSaisie.keySet().toArray());
 				jComboBoxSaisieReponse = new JComboBox();
-				this.add(jComboBoxSaisieReponse, new CellConstraints("2, 3, 1, 1, left, default"));
+				this.add(jComboBoxSaisieReponse, new CellConstraints("2, 3, 1, 1, left, default")); //$NON-NLS-1$
 				jComboBoxSaisieReponse.setModel(jComboBoxSaisieReponseModel);
 				jComboBoxSaisieReponse.addItemListener(new ItemListener()
 				{
 					public void itemStateChanged(ItemEvent evt)
 					{
-						jComboBoxSaisieReponseChoixAff.setEnabled((jComboBoxSaisieReponse.getSelectedItem().equals(ETypeSaisie.ListeChoix)));
-						switch (ETypeSaisie.valueOf(jComboBoxSaisieReponse.getSelectedItem().toString()))
+						jComboBoxSaisieReponseChoixAff.setEnabled((typesSaisie.get(jComboBoxSaisieReponse.getSelectedItem()).equals(ETypeSaisie.ListeChoix)));
+						switch (typesSaisie.get(jComboBoxSaisieReponse.getSelectedItem()))
 						{
 							case Signification:
 							case LectureJaponaise:
@@ -150,22 +167,22 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 				});
 			}
 			{
-				ComboBoxModel jComboBoxSaisieReponseChoixAffModel = new DefaultComboBoxModel(ETypeAff.values());
+				ComboBoxModel jComboBoxSaisieReponseChoixAffModel = new DefaultComboBoxModel(typesAff.keySet().toArray());
 				jComboBoxSaisieReponseChoixAff = new JComboBox();
-				this.add(jComboBoxSaisieReponseChoixAff, new CellConstraints("2, 5, 1, 1, left, default"));
+				this.add(jComboBoxSaisieReponseChoixAff, new CellConstraints("2, 5, 1, 1, left, default")); //$NON-NLS-1$
 				jComboBoxSaisieReponseChoixAff.setModel(jComboBoxSaisieReponseChoixAffModel);
 			}
 			{
 				jLabelAffReponse = new JLabel();
-				this.add(jLabelAffReponse, new CellConstraints("1, 6, 1, 1, left, default"));
-				jLabelAffReponse.setText("Affichage réponse");
+				this.add(jLabelAffReponse, new CellConstraints("1, 6, 1, 1, left, default")); //$NON-NLS-1$
+				jLabelAffReponse.setText(Messages.getString("KanjiQuizConfigPanel.LabelAnswerDisplay")); //$NON-NLS-1$
 			}
 			{
-				ComboBoxModel jComboBoxAffReponseModel = new DefaultComboBoxModel(ETypeAff.values());
+				ComboBoxModel jComboBoxAffReponseModel = new DefaultComboBoxModel(typesAff.keySet().toArray());
 				jComboBoxAffReponse = new JComboBox();
-				this.add(jComboBoxAffReponse, new CellConstraints("2, 6, 1, 1, left, default"));
-				this.add(getJLabelSaisieReponseListe(), new CellConstraints("1, 5, 1, 1, left, default"));
-				this.add(getJCheckBoxSaisieReponseComplete(), new CellConstraints("2, 4, 1, 1, default, default"));
+				this.add(jComboBoxAffReponse, new CellConstraints("2, 6, 1, 1, left, default")); //$NON-NLS-1$
+				this.add(getJLabelSaisieReponseListe(), new CellConstraints("1, 5, 1, 1, left, default")); //$NON-NLS-1$
+				this.add(getJCheckBoxSaisieReponseComplete(), new CellConstraints("2, 4, 1, 1, default, default")); //$NON-NLS-1$
 				jComboBoxAffReponse.setModel(jComboBoxAffReponseModel);
 			}
 		}
@@ -197,7 +214,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	private JLabel getJLabelSaisieReponseListe() {
 		if(jLabelSaisieReponseListe == null) {
 			jLabelSaisieReponseListe = new JLabel();
-			jLabelSaisieReponseListe.setText("Affichage de la liste de choix");
+			jLabelSaisieReponseListe.setText(Messages.getString("KanjiQuizConfigPanel.LabelListDisplay")); //$NON-NLS-1$
 		}
 		return jLabelSaisieReponseListe;
 	}
@@ -207,10 +224,10 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	 */
 	public void valider()
 	{
-		affichageElementQuiz = ETypeAff.valueOf(jComboBoxAffQuiz.getSelectedItem().toString());
-		saisieReponseQuiz = ETypeSaisie.valueOf(jComboBoxSaisieReponse.getSelectedItem().toString());
-		affichageChoixReponsesQuiz = ETypeAff.valueOf(jComboBoxSaisieReponseChoixAff.getSelectedItem().toString());
-		affichageReponseQuiz = ETypeAff.valueOf(jComboBoxAffReponse.getSelectedItem().toString());
+		affichageElementQuiz = typesAff.get(jComboBoxAffQuiz.getSelectedItem().toString());
+		saisieReponseQuiz = typesSaisie.get(jComboBoxSaisieReponse.getSelectedItem().toString());
+		affichageChoixReponsesQuiz = typesAff.get(jComboBoxSaisieReponseChoixAff.getSelectedItem().toString());
+		affichageReponseQuiz = typesAff.get(jComboBoxAffReponse.getSelectedItem().toString());
 		saisieReponseCompleteQuiz = jCheckBoxSaisieReponseComplete.isSelected();
 	}
 
@@ -242,7 +259,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	private JCheckBox getJCheckBoxSaisieReponseComplete() {
 		if(jCheckBoxSaisieReponseComplete == null) {
 			jCheckBoxSaisieReponseComplete = new JCheckBox();
-			jCheckBoxSaisieReponseComplete.setText("Réponse complète");
+			jCheckBoxSaisieReponseComplete.setText(Messages.getString("KanjiQuizConfigPanel.LabelCompleteAnswer")); //$NON-NLS-1$
 		}
 		return jCheckBoxSaisieReponseComplete;
 	}

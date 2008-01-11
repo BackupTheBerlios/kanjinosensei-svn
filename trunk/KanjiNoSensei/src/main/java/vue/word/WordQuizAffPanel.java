@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import metier.Messages;
+
 import vue.JPanelSonBtn;
 import vue.VueElement.NoAffException;
 import vue.VueElement.QuizQuestionPanel;
@@ -37,7 +39,7 @@ class WordQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, 
 		this.setBackground(new java.awt.Color(255,255,255));
 		{
 			// <NoJigloo>
-			String texte = "", son = "";
+			String texte = "", son = ""; //$NON-NLS-1$ //$NON-NLS-2$
 			int taille_fonte = -1;
 
 			switch (typeAff)
@@ -97,14 +99,14 @@ class WordQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, 
 		jLabel = new JLabel();
 		jLabel.setText(text);
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
-		jLabel.setFont(new java.awt.Font("SimSun", 0, taille));
+		jLabel.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
 		this.add(jLabel, BorderLayout.NORTH);
 	}
 
 	private void addSon(String source)
 	{
 		JPanelSonBtn jPanelSonBtn = new JPanelSonBtn(source, true);
-		jPanelSonBtn.setText("Lire");
+		jPanelSonBtn.setText(Messages.getString("WordQuizAffPanel.ButtonPlaySound")); //$NON-NLS-1$
 		this.add(jPanelSonBtn, BorderLayout.CENTER);
 		jPanelSonBtn.setVisible(true);
 	}

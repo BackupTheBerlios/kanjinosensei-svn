@@ -29,6 +29,7 @@ public class Messages
 		}
 		catch (MissingResourceException e)
 		{
+			System.err.println("MissingResourceException : key \""+key+"\" is not found in resource file \""+BUNDLE_NAME+"\"");
 			return '!' + key + '!';
 		}
 	}

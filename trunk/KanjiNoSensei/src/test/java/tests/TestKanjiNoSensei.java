@@ -56,7 +56,7 @@ public class TestKanjiNoSensei
 	@Test
 	public void testMain()
 	{
-		String[] args = {"dico/dico.kjd"};
+		String[] args = {"dico/dico.kjd"}; //$NON-NLS-1$
 		KanjiNoSensei.main(args);
 	}
 

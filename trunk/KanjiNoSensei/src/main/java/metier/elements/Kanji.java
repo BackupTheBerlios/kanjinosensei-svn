@@ -260,12 +260,6 @@ public class Kanji extends Element implements Serializable
 		lecturesON.removeEmptyElements();
 
 		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, DICO_DIR);
-		
-		// We add "kanji" to the themes.
-		if ( !themes.contains(Messages.getString("Kanji.Kanji"))) //$NON-NLS-1$
-		{
-			themes.add(Messages.getString("Kanji.Kanji")); //$NON-NLS-1$
-		}
 	}
 
 	/**

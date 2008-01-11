@@ -22,6 +22,7 @@ import javax.swing.event.CaretListener;
 import javax.swing.filechooser.FileFilter;
 
 import metier.Dictionary;
+import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Word;
@@ -68,8 +69,8 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 	
 	private boolean motEdite = false;
 
-	static private String[]		extFilterSons = {"wav", "mp3"};
-	static private FileFilter	fileFilterSons = MyUtils.generateFileFilter("Sons", extFilterSons);
+	static private String[]		extFilterSons = {"wav", "mp3"}; //$NON-NLS-1$ //$NON-NLS-2$
+	static private FileFilter	fileFilterSons = MyUtils.generateFileFilter(Messages.getString("WordEditionDialog.SoundFileFilterName"), extFilterSons); //$NON-NLS-1$
 	
 	public WordEditionDialog(VueWord vue)
 	{
@@ -87,7 +88,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 			this.setMinimumSize(new Dimension(400, 150));
 			this.setPreferredSize(new java.awt.Dimension(390, 200));
 			this.setResizable(true);
-			this.setTitle("Edition d'un mot");
+			this.setTitle(Messages.getString("WordEditionDialog.Title")); //$NON-NLS-1$
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setModal(true);
 			this.setSize(390, 135);
@@ -110,7 +111,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 						BorderLayout jLabelMsgLayout = new BorderLayout();
 						jLabelMsg.setLayout(jLabelMsgLayout);
 						jPanelMsg.add(jLabelMsg, BorderLayout.CENTER);
-						jLabelMsg.setText("message");
+						jLabelMsg.setText("message"); //$NON-NLS-1$
 					}
 				}
 				{
@@ -126,7 +127,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 					ajouterMotFormPanel.setPreferredSize(new java.awt.Dimension(422, 120));
 					{
 						jLabelMot = new JLabel();
-						jLabelMot.setText("Mot :");
+						jLabelMot.setText(Messages.getString("WordEditionDialog.LabelWord")); //$NON-NLS-1$
 						jLabelMot.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterMotFormPanel.add(jLabelMot, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
@@ -141,19 +142,18 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 						{
 							public void caretUpdate(CaretEvent evt)
 							{
-								jLabelMsg.setText("");
+								jLabelMsg.setText(""); //$NON-NLS-1$
 								for (Character c : jTextFieldMot.getText().toCharArray())
 								{
 									if (Character.isSpaceChar(c) || Character.isWhitespace(c))
 									{
-										jLabelMsg.setText(jLabelMsg.getText() + "\t" + "Caractère blanc détecté");
+										jLabelMsg.setText(jLabelMsg.getText() + "\n" + Messages.getString("WordEditionDialog.WarningBlankCharacter")); //$NON-NLS-1$ //$NON-NLS-2$
 									}
 									
 
-									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null)
+									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 									{
-										jLabelMsg.setText(jLabelMsg.getText() + "\t" + "Kanji '" + c
-												+ "' non présent dans le dictionnaire");
+										jLabelMsg.setText(jLabelMsg.getText() + "\n" + Messages.getString("WordEditionDialog.WarningKanjiMissing") + "'" + c + "'" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									}
 								}
 							}
@@ -161,7 +161,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 					{
 						jLabelSon = new JLabel();
-						jLabelSon.setText("Son :");
+						jLabelSon.setText(Messages.getString("WordEditionDialog.LabelSound")); //$NON-NLS-1$
 						jLabelSon.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterMotFormPanel.add(jLabelSon, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
@@ -176,7 +176,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 					{
 						jButtonParcourir = new JButton();
-						jButtonParcourir.setText("Parcourir...");
+						jButtonParcourir.setText(Messages.getString("WordEditionDialog.ButtonBrowse")); //$NON-NLS-1$
 						jButtonParcourir.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterMotFormPanel.add(jButtonParcourir, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -200,7 +200,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelSignification = new JLabel();
 						ajouterMotFormPanel.add(jLabelSignification, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelSignification.setText("Significations :");
+						jLabelSignification.setText(Messages.getString("WordEditionDialog.LabelSignifications")); //$NON-NLS-1$
 						jLabelSignification.setSize(69, 20);
 					}
 					{
@@ -213,7 +213,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelThemes = new JLabel();
 						ajouterMotFormPanel.add(jLabelThemes, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelThemes.setText("Thèmes :");
+						jLabelThemes.setText(Messages.getString("WordEditionDialog.LabelThemes")); //$NON-NLS-1$
 						jLabelThemes.setSize(44, 20);
 					}
 					{
@@ -226,7 +226,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelLecture = new JLabel();
 						ajouterMotFormPanel.add(jLabelLecture, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelLecture.setText("Lecture :");
+						jLabelLecture.setText(Messages.getString("WordEditionDialog.LabelLecture")); //$NON-NLS-1$
 					}
 					{
 						jTextFieldLecture = new JTextField();
@@ -243,7 +243,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 					{
 						jButtonValider = new JButton();
 						jPanelBtns.add(jButtonValider, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 10, 5), 0, 0));
-						jButtonValider.setText("Valider");
+						jButtonValider.setText(Messages.getString("WordEditionDialog.ButtonValidate")); //$NON-NLS-1$
 						jButtonValider.addActionListener(new ActionListener()
 						{
 							public void actionPerformed(ActionEvent evt)
@@ -251,7 +251,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 								if ( !jLabelMsg.getText().isEmpty())
 								{
 									if (JOptionPane.showConfirmDialog(null,
-											"Il y a des erreurs, êtes-vous sûr de vouloir continuer ?", "Attention",
+											Messages.getString("WordEditionDialog.WarningBoxAreYouSureToContinue"), Messages.getString("WordEditionDialog.WarningBoxTitle"), //$NON-NLS-1$ //$NON-NLS-2$
 											JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION)
 									{
 										return;
@@ -267,12 +267,12 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 					{
 						jButtonAnnuler = new JButton();
 						jPanelBtns.add(jButtonAnnuler, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 10, 0), 0, 0));
-						jButtonAnnuler.setText("Annuler");
+						jButtonAnnuler.setText(Messages.getString("WordEditionDialog.ButtonCancel")); //$NON-NLS-1$
 						jButtonAnnuler.addActionListener(new ActionListener()
 						{
 							public void actionPerformed(ActionEvent evt)
 							{
-								System.out.println("jButtonAnnuler.actionPerformed, event=" + evt);
+								System.out.println("jButtonAnnuler.actionPerformed, event=" + evt); //$NON-NLS-1$
 								dispose();
 							}
 						});

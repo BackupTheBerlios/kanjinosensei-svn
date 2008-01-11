@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import metier.Dictionary;
+import metier.Messages;
 import metier.elements.Element;
 import utils.MyUtils;
 import utils.OneStringList;
@@ -43,11 +44,11 @@ public abstract class VueElement
 	protected boolean useRomaji = false;
 	public abstract Element getElement();
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	private static Class<? extends VueElement> getVueClassFromElementClass(Class<? extends Element> elementClass)
 			throws ClassNotFoundException
 	{
-		String className = "vue." + elementClass.getSimpleName().toLowerCase() + ".Vue" + elementClass.getSimpleName();
+		String className = "vue." + elementClass.getSimpleName().toLowerCase() + ".Vue" + elementClass.getSimpleName(); //$NON-NLS-1$ //$NON-NLS-2$
 		return (Class<? extends VueElement>) Class.forName(className);
 	}
 
@@ -63,7 +64,7 @@ public abstract class VueElement
 	public static VueElement genererVueBlankElement(KanjiNoSensei app, Class<? extends Element> elementClass, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
 	{
 		Class<?> classeVue = getVueClassFromElementClass(elementClass);
-		Field fieldBlank = elementClass.getDeclaredField("BLANK");
+		Field fieldBlank = elementClass.getDeclaredField("BLANK"); //$NON-NLS-1$
 		Element blank = (Element) fieldBlank.get(null);
 		Constructor<?> constructor = classeVue.getConstructor(KanjiNoSensei.class, elementClass, boolean.class);
 		VueElement vue = (VueElement) constructor.newInstance(app, blank, useRomaji);
@@ -168,7 +169,7 @@ public abstract class VueElement
 
 		public NoAffException(String typeAff)
 		{
-			super("Affichage '" + typeAff + "' impossible");
+			super(Messages.getString("VueElement.NoAffException") + " : "+ typeAff); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -178,7 +179,7 @@ public abstract class VueElement
 
 		public NoSaisieException(String typeSaisie)
 		{
-			super("Saisie '" + typeSaisie + "' impossible");
+			super(Messages.getString("VueElement.NoSaisieException") + " : "+typeSaisie); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -293,7 +294,7 @@ public abstract class VueElement
 	{
 		if (consigne == null)
 		{
-			consigne = "Double cliquez ici pour afficher la solution et corriger votre réponse.";
+			consigne = Messages.getString("VueElement.ClickWaitDirective"); //$NON-NLS-1$
 		}
 		
 		final KanjiNoSensei app = vue.getApp();
@@ -309,7 +310,7 @@ public abstract class VueElement
 					
 					component.removeMouseListener(this);
 
-					JButton jButtonBON = new JButton("Bon");
+					JButton jButtonBON = new JButton(Messages.getString("VueElement.ButtonCorrect")); //$NON-NLS-1$
 					jButtonBON.addActionListener(new ActionListener()
 					{
 
@@ -321,7 +322,7 @@ public abstract class VueElement
 
 					});
 
-					JButton jButtonMAUVAIS = new JButton("Mauvais");
+					JButton jButtonMAUVAIS = new JButton(Messages.getString("VueElement.ButtonIncorrect")); //$NON-NLS-1$
 					jButtonMAUVAIS.addActionListener(new ActionListener()
 					{
 
@@ -356,7 +357,7 @@ public abstract class VueElement
 
 	public static void addInputMethodTextField(String consigne, final VueElement vue, final JComponent component, String reponseUnique) throws NoSaisieException
 	{
-		if (reponseUnique.isEmpty()) throw new NoSaisieException("");
+		if (reponseUnique.isEmpty()) throw new NoSaisieException(""); //$NON-NLS-1$
 		
 		final TreeSet<String> reponse = new TreeSet<String>();
 		reponse.add(reponseUnique);
@@ -365,12 +366,12 @@ public abstract class VueElement
 	
 	public static void addInputMethodTextField(String consigne, final VueElement vue, final JComponent component, Set<String> reponsesMultiples, final boolean saisieReponseComplete) throws NoSaisieException
 	{
-		if (reponsesMultiples.isEmpty()) throw new NoSaisieException("");
+		if (reponsesMultiples.isEmpty()) throw new NoSaisieException(""); //$NON-NLS-1$
 	
-		consigne = "Saisissez le ou les élément(s) réponse attendu ("+consigne+") dans la zone de texte ci-dessous.";
+		consigne = Messages.getString("VueElement.TextFieldInputDirective") + "("+consigne+")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		if (saisieReponseComplete)
 		{
-			consigne += " Attention, tout les éléments réponses sont nécéssaires.";
+			consigne += "; "+Messages.getString("VueElement.TextFieldInputDirectiveCompleteAnswer"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		
 		final OneStringList reponses = new OneStringList(Element.FIELD_ALLOWED_SEPARATORS);
@@ -391,7 +392,7 @@ public abstract class VueElement
 			
 				if (saisie.isEmpty())
 				{
-					JOptionPane.showMessageDialog(jSaisie, "Vous n'avez pas saisie de réponse", "Aucune saisie", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(jSaisie, Messages.getString("VueElement.WarningBoxNoInput"), Messages.getString("VueElement.WarningBoxNoInputTitle"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 					return;
 				}
 				

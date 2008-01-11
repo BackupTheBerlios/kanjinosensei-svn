@@ -163,12 +163,6 @@ public class Sentence extends Element implements Serializable
 	{
 		sound = MyUtils.checkFileExists(sound, DICO_DIR);
 		
-		// We add "sentence" to themes.
-		if (!themes.contains(Messages.getString("Sentence.Sentence"))) //$NON-NLS-1$
-		{
-			themes.add(Messages.getString("Sentence.Sentence")); //$NON-NLS-1$
-		}
-		
 		lecture = lecture.replace(' ', '　');
 	}
 

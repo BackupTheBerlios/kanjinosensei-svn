@@ -837,7 +837,7 @@ public abstract class MyUtils
 
 			if (window.getComponentCount() <= 0)
 			{
-				JButton jButton = new JButton("FAKE");
+				JButton jButton = new JButton("FAKE"); //$NON-NLS-1$
 				jButton.setVisible(true);
 				window.add(jButton, BorderLayout.CENTER);
 			}
@@ -902,7 +902,7 @@ public abstract class MyUtils
 	{
 		final HashMap<String, String> vLFclass = listLookAndFeels();
 
-		JMenu jMenuUI = new JMenu("Look&Feels");
+		JMenu jMenuUI = new JMenu(Messages.getString("MyUtils.L&FMenuName")); //$NON-NLS-1$
 
 		Iterator<String> it = vLFclass.keySet().iterator();
 		while (it.hasNext())

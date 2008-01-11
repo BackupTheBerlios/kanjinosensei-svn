@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileFilter;
 
+import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import utils.MyUtils;
@@ -48,8 +49,8 @@ import vue.VueElement.EditionDialog;
 class KanjiEditionDialog extends JDialog implements EditionDialog
 {
 
-	static final private String[] extFilterTrace = {"png", "jpg", "bmp"};
-	static final private FileFilter fileFilterTrace = MyUtils.generateFileFilter("Image de tracé du 漢字", extFilterTrace);
+	static final private String[] extFilterTrace = {"png", "jpg", "bmp"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	static final private FileFilter fileFilterTrace = MyUtils.generateFileFilter(Messages.getString("KanjiEditionDialog.ImageFileFilterName"), extFilterTrace); //$NON-NLS-1$
 	
 	private static final long	serialVersionUID	= 1L;
 
@@ -99,7 +100,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
         this.setMinimumSize(new Dimension(430, 200));
         this.setPreferredSize(new Dimension(430, 200));
         this.setResizable(true);
-        this.setTitle("Edition \u6f22\u5b57");
+        this.setTitle(Messages.getString("KanjiEditionDialog.Title")); //$NON-NLS-1$
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setContentPane(getAjouterKanjiContentPane());
         this.setModal(true);
@@ -154,8 +155,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			gridBagConstraints13.gridy = 5;
 			gridBagConstraints13.gridx = 0;
 			jLabelThemes = new JLabel();
-			jLabelThemes.setName("jLabelThemes");
-			jLabelThemes.setText("Thèmes :");
+			jLabelThemes.setName("jLabelThemes"); //$NON-NLS-1$
+			jLabelThemes.setText(Messages.getString("KanjiEditionDialog.LabelThemes")); //$NON-NLS-1$
 			jLabelThemes.setPreferredSize(new Dimension(100, 20));
 			GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
 			gridBagConstraints12.anchor = GridBagConstraints.WEST;
@@ -168,8 +169,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			gridBagConstraints11.gridy = 4;
 			gridBagConstraints11.gridx = 0;
 			jLabelSignifications = new JLabel();
-			jLabelSignifications.setName("jLabelSignifications");
-			jLabelSignifications.setText("Significations :");
+			jLabelSignifications.setName("jLabelSignifications"); //$NON-NLS-1$
+			jLabelSignifications.setText(Messages.getString("KanjiEditionDialog.LabelSignifications")); //$NON-NLS-1$
 			jLabelSignifications.setPreferredSize(new Dimension(100, 20));
 			GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
 			gridBagConstraints8.anchor = GridBagConstraints.WEST;
@@ -182,8 +183,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			gridBagConstraints7.gridy = 3;
 			gridBagConstraints7.gridx = 0;
 			jLabelLecturesJaponaises = new JLabel();
-			jLabelLecturesJaponaises.setName("jLabelLecturesJaponaises");
-			jLabelLecturesJaponaises.setText("Lectures Japonaises :");
+			jLabelLecturesJaponaises.setName("jLabelLecturesJaponaises"); //$NON-NLS-1$
+			jLabelLecturesJaponaises.setText(Messages.getString("KanjiEditionDialog.LabelKUNLectures")); //$NON-NLS-1$
 			jLabelLecturesJaponaises.setPreferredSize(new Dimension(130, 20));
 			GridBagConstraints gridBagConstraints6 = new GridBagConstraints();
 			gridBagConstraints6.anchor = GridBagConstraints.WEST;
@@ -196,8 +197,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			gridBagConstraints5.gridy = 2;
 			gridBagConstraints5.gridx = 0;
 			jLabelLecturesChinoises = new JLabel();
-			jLabelLecturesChinoises.setName("jLabelLecturesChinoises");
-			jLabelLecturesChinoises.setText("Lectures Chinoises :");
+			jLabelLecturesChinoises.setName("jLabelLecturesChinoises"); //$NON-NLS-1$
+			jLabelLecturesChinoises.setText(Messages.getString("KanjiEditionDialog.LabelONLectures")); //$NON-NLS-1$
 			jLabelLecturesChinoises.setPreferredSize(new Dimension(130, 20));
 			GridBagConstraints gridBagConstraints4 = new GridBagConstraints();
 			gridBagConstraints4.anchor = GridBagConstraints.WEST;
@@ -215,8 +216,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			gridBagConstraints2.gridy = 1;
 			gridBagConstraints2.fill = GridBagConstraints.NONE;
 			jLabelOrdreTraits = new JLabel();
-			jLabelOrdreTraits.setName("jLabelOrdreTraits");
-			jLabelOrdreTraits.setText("Tracé :");
+			jLabelOrdreTraits.setName("jLabelOrdreTraits"); //$NON-NLS-1$
+			jLabelOrdreTraits.setText(Messages.getString("KanjiEditionDialog.LabelStrokesOrder")); //$NON-NLS-1$
 			jLabelOrdreTraits.setPreferredSize(new Dimension(100, 20));
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.anchor = GridBagConstraints.WEST;
@@ -234,8 +235,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			jLabelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jLabelCodeUTF8.setPreferredSize(new Dimension(100, 20));
 			jLabelCodeUTF8.setHorizontalAlignment(SwingConstants.LEADING);
-			jLabelCodeUTF8.setText("Code UTF8 :");
-			jLabelCodeUTF8.setName("jLabelCodeUTF8");
+			jLabelCodeUTF8.setText(Messages.getString("KanjiEditionDialog.LabelCodeUTF8")); //$NON-NLS-1$
+			jLabelCodeUTF8.setName("jLabelCodeUTF8"); //$NON-NLS-1$
 			ajouterKanjiFormPanel = new JPanel();
 			ajouterKanjiFormPanel.setLayout(new GridBagLayout());
 			ajouterKanjiFormPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -267,7 +268,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldCodeUTF8 == null)
 		{
 			jTextFieldCodeUTF8 = new JTextField();
-			jTextFieldCodeUTF8.setName("jTextFieldCodeUTF8");
+			jTextFieldCodeUTF8.setName("jTextFieldCodeUTF8"); //$NON-NLS-1$
 			jTextFieldCodeUTF8.setColumns(0);
 			jTextFieldCodeUTF8.setPreferredSize(new Dimension(50, 20));
 		}
@@ -284,7 +285,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldTrace == null)
 		{
 			jTextFieldTrace = new JTextField();
-			jTextFieldTrace.setName("jTextFieldTrace");
+			jTextFieldTrace.setName("jTextFieldTrace"); //$NON-NLS-1$
 			jTextFieldTrace.setEditable(false);
 			jTextFieldTrace.setPreferredSize(new Dimension(150, 20));
 		}
@@ -301,8 +302,8 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jButtonTraceParcourir == null)
 		{
 			jButtonTraceParcourir = new JButton();
-			jButtonTraceParcourir.setName("jButtonTraceParcourir");
-			jButtonTraceParcourir.setText("Parcourir...");
+			jButtonTraceParcourir.setName("jButtonTraceParcourir"); //$NON-NLS-1$
+			jButtonTraceParcourir.setText(Messages.getString("KanjiEditionDialog.BrowseButton")); //$NON-NLS-1$
 			jButtonTraceParcourir.setPreferredSize(new java.awt.Dimension(100, 20));
 			
 			jButtonTraceParcourir.addActionListener(new ActionListener()
@@ -335,7 +336,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldLecturesChinoises == null)
 		{
 			jTextFieldLecturesChinoises = new JTextField();
-			jTextFieldLecturesChinoises.setName("jTextFieldLecturesChinoises");
+			jTextFieldLecturesChinoises.setName("jTextFieldLecturesChinoises"); //$NON-NLS-1$
 		}
 		return jTextFieldLecturesChinoises;
 	}
@@ -350,7 +351,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldLecturesJaponaises == null)
 		{
 			jTextFieldLecturesJaponaises = new JTextField();
-			jTextFieldLecturesJaponaises.setName("jTextFieldLecturesJaponaises");
+			jTextFieldLecturesJaponaises.setName("jTextFieldLecturesJaponaises"); //$NON-NLS-1$
 		}
 		return jTextFieldLecturesJaponaises;
 	}
@@ -365,7 +366,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldSignifications == null)
 		{
 			jTextFieldSignifications = new JTextField();
-			jTextFieldSignifications.setName("jTextFieldSignifications");
+			jTextFieldSignifications.setName("jTextFieldSignifications"); //$NON-NLS-1$
 		}
 		return jTextFieldSignifications;
 	}
@@ -380,7 +381,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		if (jTextFieldThemes == null)
 		{
 			jTextFieldThemes = new JTextField();
-			jTextFieldThemes.setName("jTextFieldThemes");
+			jTextFieldThemes.setName("jTextFieldThemes"); //$NON-NLS-1$
 		}
 		return jTextFieldThemes;
 	}
@@ -420,7 +421,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		{
 			jButtonOK = new JButton();
 			jButtonOK.setPreferredSize(new Dimension(80, 20));
-			jButtonOK.setText("Valider");
+			jButtonOK.setText(Messages.getString("KanjiEditionDialog.ButtonValidate")); //$NON-NLS-1$
 			jButtonOK.setHorizontalTextPosition(SwingConstants.CENTER);
 			
 			jButtonOK.addActionListener(new ActionListener()
@@ -449,7 +450,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 		{
 			jButtonCANCEL = new JButton();
 			jButtonCANCEL.setPreferredSize(new Dimension(80, 20));
-			jButtonCANCEL.setText("Annuler");
+			jButtonCANCEL.setText(Messages.getString("KanjiEditionDialog.ButtonCancel")); //$NON-NLS-1$
 			
 			jButtonCANCEL.addActionListener(new ActionListener()
 			{

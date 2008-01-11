@@ -2,9 +2,12 @@ package vue.kanji;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JLabel;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
+import metier.Messages;
 import vue.JPanelImageBg;
 import vue.VueElement.NoAffException;
 import vue.VueElement.QuizQuestionPanel;
@@ -27,7 +30,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 	 * 
 	 */
 	private static final long	serialVersionUID	= 1L;
-	private JLabel				jLabel;
+	private JEditorPane				jEditorPane;
 	VueKanji					vue					= null;
 	ETypeAff					typeAff				= null;
 
@@ -46,7 +49,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 		this.setBackground(new java.awt.Color(255,255,255));
 		{
 			// <NoJigloo>
-			String texte = "", image = "";
+			String texte = "", image = ""; //$NON-NLS-1$ //$NON-NLS-2$
 			int taille_fonte = -1;
 
 			switch (typeAff)
@@ -84,6 +87,24 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 					taille_fonte = 16;
 					break;
 				}
+				
+				case KanjiEtSignification:
+				{
+					texte =  "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">"+vue.getKanji().getCodeUTF8().toString()+"</font></td>";
+					texte += "<td><font style=\"font-size: 16pt\">"+Messages.getString("KanjiVueDetaillePanel.LabelSignifications")+" : "+vue.getKanji().getSignifications()+"</font></td></tr></table>";
+					//taille_fonte = 100;
+					break;
+				}
+				
+				case KanjiEtLectures:
+				{
+					texte =  "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">"+vue.getKanji().getCodeUTF8().toString()+"</font></td>";
+					texte += "<td><font style=\"font-size: 16pt\">"+Messages.getString("KanjiVueDetaillePanel.LabelONLectures")+" : "+vue.getKanji().getLecturesON()+"<br/>";
+					texte += Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures")+" : "+vue.getKanji().getLecturesKUN()+"</font></td></tr></table>";
+					//taille_fonte = 12;
+					break;
+				}
+				
 			}
 
 			if (texte.isEmpty() && image.isEmpty())
@@ -109,11 +130,23 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 
 	private void addJLabel(String text, int taille)
 	{
-		jLabel = new JLabel();
-		jLabel.setText(text);
-		jLabel.setHorizontalAlignment(JLabel.CENTER);
-		jLabel.setFont(new java.awt.Font("SimSun", 0, taille));
-		this.add(jLabel, BorderLayout.NORTH);
+		jEditorPane = new JEditorPane("text/html", null);
+		
+		HTMLEditorKit htmlEditoKit = (HTMLEditorKit) jEditorPane.getEditorKit();
+		StyleSheet styleSheet = htmlEditoKit.getStyleSheet();
+		
+		if (taille > 0)
+		{
+			//jEditorPane.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
+			styleSheet.setBaseFontSize(taille+"px");
+			htmlEditoKit.setStyleSheet(styleSheet);
+			jEditorPane.setEditorKit(htmlEditoKit);
+		}
+		
+		jEditorPane.setText(text);
+		jEditorPane.setEditable(false);
+		
+		this.add(jEditorPane, BorderLayout.NORTH);
 	}
 
 	private void addImage(String source)

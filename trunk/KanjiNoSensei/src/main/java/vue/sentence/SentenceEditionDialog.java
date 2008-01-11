@@ -22,6 +22,7 @@ import javax.swing.event.CaretListener;
 import javax.swing.filechooser.FileFilter;
 
 import metier.Dictionary;
+import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Sentence;
@@ -68,8 +69,8 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 	
 	private boolean phraseEdite = false;
 
-	static private String[]		extFilterSons = {"wav", "mp3"};
-	static private FileFilter	fileFilterSons = MyUtils.generateFileFilter("Sons", extFilterSons);
+	static private String[]		extFilterSons = {"wav", "mp3"}; //$NON-NLS-1$ //$NON-NLS-2$
+	static private FileFilter	fileFilterSons = MyUtils.generateFileFilter(Messages.getString("SentenceEditionDialog.SoundFileFilterName"), extFilterSons); //$NON-NLS-1$
 	
 	public SentenceEditionDialog(VueSentence vue)
 	{
@@ -87,7 +88,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 			this.setMinimumSize(new Dimension(400, 150));
 			this.setPreferredSize(new java.awt.Dimension(504, 170));
 			this.setResizable(true);
-			this.setTitle("Edition d'un phrase");
+			this.setTitle(Messages.getString("SentenceEditionDialog.Title")); //$NON-NLS-1$
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setModal(true);
 			this.setSize(504, 170);
@@ -110,7 +111,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						BorderLayout jLabelMsgLayout = new BorderLayout();
 						jLabelMsg.setLayout(jLabelMsgLayout);
 						jPanelMsg.add(jLabelMsg, BorderLayout.CENTER);
-						jLabelMsg.setText("message");
+						jLabelMsg.setText("message"); //$NON-NLS-1$
 					}
 				}
 				{
@@ -126,7 +127,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 					ajouterPhraseFormPanel.setPreferredSize(new java.awt.Dimension(422, 120));
 					{
 						jLabelPhrase = new JLabel();
-						jLabelPhrase.setText("Phrase :");
+						jLabelPhrase.setText(Messages.getString("SentenceEditionDialog.LabelSentence")); //$NON-NLS-1$
 						jLabelPhrase.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterPhraseFormPanel.add(jLabelPhrase, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
@@ -140,16 +141,15 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						{
 							public void caretUpdate(CaretEvent evt)
 							{
-								jLabelMsg.setText("");
+								jLabelMsg.setText(""); //$NON-NLS-1$
 								for (Character c : jTextFieldPhrase.getText().toCharArray())
 								{
 									if (Character.isSpaceChar(c)) continue;
 									if (Character.isWhitespace(c)) continue;
 
-									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null)
+									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 									{
-										jLabelMsg.setText(jLabelMsg.getText() + "\t" + "Kanji '" + c
-												+ "' non présent dans le dictionnaire");
+										jLabelMsg.setText(jLabelMsg.getText() + "\n" + Messages.getString("SentenceEditionDialog.WarningMissingKanji") + " : '" + c + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									}
 								}
 							}
@@ -157,7 +157,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 					{
 						jLabelSon = new JLabel();
-						jLabelSon.setText("Son :");
+						jLabelSon.setText(Messages.getString("SentenceEditionDialog.LabelSound")); //$NON-NLS-1$
 						jLabelSon.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterPhraseFormPanel.add(jLabelSon, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
@@ -172,7 +172,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 					}
 					{
 						jButtonParcourir = new JButton();
-						jButtonParcourir.setText("Parcourir...");
+						jButtonParcourir.setText(Messages.getString("SentenceEditionDialog.ButtonBrowse")); //$NON-NLS-1$
 						jButtonParcourir.setPreferredSize(new java.awt.Dimension(100, 20));
 						ajouterPhraseFormPanel.add(jButtonParcourir, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -196,7 +196,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelSignification = new JLabel();
 						ajouterPhraseFormPanel.add(jLabelSignification, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelSignification.setText("Significations :");
+						jLabelSignification.setText(Messages.getString("SentenceEditionDialog.LabelSignifications")); //$NON-NLS-1$
 						jLabelSignification.setSize(69, 20);
 					}
 					{
@@ -209,7 +209,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelThemes = new JLabel();
 						ajouterPhraseFormPanel.add(jLabelThemes, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelThemes.setText("Thèmes :");
+						jLabelThemes.setText(Messages.getString("SentenceEditionDialog.LabelThemes")); //$NON-NLS-1$
 						jLabelThemes.setSize(44, 20);
 					}
 					{
@@ -222,7 +222,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						jLabelLecture = new JLabel();
 						ajouterPhraseFormPanel.add(jLabelLecture, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 								GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
-						jLabelLecture.setText("Lecture :");
+						jLabelLecture.setText(Messages.getString("SentenceEditionDialog.LabelLecture")); //$NON-NLS-1$
 					}
 					{
 						jTextFieldLecture = new JTextField();
@@ -239,7 +239,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 					{
 						jButtonValider = new JButton();
 						jPanelBtns.add(jButtonValider, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 10, 5), 0, 0));
-						jButtonValider.setText("Valider");
+						jButtonValider.setText(Messages.getString("SentenceEditionDialog.ButtonValidate")); //$NON-NLS-1$
 						jButtonValider.addActionListener(new ActionListener()
 						{
 							public void actionPerformed(ActionEvent evt)
@@ -247,7 +247,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 								if ( !jLabelMsg.getText().isEmpty())
 								{
 									if (JOptionPane.showConfirmDialog(null,
-											"Il y a des erreurs, êtes-vous sûr de vouloir continuer ?", "Attention",
+											Messages.getString("SentenceEditionDialog.WarningBoxAreYouSureToContinue"), Messages.getString("SentenceEditionDialog.WarningBoxTitle"), //$NON-NLS-1$ //$NON-NLS-2$
 											JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION)
 									{
 										return;
@@ -263,12 +263,12 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 					{
 						jButtonAnnuler = new JButton();
 						jPanelBtns.add(jButtonAnnuler, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 10, 0), 0, 0));
-						jButtonAnnuler.setText("Annuler");
+						jButtonAnnuler.setText(Messages.getString("SentenceEditionDialog.ButtonCancel")); //$NON-NLS-1$
 						jButtonAnnuler.addActionListener(new ActionListener()
 						{
 							public void actionPerformed(ActionEvent evt)
 							{
-								System.out.println("jButtonAnnuler.actionPerformed, event=" + evt);
+								System.out.println("jButtonAnnuler.actionPerformed, event=" + evt); //$NON-NLS-1$
 								dispose();
 							}
 						});

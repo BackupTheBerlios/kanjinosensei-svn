@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JToggleButton;
 
+import metier.Messages;
+
 import utils.MySoundPlayer;
 import utils.MySoundPlayer.MySoundPlayerEvent;
 
@@ -30,7 +32,7 @@ public class JPanelSonBtn extends JToggleButton
 	
 	public JPanelSonBtn()
 	{
-		nomFichierSon = "none";
+		nomFichierSon = Messages.getString("JPanelSonBtn.None"); //$NON-NLS-1$
 	}
 	
 	public JPanelSonBtn(String fileName, boolean play)
@@ -70,7 +72,7 @@ public class JPanelSonBtn extends JToggleButton
 			{
 				if (nomFichierSon.compareToIgnoreCase(evt.fileName) == 0)
 				{
-					System.err.println("Erreur de lecture du son \""+evt.fileName+"\"");
+					System.err.println(Messages.getString("JPanelSonBtn.ErrorPlayingSound")+" : \""+evt.fileName+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					setSelected((evt.isPlaying) && (nomFichierSon.compareToIgnoreCase(evt.fileName) == 0));
 				}
 				super.errorOccured(evt);

@@ -288,6 +288,16 @@ public abstract class Element implements Serializable, Comparable<Element>
 	{
 		significations.removeEmptyElements();
 		themes.removeEmptyElements();
+		
+		if (themes.contains(this.getClass().getSimpleName()))
+		{
+			themes.remove(this.getClass().getSimpleName());
+		}
+		
+		if (!themes.contains(Messages.getString(this.getClass().getSimpleName())))
+		{
+			themes.add(Messages.getString(this.getClass().getSimpleName()));
+		}
 	}
 
 	/**

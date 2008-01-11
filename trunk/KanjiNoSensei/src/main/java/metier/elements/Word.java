@@ -171,12 +171,6 @@ public class Word extends Element implements Serializable
 	public void pack()
 	{
 		sound = MyUtils.checkFileExists(sound, DICO_DIR);
-
-		// We add "word" to themes.
-		if ( !themes.contains(Messages.getString("Word.Word"))) //$NON-NLS-1$
-		{
-			themes.add(Messages.getString("Word.Word")); //$NON-NLS-1$
-		}
 	}
 
 	/**

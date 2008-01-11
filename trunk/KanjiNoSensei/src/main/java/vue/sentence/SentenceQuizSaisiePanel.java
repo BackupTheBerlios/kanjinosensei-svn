@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import metier.Dictionary;
+import metier.Messages;
 import vue.VueElement;
 import vue.VueElement.NoSaisieException;
 import vue.VueElement.QuizSaisieReponsePanel;
@@ -68,19 +69,19 @@ class SentenceQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRe
 		
 			case Kanji:
 			{
-				VueElement.addInputMethodTextField("kanji", solution, this, solution.getPhrase().getSentence());
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Kanji"), solution, this, solution.getPhrase().getSentence()); //$NON-NLS-1$
 				break;
 			}
 			
 			case Lecture:
 			{
-				VueElement.addInputMethodTextField("lecture", solution, this, solution.getPhrase().getLecture());
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Lecture"), solution, this, solution.getPhrase().getLecture()); //$NON-NLS-1$
 				break;
 			}
 			
 			case Signification:
 			{
-				VueElement.addInputMethodTextField("signification", solution, this, solution.getPhrase().getSignificationsSet(), saisieReponseComplete);
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Signification"), solution, this, solution.getPhrase().getSignificationsSet(), saisieReponseComplete); //$NON-NLS-1$
 				break;
 			}
 			
