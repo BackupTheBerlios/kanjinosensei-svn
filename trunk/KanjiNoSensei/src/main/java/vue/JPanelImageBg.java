@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 import metier.Messages;
 
@@ -48,7 +49,7 @@ public class JPanelImageBg extends JComponent
 		CENTRE, TEXTURE, NONE
 	}
 
-	public JPanelImageBg(final String fileName, final eImageDisplayMode mode)
+	public JPanelImageBg(final String fileName, final eImageDisplayMode mode) throws ImageLoadingException
 	{
 		MyUtils.trace("[3.1] JPanelImageBg creation"); //$NON-NLS-1$
 
@@ -56,6 +57,23 @@ public class JPanelImageBg extends JComponent
 		this.fileName = fileName;
 		final JPanelImageBg thisPanel = this;
 
+		bufferedImage = getBufferedImage();
+		
+		this.setMinimumSize(this.getImageDimension());
+		this.setPreferredSize(this.getImageDimension());
+		this.setSize(this.getImageDimension());
+		
+		repaint();
+		/*
+		catch (ImageLoadingException e1)
+		{
+			System.err.println(Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \""+fileName + "\"\t(" + mode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			thisPanel.mode = eImageDisplayMode.NONE;
+			// return;
+		}
+		*/
+		
+		/*
 		this.addComponentListener(new ComponentAdapter()
 		{
 
@@ -64,21 +82,12 @@ public class JPanelImageBg extends JComponent
 			{
 				MyUtils.trace("[5] JPanelImageBg < componentShown"); //$NON-NLS-1$
 
-				try
-				{
-					bufferedImage = getBufferedImage();
-					repaint();
-				}
-				catch (ImageLoadingException e1)
-				{
-					System.err.println(Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \""+fileName + "\"\t(" + mode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-					thisPanel.mode = eImageDisplayMode.NONE;
-					// return;
-				}
+				
 				super.componentShown(e);
 			}
 
 		});
+		*/
 	}
 
 	public void paintComponent(Graphics g)

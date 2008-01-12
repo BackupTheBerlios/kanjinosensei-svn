@@ -3,11 +3,23 @@
  */
 package vue.kanji;
 
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import metier.Dictionary;
 import metier.elements.Element;
 import metier.elements.Kanji;
+import vue.JPanelImageBg;
 import vue.KanjiNoSensei;
 import vue.VueElement;
+import vue.JPanelImageBg.ImageLoadingException;
 import vue.kanji.KanjiQuizConfigPanel.ETypeAff;
 
 /**
@@ -16,16 +28,30 @@ import vue.kanji.KanjiQuizConfigPanel.ETypeAff;
  */
 public class VueKanji extends VueElement
 {
-	private Kanji					kanji				= null;
+	final private static Boolean	USE_ONLY_STROKEORDERS_FONT	= true;
 
-	private KanjiVueDetaillePanel	jVueDetaillePanel	= null;
+	private static Font				strokeOrdersFont			= null;
+	{
+		try
+		{
+			strokeOrdersFont = Font.createFont(Font.TRUETYPE_FONT, new File(Element.DICO_DIR + "/fonts/KanjiStrokeOrders.ttf"));
+		}
+		catch (Exception e)
+		{
+			strokeOrdersFont = null;
+		}
+	}
 
-	private KanjiEditionDialog		jEditionDialog		= null;
+	private Kanji					kanji						= null;
 
-	private QuizQuestionPanel		jQuizQuestionPanel	= null;
+	private KanjiVueDetaillePanel	jVueDetaillePanel			= null;
 
-	private QuizSolutionPanel		jQuizSolutionPanel	= null;
-	
+	private KanjiEditionDialog		jEditionDialog				= null;
+
+	private QuizQuestionPanel		jQuizQuestionPanel			= null;
+
+	private QuizSolutionPanel		jQuizSolutionPanel			= null;
+
 	public VueKanji(KanjiNoSensei app, Kanji kanji, boolean useRomaji)
 	{
 		super(app, useRomaji);
@@ -62,8 +88,7 @@ public class VueKanji extends VueElement
 			}
 			else
 			{
-				jQuizQuestionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel()
-						.getAffichageElementQuiz());
+				jQuizQuestionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageElementQuiz());
 			}
 		}
 		return jQuizQuestionPanel;
@@ -98,7 +123,7 @@ public class VueKanji extends VueElement
 		{
 			return getQuizSolutionPanelCopy();
 		}
-		
+
 		if (jQuizSolutionPanel == null)
 		{
 			if (KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageReponseQuiz() == ETypeAff.Detaille)
@@ -109,8 +134,7 @@ public class VueKanji extends VueElement
 			{
 				try
 				{
-					jQuizSolutionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel()
-							.getAffichageReponseQuiz());
+					jQuizSolutionPanel = new KanjiQuizAffPanel(this, KanjiQuizConfigPanel.getKanjiQuizConfigPanel().getAffichageReponseQuiz());
 				}
 				catch (NoAffException e)
 				{
@@ -179,5 +203,50 @@ public class VueKanji extends VueElement
 	public Element getElement()
 	{
 		return kanji;
+	}
+
+	/**
+	 * This method initializes jPanelImageBg
+	 * 
+	 * @return vue.JPanelImageBg
+	 */
+	private JPanelImageBg	jPanelImageBg			= null;
+
+	private JPanel			jPanelStrokeOrdersFont	= null;
+
+	protected JComponent getStrokeOrdersImgComponent()
+	{
+		if (jPanelImageBg == null)
+		{
+			try
+			{
+				if ((strokeOrdersFont != null) && USE_ONLY_STROKEORDERS_FONT) throw new ImageLoadingException("USE_ONLY_STROKEORDERS_FONT");
+				jPanelImageBg = new JPanelImageBg(getKanji().getStrokeOrderPicture(), JPanelImageBg.eImageDisplayMode.CENTRE);
+				return jPanelImageBg;
+			}
+			catch (ImageLoadingException e)
+			{
+				jPanelImageBg = null;
+
+				if (jPanelStrokeOrdersFont == null)
+				{
+					jPanelStrokeOrdersFont = new JPanel(new BorderLayout(2, 2));
+
+					if (strokeOrdersFont != null)
+					{
+						JLabel jLabelStrokeFont = new JLabel(getKanji().getCodeUTF8().toString());
+						jLabelStrokeFont.setVisible(true);
+						jPanelStrokeOrdersFont.add(jLabelStrokeFont, BorderLayout.CENTER);
+						jPanelStrokeOrdersFont.setVisible(true);
+						jLabelStrokeFont.setFont(strokeOrdersFont.deriveFont((float) 200));
+						jPanelStrokeOrdersFont.doLayout();
+					}
+				}
+
+				return jPanelStrokeOrdersFont;
+			}
+		}
+
+		return jPanelImageBg;
 	}
 }

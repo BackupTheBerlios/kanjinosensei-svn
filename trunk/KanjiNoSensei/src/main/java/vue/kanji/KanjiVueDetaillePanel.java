@@ -5,10 +5,12 @@ package vue.kanji;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -16,8 +18,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,9 +32,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import metier.Messages;
+import metier.elements.Element;
 
 import utils.MyUtils;
 import vue.JPanelImageBg;
+import vue.JPanelImageBg.ImageLoadingException;
 import vue.VueElement.QuizQuestionPanel;
 import vue.VueElement.QuizSolutionPanel;
 import vue.VueElement.VueDetaillePanel;
@@ -44,6 +51,8 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private static final long	serialVersionUID				= 1L;
 
 	public static final int		vueHeight						= 100;
+	
+	public static final int		labelFontSize					= 20;
 
 	private VueKanji			vue								= null;
 
@@ -68,6 +77,8 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private JPanel				ImgTraceContentPane				= null;
 
 	private JPanelImageBg		jPanelImageBg					= null;
+	
+	private JPanel				jPanelStrokeOrdersFont			= null;
 
 	private final JPanel		vueDetaillePanel				= this;
 
@@ -135,7 +146,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		jLabelCodeUTF8.setText(vue.getKanji().getCodeUTF8().toString());
 		jLabelLecturesChinoises.setText(Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : " + vue.toRomajiIfNeeded(vue.getKanji().getLecturesON())); //$NON-NLS-1$ //$NON-NLS-2$
 		jLabelLecturesJaponaises.setText(Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : " + vue.toRomajiIfNeeded(vue.getKanji().getLecturesKUN())); //$NON-NLS-1$ //$NON-NLS-2$
-		jLabelSignifications.setText(Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : "+ vue.getKanji().getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
+		jLabelSignifications.setText(Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : " + vue.getKanji().getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
 		jLabelThemes.setText(Messages.getString("KanjiVueDetaillePanel.LabelThemes") + " : " + vue.getKanji().getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		setVisible(false);
@@ -181,7 +192,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 							loc.translate(20, 20);
 							imageTraceDialog.setLocation(loc);
 							MyUtils.trace("jLabelCodeUTF8 double clicked should display imageTraceDialog"); //$NON-NLS-1$
-							
+
 							imageTraceDialog.setVisible(true);
 						}
 						else
@@ -265,6 +276,17 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jPanelInfos.add(jLabelSignifications);
 			jLabelSignifications.setOpaque(true);
 			jPanelInfos.add(jLabelThemes);
+			
+			for(Component c : jPanelInfos.getComponents())
+			{
+				if (JLabel.class.isInstance(c))
+				{
+					JLabel label = ((JLabel) c);
+					label.setFont(label.getFont().deriveFont((float) labelFontSize));
+				}
+			}
+			
+			jPanelInfos.doLayout();
 		}
 		return jPanelInfos;
 	}
@@ -291,31 +313,32 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 			ImgTraceDialog.addComponentListener(new ComponentAdapter()
 			{
-			
+
 				@Override
 				public void componentShown(ComponentEvent e)
 				{
 					MyUtils.trace("[4] ImgTraceDialog < componentShown"); //$NON-NLS-1$
 					MyUtils.assertTrue((ImgTraceDialog.getContentPane() == getImgTraceContentPane()) && (ImgTraceDialog.getContentPane() != null), "ImgTraceDialog unexpected contentPane"); //$NON-NLS-1$
 
-					Dimension d = getJPanelImageBg().getImageDimension();
-					MyUtils.assertFalse((d.width <= 10) || (d.height <= 10),
-							"ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
+					Dimension d = vue.getStrokeOrdersImgComponent().getPreferredSize();
+					Dimension nd = new Dimension(d.width+20, d.height+30);
+					MyUtils.assertFalse((d.width <= 10) || (d.height <= 10), "ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
 
-					ImgTraceDialog.setPreferredSize(new Dimension(d.width + 20, d.height + 30));
+					ImgTraceDialog.setMinimumSize(nd);
+					ImgTraceDialog.setPreferredSize(ImgTraceDialog.getMinimumSize());
 					ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
-	
+
 					ImgTraceContentPane.doLayout();
 					ImgTraceContentPane.repaint();
 					ImgTraceContentPane.revalidate();
 					ImgTraceContentPane.setVisible(true);
-					
+
 					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isDisplayable(), "ContentPane not displayable"); //$NON-NLS-1$
 					MyUtils.assertTrue(ImgTraceDialog.getContentPane().isVisible(), "ContentPane not visible"); //$NON-NLS-1$
-					
+
 					super.componentShown(e);
 				}
-			
+
 			});
 
 		}
@@ -334,24 +357,9 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			MyUtils.trace("[2] ImgTraceContentPane creation"); //$NON-NLS-1$
 			ImgTraceContentPane = new JPanel();
 			ImgTraceContentPane.setLayout(new BorderLayout());
-			ImgTraceContentPane.add(getJPanelImageBg(), BorderLayout.CENTER);
+			ImgTraceContentPane.add(vue.getStrokeOrdersImgComponent(), BorderLayout.CENTER);
 		}
 		return ImgTraceContentPane;
-	}
-	
-	/**
-	 * This method initializes jPanelImageBg
-	 * 
-	 * @return vue.JPanelImageBg
-	 */
-	private JPanelImageBg getJPanelImageBg()
-	{
-		if (jPanelImageBg == null)
-		{
-			jPanelImageBg = new JPanelImageBg(vue.getKanji().getStrokeOrderPicture(),
-					JPanelImageBg.eImageDisplayMode.CENTRE);
-		}
-		return jPanelImageBg;
 	}
 
 	/*
