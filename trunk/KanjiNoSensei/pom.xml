@@ -164,11 +164,29 @@
 										<exclude name="**/CVS" />
 									</fileset>
 								</copy>
+								
+								<!-- On liste les fichiers à excludes de l'archive (dico/fonts/*) -->
+								<exec executable="echo" output="${project.build.directory}/excludes.txt"><arg value="dico/fonts/*.*"/></exec>
+								
+								<!-- On lance 7z en spécifiant la liste des fichiers à exclure -->
 								<exec executable="7z">
-									<arg
-										line="a ${project.build.directory}/${project.name}-${project.version}.7z ${finalReleaseDirectory}/*" />
+									<arg value="a" />
+									<arg value="-r" />
+									<arg value="-x@${project.build.directory}/excludes.txt" />
+									<!-- <arg value="-x&#39;&#33;&#39;${finalReleaseDirectory}/dico/fonts/*" /> -->
+									<arg value="${project.build.directory}/${project.name}-${project.version}.7z" />
+									<arg value="${finalReleaseDirectory}/*" />
 								</exec>
-
+								
+								<!-- On 7zip les fontes -->
+								<exec executable="echo" output="${project.build.directory}/excludes.txt"><arg value=".*"/></exec>
+								<exec executable="7z">
+									<arg value="a" />
+									<arg value="-r" />
+									<arg value="-x@${project.build.directory}/excludes.txt" />
+									<arg value="${project.build.directory}/fonts.7z" />
+									<arg value="${basedir}/dico/fonts/*" />
+								</exec>
 								<!-- 
 									mvn install:install-file -DgroupId=GROUPID -DartifactId=ARTIFACTID -Dversion=VERSION -Dpackaging=jar -Dfile=/path/to/file
 									TODO: Générer un script capable d'installer toutes les libs sur un environnement maven vierge.

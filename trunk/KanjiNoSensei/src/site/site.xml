@@ -23,9 +23,9 @@
 		<menu name="KanjiNoSensei project">
 			<item name="Présentation" href="/index.html" />
 			<item name="Screenshots"
-				href="https://developer.berlios.de/screenshots/?group_id=${berliOSid}" />
+				href="https://developer.berlios.de/screenshots/?group_id=${berliOSid}"/>
 			<!-- <item name="Téléchargement" href="http://developer.berlios.de/project/filelist.php?group_id=${berliOSid}" /> -->
-			<item name="Téléchargement" href="releases/" />
+			<item name="Téléchargement" href="http://kanjinosensei.berlios.de/releases/" />
 			<item name="FAQ" href="/faq.html" />
 			<item name="TODO list" href="/todolist.html" />
 		</menu>

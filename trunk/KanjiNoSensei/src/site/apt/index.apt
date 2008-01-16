@@ -39,4 +39,7 @@ Un moteur de flashcard évolutif
 Contenu pour l'apprentissage du Japonais
 
 	Kanji no Sensei est développé de sorte que le moteur soit découplé du contenu (grace à un systeme de plugins), mais un contenu de base pour l'apprentissage de kanjis et de vocabulaire japonais est constitué en parallèle.
-	Ce contenu se base sur les cours délivrés en section LEA de l'Université Toulouse le Mirail.
+	Ce contenu prend modèle sur les cours délivrés en section LEA de l'Université Toulouse le Mirail.
+	Etant moi même étudiant et développant sur mon temps libre, je ne peux pas garantir l'entière fiabilité des données que je saisie (coquilles, ...), néanmoins je fais de mon mieux et je compte sur la bonne volonté des utilisateurs pour me signaler toute erreur restante afin que je la corrige.
+
+	{{{mailto:p.escallier@laposte.net}Escallier Pierre}}

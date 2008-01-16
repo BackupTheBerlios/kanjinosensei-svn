@@ -1,383 +1,443 @@
-"Hiragana";;;;;;
-"metier.elements.Kanji";"hiragana>kanji";;"あ";"dico/hiragana/あ-bw.png";"あ";
-"metier.elements.Kanji";"hiragana>kanji";;"い";"dico/hiragana/い-bw.png";"い";
-"metier.elements.Kanji";"hiragana>kanji";;"う";"dico/hiragana/う-bw.png";"う";
-"metier.elements.Kanji";"hiragana>kanji";;"え";"dico/hiragana/え-bw.png";"え";
-"metier.elements.Kanji";"hiragana>kanji";;"お";"dico/hiragana/お-bw.png";"お";
-"metier.elements.Kanji";"hiragana>kanji";;"か";"dico/hiragana/か-bw.png";"か";
-"metier.elements.Kanji";"hiragana>kanji";;"き";"dico/hiragana/き-bw.png";"き";
-"metier.elements.Kanji";"hiragana>kanji";;"く";"dico/hiragana/く-bw.png";"く";
-"metier.elements.Kanji";"hiragana>kanji";;"け";"dico/hiragana/け-bw.png";"け";
-"metier.elements.Kanji";"hiragana>kanji";;"こ";"dico/hiragana/こ-bw.png";"こ";
-"metier.elements.Kanji";"hiragana>kanji";;"さ";"dico/hiragana/さ-bw.png";"さ";
-"metier.elements.Kanji";"hiragana>kanji";;"し";"dico/hiragana/し-bw.png";"し";
-"metier.elements.Kanji";"hiragana>kanji";;"す";"dico/hiragana/す-bw.png";"す";
-"metier.elements.Kanji";"hiragana>kanji";;"せ";"dico/hiragana/せ-bw.png";"せ";
-"metier.elements.Kanji";"hiragana>kanji";;"そ";"dico/hiragana/そ-bw.png";"そ";
-"metier.elements.Kanji";"hiragana>kanji";;"た";"dico/hiragana/た-bw.png";"た";
-"metier.elements.Kanji";"hiragana>kanji";;"ち";"dico/hiragana/ち-bw.png";"ち";
-"metier.elements.Kanji";"hiragana>kanji";;"つ";"dico/hiragana/つ-bw.png";"つ";
-"metier.elements.Kanji";"hiragana>kanji";;"て";"dico/hiragana/て-bw.png";"て";
-"metier.elements.Kanji";"hiragana>kanji";;"と";"dico/hiragana/と-bw.png";"と";
-"metier.elements.Kanji";"hiragana>kanji";;"な";"dico/hiragana/な-bw.png";"な";
-"metier.elements.Kanji";"hiragana>kanji";;"に";"dico/hiragana/に-bw.png";"に";
-"metier.elements.Kanji";"hiragana>kanji";;"ぬ";"dico/hiragana/ぬ-bw.png";"ぬ";
-"metier.elements.Kanji";"hiragana>kanji";;"ね";"dico/hiragana/ね-bw.png";"ね";
-"metier.elements.Kanji";"hiragana>kanji";;"の";"dico/hiragana/の-bw.png";"の";
-"metier.elements.Kanji";"hiragana>kanji";;"は";"dico/hiragana/は-bw.png";"は";
-"metier.elements.Kanji";"hiragana>kanji";;"ひ";"dico/hiragana/ひ-bw.png";"ひ";
-"metier.elements.Kanji";"hiragana>kanji";;"ふ";"dico/hiragana/ふ-bw.png";"ふ";
-"metier.elements.Kanji";"hiragana>kanji";;"へ";"dico/hiragana/へ-bw.png";"へ";
-"metier.elements.Kanji";"hiragana>kanji";;"ほ";"dico/hiragana/ほ-bw.png";"ほ";
-"metier.elements.Kanji";"hiragana>kanji";;"ま";"dico/hiragana/ま-bw.png";"ま";
-"metier.elements.Kanji";"hiragana>kanji";;"み";"dico/hiragana/み-bw.png";"み";
-"metier.elements.Kanji";"hiragana>kanji";;"む";"dico/hiragana/む-bw.png";"む";
-"metier.elements.Kanji";"hiragana>kanji";;"め";"dico/hiragana/め-bw.png";"め";
-"metier.elements.Kanji";"hiragana>kanji";;"も";"dico/hiragana/も-bw.png";"も";
-"metier.elements.Kanji";"hiragana>kanji";;"や";"dico/hiragana/や-bw.png";"や";
-"metier.elements.Kanji";"hiragana>kanji";;"ゆ";"dico/hiragana/ゆ-bw.png";"ゆ";
-"metier.elements.Kanji";"hiragana>kanji";;"よ";"dico/hiragana/よ-bw.png";"よ";
-"metier.elements.Kanji";"hiragana>kanji";;"ら";"dico/hiragana/ら-bw.png";"ら";
-"metier.elements.Kanji";"hiragana>kanji";;"り";"dico/hiragana/り-bw.png";"り";
-"metier.elements.Kanji";"hiragana>kanji";;"る";"dico/hiragana/る-bw.png";"る";
-"metier.elements.Kanji";"hiragana>kanji";;"れ";"dico/hiragana/れ-bw.png";"れ";
-"metier.elements.Kanji";"hiragana>kanji";;"ろ";"dico/hiragana/ろ-bw.png";"ろ";
-"metier.elements.Kanji";"hiragana>kanji";;"わ";"dico/hiragana/わ-bw.png";"わ";
-"metier.elements.Kanji";"hiragana>kanji";;"を";"dico/hiragana/を-bw.png";"を";
-"metier.elements.Kanji";"hiragana>kanji";;"ん";"dico/hiragana/ん-bw.png";"ん";
-;;;;;;
-"Katakana";;;;;;
-"metier.elements.Kanji";"katakana>kanji";;"ア";"dico/katakana/ア-bw.png";"ア";
-"metier.elements.Kanji";"katakana>kanji";;"イ";"dico/katakana/イ-bw.png";"イ";
-"metier.elements.Kanji";"katakana>kanji";;"ウ";"dico/katakana/ウ-bw.png";"ウ";
-"metier.elements.Kanji";"katakana>kanji";;"エ";"dico/katakana/エ-bw.png";"エ";
-"metier.elements.Kanji";"katakana>kanji";;"オ";"dico/katakana/オ-bw.png";"オ";
-"metier.elements.Kanji";"katakana>kanji";;"カ";"dico/katakana/カ-bw.png";"カ";
-"metier.elements.Kanji";"katakana>kanji";;"キ";"dico/katakana/キ-bw.png";"キ";
-"metier.elements.Kanji";"katakana>kanji";;"ク";"dico/katakana/Japanese_Katakana_KU_Stroke.png";"ク";
-"metier.elements.Kanji";"katakana>kanji";;"ケ";"dico/katakana/ケ-bw.png";"ケ";
-"metier.elements.Kanji";"katakana>kanji";;"コ";"dico/katakana/コ-bw.png";"コ";
-"metier.elements.Kanji";"katakana>kanji";;"サ";"dico/katakana/Japanese_Katakana_SA_Stroke.png";"サ";
-"metier.elements.Kanji";"katakana>kanji";;"シ";"dico/katakana/シ-bw.png";"シ";
-"metier.elements.Kanji";"katakana>kanji";;"ス";"dico/katakana/ス-bw.png";"ス";
-"metier.elements.Kanji";"katakana>kanji";;"セ";"dico/katakana/セ-bw.png";"セ";
-"metier.elements.Kanji";"katakana>kanji";;"ソ";"dico/katakana/ソ-bw.png";"ソ";
-"metier.elements.Kanji";"katakana>kanji";;"タ";"dico/katakana/タ-bw.png";"タ";
-"metier.elements.Kanji";"katakana>kanji";;"チ";"dico/katakana/チ-bw.png";"チ";
-"metier.elements.Kanji";"katakana>kanji";;"ツ";"dico/katakana/ツ-bw.png";"ツ";
-"metier.elements.Kanji";"katakana>kanji";;"テ";"dico/katakana/テ-bw.png";"テ";
-"metier.elements.Kanji";"katakana>kanji";;"ト";"dico/katakana/ト-bw.png";"ト";
-"metier.elements.Kanji";"katakana>kanji";;"ナ";"dico/katakana/ナ-bw.png";"ナ";
-"metier.elements.Kanji";"katakana>kanji";;"ニ";"dico/katakana/ニ-bw.png";"ニ";
-"metier.elements.Kanji";"katakana>kanji";;"ヌ";"dico/katakana/ヌ-bw.png";"ヌ";
-"metier.elements.Kanji";"katakana>kanji";;"ネ";"dico/katakana/ネ-bw.png";"ネ";
-"metier.elements.Kanji";"katakana>kanji";;"ノ";"dico/katakana/ノ-bw.png";"ノ";
-"metier.elements.Kanji";"katakana>kanji";;"ハ";"dico/katakana/ハ-bw.png";"ハ";
-"metier.elements.Kanji";"katakana>kanji";;"ヒ";"dico/katakana/ヒ-bw.png";"ヒ";
-"metier.elements.Kanji";"katakana>kanji";;"フ";"dico/katakana/フ-bw.png";"フ";
-"metier.elements.Kanji";"katakana>kanji";;"ヘ";"dico/katakana/ヘ-bw.png";"ヘ";
-"metier.elements.Kanji";"katakana>kanji";;"ホ";"dico/katakana/ホ-bw.png";"ホ";
-"metier.elements.Kanji";"katakana>kanji";;"マ";"dico/katakana/マ-bw.png";"マ";
-"metier.elements.Kanji";"katakana>kanji";;"ミ";"dico/katakana/ミ-bw.png";"ミ";
-"metier.elements.Kanji";"katakana>kanji";;"ム";"dico/katakana/ム-bw.png";"ム";
-"metier.elements.Kanji";"katakana>kanji";;"メ";"dico/katakana/メ-bw.png";"メ";
-"metier.elements.Kanji";"katakana>kanji";;"モ";"dico/katakana/モ-bw.png";"モ";
-"metier.elements.Kanji";"katakana>kanji";;"ヤ";"dico/katakana/Japanese_Katakana_YA_Stroke.png";"ヤ";
-"metier.elements.Kanji";"katakana>kanji";;"ユ";"dico/katakana/Japanese_Katakana_YU_Stroke.png";"ユ";
-"metier.elements.Kanji";"katakana>kanji";;"ヨ";"dico/katakana/Japanese_Katakana_YO_Stroke.png";"ヨ";
-"metier.elements.Kanji";"katakana>kanji";;"ラ";"dico/katakana/Japanese_Katakana_RA_Stroke.png";"ラ";
-"metier.elements.Kanji";"katakana>kanji";;"リ";"dico/katakana/Japanese_Katakana_RI_Stroke.png";"リ";
-"metier.elements.Kanji";"katakana>kanji";;"ル";"dico/katakana/Japanese_Katakana_RU_Stroke.png";"ル";
-"metier.elements.Kanji";"katakana>kanji";;"レ";"dico/katakana/レ-bw.png";"レ";
-"metier.elements.Kanji";"katakana>kanji";;"ロ";"dico/katakana/Japanese_Katakana_RO_Stroke.png";"ロ";
-"metier.elements.Kanji";"katakana>kanji";;"ワ";"dico/katakana/Japanese_Katakana_WA_Stroke.png";"ワ";
-"metier.elements.Kanji";"katakana>kanji";;"ヲ";"dico/katakana/Japanese_Katakana_WO_Stroke.png";"ヲ";
-"metier.elements.Kanji";"katakana>kanji";;"ン";"dico/katakana/Japanese_Katakana_N_Stroke.png";"ン";
-;;;;;;
-"Hiragana (mot)";;;;;;
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"あ";"あ";"dico/kana_female/a.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"い";"い";"dico/kana_female/i.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"う";"う";"dico/kana_female/u.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"え";"え";"dico/kana_female/e.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"お";"お";"dico/kana_female/o.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"か";"か";"dico/kana_female/ka.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"き";"き";"dico/kana_female/ki.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"く";"く";"dico/kana_female/ku.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"け";"け";"dico/kana_female/ke.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"こ";"こ";"dico/kana_female/ko.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"さ";"さ";"dico/kana_female/sa.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"し";"し";"dico/kana_female/shi.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"す";"す";"dico/kana_female/su.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"せ";"せ";"dico/kana_female/se.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"そ";"そ";"dico/kana_female/so.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"た";"た";"dico/kana_female/ta.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ち";"ち";"dico/kana_female/chi.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"つ";"つ";"dico/kana_female/tsu.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"て";"て";"dico/kana_female/te.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"と";"と";"dico/kana_female/to.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"な";"な";"dico/kana_female/na.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"に";"に";"dico/kana_female/ni.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ぬ";"ぬ";"dico/kana_female/nu.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ね";"ね";"dico/kana_female/ne.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"の";"の";"dico/kana_female/no.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"は";"は";"dico/kana_female/ha.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ひ";"ひ";"dico/kana_female/hi.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ふ";"ふ";"dico/kana_female/fu.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"へ";"へ";"dico/kana_female/he.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ほ";"ほ";"dico/kana_female/ho.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ま";"ま";"dico/kana_female/ma.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"み";"み";"dico/kana_female/mi.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"む";"む";"dico/kana_female/mu.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"め";"め";"dico/kana_female/me.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"も";"も";"dico/kana_female/mo.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"や";"や";"dico/kana_female/ya.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ゆ";"ゆ";"dico/kana_female/yu.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"よ";"よ";"dico/kana_female/yo.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ら";"ら";"dico/kana_female/ra.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"り";"り";"dico/kana_female/ri.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"る";"る";"dico/kana_female/ru.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"れ";"れ";"dico/kana_female/re.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ろ";"ろ";"dico/kana_female/ro.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"わ";"わ";"dico/kana_female/wa.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"を";"を";"dico/kana_female/wo.wav";
-"metier.elements.Word";"hiragana>mot, L1>Ecriture>leçon 1";;"ん";"ん";"dico/kana_female/n.wav";
-;;;;;;
-"Katakana (mot)";;;;;;
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ア";"ア";"dico/kana_female/a.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"イ";"イ";"dico/kana_female/i.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ウ";"ウ";"dico/kana_female/u.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"エ";"エ";"dico/kana_female/e.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"オ";"オ";"dico/kana_female/o.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"カ";"カ";"dico/kana_female/ka.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"キ";"キ";"dico/kana_female/ki.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ク";"ク";"dico/kana_female/ku.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ケ";"ケ";"dico/kana_female/ke.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"コ";"コ";"dico/kana_female/ko.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"サ";"サ";"dico/kana_female/sa.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"シ";"シ";"dico/kana_female/shi.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ス";"ス";"dico/kana_female/su.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"セ";"セ";"dico/kana_female/se.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ソ";"ソ";"dico/kana_female/so.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"タ";"タ";"dico/kana_female/ta.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"チ";"チ";"dico/kana_female/chi.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ツ";"ツ";"dico/kana_female/tsu.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"テ";"テ";"dico/kana_female/te.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ト";"ト";"dico/kana_female/to.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ナ";"ナ";"dico/kana_female/na.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ニ";"ニ";"dico/kana_female/ni.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヌ";"ヌ";"dico/kana_female/nu.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ネ";"ネ";"dico/kana_female/ne.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ノ";"ノ";"dico/kana_female/no.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ハ";"ハ";"dico/kana_female/ha.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヒ";"ヒ";"dico/kana_female/hi.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"フ";"フ";"dico/kana_female/fu.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヘ";"ヘ";"dico/kana_female/he.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ホ";"ホ";"dico/kana_female/ho.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"マ";"マ";"dico/kana_female/ma.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ミ";"ミ";"dico/kana_female/mi.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ム";"ム";"dico/kana_female/mu.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"メ";"メ";"dico/kana_female/me.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"モ";"モ";"dico/kana_female/mo.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヤ";"ヤ";"dico/kana_female/ya.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ユ";"ユ";"dico/kana_female/yu.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヨ";"ヨ";"dico/kana_female/yo.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ラ";"ラ";"dico/kana_female/ra.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"リ";"リ";"dico/kana_female/ri.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ル";"ル";"dico/kana_female/ru.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"レ";"レ";"dico/kana_female/re.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ロ";"ロ";"dico/kana_female/ro.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ワ";"ワ";"dico/kana_female/wa.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ヲ";"ヲ";"dico/kana_female/wo.wav";
-"metier.elements.Word";"katakana>mot, L1>Ecriture>leçon 2";;"ン";"ン";"dico/kana_female/n.wav";
-;;;;;;
-;;;;;;
-"Kanjis L1 Ecriture leçon 3";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"jour, soleil";"日";"dico/kanji_日.png";"ひ、−か";"ニチ、ジツ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"livre, origine, ceci, autrfois, (suffixe pour compter les objets longs)";"本";"dico/kanji_本.png";"もと";"ホン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"être humain, homme, personne";"人";"dico/kanji_人.png";"ひと";"ヂン,ニン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"mot, langue, raconter, converser";"語";"dico/kanji_語.png";"かた（る）、かた（らう）";"ゴ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"je, privé";"私";"dico/kanji_私.png";"わたくし、わたし";"シ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"plus tôt, précédent, priorité, futur, destination, pointe";"先";"dico/kanji_先.png";"さき";"セン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"vie, vivre, laisser vivre, exploiter, porter (un enfant), être né, faire pousser, pousser, cru, pur";"生";"dico/kanji_生.png";"い（きる）、い（ける）、い（かす）、う（む）、う（まれる）、は（やす）、は（える）、お（う）、なま、き−";"セイ、ショウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"maintenant";"今";"dico/kanji_今.png";"いま";"キン,コン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"bois, forêt";"林";"dico/kanji_林.png";"はやし";"リン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"étude, science, étudier";"学";"dico/kanji_学.png";"まな(ぶ)";"ガク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"pays";"国";"dico/kanji_国.png";"くに";"コク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"bureau, table";"机";"dico/kanji_机.png";"つくえ";"キ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"montagne";"山";"dico/kanji_山.png";"やま";"サン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"milieu, intérieur, tout";"中";"dico/kanji_中.png";"なか";"チュウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 3>kanjis";"quoi, combien, comment";"何";"dico/kanji_何.png";"なん,「なに」";"カ"
-;;;;;;
-"Phrases L1 Ecriture leçon 3";;;;;;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Je suis japonais";"私は日本人です";"わたし　は　にほんじん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Je suis professeur de japonais";"私は日本語の先生です";"わたし　は　にほんご　の　せんせい　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Bonjour";"今日は";"こんにちは";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Je suis monsieur Hayashi";"私は林です";"わたし　は　はやし　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Êtes-vous étudiant ?";"あなたは学生ですか";"あなた　は　がくせい　です　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Oui, je suis étudiant";"はい、私は学生です";"はい、わたし　は　がくせい　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Êtes-vous français ?";"あなたはフランス人ですか";"あなたは　フランスじん　です　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Non, je ne suis pas français";"いいえ、私はフランス人ではありません";"いいえ、わたし　は　フランスじん　では　ありません";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Cette personne est chinoise";"このかたは中国人です";"この　かた　は　ちゅうごくじん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Il y a un livre sur le bureau";"机のうえに本があります";"つくえ　の　うえ　に　ほん　が　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"C'est le livre de monsieur Yamamoto";"山本さんの本です";"やまもと　さん　の　ほん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 3>phrases";"Qu'est-ce que ceci ?";"これは何ですか";"これ　は　なん　です　か";;
-;;;;;;
-"Kanjis L1 Ecriture leçon 4";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"rizière";"田";"dico/kanji_田.png";"た";"デン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"maison, famille";"家";"dico/kanji_家.png";"いえ,や";"カ,ケ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"électricité";"電";"dico/kanji_電.png";;"デン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"véhicule, roue";"車";"dico/kanji_車.png";"くるま";"シャ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"féminin, femme";"女";"dico/kanji_女.png";"おんな、め";"ジョ,ニョ、「ニョウ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"homme";"男";"dico/kanji_男.png";"おとこ";"ダン,ナン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"conversation, histoire, parler";"話";"dico/kanji_話.png";"はな(す)、はなし";"ワ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"supérieur, haut, élever, monter, soulever (une question)";"上";"dico/kanji_上.png";"うえ、かみ、「うわ−」、あ（げる）、あ（がる）、の（ぼる）、のぼ（せる）、のぼ（す）";"ジョウ、「ショウ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"bas, inférieur, abaisser, prononcer (sentence), pendre, descendre, donner";"下";"dico/kanji_下.png";"した、もと、しも、さ（げる）、お（ろす）、くだ（す）、さ（がる）、お（りる）、く（だる）";"ゲ,カ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"rivière";"川";"dico/kanji_川.png";"かわ";"セン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"arbre, bois";"木";"dico/kanji_木.png";"き、「こ」";"ボク,モク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"école, épreuve (d'imprimerie)";"校";"dico/kanji_校.png";;"コウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"jardin";"庭";"dico/kanji_庭.png";"にわ";"テイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 4>kanjis";"pièce d'eau, étang";"池";"dico/kanji_池.png";"いけ";"チ"
-;;;;;;
-"Phrases L1 Ecriture leçon 4";;;;;;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Je suis Tanaka";"私は田中です";"わたし　は　たなか　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"C'est une maison";"それは家です";"それ　は　うえ　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"C'est le train";"あれは電車です";"あれ　は　でんしゃ　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Es-ce un chapeau pour femme ?";"それは女のぼうしですか";"それ　は　うえ　です　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"C'est un chapeau pour homme";"それは男のぼうしです";"それ　は　おとこ　の　ぼうし　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Il y a un téléphone ici";"ここに電話があります";"ここ　に　でんわ　が　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Qu'y-a-t'il sur le réfrigérateur ?";"れいぞうこの上に何がありますか";"れいぞうこ　の　うえ　に　なに　が　あります　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Qu'y a t'il sous le bureau ?";"机の下に何がありますか";"つくえ　の　した　に　なに　が　あります　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Il y a une rivière à coté de la maison";"家のそばに川があります";"いえ　の　そば　に　かわ　が　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Ici c'est l'école";"ここは学校です";"ここ　は　がっこう　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Qu'y a t'il dans ce jardin là-bas ?";"あの庭に何がありますか";"あの　にわ　に　なに　が　あります　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Il y a un arbre, un étang, etc...";"木や池などがあります";"き　や　いけ　など　が　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 4>phrases";"Y'a t'il quelque chose sur l'arbre ?";"木の上に何かいますか";"き　の　うえ　に　なにか　います　か";;
-;;;;;;
-"Kanjis L1 Ecriture leçon 5";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 1, un";"一";"dico/kanji_一.png";"ひと−,ひと（つ）";"イチ,イツ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 2, deux";"二";"dico/kanji_二.png";"ふた−,ふた（つ）";"ニ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 3, trois";"三";"dico/kanji_三.png";"み,み（つ）、みっ（つ）";"サン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 4, quatre";"四";"dico/kanji_四.png";"よ,よっ（つ）,よん,よ（つ）";"シ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 5, cinq";"五";"dico/kanji_五.png";"いつ,いつ（つ）";"ゴ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 6, six";"六";"dico/kanji_六.png";"むっ（つ）、む（つ）、む−、「むい」";"ロク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 7, sept";"七";"dico/kanji_七.png";"なな（つ）、なな、「なの」";"シチ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 8, huit";"八";"dico/kanji_八.png";"やっ（つ）、や（つ）、や、「よう」";"ハチ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 9, neuf";"九";"dico/kanji_九.png";"ここの,ここの（つ）";"キュウ,ク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"le chiffre 10, dix";"十";"dico/kanji_十.png";"とお、と";"ジュウ、ジ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"enfant";"子";"dico/kanji_子.png";"こ";"シ,ス"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"pied, jambe, suffire, ajouter";"足";"dico/kanji_足.png";"あし、た（る）、た（りる）、た（す）";"ソク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"oiseau";"鳥";"dico/kanji_鳥.png";"とり";"チョウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"bleu,inexpérience,vert";"青";"dico/kanji_青.png";"あお,あお（い）";"セイ、ショウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"rouge, rougir, faire rougir";"赤";"dico/kanji_赤.png";"あか（い）、あか、あか（らむ）、あか（らめる）";"セキ、シャク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"blanc";"白";"dico/kanji_白.png";"しろ（い）、しろ、「しら」";"ハク,ビャク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"noir";"黒";"dico/kanji_黒.png";"くろ（い）、くろ";"コク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 5>kanjis";"chien";"犬";"dico/kanji_犬.png";"いぬ";"ケン"
-;;;;;;
-"Phrases L1 Ecriture leçon 5";;;;;;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a trente deux pommes ici";"ここにりんごが三十二あります";"ここ　に　りんご　が　さん　じゅう　に　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 5 enfants";"子どもが五人います";"こども　が　ごにん　います";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 1 stylo";"まねんひつが一本あります";"まねんひつ　が　いっぽん　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 6 paires de chaussettes";"くつ下が六足あります";"くつした　が　ろくそく　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 9 oiseaux";"鳥が八わいます";"とり　が　きゅうわ　います";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 4 garçons et 6 filles";"男の子は四人と女の子が六人います";"おとこ　の　こ　は　よにん　と　おんな　の　こ　が　ろくにん　います";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 7 feuilles et 9 enveloppes";"かみが七まいとふうとうが九まいあります";"かみ　が　ななまい　と　ふうとう　が　きゅうまい　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Ici il y a 1 feuille bleue et 3 blanches";"ここに青いかみが一まいと白いかみが三まいあります";"ここ　に　あおい　かみ　が　いちまい　と　しろい　かみ　が　さんまい　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Il y a 5 chiens ici";"ここに犬がごひきいます";"ここ　に　いぬ　が　ごひき　います";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"Là-bas il y a 15 feuilles rouges et 39 noires";"あそこに赤いかみが十五まいと黒いかみが三十九まいあります";"あそこ　に　あかい　かみ　が　じゅうごまい　と　くろい　かみ　が　さんじゅうきゅうまい　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"un deux trois quatre cinq six sept huit neuf dix onze douze treize quatorze quinze seize dix-sept dix-huit dix-neuf vingt vingt-et-un vingt-deux";"一　二　三　四　五　六　七　八　九　十　十一　十二　十三　十四　十五　十六　十七　十八　十九　二十　二十一　二十二";"いち　に　さん　し　ご　ろく　はち　きゅう　じゅう　じゅういち　じゅうに　じゅうさん　じゅうよん　じゅうご　じゅうろく　じゅうなな　じゅうはち　じゅうきゅう　にじゅう　にじゅういち　にじゅうに";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 5>phrases";"un(e) deux trois quatre cinq six sept huit neux dix (choses)";"一つ　二つ　三つ　四つ　五つ　六つ　七つ　八つ　九つ　十";"ひとつ　ふたつ　みっつ　よっつ　いつつ　むっつ　ななつ　やっつ　ここのつ　とお";;
-;;;;;;
-"Kanjis L1 Ecriture leçon 6";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"fleur";"花";"dico/kanji_花.png";"はな";"カ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"grand, gros, très";"大";"dico/kanji_大.png";"おお−、おお（きい）、おお（いに）";"タイ,ダイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"100,cent";"百";"dico/kanji_百.png";;"−ビャク,−ピャク,ヒャク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"cercle, yen, rond";"円";"dico/kanji_円.png";"まる（い）";"エン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"petit";"小";"dico/kanji_小.png";"こー,おー,ちい（さい）";"ショウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"mille";"千";"dico/kanji_千.png";"ち";"セン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"or, métail, argent, monnaie";"金";"dico/kanji_金.png";"かね、「かな」";"キン,コン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"1.0000,dix mille,nombreux, tout";"万";"dico/kanji_万.png";;"マン,バン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"boutique,magasin";"店";"dico/kanji_店.png";"みせ";"テン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"toit, maison, magasin, marchand";"屋";"dico/kanji_屋.png";"や";"オク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"poil, cheuveu, plume, laine";"毛";"dico/kanji_毛.png";"け";"モウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"haut, cher, montant, quantité, s'élever, élever";"高";"dico/kanji_高.png";"たか（い）、たか、たか（まる）、たか（める）";"コウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"bon marché,paix,tranquillité";"安";"dico/kanji_安.png";"やす（い）";"アン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 6>kanjis";"acheter";"買";"dico/kanji_買.png";"か（う）";"バイ"
-;;;;;;
-"Phrases L1 Ecriture leçon 6";;;;;;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"C'est une boutique de fleur";"この店は花屋です";"この　みせ　は　はなや　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"La grande rose est à 100 yen l'une";"大きいばらの花は一本百円です";"おおきい　ばら　の　はな　は　いっぽん　ひゃく　えん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"La petite est à 50 yen l'une";"小さいのは一本五十円です";"ちいさい　の　は　いっぽん　ごじゅう　えん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Cette boutique est une mercerie";"この店はようひんてんです";"この　みせ　は　ようひんてん　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Combien vaut une paire de chausette ?";"くつ下は一足いくらぐらいですか";"くつした　は　いっそく　いくらぐらい　です　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Il y'en a des chers et des bons marchés";"高いのも安いのもあります";"たかい　の　も　やすい　の　も　あります";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Une paire de chausette en laine vaut 1000 yen";"毛のくつ下は一足千円ぐらいです";"け　の　くつした　は　いっそく　せん　えん　ぐらい　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Qu'a tu acheté dans la boutique de fleur ?";"あなたは花屋で何を買いしましたか";"あなた　は　はなや　で　なに　を　かいしました　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Combien y a t'il d'argent ici ?";"ここにお金がいくらありますか";"ここ　に　お　かね　が　いくら　あります　か";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 6>phrases";"Il y a 10000 yen";"一万円あります";"いちまん　えん　あります";;
-;;;;;;
-"Kanjis L1 Ecriture leçon 7";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"aller, ligne, colonne (texte), accomplir, exécuter, organiser";"行";"dico/kanji_行.png";"い（く）、ゆ（く）、おこな（う）";"コウ、「アン」、ギョウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"argent (métal)";"銀";"dico/kanji_銀.png";;"ギン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"lune,mois";"月";"dico/kanji_月.png";"つき";"ゲツ、ガツ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"venir, donner lieu";"来";"dico/kanji_来.png";"く（る）、きた（る）、き（たす）";"ライ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"entrer,pénétrer,insérer,mettre,introduire,accepter";"入";"dico/kanji_入.png";"い（る）,はい（る）";"ニュウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"commencer";"始";"dico/kanji_始.png";"はじ（まる）、はじ（める）";"シ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"année";"年";"dico/kanji_年.png";"とし";"ネン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"semaine";"週";"dico/kanji_週.png";;"シュウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"intervalle,entre,salle,espace,moment";"間";"dico/kanji_間.png";"あいだ,ま";"カン,ケン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"printemps";"春";"dico/kanji_春.png";"はる";"シュン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"été";"夏";"dico/kanji_夏.png";"なつ";"カ、「ゲ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"automne";"秋";"dico/kanji_秋.png";"あき";"シュウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 7>kanjis";"hiver";"冬";"dico/kanji_冬.png";"ふゆ";"トウ"
-;;;;;;
-;;;;;;
-"Kanjis L1 Ecriture leçon 8";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"jour de la semaine";"曜";"dico/kanji_曜.png";;"ヨウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"terre, sol, terrain";"土";"dico/kanji_土.png";"つち";"ト,ド"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"lumière, clarté, clair, s'éclaircir, se vider, passer (la nuit), divulguer, suivant";"明";"dico/kanji_明.png";"あ（かり）、あか（るい）、あき（らか）、あ（ける）、あか（るむ）、あか（らむ）、あ（く）、あ（かす）、あ（くる）";"ミョウ,メイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"feu";"火";"dico/kanji_火.png";"ひ、「ほ」";"カ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"eau";"水";"dico/kanji_水.png";"みづ";"スイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"passé, hier";"昨";"dico/kanji_昨.png";;"サク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"fois, répétition, faire tourner, faire circuler, tourner";"回";"dico/kanji_回.png";"まわ（す）、まわ（る）";"カイ、「エ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"application,effort";"勉";"dico/kanji_勉.png";;"ベン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"fort, devenir fort, fortifier, intensifier, forcer, exiger";"強";"dico/kanji_強.png";"つよ（い）、つよ（まる）、つよ（める）、し（いる）";"キョウ、ゴウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"chaque";"毎";"dico/kanji_毎.png";;"マイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"voir, être visible, montrer";"見";"dico/kanji_見.png";"み（る）、み（える）、み（せる）";"ケン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"servir";"仕";"dico/kanji_仕.png";"つか（える）";"シ、「ジ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"chose,fait, événement";"事";"dico/kanji_事.png";"こと";"ジ、「ズ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"chose,objet";"物";"dico/kanji_物.png";"もの";"ブツ,モツ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"destin,sort,transporter";"運";"dico/kanji_運.png";"はこ（ぶ）";"ウン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 8>kanjis";"bouger,(se) déplacer";"動";"dico/kanji_動.png";"うご（く）、うご（かす）";"ドウ"
-;;;;;;
-"Kanjis L1 Ecriture leçon 9";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"heure,temps";"時";"dico/kanji_時.png";"とき";"ジ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"position, portion, 1 pourcent, minute, diviser, partager, différencier, se séparer, être clair, comprendre";"分";"dico/kanji_分.png";"わ（ける）、わ（かつ）、わ（かれる）、わ（かる）";"ブン、ブ、フン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"moitié";"半";"dico/kanji_半.png";"なか（ば）";"ハン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"matin, dynastie";"朝";"dico/kanji_朝.png";"あさ";"チョウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"tôt, rapide, se hâter, hâter";"早";"dico/kanji_早.png";"はや（い）、はや（まる）、はや（める）";"ソウ、「サ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"éveil, commencement, se lever, se produire, produire, provoquer, réveiller";"起";"dico/kanji_起.png";"お（きる）、お（こる）、お（こす）";"キ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"nuit";"夜";"dico/kanji_夜.png";"よ,よる";"ヤ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"soir, nuit";"晩";"dico/kanji_晩.png";;"バン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"midi";"午";"dico/kanji_午.png";;"ゴ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"après, derrière, après, ultérieur, reste, être en retard";"後";"dico/kanji_後.png";"のち、うし（ろ）、あと、おく（れる）";"ゴ、コウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"antérieur,avant,devant";"前";"dico/kanji_前.png";"まえ";"ゼン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"en retard, lent, être en retard, retarder (réveil), différer";"遅";"dico/kanji_遅.png";"おそ（い）、おく（れる）、おく（らす）";"チ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 9>kanjis";"tous,tout le monde";"皆";"dico/kanji_皆.png";"みな,みんな";"カイ"
-;;;;;;
-"Kanjis L1 Ecriture leçon 10";"Vérifié le 11/01/08";;;;;
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"ciel";"天";"dico/kanji_天.png";"あめ、「あま」";"テン"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"esprit, âme, souffle, humeur";"気";"dico/kanji_気.png";;"キ,ケ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"pluie";"雨";"dico/kanji_雨.png";"あめ、「あま」";"ウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"neige";"雪";"dico/kanji_雪.png";"ゆき";"セツ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"vent, apparence";"風";"dico/kanji_風.png";"かぜ、「かざ」";"フウ、「フ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"chaud (temps)";"暑";"dico/kanji_暑.png";"あつ（い）";"ショ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"le nord";"北";"dico/kanji_北.png";"きた";"ホク"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"mer, océan";"海";"dico/kanji_海.png";"うみ";"カイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"chemin,voie,rue";"道";"dico/kanji_道.png";"みち";"トウ,ドウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"le sud";"南";"dico/kanji_南.png";"みなみ";"ナン、「ナ」"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"même, égal, équivalent";"同";"dico/kanji_同.png";"おな（じ）";"ドウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"l'est";"東";"dico/kanji_東.png";"ひがし";"トウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"ciel, rendre libre, être libre, vide";"空";"dico/kanji_空.png";"そら、あ（ける）、あ（く）、から";"クウ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"l'ouest";"西";"dico/kanji_西.png";"にし";"サイ,セイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"capitale";"京";"dico/kanji_京.png";;"キョウ,ケイ"
-"metier.elements.Kanji";"L1>Ecriture>leçon 10>kanjis";"ville, quartier";"町";"dico/kanji_町.png";"まち";"チョウ"
+"Hiragana"						
+"metier.elements.Kanji"	"hiragana>kanji"		"あ"	"dico/hiragana/あ-bw.png"	"あ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"い"	"dico/hiragana/い-bw.png"	"い"	
+"metier.elements.Kanji"	"hiragana>kanji"		"う"	"dico/hiragana/う-bw.png"	"う"	
+"metier.elements.Kanji"	"hiragana>kanji"		"え"	"dico/hiragana/え-bw.png"	"え"	
+"metier.elements.Kanji"	"hiragana>kanji"		"お"	"dico/hiragana/お-bw.png"	"お"	
+"metier.elements.Kanji"	"hiragana>kanji"		"か"	"dico/hiragana/か-bw.png"	"か"	
+"metier.elements.Kanji"	"hiragana>kanji"		"き"	"dico/hiragana/き-bw.png"	"き"	
+"metier.elements.Kanji"	"hiragana>kanji"		"く"	"dico/hiragana/く-bw.png"	"く"	
+"metier.elements.Kanji"	"hiragana>kanji"		"け"	"dico/hiragana/け-bw.png"	"け"	
+"metier.elements.Kanji"	"hiragana>kanji"		"こ"	"dico/hiragana/こ-bw.png"	"こ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"さ"	"dico/hiragana/さ-bw.png"	"さ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"し"	"dico/hiragana/し-bw.png"	"し"	
+"metier.elements.Kanji"	"hiragana>kanji"		"す"	"dico/hiragana/す-bw.png"	"す"	
+"metier.elements.Kanji"	"hiragana>kanji"		"せ"	"dico/hiragana/せ-bw.png"	"せ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"そ"	"dico/hiragana/そ-bw.png"	"そ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"た"	"dico/hiragana/た-bw.png"	"た"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ち"	"dico/hiragana/ち-bw.png"	"ち"	
+"metier.elements.Kanji"	"hiragana>kanji"		"つ"	"dico/hiragana/つ-bw.png"	"つ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"て"	"dico/hiragana/て-bw.png"	"て"	
+"metier.elements.Kanji"	"hiragana>kanji"		"と"	"dico/hiragana/と-bw.png"	"と"	
+"metier.elements.Kanji"	"hiragana>kanji"		"な"	"dico/hiragana/な-bw.png"	"な"	
+"metier.elements.Kanji"	"hiragana>kanji"		"に"	"dico/hiragana/に-bw.png"	"に"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ぬ"	"dico/hiragana/ぬ-bw.png"	"ぬ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ね"	"dico/hiragana/ね-bw.png"	"ね"	
+"metier.elements.Kanji"	"hiragana>kanji"		"の"	"dico/hiragana/の-bw.png"	"の"	
+"metier.elements.Kanji"	"hiragana>kanji"		"は"	"dico/hiragana/は-bw.png"	"は"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ひ"	"dico/hiragana/ひ-bw.png"	"ひ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ふ"	"dico/hiragana/ふ-bw.png"	"ふ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"へ"	"dico/hiragana/へ-bw.png"	"へ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ほ"	"dico/hiragana/ほ-bw.png"	"ほ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ま"	"dico/hiragana/ま-bw.png"	"ま"	
+"metier.elements.Kanji"	"hiragana>kanji"		"み"	"dico/hiragana/み-bw.png"	"み"	
+"metier.elements.Kanji"	"hiragana>kanji"		"む"	"dico/hiragana/む-bw.png"	"む"	
+"metier.elements.Kanji"	"hiragana>kanji"		"め"	"dico/hiragana/め-bw.png"	"め"	
+"metier.elements.Kanji"	"hiragana>kanji"		"も"	"dico/hiragana/も-bw.png"	"も"	
+"metier.elements.Kanji"	"hiragana>kanji"		"や"	"dico/hiragana/や-bw.png"	"や"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ゆ"	"dico/hiragana/ゆ-bw.png"	"ゆ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"よ"	"dico/hiragana/よ-bw.png"	"よ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ら"	"dico/hiragana/ら-bw.png"	"ら"	
+"metier.elements.Kanji"	"hiragana>kanji"		"り"	"dico/hiragana/り-bw.png"	"り"	
+"metier.elements.Kanji"	"hiragana>kanji"		"る"	"dico/hiragana/る-bw.png"	"る"	
+"metier.elements.Kanji"	"hiragana>kanji"		"れ"	"dico/hiragana/れ-bw.png"	"れ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ろ"	"dico/hiragana/ろ-bw.png"	"ろ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"わ"	"dico/hiragana/わ-bw.png"	"わ"	
+"metier.elements.Kanji"	"hiragana>kanji"		"を"	"dico/hiragana/を-bw.png"	"を"	
+"metier.elements.Kanji"	"hiragana>kanji"		"ん"	"dico/hiragana/ん-bw.png"	"ん"	
+						
+"Katakana"						
+"metier.elements.Kanji"	"katakana>kanji"		"ア"	"dico/katakana/ア-bw.png"	"ア"	
+"metier.elements.Kanji"	"katakana>kanji"		"イ"	"dico/katakana/イ-bw.png"	"イ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ウ"	"dico/katakana/ウ-bw.png"	"ウ"	
+"metier.elements.Kanji"	"katakana>kanji"		"エ"	"dico/katakana/エ-bw.png"	"エ"	
+"metier.elements.Kanji"	"katakana>kanji"		"オ"	"dico/katakana/オ-bw.png"	"オ"	
+"metier.elements.Kanji"	"katakana>kanji"		"カ"	"dico/katakana/カ-bw.png"	"カ"	
+"metier.elements.Kanji"	"katakana>kanji"		"キ"	"dico/katakana/キ-bw.png"	"キ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ク"	"dico/katakana/Japanese_Katakana_KU_Stroke.png"	"ク"	
+"metier.elements.Kanji"	"katakana>kanji"		"ケ"	"dico/katakana/ケ-bw.png"	"ケ"	
+"metier.elements.Kanji"	"katakana>kanji"		"コ"	"dico/katakana/コ-bw.png"	"コ"	
+"metier.elements.Kanji"	"katakana>kanji"		"サ"	"dico/katakana/Japanese_Katakana_SA_Stroke.png"	"サ"	
+"metier.elements.Kanji"	"katakana>kanji"		"シ"	"dico/katakana/シ-bw.png"	"シ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ス"	"dico/katakana/ス-bw.png"	"ス"	
+"metier.elements.Kanji"	"katakana>kanji"		"セ"	"dico/katakana/セ-bw.png"	"セ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ソ"	"dico/katakana/ソ-bw.png"	"ソ"	
+"metier.elements.Kanji"	"katakana>kanji"		"タ"	"dico/katakana/タ-bw.png"	"タ"	
+"metier.elements.Kanji"	"katakana>kanji"		"チ"	"dico/katakana/チ-bw.png"	"チ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ツ"	"dico/katakana/ツ-bw.png"	"ツ"	
+"metier.elements.Kanji"	"katakana>kanji"		"テ"	"dico/katakana/テ-bw.png"	"テ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ト"	"dico/katakana/ト-bw.png"	"ト"	
+"metier.elements.Kanji"	"katakana>kanji"		"ナ"	"dico/katakana/ナ-bw.png"	"ナ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ニ"	"dico/katakana/ニ-bw.png"	"ニ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヌ"	"dico/katakana/ヌ-bw.png"	"ヌ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ネ"	"dico/katakana/ネ-bw.png"	"ネ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ノ"	"dico/katakana/ノ-bw.png"	"ノ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ハ"	"dico/katakana/ハ-bw.png"	"ハ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヒ"	"dico/katakana/ヒ-bw.png"	"ヒ"	
+"metier.elements.Kanji"	"katakana>kanji"		"フ"	"dico/katakana/フ-bw.png"	"フ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヘ"	"dico/katakana/ヘ-bw.png"	"ヘ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ホ"	"dico/katakana/ホ-bw.png"	"ホ"	
+"metier.elements.Kanji"	"katakana>kanji"		"マ"	"dico/katakana/マ-bw.png"	"マ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ミ"	"dico/katakana/ミ-bw.png"	"ミ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ム"	"dico/katakana/ム-bw.png"	"ム"	
+"metier.elements.Kanji"	"katakana>kanji"		"メ"	"dico/katakana/メ-bw.png"	"メ"	
+"metier.elements.Kanji"	"katakana>kanji"		"モ"	"dico/katakana/モ-bw.png"	"モ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヤ"	"dico/katakana/Japanese_Katakana_YA_Stroke.png"	"ヤ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ユ"	"dico/katakana/Japanese_Katakana_YU_Stroke.png"	"ユ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヨ"	"dico/katakana/Japanese_Katakana_YO_Stroke.png"	"ヨ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ラ"	"dico/katakana/Japanese_Katakana_RA_Stroke.png"	"ラ"	
+"metier.elements.Kanji"	"katakana>kanji"		"リ"	"dico/katakana/Japanese_Katakana_RI_Stroke.png"	"リ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ル"	"dico/katakana/Japanese_Katakana_RU_Stroke.png"	"ル"	
+"metier.elements.Kanji"	"katakana>kanji"		"レ"	"dico/katakana/レ-bw.png"	"レ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ロ"	"dico/katakana/Japanese_Katakana_RO_Stroke.png"	"ロ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ワ"	"dico/katakana/Japanese_Katakana_WA_Stroke.png"	"ワ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ヲ"	"dico/katakana/Japanese_Katakana_WO_Stroke.png"	"ヲ"	
+"metier.elements.Kanji"	"katakana>kanji"		"ン"	"dico/katakana/Japanese_Katakana_N_Stroke.png"	"ン"	
+						
+"Hiragana (mot)"						
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"あ"	"あ"	"dico/kana_female/a.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"い"	"い"	"dico/kana_female/i.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"う"	"う"	"dico/kana_female/u.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"え"	"え"	"dico/kana_female/e.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"お"	"お"	"dico/kana_female/o.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"か"	"か"	"dico/kana_female/ka.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"き"	"き"	"dico/kana_female/ki.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"く"	"く"	"dico/kana_female/ku.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"け"	"け"	"dico/kana_female/ke.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"こ"	"こ"	"dico/kana_female/ko.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"さ"	"さ"	"dico/kana_female/sa.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"し"	"し"	"dico/kana_female/shi.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"す"	"す"	"dico/kana_female/su.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"せ"	"せ"	"dico/kana_female/se.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"そ"	"そ"	"dico/kana_female/so.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"た"	"た"	"dico/kana_female/ta.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ち"	"ち"	"dico/kana_female/chi.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"つ"	"つ"	"dico/kana_female/tsu.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"て"	"て"	"dico/kana_female/te.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"と"	"と"	"dico/kana_female/to.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"な"	"な"	"dico/kana_female/na.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"に"	"に"	"dico/kana_female/ni.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ぬ"	"ぬ"	"dico/kana_female/nu.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ね"	"ね"	"dico/kana_female/ne.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"の"	"の"	"dico/kana_female/no.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"は"	"は"	"dico/kana_female/ha.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ひ"	"ひ"	"dico/kana_female/hi.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ふ"	"ふ"	"dico/kana_female/fu.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"へ"	"へ"	"dico/kana_female/he.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ほ"	"ほ"	"dico/kana_female/ho.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ま"	"ま"	"dico/kana_female/ma.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"み"	"み"	"dico/kana_female/mi.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"む"	"む"	"dico/kana_female/mu.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"め"	"め"	"dico/kana_female/me.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"も"	"も"	"dico/kana_female/mo.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"や"	"や"	"dico/kana_female/ya.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ゆ"	"ゆ"	"dico/kana_female/yu.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"よ"	"よ"	"dico/kana_female/yo.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ら"	"ら"	"dico/kana_female/ra.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"り"	"り"	"dico/kana_female/ri.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"る"	"る"	"dico/kana_female/ru.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"れ"	"れ"	"dico/kana_female/re.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ろ"	"ろ"	"dico/kana_female/ro.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"わ"	"わ"	"dico/kana_female/wa.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"を"	"を"	"dico/kana_female/wo.wav"	
+"metier.elements.Word"	"hiragana>mot, L1>Ecriture>leçon 1"		"ん"	"ん"	"dico/kana_female/n.wav"	
+						
+"Katakana (mot)"						
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ア"	"ア"	"dico/kana_female/a.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"イ"	"イ"	"dico/kana_female/i.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ウ"	"ウ"	"dico/kana_female/u.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"エ"	"エ"	"dico/kana_female/e.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"オ"	"オ"	"dico/kana_female/o.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"カ"	"カ"	"dico/kana_female/ka.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"キ"	"キ"	"dico/kana_female/ki.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ク"	"ク"	"dico/kana_female/ku.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ケ"	"ケ"	"dico/kana_female/ke.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"コ"	"コ"	"dico/kana_female/ko.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"サ"	"サ"	"dico/kana_female/sa.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"シ"	"シ"	"dico/kana_female/shi.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ス"	"ス"	"dico/kana_female/su.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"セ"	"セ"	"dico/kana_female/se.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ソ"	"ソ"	"dico/kana_female/so.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"タ"	"タ"	"dico/kana_female/ta.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"チ"	"チ"	"dico/kana_female/chi.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ツ"	"ツ"	"dico/kana_female/tsu.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"テ"	"テ"	"dico/kana_female/te.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ト"	"ト"	"dico/kana_female/to.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ナ"	"ナ"	"dico/kana_female/na.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ニ"	"ニ"	"dico/kana_female/ni.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヌ"	"ヌ"	"dico/kana_female/nu.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ネ"	"ネ"	"dico/kana_female/ne.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ノ"	"ノ"	"dico/kana_female/no.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ハ"	"ハ"	"dico/kana_female/ha.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヒ"	"ヒ"	"dico/kana_female/hi.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"フ"	"フ"	"dico/kana_female/fu.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヘ"	"ヘ"	"dico/kana_female/he.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ホ"	"ホ"	"dico/kana_female/ho.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"マ"	"マ"	"dico/kana_female/ma.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ミ"	"ミ"	"dico/kana_female/mi.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ム"	"ム"	"dico/kana_female/mu.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"メ"	"メ"	"dico/kana_female/me.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"モ"	"モ"	"dico/kana_female/mo.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヤ"	"ヤ"	"dico/kana_female/ya.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ユ"	"ユ"	"dico/kana_female/yu.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヨ"	"ヨ"	"dico/kana_female/yo.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ラ"	"ラ"	"dico/kana_female/ra.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"リ"	"リ"	"dico/kana_female/ri.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ル"	"ル"	"dico/kana_female/ru.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"レ"	"レ"	"dico/kana_female/re.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ロ"	"ロ"	"dico/kana_female/ro.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ワ"	"ワ"	"dico/kana_female/wa.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ヲ"	"ヲ"	"dico/kana_female/wo.wav"	
+"metier.elements.Word"	"katakana>mot, L1>Ecriture>leçon 2"		"ン"	"ン"	"dico/kana_female/n.wav"	
+						
+						
+"Kanjis L1 Ecriture leçon 3"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"jour, soleil"	"日"	"dico/kanji_日.png"	"ひ、−か"	"ニチ、ジツ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"livre, origine, ceci, autrfois, (suffixe pour compter les objets longs)"	"本"	"dico/kanji_本.png"	"もと"	"ホン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"être humain, homme, personne"	"人"	"dico/kanji_人.png"	"ひと"	"ヂン,ニン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"mot, langue, raconter, converser"	"語"	"dico/kanji_語.png"	"かた（る）、かた（らう）"	"ゴ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"je, privé"	"私"	"dico/kanji_私.png"	"わたくし、わたし"	"シ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"plus tôt, précédent, priorité, futur, destination, pointe"	"先"	"dico/kanji_先.png"	"さき"	"セン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"vie, vivre, laisser vivre, exploiter, porter (un enfant), être né, faire pousser, pousser, cru, pur"	"生"	"dico/kanji_生.png"	"い（きる）、い（ける）、い（かす）、う（む）、う（まれる）、は（やす）、は（える）、お（う）、なま、き−"	"セイ、ショウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"maintenant"	"今"	"dico/kanji_今.png"	"いま"	"キン,コン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"bois, forêt"	"林"	"dico/kanji_林.png"	"はやし"	"リン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"étude, science, étudier"	"学"	"dico/kanji_学.png"	"まな(ぶ)"	"ガク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"pays"	"国"	"dico/kanji_国.png"	"くに"	"コク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"bureau, table"	"机"	"dico/kanji_机.png"	"つくえ"	"キ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"montagne"	"山"	"dico/kanji_山.png"	"やま"	"サン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"milieu, intérieur, tout"	"中"	"dico/kanji_中.png"	"なか"	"チュウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 3>kanjis"	"quoi, combien, comment"	"何"	"dico/kanji_何.png"	"なん,「なに」"	"カ"
+						
+"Phrases L1 Ecriture leçon 3"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis japonais"	"私は日本人です"	"わたし　は　にほんじん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis professeur de japonais"	"私は日本語の先生です"	"わたし　は　にほんご　の　せんせい　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Bonjour"	"今日は"			
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis monsieur Hayashi"	"私は林です"	"わたし　は　はやし　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Êtes-vous étudiant ?"	"あなたは学生ですか"	"あなた　は　がくせい　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Oui, je suis étudiant"	"はい、私は学生です"	"はい、わたし　は　がくせい　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Êtes-vous français ?"	"あなたはフランス人ですか"	"あなたは　フランスじん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Non, je ne suis pas français"	"いいえ、私はフランス人ではありません"	"いいえ、わたし　は　フランスじん　では　ありません"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Cette personne est chinoise"	"このかたは中国人です"	"この　かた　は　ちゅうごくじん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Il y a un livre sur le bureau"	"机のうえに本があります"	"つくえ　の　うえ　に　ほん　が　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"C'est le livre de monsieur Yamamoto"	"山本さんの本です"	"やまもと　さん　の　ほん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Qu'est-ce que ceci ?"	"これは何ですか"	"これ　は　なん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis Hayashi"	"私は林です"	"わたし　は　はやし　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis japonais"	"私は日本人です"	"わたし　は　にほんじん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis professeur de japonais"	"私は日本語の先生です"	"わたし　は　にほんご　の　せんせい　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Bonjour"	"今日は"	"こんにちは"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis Hayashi"	"私は林です"	"わたし　は　はやし　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Enchanté"	"はじめまして"	"はじめまして"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Je suis John Smith, enchanté"	"私はジョンスミスです。どうぞよろしく"	"わたし　は　ジョン　スミス　です。　どうぞ　よろしく"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Êtes-vous monsieur John ?"	"あなたはジョンさんですか"	"あなた　は　ジョンさん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Oui, je suis John"	"はい、私はジョンです"	"はい、わたし　は　ジョン　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Êtes-vous étudiant ?"	"あなたは学生ですか"	"あなた　は　がくせい　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Oui, je suis étudiant"	"はい、私は学生です"	"はい、わたし　は　がくせい　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Êtes-vous français ?"	"あなたはフランス人ですか"	"あなた　は　フランスじん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Non, je ne suis pas français"	"いいえ、私はフランス人ではありません"	"いいえ、わたし　は　フランスじん　では　ありません"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Qui est cette personne ?"	"このかたはどなたですか"	"この　かた　は　どなた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Cette personne est Ali, d'indonésie"	"そのかたはインドネシアのアリさんです"	"その　かた　は　インドネシア　の　アリさん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Qui est cette personne ?"	"このかたはどなたですか"	"この　かた　は　どなた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Cette personne est Tchin, de Chine"	"このかたは中国のチンさんです"	"この　かた　は　ちゅうごく　の　チンさん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Qui est cette personne ?"	"このかたはどなたですか"	"この　かた　は　どなた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Laquelle de ces personnes es-ce ?"	"どのかたですか"	"どの　かた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Es-ce cette dame ?"	"あの女のかたですか"	"あの　おんな　の　かた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Cette personne est Ratana, de Thaïlande"	"あのかたはタイのラタナ−さんです"	"あの　かた　は　タイ　の　ラタナ−さん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Qui est cet homme ?"	"あのおとこのかたはどなたですか"	"あの　おとこ　の　かた　は　どなた　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"C'est personne est Galo, des Philipines"	"あのかたはフイリピノのガロさんです"	"あの　かた　は　フイリピノ　の　ガロさん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Ali est-il japonais ?"	"アリさんは日本人ですか"	"アリさん　は　にほんじん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Non, Ali n'est pas japonais"	"いいえ、アリさんは日本人ではありません"	"いいえ、アリさん　は　にほんじん　では　ありません"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Ali est indonésien"	"アリさんはインドネシア人です"	"アリさん　は　インドネシアじん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Tchin est elle japonaise ?"	"チンさんは日本人ですか"	"チンさん　は　にほんじん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Non, Tchin non plus n'est pas japonaise"	"いいえ、チンさんも日本人ではありません"	"いいえ、チンさん　も　にほんじん　では　ありません"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Tchin est chinoise"	"チンさんは中国人です"	"チンさん　は　ちゅうごくじん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Ratana est-il aussi chinois ?"	"ラタナ−さんも中国人ですか"	"ラタナ−さん　も　ちゅうごくじん　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Non, Ratana n'est pas chinois"	"いいえ、ラタナ−さんも中国人ではありません"	"いいえ、ラタナ−さん　も　ちゅうごくじん　では　ありません"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 3>phrases"	"Ratana est thaïlandais"	"ラタナ−さんはタイ人です"	"ラタナ−さん　は　タイじん　です"		
+						
+"Kanjis L1 Ecriture leçon 4"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"rizière"	"田"	"dico/kanji_田.png"	"た"	"デン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"maison, famille"	"家"	"dico/kanji_家.png"	"いえ,や"	"カ,ケ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"électricité"	"電"	"dico/kanji_電.png"		"デン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"véhicule, roue"	"車"	"dico/kanji_車.png"	"くるま"	"シャ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"féminin, femme"	"女"	"dico/kanji_女.png"	"おんな、め"	"ジョ,ニョ、「ニョウ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"homme"	"男"	"dico/kanji_男.png"	"おとこ"	"ダン,ナン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"conversation, histoire, parler"	"話"	"dico/kanji_話.png"	"はな(す)、はなし"	"ワ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"supérieur, haut, élever, monter, soulever (une question)"	"上"	"dico/kanji_上.png"	"うえ、かみ、「うわ−」、あ（げる）、あ（がる）、の（ぼる）、のぼ（せる）、のぼ（す）"	"ジョウ、「ショウ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"bas, inférieur, abaisser, prononcer (sentence), pendre, descendre, donner"	"下"	"dico/kanji_下.png"	"した、もと、しも、さ（げる）、お（ろす）、くだ（す）、さ（がる）、お（りる）、く（だる）"	"ゲ,カ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"rivière"	"川"	"dico/kanji_川.png"	"かわ"	"セン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"arbre, bois"	"木"	"dico/kanji_木.png"	"き、「こ」"	"ボク,モク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"école, épreuve (d'imprimerie)"	"校"	"dico/kanji_校.png"		"コウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"jardin"	"庭"	"dico/kanji_庭.png"	"にわ"	"テイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 4>kanjis"	"pièce d'eau, étang"	"池"	"dico/kanji_池.png"	"いけ"	"チ"
+						
+"Phrases L1 Ecriture leçon 4"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Je suis Tanaka"	"私は田中です"	"わたし　は　たなか　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"C'est ma maison"	"それは家です"	"それ　は　うえ　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"C'est le train"	"あれは電車です"	"あれ　は　でんしゃ　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Es-ce un chapeau pour femme ?"	"それは女のぼうしですか"	"それ　は　おんな　の　ぼうし　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"C'est un chapeau pour homme"	"それは男のぼうしです"	"それ　は　おとこ　の　ぼうし　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Il y a un téléphone ici"	"ここに電話があります"	"ここ　に　でんわ　が　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Qu'y-a-t'il sur le réfrigérateur ?"	"れいぞうこの上に何がありますか"	"れいぞうこ　の　うえ　に　なに　が　あります　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Qu'y a t'il sous le bureau ?"	"机の下に何がありますか"	"つくえ　の　した　に　なに　が　あります　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Il y a une rivière à coté de la maison"	"家のそばに川があります"	"いえ　の　そば　に　かわ　が　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Ici c'est l'école"	"ここは学校です"	"ここ　は　がっこう　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Qu'y a t'il dans ce jardin là-bas ?"	"あの庭に何がありますか"	"あの　にわ　に　なに　が　あります　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Il y a un arbre, un étang, etc..."	"木や池などがあります"	"き　や　いけ　など　が　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 4>phrases"	"Y'a t'il quelque chose sur l'arbre ?"	"木の上に何かいますか"	"き　の　うえ　に　なにか　います　か"		
+						
+"Kanjis L1 Ecriture leçon 5"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 1, un"	"一"	"dico/kanji_一.png"	"ひと−,ひと（つ）"	"イチ,イツ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 2, deux"	"二"	"dico/kanji_二.png"	"ふた−,ふた（つ）"	"ニ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 3, trois"	"三"	"dico/kanji_三.png"	"み,み（つ）、みっ（つ）"	"サン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 4, quatre"	"四"	"dico/kanji_四.png"	"よ,よっ（つ）,よん,よ（つ）"	"シ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 5, cinq"	"五"	"dico/kanji_五.png"	"いつ,いつ（つ）"	"ゴ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 6, six"	"六"	"dico/kanji_六.png"	"むっ（つ）、む（つ）、む−、「むい」"	"ロク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 7, sept"	"七"	"dico/kanji_七.png"	"なな（つ）、なな、「なの」"	"シチ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 8, huit"	"八"	"dico/kanji_八.png"	"やっ（つ）、や（つ）、や、「よう」"	"ハチ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 9, neuf"	"九"	"dico/kanji_九.png"	"ここの,ここの（つ）"	"キュウ,ク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"le chiffre 10, dix"	"十"	"dico/kanji_十.png"	"とお、と"	"ジュウ、ジ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"enfant"	"子"	"dico/kanji_子.png"	"こ"	"シ,ス"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"pied, jambe, suffire, ajouter"	"足"	"dico/kanji_足.png"	"あし、た（る）、た（りる）、た（す）"	"ソク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"oiseau"	"鳥"	"dico/kanji_鳥.png"	"とり"	"チョウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"bleu,inexpérience,vert"	"青"	"dico/kanji_青.png"	"あお,あお（い）"	"セイ、ショウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"rouge, rougir, faire rougir"	"赤"	"dico/kanji_赤.png"	"あか（い）、あか、あか（らむ）、あか（らめる）"	"セキ、シャク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"blanc"	"白"	"dico/kanji_白.png"	"しろ（い）、しろ、「しら」"	"ハク,ビャク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"noir"	"黒"	"dico/kanji_黒.png"	"くろ（い）、くろ"	"コク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 5>kanjis"	"chien"	"犬"	"dico/kanji_犬.png"	"いぬ"	"ケン"
+						
+"Phrases L1 Ecriture leçon 5"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a trente deux pommes ici"	"ここにりんごが三十二あります"	"ここ　に　りんご　が　さん　じゅう　に　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 5 enfants"	"子どもが五人います"	"こども　が　ごにん　います"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 1 stylo"	"まねんひつが一本あります"	"まねんひつ　が　いっぽん　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 6 paires de chaussettes"	"くつ下が六足あります"	"くつした　が　ろくそく　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 8 oiseaux"	"鳥が八わいます"	"とり　が　はちわ　います"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 4 garçons et 6 filles"	"男の子は四人と女の子が六人います"	"おとこ　の　こ　は　よにん　と　おんな　の　こ　が　ろくにん　います"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 7 feuilles et 9 enveloppes"	"かみが七まいとふうとうが九まいあります"	"かみ　が　ななまい　と　ふうとう　が　きゅうまい　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Ici il y a 1 feuille bleue et 3 blanches"	"ここに青いかみが一まいと白いかみが三まいあります"	"ここ　に　あおい　かみ　が　いちまい　と　しろい　かみ　が　さんまい　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Il y a 5 chiens ici"	"ここに犬がごひきいます"	"ここ　に　いぬ　が　ごひき　います"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"Là-bas il y a 15 feuilles rouges et 39 noires"	"あそこに赤いかみが十五まいと黒いかみが三十九まいあります"	"あそこ　に　あかい　かみ　が　じゅうごまい　と　くろい　かみ　が　さんじゅうきゅうまい　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"un deux trois quatre cinq six sept huit neuf dix onze douze treize quatorze quinze seize dix-sept dix-huit dix-neuf vingt vingt-et-un vingt-deux"	"一　二　三　四　五　六　七　八　九　十　十一　十二　十三　十四　十五　十六　十七　十八　十九　二十　二十一　二十二"	"いち　に　さん　し　ご　ろく　はち　きゅう　じゅう　じゅういち　じゅうに　じゅうさん　じゅうよん　じゅうご　じゅうろく　じゅうなな　じゅうはち　じゅうきゅう　にじゅう　にじゅういち　にじゅうに"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 5>phrases"	"un(e) deux trois quatre cinq six sept huit neux dix (choses)"	"一つ　二つ　三つ　四つ　五つ　六つ　七つ　八つ　九つ　十"	"ひとつ　ふたつ　みっつ　よっつ　いつつ　むっつ　ななつ　やっつ　ここのつ　とお"		
+						
+"Kanjis L1 Ecriture leçon 6"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"fleur"	"花"	"dico/kanji_花.png"	"はな"	"カ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"grand, gros, très"	"大"	"dico/kanji_大.png"	"おお−、おお（きい）、おお（いに）"	"タイ,ダイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"100,cent"	"百"	"dico/kanji_百.png"		"−ビャク,−ピャク,ヒャク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"cercle, yen, rond"	"円"	"dico/kanji_円.png"	"まる（い）"	"エン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"petit"	"小"	"dico/kanji_小.png"	"こー,おー,ちい（さい）"	"ショウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"mille"	"千"	"dico/kanji_千.png"	"ち"	"セン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"or, métail, argent, monnaie"	"金"	"dico/kanji_金.png"	"かね、「かな」"	"キン,コン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"1.0000,dix mille,nombreux, tout"	"万"	"dico/kanji_万.png"		"マン,バン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"boutique,magasin"	"店"	"dico/kanji_店.png"	"みせ"	"テン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"toit, maison, magasin, marchand"	"屋"	"dico/kanji_屋.png"	"や"	"オク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"poil, cheuveu, plume, laine"	"毛"	"dico/kanji_毛.png"	"け"	"モウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"haut, cher, montant, quantité, s'élever, élever"	"高"	"dico/kanji_高.png"	"たか（い）、たか、たか（まる）、たか（める）"	"コウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"bon marché,paix,tranquillité"	"安"	"dico/kanji_安.png"	"やす（い）"	"アン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 6>kanjis"	"acheter"	"買"	"dico/kanji_買.png"	"か（う）"	"バイ"
+						
+"Phrases L1 Ecriture leçon 6"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"C'est une boutique de fleur"	"この店は花屋です"	"この　みせ　は　はなや　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"La grande rose est à 100 yen l'une"	"大きいばらの花は一本百円です"	"おおきい　ばら　の　はな　は　いっぽん　ひゃく　えん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"La petite est à 50 yen l'une"	"小さいのは一本五十円です"	"ちいさい　の　は　いっぽん　ごじゅう　えん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Cette boutique est une mercerie"	"この店はようひんてんです"	"この　みせ　は　ようひんてん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Combien vaut une paire de chausette ?"	"くつ下は一足いくらぐらいですか"	"くつした　は　いっそく　いくらぐらい　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Il y'en a des chers et des bons marchés"	"高いのも安いのもあります"	"たかい　の　も　やすい　の　も　あります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Une paire de chausette en laine vaut 1000 yen"	"毛のくつ下は一足千円ぐらいです"	"け　の　くつした　は　いっそく　せん　えん　ぐらい　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Qu'a tu acheté dans la boutique de fleur ?"	"あなたは花屋で何を買いしましたか"	"あなた　は　はなや　で　なに　を　かいしました　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Combien y a t'il d'argent ici ?"	"ここにお金がいくらありますか"	"ここ　に　お　かね　が　いくら　あります　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 6>phrases"	"Il y a 10000 yen"	"一万円あります"	"いちまん　えん　あります"		
+						
+"Kanjis L1 Ecriture leçon 7"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"aller, ligne, colonne (texte), accomplir, exécuter, organiser"	"行"	"dico/kanji_行.png"	"い（く）、ゆ（く）、おこな（う）"	"コウ、「アン」、ギョウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"argent (métal)"	"銀"	"dico/kanji_銀.png"		"ギン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"lune,mois"	"月"	"dico/kanji_月.png"	"つき"	"ゲツ、ガツ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"venir, donner lieu"	"来"	"dico/kanji_来.png"	"く（る）、きた（る）、き（たす）"	"ライ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"entrer,pénétrer,insérer,mettre,introduire,accepter"	"入"	"dico/kanji_入.png"	"い（る）,はい（る）"	"ニュウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"commencer"	"始"	"dico/kanji_始.png"	"はじ（まる）、はじ（める）"	"シ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"année"	"年"	"dico/kanji_年.png"	"とし"	"ネン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"semaine"	"週"	"dico/kanji_週.png"		"シュウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"intervalle,entre,salle,espace,moment"	"間"	"dico/kanji_間.png"	"あいだ,ま"	"カン,ケン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"printemps"	"春"	"dico/kanji_春.png"	"はる"	"シュン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"été"	"夏"	"dico/kanji_夏.png"	"なつ"	"カ、「ゲ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"automne"	"秋"	"dico/kanji_秋.png"	"あき"	"シュウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 7>kanjis"	"hiver"	"冬"	"dico/kanji_冬.png"	"ふゆ"	"トウ"
+						
+"Phrases L1 Ecriture leçon 7"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Où vas tu demain ?"	"あなたはあしたどこへ行きますか"	"あなた　は　あした　どこ　へ　いきます　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Aujourd'hui, le combien somme nous ?"	"今日何日ですか"	"きょう　は　なん　にち　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Aujourd'hui nous sommes le premier du mois"	"今日は一日です"	"きょう　は　ついたち　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Je suis allé à la banque le 31"	"私は三十一日に銀行へ行きました"	"わたし　は　さんじゅういちにち　に　ぎんこう　へ　いきました"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Ce mois-ci quel mois sommes nous ?"	"今月は何月ですか"	"こんげつ　は　なん　がつ　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Nous sommes en avril"	"今月は四月です"	"こんげつ　は　しがつ　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Quel mois seront nous le mois prochain ?"	"来月は何月ですか"	"らいげつ　は　なん　がつ　です　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Nous seront en mai"	"来月は五月です"	"らいげつ　は　ごがつ　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Le mois précédent nous étions en mars"	"先月は三月です"	"せんげつ　は　さんがつ　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"J'étais venus au japon le 2 mars"	"私は三月二日に日本へ来ました"	"わたし　は　さんがつ　ふつか　に　にほん　へ　きました"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"J'entrerais dans une université au japon en avril"	"私は四月に日本の大学へいります"	"わたし　は　しがつ　に　にほん　の　だいがく　へ　にります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"C'est en avril que je commencerais l'université japonaise"	"日本の大学は四月に始まります"	"にほん　の　だいがく　は　しがつ　に　はじまります"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Nous sommes en 1992"	"今年は千九百九十二年です"	"ことし　は　せん　きゅう　ひゃく　きゅう　じゅう　に　ねん　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Il y a 7 jours dans 1 semaine"	"一週間は七日です"	"いち　しゅう　かん　は　なのか　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 7>phrases"	"Il y a le printemps, l'été, l'automne et l'hiver dans une année"	"一年には春と夏と秋と冬があります"	"いち　ねん　に　は　はる　と　なつ　と　あき　と　ふゆ　が　あります"		
+						
+"Kanjis L1 Ecriture leçon 8"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"jour de la semaine"	"曜"	"dico/kanji_曜.png"		"ヨウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"terre, sol, terrain"	"土"	"dico/kanji_土.png"	"つち"	"ト,ド"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"lumière, clarté, clair, s'éclaircir, se vider, passer (la nuit), divulguer, suivant"	"明"	"dico/kanji_明.png"	"あ（かり）、あか（るい）、あき（らか）、あ（ける）、あか（るむ）、あか（らむ）、あ（く）、あ（かす）、あ（くる）"	"ミョウ,メイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"feu"	"火"	"dico/kanji_火.png"	"ひ、「ほ」"	"カ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"eau"	"水"	"dico/kanji_水.png"	"みづ"	"スイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"passé, hier"	"昨"	"dico/kanji_昨.png"		"サク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"fois, répétition, faire tourner, faire circuler, tourner"	"回"	"dico/kanji_回.png"	"まわ（す）、まわ（る）"	"カイ、「エ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"application,effort"	"勉"	"dico/kanji_勉.png"		"ベン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"fort, devenir fort, fortifier, intensifier, forcer, exiger"	"強"	"dico/kanji_強.png"	"つよ（い）、つよ（まる）、つよ（める）、し（いる）"	"キョウ、ゴウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"chaque"	"毎"	"dico/kanji_毎.png"		"マイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"voir, être visible, montrer"	"見"	"dico/kanji_見.png"	"み（る）、み（える）、み（せる）"	"ケン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"servir"	"仕"	"dico/kanji_仕.png"	"つか（える）"	"シ、「ジ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"chose,fait, événement"	"事"	"dico/kanji_事.png"	"こと"	"ジ、「ズ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"chose,objet"	"物"	"dico/kanji_物.png"	"もの"	"ブツ,モツ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"destin,sort,transporter"	"運"	"dico/kanji_運.png"	"はこ（ぶ）"	"ウン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 8>kanjis"	"bouger,(se) déplacer"	"動"	"dico/kanji_動.png"	"うご（く）、うご（かす）"	"ドウ"
+						
+"Phrases L1 Ecriture leçon 8"						
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Que fais-tu dimanche ?"	"日曜日には何をしますか"	"にちようび　に　は　なに　を　します　か"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Aujourd'hui nous sommes samedi"	"今日は土曜日です"	"きょう　は　どようび　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Demain nous serons mardi"	"明日は火曜日です"	"あした　は　かようび　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Après demain nous serons jeudi"	"あさっては水曜日です"	"あさって　は　すいようび　です"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Hier nous étions mercredi"	"昨日は木曜日でした"	"きのう　は　もくようび　でした"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"J'étudie le japonais 3 fois par semaine"	"私は一週間に三回日本語の勉強をします"	"わたし　は　いち　しゅう　かん　に　さん　かい　にほんご　の　べんきょう　を　します"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Je fait des étirements chaque jour"	"私は毎日運動をします"	"わたし　は　まいにち　うんどう　を　します"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Je regarde la télé"	"テレビを見ます"	"テレビ　を　みます"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Je travaille chaque jour"	"私は毎日仕事をします"	"わたし　は　まいにち　しごと　を　します"		
+"metier.elements.Sentence"	"L1>Ecriture>leçon 8>phrases"	"Je ferais les courses dimanche"	"私は日曜日には買物をします"	"わたし　は　にちようび　に　は　かいもの　を　します"		
+						
+"Kanjis L1 Ecriture leçon 9"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"heure,temps"	"時"	"dico/kanji_時.png"	"とき"	"ジ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"position, portion, 1 pourcent, minute, diviser, partager, différencier, se séparer, être clair, comprendre"	"分"	"dico/kanji_分.png"	"わ（ける）、わ（かつ）、わ（かれる）、わ（かる）"	"ブン、ブ、フン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"moitié"	"半"	"dico/kanji_半.png"	"なか（ば）"	"ハン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"matin, dynastie"	"朝"	"dico/kanji_朝.png"	"あさ"	"チョウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"tôt, rapide, se hâter, hâter"	"早"	"dico/kanji_早.png"	"はや（い）、はや（まる）、はや（める）"	"ソウ、「サ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"éveil, commencement, se lever, se produire, produire, provoquer, réveiller"	"起"	"dico/kanji_起.png"	"お（きる）、お（こる）、お（こす）"	"キ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"nuit"	"夜"	"dico/kanji_夜.png"	"よ,よる"	"ヤ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"soir, nuit"	"晩"	"dico/kanji_晩.png"		"バン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"midi"	"午"	"dico/kanji_午.png"		"ゴ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"après, derrière, après, ultérieur, reste, être en retard"	"後"	"dico/kanji_後.png"	"のち、うし（ろ）、あと、おく（れる）"	"ゴ、コウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"antérieur,avant,devant"	"前"	"dico/kanji_前.png"	"まえ"	"ゼン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"en retard, lent, être en retard, retarder (réveil), différer"	"遅"	"dico/kanji_遅.png"	"おそ（い）、おく（れる）、おく（らす）"	"チ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 9>kanjis"	"tous,tout le monde"	"皆"	"dico/kanji_皆.png"	"みな,みんな"	"カイ"
+						
+"Kanjis L1 Ecriture leçon 10"	"Vérifié le 11/01/08"					
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"ciel"	"天"	"dico/kanji_天.png"	"あめ、「あま」"	"テン"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"esprit, âme, souffle, humeur"	"気"	"dico/kanji_気.png"		"キ,ケ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"pluie"	"雨"	"dico/kanji_雨.png"	"あめ、「あま」"	"ウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"neige"	"雪"	"dico/kanji_雪.png"	"ゆき"	"セツ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"vent, apparence"	"風"	"dico/kanji_風.png"	"かぜ、「かざ」"	"フウ、「フ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"chaud (temps)"	"暑"	"dico/kanji_暑.png"	"あつ（い）"	"ショ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"le nord"	"北"	"dico/kanji_北.png"	"きた"	"ホク"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"mer, océan"	"海"	"dico/kanji_海.png"	"うみ"	"カイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"chemin,voie,rue"	"道"	"dico/kanji_道.png"	"みち"	"トウ,ドウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"le sud"	"南"	"dico/kanji_南.png"	"みなみ"	"ナン、「ナ」"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"même, égal, équivalent"	"同"	"dico/kanji_同.png"	"おな（じ）"	"ドウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"l'est"	"東"	"dico/kanji_東.png"	"ひがし"	"トウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"ciel, rendre libre, être libre, vide"	"空"	"dico/kanji_空.png"	"そら、あ（ける）、あ（く）、から"	"クウ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"l'ouest"	"西"	"dico/kanji_西.png"	"にし"	"サイ,セイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"capitale"	"京"	"dico/kanji_京.png"		"キョウ,ケイ"
+"metier.elements.Kanji"	"L1>Ecriture>leçon 10>kanjis"	"ville, quartier"	"町"	"dico/kanji_町.png"	"まち"	"チョウ"
