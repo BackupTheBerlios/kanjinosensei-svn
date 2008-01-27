@@ -10,7 +10,6 @@ import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -18,11 +17,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,11 +28,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import metier.Messages;
-import metier.elements.Element;
-
 import utils.MyUtils;
 import vue.JPanelImageBg;
-import vue.JPanelImageBg.ImageLoadingException;
 import vue.VueElement.QuizQuestionPanel;
 import vue.VueElement.QuizSolutionPanel;
 import vue.VueElement.VueDetaillePanel;

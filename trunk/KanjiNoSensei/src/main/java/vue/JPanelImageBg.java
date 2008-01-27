@@ -8,16 +8,12 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 import metier.Messages;
-
 import utils.MyUtils;
 
 public class JPanelImageBg extends JComponent

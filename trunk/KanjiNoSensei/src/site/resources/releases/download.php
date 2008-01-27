@@ -3,8 +3,6 @@ require("./fonctions.php");
 
 $fichier = $_GET["fichier"];
 
-echo "fichier \"".$fichier."\"<br>";
-
 $fichier = VerifCheminFils($fichier);
 $ext = substr($fichier, strrpos($fichier, ".")+1);
 if (($fichier === false) || ($ext == "php"))

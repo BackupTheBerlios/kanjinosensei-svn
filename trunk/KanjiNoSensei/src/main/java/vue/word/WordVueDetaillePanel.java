@@ -141,17 +141,17 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				this.add(jPanelCentre, BorderLayout.CENTER);
 				jPanelCentre.setLayout(jPanelCentreLayout);
 				jPanelCentre.setMinimumSize(new java.awt.Dimension(600, 45));
-				jPanelCentre.setSize(600, 45);
-				jPanelCentre.setPreferredSize(new java.awt.Dimension(10, 45));
+				jPanelCentre.setSize(0, 45);
+				jPanelCentre.setPreferredSize(new java.awt.Dimension(0, 45));
 				{
 					jTextFieldMot = new JTextField();
-					jPanelCentre.add(jTextFieldMot);
+					jPanelCentre.add(jTextFieldMot, BorderLayout.CENTER);
 					jTextFieldMot.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
 					jTextFieldMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
 					jTextFieldMot.setHorizontalAlignment(SwingConstants.CENTER);
-					jTextFieldMot.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+					jTextFieldMot.setBorder(BorderFactory.createEmptyBorder());
 					jTextFieldMot.setEditable(false);
-					jTextFieldMot.setPreferredSize(new java.awt.Dimension(47, 47));
+					jTextFieldMot.setPreferredSize(new java.awt.Dimension(0, 47));
 					jTextFieldMot.setSize(0, 47);
 					jTextFieldMot.addMouseListener(vueDetaillePanelMouseAdapter);
 					jTextFieldMot.addCaretListener(new CaretListener() {
@@ -209,7 +209,7 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 		Word mot = vue.getMot();
 		jLabelLecture.setText(Messages.getString("WordVueDetaillePanel.LabelLecture") + " : "+ vue.toRomajiIfNeeded(mot.getLecture())); //$NON-NLS-1$ //$NON-NLS-2$
 		jTextFieldMot.setText(mot.getWord());
-		jTextFieldMot.setColumns(Math.min(2, jTextFieldMot.getText().length()) * 2);
+		jTextFieldMot.setColumns(Math.max(2, jTextFieldMot.getText().length()) * 2);
 		jLabelSignifications.setText(Messages.getString("WordVueDetaillePanel.LabelSignifications") + " : "+mot.getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
 		jLabelThemes.setText(Messages.getString("WordVueDetaillePanel.LabelThemes") + " : " +mot.getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 	}

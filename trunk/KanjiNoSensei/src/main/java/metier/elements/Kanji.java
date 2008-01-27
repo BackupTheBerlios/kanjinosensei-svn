@@ -1,10 +1,9 @@
 package metier.elements;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import metier.Messages;
-
 import utils.MyUtils;
 import utils.OneStringList;
 
@@ -187,7 +186,7 @@ public class Kanji extends Element implements Serializable
 	 * 
 	 * @return ON lectures set.
 	 */
-	public Set<String> getLecturesONSet()
+	public List<String> getLecturesONSet()
 	{
 		return new OneStringList(lecturesON);
 	}
@@ -207,7 +206,7 @@ public class Kanji extends Element implements Serializable
 	 * 
 	 * @return KUN lectures set.
 	 */
-	public Set<String> getLecturesKUNSet()
+	public List<String> getLecturesKUNSet()
 	{
 		return new OneStringList(lecturesKUN);
 	}

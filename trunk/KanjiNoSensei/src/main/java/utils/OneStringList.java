@@ -8,15 +8,15 @@ package utils;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.Vector;
 
 /**
  * This class represent a list of elements which support "one string format" input/output.
  * This class extends TreeSet&lt;E&gt; so each element is unique on the list.
  */
-public class OneStringList extends TreeSet<String>
+public class OneStringList extends Vector<String>
 {
-
+	
 	/** Serialization version. */
 	private static final long	serialVersionUID	= 1L;
 	
@@ -42,7 +42,6 @@ public class OneStringList extends TreeSet<String>
 	 */
 	public OneStringList(OneStringList oneStringList)
 	{
-		super(oneStringList);
 		ALLOWED_SEPARATOR = oneStringList.ALLOWED_SEPARATOR;
 		SEPARATOR = oneStringList.SEPARATOR;
 	}
@@ -238,4 +237,5 @@ public class OneStringList extends TreeSet<String>
 	{
 		MyUtils.removeEmptyElements(this);
 	}
+
 }

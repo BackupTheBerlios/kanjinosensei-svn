@@ -5,9 +5,7 @@ package vue.kanji;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;

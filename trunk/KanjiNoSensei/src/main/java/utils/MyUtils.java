@@ -11,7 +11,6 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -203,9 +202,9 @@ public abstract class MyUtils
 	 * @param set
 	 *            Set of string to clean.
 	 */
-	public static void removeEmptyElements(Set<String> set)
+	public static void removeEmptyElements(Iterable<String> iterable)
 	{
-		Iterator<String> it = set.iterator();
+		Iterator<String> it = iterable.iterator();
 		while (it.hasNext())
 		{
 			String s = it.next();

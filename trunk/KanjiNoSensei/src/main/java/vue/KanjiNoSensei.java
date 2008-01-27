@@ -277,7 +277,7 @@ public class KanjiNoSensei
 	private JSplitPane		jSplitPaneThemes			= null;
 
 	private JPanel			jPanelThemesSelection		= null;
-
+	
 	private JList			jListThemesSelectionnes		= null;
 
 	private int				questionCourante			= 0;
@@ -424,6 +424,7 @@ public class KanjiNoSensei
 			afficherBaseFrame.setPreferredSize(d);
 			afficherBaseFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			afficherBaseFrame.setName("Base de connaissance"); //$NON-NLS-1$
+			afficherBaseFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			// <JiglooProtected>
 			afficherBaseFrame.addComponentListener(new ComponentAdapter()
 			{
@@ -479,9 +480,14 @@ public class KanjiNoSensei
 		Iterator<String> itThemes = listeThemesFiltre.iterator();
 		MyCheckBoxTree jCheckBoxTree = getMyCheckBoxTree(true);
 
+		jCheckBoxTree.setTreeStable(false);
 		while (itThemes.hasNext())
 		{
 			String theme = itThemes.next();
+			if (!itThemes.hasNext())
+			{
+				jCheckBoxTree.setTreeStable(true);
+			}
 			jCheckBoxTree.addNode(theme, themesSelectionnes.contains(theme));
 		}
 
@@ -539,7 +545,7 @@ public class KanjiNoSensei
 
 						if (c.getMouseListeners().length > 0)
 						{
-							MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
+							//MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
 						}
 						else
 						{

@@ -12,8 +12,8 @@ import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -359,12 +359,12 @@ public abstract class VueElement
 	{
 		if (reponseUnique.isEmpty()) throw new NoSaisieException(""); //$NON-NLS-1$
 		
-		final TreeSet<String> reponse = new TreeSet<String>();
+		final List<String> reponse = new Vector<String>();
 		reponse.add(reponseUnique);
 		addInputMethodTextField(consigne, vue, component, reponse, true);
 	}
 	
-	public static void addInputMethodTextField(String consigne, final VueElement vue, final JComponent component, Set<String> reponsesMultiples, final boolean saisieReponseComplete) throws NoSaisieException
+	public static void addInputMethodTextField(String consigne, final VueElement vue, final JComponent component, List<String> reponsesMultiples, final boolean saisieReponseComplete) throws NoSaisieException
 	{
 		if (reponsesMultiples.isEmpty()) throw new NoSaisieException(""); //$NON-NLS-1$
 	

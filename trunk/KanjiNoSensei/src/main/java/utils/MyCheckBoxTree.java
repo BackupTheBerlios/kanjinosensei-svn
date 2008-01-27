@@ -341,4 +341,13 @@ public class MyCheckBoxTree extends CheckboxTree
 		treeDidChange();
 		repaint();
 	}
+	
+	/**
+	 * Force isTreeStable flag. Must be used by external tree scanning methods.
+	 * Warning not to set tree stable if another method is running concurrently.
+	 */
+	public synchronized void setTreeStable(boolean isTreeStable)
+	{
+		this.isTreeStable = isTreeStable;
+	}
 }

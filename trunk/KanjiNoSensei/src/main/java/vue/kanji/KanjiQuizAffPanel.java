@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 
 import metier.Messages;
 import vue.JPanelImageBg;

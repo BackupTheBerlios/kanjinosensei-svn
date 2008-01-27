@@ -1,5 +1,5 @@
 <?
-// Vous pouvez changer le chemin de départ, par default "." //
+// Vous pouvez changer le chemin de dÃ©part, par default "." //
 $depart=".";
 
 // ----- Affiche arborescence ----- //
@@ -15,16 +15,17 @@ require("./fonctions.php");
 if(!empty($chemin))     $chemin     = stripslashes($chemin); else $chemin = $depart;
 
 
-// ----------------------------------- Sécurité navigation -------------------------------------------------- //
+// ----------------------------------- SÃ©curitÃ© navigation -------------------------------------------------- //
 
 $chemintotal = VerifCheminFils($chemin);
 
 if ($chemintotal === false)
 {
+	
 	$chemintotal = $depart;
 }
 
-// ------------------------------- Récupération des fichiers et répertoires dans tableau-- //
+// ------------------------------- RÃ©cupÃ©ration des fichiers et rÃ©pertoires dans tableau-- //
 
 $repind  = 0;
 $fileind = 0;
@@ -87,21 +88,19 @@ if ($handle = @opendir($chemintotal))
 <? 
 // ------ Si on clique sur dossier parent --------------- //
 
-if($chemintotal != ".")
-{
-	$cheminretour = ModifChemin($chemintotal);
-	$cheminretour = rawurlencode($cheminretour);
+$cheminretour = ModifChemin($chemintotal);
+$cheminretour = rawurlencode($cheminretour);
 
-	?>
-	<TR>
-		<TD width=35 ALIGN="center"><A HREF="./dir.php?chemin=<? echo $cheminretour; ?>"><IMG SRC="./img/back.gif" BORDER="0"></A></TD>
-		<TD ALIGN="left"  ><A HREF="./dir.php?chemin=<? echo $cheminretour; ?>">..</A></TD>
-	</TR>
-	<?
-}
+$lienretour = ($chemintotal == $depart."/")?"..":"./dir.php?chemin=".$cheminretour;
+?>
+<TR>
+	<TD width=35 ALIGN="center"><A HREF="<? echo $lienretour; ?>"><IMG SRC="./img/back.gif" BORDER="0"></A></TD>
+	<TD ALIGN="left"  ><A HREF="<? echo $lienretour; ?>">..</A></TD>
+</TR>
+<?
 
 
-// -------------------------------------- Affichage des répertoires --------------------------------------- //
+// -------------------------------------- Affichage des rÃ©pertoires --------------------------------------- //
 
 for($i=0;$i<$repind;$i++)
 {

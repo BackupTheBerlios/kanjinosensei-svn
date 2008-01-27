@@ -3,6 +3,7 @@ package metier.elements;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Set;
 
 import metier.Messages;
@@ -221,7 +222,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	 *            Theme filter.
 	 * @return Set of matching themes.
 	 */
-	public Set<String> getThemesSet(String beginning)
+	public List<String> getThemesSet(String beginning)
 	{
 		return themes.getElementsBeginWith(beginning);		
 	}
@@ -254,7 +255,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	 * 
 	 * @return this element significations.
 	 */
-	public Set<String> getSignificationsSet()
+	public List<String> getSignificationsSet()
 	{
 		return new OneStringList(significations);
 	}
