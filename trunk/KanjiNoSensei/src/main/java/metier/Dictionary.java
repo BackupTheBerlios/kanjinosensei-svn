@@ -1,4 +1,5 @@
 package metier;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +22,8 @@ import metier.elements.Element;
 import utils.MyUtils;
 
 /**
- * Class that represent a dictionary with all available elements.
- * A dictionary is opened with a source file (*.kjd). It can be exported/imported with *.csv extension, the file structure depends on the elements the dictionary contains.
+ * Class that represent a dictionary with all available elements. A dictionary is opened with a source file (*.kjd). It can be exported/imported with *.csv extension, the file structure depends on the elements the dictionary contains.
+ * 
  * @author Escallier Pierre
  */
 public class Dictionary implements Serializable
@@ -36,7 +37,7 @@ public class Dictionary implements Serializable
 		private static final long	serialVersionUID	= 1L;
 
 	}
-	
+
 	/**
 	 * Exception class, thrown when trying to add an element already present in the dictionary.
 	 */
@@ -45,16 +46,16 @@ public class Dictionary implements Serializable
 
 		/** Serialization version. */
 		private static final long	serialVersionUID	= 1L;
-		
+
 		DictionaryElementAlreadyPresentException(Element element)
 		{
-			super(Messages.getString("Dictionary.Exception.ElementAlreadyPresent") + " : "+ element.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+			super(Messages.getString("Dictionary.Exception.ElementAlreadyPresent") + " : " + element.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/** Serialization version. */
 	private static final long			serialVersionUID	= 1L;
-	
+
 	/** Random object use to generate random data */
 	private static final Random			dice				= new Random();
 
@@ -63,7 +64,9 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Construction from existing element collection.
-	 * @param i_elements existing element collection.
+	 * 
+	 * @param i_elements
+	 *            existing element collection.
 	 */
 	private Dictionary(TreeMap<String, Element> elements)
 	{
@@ -72,8 +75,11 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Export method. Open the export file and write all elements sorted by key (it includes by-type sorting).
-	 * @param file Destination file to export.
-	 * @throws FileNotFoundException if file is not found.
+	 * 
+	 * @param file
+	 *            Destination file to export.
+	 * @throws FileNotFoundException
+	 *             if file is not found.
 	 */
 	public void exportFile(File file) throws FileNotFoundException
 	{
@@ -94,8 +100,11 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Save the dictionary in a binary file (*.kjd) using ObjectOutputStream.
-	 * @param file Destination file to save the dictionary.
-	 * @throws IOException on any Input/Output error.
+	 * 
+	 * @param file
+	 *            Destination file to save the dictionary.
+	 * @throws IOException
+	 *             on any Input/Output error.
 	 */
 	public void save(File file) throws IOException
 	{
@@ -115,8 +124,11 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Dictionary constructor using source file to open (*.kjd). The file must have been saved with {@link Dictionary#save(File)}.
-	 * @param file Source file to open.
-	 * @throws IOException on any Input/Output error.
+	 * 
+	 * @param file
+	 *            Source file to open.
+	 * @throws IOException
+	 *             on any Input/Output error.
 	 */
 	public Dictionary(File file) throws IOException
 	{
@@ -131,10 +143,12 @@ public class Dictionary implements Serializable
 	}
 
 	/**
-	 * Import elements from *.csv file. Previous collection is cleared.
-	 * Invalids lines or unavailables elements class are ignored, no Exception is thrown but an error is print on System.err stream.
-	 * @param file Source file to import.
-	 * @throws IOException on any Input/Output error.
+	 * Import elements from *.csv file. Previous collection is cleared. Invalids lines or unavailables elements class are ignored, no Exception is thrown but an error is print on System.err stream.
+	 * 
+	 * @param file
+	 *            Source file to import.
+	 * @throws IOException
+	 *             on any Input/Output error.
 	 */
 	public void importFile(File file) throws IOException
 	{
@@ -153,13 +167,13 @@ public class Dictionary implements Serializable
 		{
 			line = br.readLine();
 			++lineNb;
-			
-			end = (line.contains(Element.EXPORT_SEPARATOR)?line.indexOf(Element.EXPORT_SEPARATOR):line.length());
+
+			end = (line.contains(Element.EXPORT_SEPARATOR) ? line.indexOf(Element.EXPORT_SEPARATOR) : line.length());
 			current = MyUtils.stripQuotes(line.substring(0, end));
-			
+
 			// Try to translate it as an element
 			try
-			{	
+			{
 				Element element = Element.generateImportedElement(current, line);
 				addElement(element);
 			}
@@ -181,8 +195,11 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Open dictionary from binary file (*.kjd). Previous collection is cleared. Unavailable class elements are ignored but an error is printed on System.err stream.
-	 * @param file Dictionary file to open.
-	 * @throws IOException on any Input/Output error.
+	 * 
+	 * @param file
+	 *            Dictionary file to open.
+	 * @throws IOException
+	 *             on any Input/Output error.
 	 */
 	public void open(File file) throws IOException
 	{
@@ -200,21 +217,20 @@ public class Dictionary implements Serializable
 			try
 			{
 				obj = ois.readObject();
-				
-				if (!Element.class.isInstance(obj)) throw new ClassNotFoundException();
-				
-				
+
+				if ( !Element.class.isInstance(obj)) throw new ClassNotFoundException();
+
 				element = (Element) obj;
 				element.pack();
 				addElement(element);
 			}
 			catch (ClassNotFoundException e)
 			{
-				System.err.println(Messages.getString("Dictionary.Open.ErrorOnElement")+ " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				System.err.println(Messages.getString("Dictionary.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			catch (DictionaryElementAlreadyPresentException e)
 			{
-				System.err.println(Messages.getString("Dictionary.Open.WarningElementAlreadyPresent")+" : "+e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				System.err.println(Messages.getString("Dictionary.Open.WarningElementAlreadyPresent") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
@@ -224,8 +240,11 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Add an element to the collection. If the element is already present, throw DictionaryElementAlreadyPresentException.
-	 * @param element Element to add to the dictionary.
-	 * @throws DictionaryElementAlreadyPresentException if the element is already present in the dictionary.
+	 * 
+	 * @param element
+	 *            Element to add to the dictionary.
+	 * @throws DictionaryElementAlreadyPresentException
+	 *             if the element is already present in the dictionary.
 	 */
 	public void addElement(Element element) throws DictionaryElementAlreadyPresentException
 	{
@@ -239,7 +258,9 @@ public class Dictionary implements Serializable
 
 	/**
 	 * List all the elements themes wich start with "beginning" string. If beginning is "" or null, return all themes.
-	 * @param beginning First character of the wanted themes.
+	 * 
+	 * @param beginning
+	 *            First character of the wanted themes.
 	 * @return Set of all elements themes wich matches the beginning string.
 	 */
 	public Set<String> getThemesList(String beginning)
@@ -260,6 +281,7 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Return all elements themes. As getThemesList(null) would do.
+	 * 
 	 * @return Set of all elements themes.
 	 */
 	public Set<String> getThemesList()
@@ -269,7 +291,9 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Return a sub dictionary containing only the elements of the given themes list.
-	 * @param themesList List of wanted themes.
+	 * 
+	 * @param themesList
+	 *            List of wanted themes.
 	 * @return Dictionary of the elements of this wich match to at least one of the given themes.
 	 */
 	public Dictionary getSubDictionary(Set<String> themesList)
@@ -291,10 +315,13 @@ public class Dictionary implements Serializable
 	}
 
 	/**
-	 * Return a random element from the dictionary. Excepting ones wich are in the alreadySeen list.
-	 * @param alreadySeen List of the already seen elements, this elements can't be returned by this method.
+	 * Return a random element from the dictionary. Excepting ones which are in the alreadySeen list.
+	 * 
+	 * @param alreadySeen
+	 *            List of the already seen elements, this elements can't be returned by this method.
 	 * @return A random element a non seen one is available, DictionaryNoMoreElementException is thrown if not.
-	 * @throws DictionaryNoMoreElementException when all dictionary elements are in alreadySeen list.
+	 * @throws DictionaryNoMoreElementException
+	 *             when all dictionary elements are in alreadySeen list.
 	 */
 	public Element getRandomElement(Vector<Element> alreadySeen) throws DictionaryNoMoreElementException
 	{
@@ -306,9 +333,41 @@ public class Dictionary implements Serializable
 		return dico.get(dice.nextInt(dico.size()));
 	}
 
+	public Element getNextElementFromLearningProfile(Vector<Element> alreadySeen, LearningProfile learningProfile) throws DictionaryNoMoreElementException
+	{
+		Vector<String> dico = new Vector<String>(elements.keySet());
+
+		if (alreadySeen != null)
+		{
+			Iterator<Element> itElements = alreadySeen.iterator();
+			while (itElements.hasNext())
+			{
+				dico.remove(itElements.next().getKey());
+			}
+		}
+		
+		if (dico.isEmpty()) throw new DictionaryNoMoreElementException();
+
+		Vector<String> neverSeenElements = ((Vector<String>) dico.clone());
+		neverSeenElements.removeAll(learningProfile.getElementsUID());
+		
+		// Never seen elements are return in first.
+		if (neverSeenElements.size() > 0)
+		{
+			return elements.get(neverSeenElements.get(dice.nextInt(neverSeenElements.size())));
+		}
+		else
+		{
+			// When the learning profile knows all elements, then it can be used to get the next element according to the user statistics.
+			return elements.get(learningProfile.getNextElement(dico));
+		}
+	}
+
 	/**
 	 * Return Element by key.
-	 * @param key Key of the wanted element.
+	 * 
+	 * @param key
+	 *            Key of the wanted element.
 	 * @return The element if key is present on the dictionary, null if not (no exception are thrown).
 	 */
 	public Element chercherElement(String key)
@@ -323,9 +382,10 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Clone this dictionary.
+	 * 
 	 * @return cloned dictionary.
 	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
+	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	public Dictionary clone()
 	{
 		TreeMap<String, Element> clonedElements = (TreeMap<String, Element>) elements.clone();
@@ -333,9 +393,10 @@ public class Dictionary implements Serializable
 	}
 
 	/**
-	 * Delete given element from the dictionary. Work similar to :
-	 * <code>elements.remove(element.getKey())</code>
-	 * @param element Element we want to delete the key from the dictionary.
+	 * Delete given element from the dictionary. Work similar to : <code>elements.remove(element.getKey())</code>
+	 * 
+	 * @param element
+	 *            Element we want to delete the key from the dictionary.
 	 */
 	public void removeElement(Element element)
 	{
@@ -347,7 +408,9 @@ public class Dictionary implements Serializable
 
 	/**
 	 * Get a list of all dictionary elements wich start with given beginning string.
-	 * @param beginning Beginning string to filter elements.
+	 * 
+	 * @param beginning
+	 *            Beginning string to filter elements.
 	 * @return List of elements wich match the beginning filter.
 	 */
 	public Set<Element> getElementsList(String beginning)
@@ -367,7 +430,7 @@ public class Dictionary implements Serializable
 			}
 		}
 
-		return elementsReponses;		
+		return elementsReponses;
 	}
 
 }

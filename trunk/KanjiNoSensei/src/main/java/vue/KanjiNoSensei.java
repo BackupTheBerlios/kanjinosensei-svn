@@ -28,19 +28,29 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -63,6 +73,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileFilter;
 
 import metier.Dictionary;
+import metier.LearningProfile;
 import metier.Messages;
 import metier.Dictionary.DictionaryElementAlreadyPresentException;
 import metier.Dictionary.DictionaryNoMoreElementException;
@@ -87,13 +98,16 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 /**
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
+/**
  * @author Axan
  * 
  */
 public class KanjiNoSensei
 {
-	
-	private final boolean									DEV_ACCESS						= ("axan".compareToIgnoreCase(System.getProperty("user.name")) == 0); //$NON-NLS-1$ //$NON-NLS-2$
+
+	private final boolean	DEV_ACCESS	= ("axan".compareToIgnoreCase(System.getProperty("user.name")) == 0);	//$NON-NLS-1$ //$NON-NLS-2$
 
 	{
 		// Set Look & Feel
@@ -105,25 +119,105 @@ public class KanjiNoSensei
 		{
 			e.printStackTrace();
 		}
-		
+
 		MyUtils.tracesEnabled = DEV_ACCESS;
 	}
 
-	public final String										KanjiNoSensei_VERSION			= "1.0c"; //$NON-NLS-1$
+	private static class Presets
+	{
+		TreeMap<String, Vector<String>>	presets	= new TreeMap<String, Vector<String>>();
+
+		File							file	= null;
+
+		public Presets(File file) throws IOException
+		{
+			this.file = file;
+			FileInputStream fis;
+			try
+			{
+				fis = new FileInputStream(file);
+			}
+			catch (FileNotFoundException e1)
+			{
+				System.err.println("Fichier presets vierge");
+				return;
+			}
+
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
+			try
+			{
+				Object obj = ois.readObject();
+				if ( !presets.getClass().isInstance(obj)) throw new ClassNotFoundException();
+
+				presets = (TreeMap<String, Vector<String>>) obj;
+			}
+			catch (ClassNotFoundException e)
+			{
+				System.err.println("Erreur chargement fichier presets");
+			}
+
+			ois.close();
+			fis.close();
+		}
+
+		public void addPreset(String presetName, Vector<String> themes)
+		{
+			presets.put(presetName, themes);
+		}
+
+		public String[] getPresetsList()
+		{
+			String[] result = new String[presets.size()];
+			return presets.keySet().toArray(result);
+		}
+
+		/**
+		 * @throws IOException
+		 * @throws FileNotFoundException
+		 * 
+		 */
+		public void save() throws FileNotFoundException, IOException
+		{
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(presets);
+		}
+
+		/**
+		 * @param string
+		 * @return
+		 */
+		public Vector<String> getPreset(String presetName)
+		{
+			return presets.get(presetName);
+		}
+
+		/**
+		 * @param string
+		 */
+		public void removePreset(String presetName)
+		{
+			presets.remove(presetName);
+		}
+	};
+
+	private final Presets									presets							= new Presets(new File("presets.txt"));
+
+	public final String										KanjiNoSensei_VERSION			= "1.0c";																									//$NON-NLS-1$
 
 	static boolean											USE_ROMAJI						= false;
 
 	final KanjiNoSensei										app								= this;
 
-	private Set<String>										themesSelectionnes				= new TreeSet<String>();												// @jve:decl-index=0:
+	private Set<String>										themesSelectionnes				= new TreeSet<String>();																					// @jve:decl-index=0:
 
 	private JFrame											jConfigModalFrame;
 
 	private JMenuItem										ConfigMenuItem;
 
-	static private FileFilter								fileFilterDictionnaire			= MyUtils.generateFileFilter(Messages.getString("KanjiNoSensei.DictionaryFileFilterName"), "kjd"); //$NON-NLS-1$ //$NON-NLS-2$
+	static private FileFilter								fileFilterDictionnaire			= MyUtils.generateFileFilter(Messages.getString("KanjiNoSensei.DictionaryFileFilterName"), "kjd");			//$NON-NLS-1$ //$NON-NLS-2$
 
-	static private FileFilter								fileFilterDictionnaireExport	= MyUtils.generateFileFilter(Messages.getString("KanjiNoSensei.ExportedDictionaryFileFilterName"), "csv"); //$NON-NLS-1$ //$NON-NLS-2$
+	static private FileFilter								fileFilterDictionnaireExport	= MyUtils.generateFileFilter(Messages.getString("KanjiNoSensei.ExportedDictionaryFileFilterName"), "csv");	//$NON-NLS-1$ //$NON-NLS-2$
 
 	private JFrame											jFrame							= null;
 
@@ -141,13 +235,13 @@ public class KanjiNoSensei
 
 	private JMenuItem										aboutMenuItem					= null;
 
-	private JFrame											aboutFrame						= null;																// @jve:decl-index=0:visual-constraint="433,15"
+	private JFrame											aboutFrame						= null;																									// @jve:decl-index=0:visual-constraint="433,15"
 
 	private JPanel											aboutContentPane				= null;
 
 	private JLabel											aboutVersionLabel				= null;
 
-	private JFrame											afficherBaseFrame				= null;																// @jve:decl-index=0:visual-constraint="23,536"
+	private JFrame											afficherBaseFrame				= null;																									// @jve:decl-index=0:visual-constraint="23,536"
 
 	private JPanel											afficherBaseContentPane			= null;
 
@@ -164,6 +258,20 @@ public class KanjiNoSensei
 	private JButton											jButtonSelectionnerTous			= null;
 
 	private JButton											jButtonDeselectionner			= null;
+
+	private JButton											jButtonSave;
+
+	private JButton											jButtonCharger;
+
+	private JPanel											jPanelPresetsBtns;
+
+	private JComboBox										jComboBoxPresets;
+
+	private JLabel											jLabelPreset;
+
+	private JPanel											jPanelPresets;
+
+	private JPanel											jPanelTop;
 
 	private JPanel											jPanelThemesBtns;
 
@@ -200,6 +308,7 @@ public class KanjiNoSensei
 	private JSplitPane										jSplitPaneTopMiddle;
 
 	private JSplitPane										jSplitPaneTopMiddleBottom;
+	private JButton jButtonSupprimer;
 
 	private JFrame											jFrameQuizz;
 
@@ -277,7 +386,7 @@ public class KanjiNoSensei
 	private JSplitPane		jSplitPaneThemes			= null;
 
 	private JPanel			jPanelThemesSelection		= null;
-	
+
 	private JList			jListThemesSelectionnes		= null;
 
 	private int				questionCourante			= 0;
@@ -294,6 +403,9 @@ public class KanjiNoSensei
 
 	private MyCheckBoxTree	jMyCheckBoxTree;
 
+	private File			userLearningProfileFile = null;
+	private LearningProfile userLearningProfile = null;
+	
 	private static Vector<Class<? extends Element>> listPluginsClasses()
 	{
 		Vector<Class<? extends Element>> v = new Vector<Class<? extends Element>>();
@@ -304,7 +416,7 @@ public class KanjiNoSensei
 		return v;
 	}
 
-	public KanjiNoSensei(File fic_dico) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
+	public KanjiNoSensei(File fic_dico, File fic_profile) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
 	{
 		plugins = listPluginsClasses();
 
@@ -314,7 +426,21 @@ public class KanjiNoSensei
 			Class<? extends Element> plugin = itPlugins.next();
 			vuesBlank.put(plugin, VueElement.genererVueBlankElement(app, plugin, USE_ROMAJI));
 		}
-
+		
+		if (fic_profile.exists() && fic_profile.isFile())
+		{
+			this.userLearningProfile = LearningProfile.open(fic_profile);
+		}
+		else if (fic_profile.createNewFile() || fic_profile.canWrite())
+		{
+			this.userLearningProfile = new LearningProfile();
+		}
+		else
+		{
+			throw new IOException("Cannot create User Learning Profile file");
+		}
+			
+		this.userLearningProfileFile = fic_profile;
 		this.dictionnaire = new Dictionary(fic_dico);
 		this.dictionnaireQuiz = this.dictionnaire.clone();
 	}
@@ -393,7 +519,7 @@ public class KanjiNoSensei
 						}
 						catch (DictionaryElementAlreadyPresentException ex)
 						{
-							System.out.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : "+ex.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+							System.out.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + ex.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 				}
@@ -484,7 +610,7 @@ public class KanjiNoSensei
 		while (itThemes.hasNext())
 		{
 			String theme = itThemes.next();
-			if (!itThemes.hasNext())
+			if ( !itThemes.hasNext())
 			{
 				jCheckBoxTree.setTreeStable(true);
 			}
@@ -545,7 +671,7 @@ public class KanjiNoSensei
 
 						if (c.getMouseListeners().length > 0)
 						{
-							//MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
+							// MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
 						}
 						else
 						{
@@ -575,14 +701,14 @@ public class KanjiNoSensei
 											}
 											catch (DictionaryElementAlreadyPresentException e1)
 											{
-												System.err.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : "+e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+												System.err.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 												try
 												{
 													dictionnaire.addElement(ancienElement);
 												}
 												catch (DictionaryElementAlreadyPresentException e2)
 												{
-													// TODO Auto-generated catch block
+													System.err.println("Erreur : Ancien élément déjà présent");
 													e2.printStackTrace();
 												}
 											}
@@ -605,7 +731,7 @@ public class KanjiNoSensei
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \""+element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 		}
 
@@ -971,7 +1097,7 @@ public class KanjiNoSensei
 			jPanelThemesInSplit.setLayout(new BorderLayout());
 			jPanelThemesInSplit.setPreferredSize(new Dimension(500, 500));
 			jPanelThemesInSplit.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jPanelThemesInSplit.add(getJPanelThemesFiltres(), BorderLayout.NORTH);
+			jPanelThemesInSplit.add(getJPanelTop(), BorderLayout.NORTH);
 			jPanelThemesInSplit.add(getJSplitPaneThemes(), BorderLayout.CENTER);
 		}
 		return jPanelThemesInSplit;
@@ -1250,7 +1376,8 @@ public class KanjiNoSensei
 		}
 
 		final File ficDico;
-
+		final File ficLearningProfile;
+		
 		if (args.length > 0)
 		{
 			ficDico = new File(args[0]);
@@ -1259,6 +1386,9 @@ public class KanjiNoSensei
 		{
 			ficDico = null;
 		}
+		
+		// TODO : Add command line parameter
+		ficLearningProfile = new File(LearningProfile.DEFAULT_PROFILE);
 
 		if (args.length >= 2)
 		{
@@ -1268,7 +1398,7 @@ public class KanjiNoSensei
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorLook&FeelsManagement") + " : " +e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				System.err.println(Messages.getString("KanjiNoSensei.ErrorLook&FeelsManagement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 				return;
 			}
 		}
@@ -1280,12 +1410,12 @@ public class KanjiNoSensei
 				KanjiNoSensei application;
 				try
 				{
-					application = new KanjiNoSensei(ficDico);
+					application = new KanjiNoSensei(ficDico, ficLearningProfile);
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					System.err.println(Messages.getString("KanjiNoSensei.ErrorRunningApp") + " : "+e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+					System.err.println(Messages.getString("KanjiNoSensei.ErrorRunningApp") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 					return;
 				}
 
@@ -1515,7 +1645,7 @@ public class KanjiNoSensei
 		if (aboutVersionLabel == null)
 		{
 			aboutVersionLabel = new JLabel();
-			aboutVersionLabel.setText(Messages.getString("KanjiNoSensei.LabelVersion") + " : " +KanjiNoSensei_VERSION); //$NON-NLS-1$ //$NON-NLS-2$
+			aboutVersionLabel.setText(Messages.getString("KanjiNoSensei.LabelVersion") + " : " + KanjiNoSensei_VERSION); //$NON-NLS-1$ //$NON-NLS-2$
 			aboutVersionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return aboutVersionLabel;
@@ -1735,7 +1865,8 @@ public class KanjiNoSensei
 		{
 			try
 			{
-				elementQuestionEnCours = dictionnaireQuizEnCours.getRandomElement(dejaVus);
+				elementQuestionEnCours = dictionnaireQuizEnCours.getNextElementFromLearningProfile(dejaVus, userLearningProfile);
+				//elementQuestionEnCours = dictionnaireQuizEnCours.getRandomElement(dejaVus);
 				vueElementQuestionEnCours = VueElement.genererVueElement(this, elementQuestionEnCours, USE_ROMAJI);
 			}
 			catch (DictionaryNoMoreElementException e1)
@@ -1750,7 +1881,7 @@ public class KanjiNoSensei
 				dejaVus.add(elementQuestionEnCours);
 
 				e.printStackTrace();
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \""+elementQuestionEnCours.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + elementQuestionEnCours.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				continue;
 			}
 
@@ -1787,11 +1918,21 @@ public class KanjiNoSensei
 
 		MyUtils.refreshComponent(getJQuizFrame());
 		getJQuizFrame().setVisible(true);
+		
+		try
+		{
+			userLearningProfile.save(userLearningProfileFile);
+		}
+		catch (IOException e)
+		{
+			System.err.println("IOException : Attention, le profil utilisateur n'as pas pu être sauvegardé : "+e.getMessage());
+		}
 	}
 
 	private void miseAJourQuizTitle()
 	{
 		getJQuizFrame().setTitle(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante + "; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+		getJQuizFrame().setTitle(getJQuizFrame().getTitle()+"   "+"Stats ["+userLearningProfile.getElementStats(elementQuestionEnCours.getKey())+"]");
 	}
 
 	public synchronized void validerReponseQuiz(boolean reponseCorrecte, boolean nextQuestion)
@@ -1810,6 +1951,8 @@ public class KanjiNoSensei
 			bg = Color.RED;
 		}
 
+		userLearningProfile.addToStats(elementQuestionEnCours.getKey(), reponseCorrecte);
+		
 		if (nextQuestion)
 		{
 			poserQuestionSuivanteQuiz();
@@ -1857,9 +2000,8 @@ public class KanjiNoSensei
 
 	protected void finirQuiz()
 	{
-		String msg = String.format(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber")+" :\t%d\n"+Messages.getString("KanjiNoSensei.QuizCorrectsAnswers")+" :\t%d\n"+Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers")+" :\t%d", questionCourante, bonnesReponses, erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+		String msg = String.format(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " :\t%d\n" + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " :\t%d\n" + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " :\t%d", questionCourante, bonnesReponses, erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 
-		
 		JOptionPane.showMessageDialog(null, msg, Messages.getString("KanjiNoSensei.QuizFinished"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
 		getJQuizFrame().dispose();
 	}
@@ -2203,6 +2345,173 @@ public class KanjiNoSensei
 			jPanelThemesBtns.add(getJButtonDeselectionner());
 		}
 		return jPanelThemesBtns;
+	}
+
+	private JPanel getJPanelTop()
+	{
+		if (jPanelTop == null)
+		{
+			jPanelTop = new JPanel();
+			BorderLayout jPanelTopLayout = new BorderLayout();
+			jPanelTop.setLayout(jPanelTopLayout);
+			jPanelTop.add(getJPanelPresets(), BorderLayout.NORTH);
+			jPanelTop.add(getJPanelThemesFiltres(), BorderLayout.CENTER);
+		}
+		return jPanelTop;
+	}
+
+	private JPanel getJPanelPresets()
+	{
+		if (jPanelPresets == null)
+		{
+			jPanelPresets = new JPanel();
+			GridBagLayout jPanelPresetsLayout = new GridBagLayout();
+			jPanelPresetsLayout.rowWeights = new double[] {0.1};
+			jPanelPresetsLayout.rowHeights = new int[] {7};
+			jPanelPresetsLayout.columnWeights = new double[] {0.0, 0.0, 0.1};
+			jPanelPresetsLayout.columnWidths = new int[] {110, 262, 7};
+			jPanelPresets.setLayout(jPanelPresetsLayout);
+			jPanelPresets.setPreferredSize(new java.awt.Dimension(788, 30));
+			jPanelPresets.add(getJLabelPreset(), new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 20), 0, 0));
+			jPanelPresets.add(getJComboBoxPresets(), new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+			jPanelPresets.add(getJPanelPresetsBtns(), new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 20, 0, 0), 0, 0));
+		}
+		return jPanelPresets;
+	}
+
+	private JLabel getJLabelPreset()
+	{
+		if (jLabelPreset == null)
+		{
+			jLabelPreset = new JLabel();
+			jLabelPreset.setText("Presets");
+			jLabelPreset.setLayout(null);
+		}
+		return jLabelPreset;
+	}
+
+	private JComboBox getJComboBoxPresets()
+	{
+		if (jComboBoxPresets == null)
+		{
+
+			ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(presets.getPresetsList());
+			jComboBoxPresets = new JComboBox();
+			jComboBoxPresets.setModel(jComboBox1Model);
+			jComboBoxPresets.setEditable(true);
+		}
+		return jComboBoxPresets;
+	}
+
+	private JPanel getJPanelPresetsBtns()
+	{
+		if (jPanelPresetsBtns == null)
+		{
+			jPanelPresetsBtns = new JPanel();
+			FlowLayout jPanelPresetsBtnsLayout = new FlowLayout();
+			jPanelPresetsBtnsLayout.setAlignment(FlowLayout.LEFT);
+			jPanelPresetsBtnsLayout.setHgap(0);
+			jPanelPresetsBtns.setLayout(jPanelPresetsBtnsLayout);
+			jPanelPresetsBtns.add(getJButtonCharger());
+			jPanelPresetsBtns.add(getJButtonSave());
+			jPanelPresetsBtns.add(getJButtonSupprimer());
+		}
+		return jPanelPresetsBtns;
+	}
+
+	private JButton getJButtonCharger()
+	{
+		if (jButtonCharger == null)
+		{
+			jButtonCharger = new JButton();
+			jButtonCharger.setText("Charger");
+			jButtonCharger.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent evt)
+				{
+					System.out.println("jButtonCharger.actionPerformed, event=" + evt);
+					Vector<String> themes = presets.getPreset(getJComboBoxPresets().getSelectedItem().toString());
+
+					Iterator<String> itThemes = themes.iterator();
+					getMyCheckBoxTree(false).setTreeStable(false);
+					while (itThemes.hasNext())
+					{
+						String theme = itThemes.next();
+						getMyCheckBoxTree(false).addNode(theme, true);
+					}
+					getMyCheckBoxTree(false).setTreeStable(true);
+					
+					afficherBaseFrameMAJZoneThemes();
+					afficherBaseFrameMAJZoneElements();
+				}
+			});
+		}
+		return jButtonCharger;
+	}
+
+	private JButton getJButtonSave()
+	{
+		if (jButtonSave == null)
+		{
+			jButtonSave = new JButton();
+			jButtonSave.setText("Sauver");
+			jButtonSave.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent evt)
+				{
+					System.out.println("jButtonSave.actionPerformed, event=" + evt);
+
+					Vector<String> themes = new Vector<String>();
+
+					for (int i = 0; i < getJListThemesSelectionnes().getModel().getSize(); ++i)
+					{
+						themes.add((String) getJListThemesSelectionnes().getModel().getElementAt(i));
+					}
+
+					presets.addPreset(getJComboBoxPresets().getSelectedItem().toString(), themes);
+					try
+					{
+						presets.save();
+					}
+					catch (IOException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					getJComboBoxPresets().setModel(new DefaultComboBoxModel(presets.getPresetsList()));
+				}
+			});
+		}
+		return jButtonSave;
+	}
+	
+	private JButton getJButtonSupprimer() {
+		if(jButtonSupprimer == null) {
+			jButtonSupprimer = new JButton();
+			jButtonSupprimer.setText("Supprimer");
+			jButtonSupprimer.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					System.out.println("jButtonSupprimer.actionPerformed, event="+evt);
+					presets.removePreset(getJComboBoxPresets().getSelectedItem().toString());
+					try
+					{
+						presets.save();
+					}
+					catch (FileNotFoundException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					catch (IOException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					getJComboBoxPresets().setModel(new DefaultComboBoxModel(presets.getPresetsList()));
+				}
+			});
+		}
+		return jButtonSupprimer;
 	}
 
 }

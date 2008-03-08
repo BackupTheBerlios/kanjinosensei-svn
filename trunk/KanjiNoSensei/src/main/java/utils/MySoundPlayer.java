@@ -302,7 +302,7 @@ public class MySoundPlayer extends Thread
 						}
 						catch (JavaLayerException e)
 						{
-							// TODO Auto-generated catch block
+							System.err.println("Erreur : ZOOM_PLAYER play()");
 							e.printStackTrace();
 						}
 					}

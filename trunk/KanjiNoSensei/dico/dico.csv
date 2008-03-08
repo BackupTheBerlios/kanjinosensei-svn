@@ -466,6 +466,48 @@
 "metier.elements.Sentence";"L1>Ecriture>leçon 10>phrases";"Au Japon, Tôkyô est la plus grande ville";"日本では東京がいちばん大きいとかいです";"にほん　で　は　とうきょう　が　いちばん　おおきい　とかい　です";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 10>phrases";"A Tôkyô, Ginza est le quartier le plus beau";"東京ではぎんざがいちばんきれいな町です";"とうきょう　で　は　ぎんざ　が　いちばん　きれい　な　まち　です";;
 ;;;;;;
+"Kanjis L1 Ecriture leçon 11";;;;;;
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"texte, phrase, littérature, lettre, note";"文";"kanji_文.png";"ふみ";"ブン、モン"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"père";"父";"kanji_父.png";"ちち";"フ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"ami,compagnon,amitié";"友";"kanji_友.png";"とも";"ユウ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"suffixe de pluriel, atteindre";"達";"kanji_達.png";"−だち,−たち";"タツ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"artisan, fabrication, construction";"工";"kanji_工.png";;"コオ,ク"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"occupation, entreprise, karma, fatalité, fait, oeuvre, procédé";"業";"kanji_業.png";"わざ";"ギョオ、ゴオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"espace, endroit, siège";"場";"kanji_場.png";"ば";"チョオ,ジョオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"lieu, endroit, adresse, point";"所";"kanji_所.png";"−どころ,ところ";"−ジョ,ショ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"forêt, bois";"森";"kanji_森.png";"もり";"シン"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"extérieur, autre, manquer";"外";"kanji_外.png";"そと、ほか、はず（れる）、はず（す）";"ガイ,ゲ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"voyage, excursion";"旅";"kanji_旅.png";"たび";"リョ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"travailler";"働";"kanji_働.png";"はたら（く）";"ドオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"courrier";"郵";"kanji_郵.png";;"ユウ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"commodité, excrément, occasion, courrier, nouvelles, appui";"便";"kanji_便.png";"たよ（り）";"ベン、ビン"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"bureau, service, office";"局";"kanji_局.png";;"キョク"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"main";"手";"kanji_手.png";"「た」,て";"シュ,ヅ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"papier";"紙";"kanji_紙.png";"−がみ,かみ";"シ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"sortir, envoyer, payer, paraître, prendre part, se produire";"出";"kanji_出.png";"で（る）、だ（す）";"シュツ、「スイ」"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"manger, aliment";"食";"kanji_食.png";"た（べる）､く（う）、く（らう）";"ショク、「ジキ」"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"réunion, association, rencontrer";"会";"kanji_会.png";"あ（う）";"エ,カイ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"sanctuaire shinto, société";"社";"kanji_社.png";"やしろ";"シャ"
+;;;;;;
+"Kanjis L1 Ecriture leçon 12";;;;;;
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"gare,station";"駅";"kanji_駅.png";;"エキ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"proche,près de";"近";"kanji_近.png";"ちか（い）";
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"monter (dans un véhicule), être mentionné, être abusé, laisser monter, charger, insérer, mystifier";"乗";"kanji_乗.png";"の（る）、の（せる）";"ジョオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"s'arrêter";"止";"kanji_止.png";"と（まる）、と（める）";"シ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"anti-,(unité de mesure de surface), se courber, se ployer";"反";"kanji_反.png";"そ（る）、そ（らす）";"ハン、「ホン」、「タン」"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"opposé,paire";"対";"kanji_対.png";;"タイ、ツイ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"direction, côté, personne, manière";"方";"kanji_方.png";"−がた,かた";"ホオ,−ポオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"enseigner, apprendre de";"教";"kanji_教.png";"おし（える）、おそ（わる）";"キョオ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"écrire";"書";"kanji_書.png";"か（く）";"ショ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"écouter, entendre, demander, être audible";"聞";"kanji_聞.png";"き（く）,き（こえる）";"ブン,モン"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"attendre";"待";"kanji_待.png";"ま（つ）";"タイ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"caractère, lettre, hameau";"字";"kanji_字.png";"あざ";"ヂ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"mère";"母";"kanji_母.png";"はは";"ボ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"couper, bien couper, se rompre, s'épuiser";"切";"kanji_切.png";"き（る）,き（れる）";"「サイ」、セツ"
+"metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"passer, faire passer, aller régulièrement";"通";"kanji_通.png";"とお（る）、とお（す）、かよ（う）";"ツウ、「ツ」"
+;;;;;;
+;;;;;;
+;;;;;;
 "Mots L1 Grammaire leçon 1";;;;;;
 "metier.elements.Word";"L1>Grammaire>leçon 1>mots";"le japonais";"日本語";"にほんご";;
 "metier.elements.Word";"L1>Grammaire>leçon 1>mots";"le maître, le professeur";"先生";"せんせい";;
@@ -698,7 +740,7 @@
 ;;;;;;
 "Phrases L1 Thème leçon 3";;;;;;
 "metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Ici, c'est notre salle de classe. C'est une nouvelle salle de classe.";"ここは私たちのきょうしつです。あたらしいのです";"ここ　は　わたしたち　の　きょうしつ　です。あたらしい　の　です";;
-"metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Dans la classe il y a (entre autres) des bureaux, des chaises, un tableau...";"きょうしつに机やいすやこくばんなどがあります";"きょうひつ　に　つくえ　や　いす　や　こくばん　など　が　あります";;
+"metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Dans la classe il y a (entre autres) des bureaux, des chaises, un tableau...";"きょうしつに机やいすやこくばんなどがあります";"きょうしつ　に　つくえ　や　いす　や　こくばん　など　が　あります";;
 "metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Près de vous il y a une carte du Japon. Il y a aussi un joli calendrier.";"そこに日本のちずがあります。きれいなカレンダーもあります";"そこ　に　にほん　の　ちず　が　あります。きれい　な　カレンダー　も　あります";;
 "metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Qu'es-ce qu'il y a dans le tiroir du bureau du professeur ? Il y a un magnétophone";"先生の机のひきだしの中に何がありますか。テープレコーダーがあります";"せんせい　の　つくえ　の　ひきだし　の　なか　に　なに　が　あります　か。テープレコーダー　が　あります";;
 "metier.elements.Sentence";"L1>Thème>leçon 3>phrases";"Est-ce qu'il y a aussi un magnétoscope dans la classe ? Oui, il y en a un sous la télé, là-bas.";"きょうしつにビデオもありますか。はい、あのテレビの下にあります";"きょうしつ　に　ビデオ　も　あります　か。はい、あの　テレビ　の　した　に　あります";;
@@ -732,13 +774,13 @@
 "metier.elements.Sentence";"L1>Thème>leçon 5>phrases";"Donnez-moi 4 timbres à 70 yens et 7 timbres à 120 yens.";"七十円のきってを四まいと百二十円のきってを七まいください";"ななじゅう　えん　の　きって　を　よんまい　と　ひゃくにじゅう　えん　の　きって　を　ななまい　ください";;
 "metier.elements.Sentence";"L1>Thème>leçon 5>phrases";"Je n'ai que des timbres à 60 yens.";"六十円のきってしかありません";"ろくじゅう　えん　の　きって　しか　ありません";;
 "metier.elements.Sentence";"L1>Thème>leçon 5>phrases";"Je voudrais 3 bouteilles de vin à 5 euros 20 et 7 bouteilles de vin à 4 euros 30.";"五点二ユーロのワインを三本と四点三ユーロのワインを七本ください";"ごてんに　ユーロ　の　ワイン を　さんぼん　と　よんてんさん　ユーロ　の　ワイン ななほん　ください";;
-"metier.elements.Sentence";"L1>Thème>leçon 5>phrases";"Dans le frigidaire il y a 9 bananes et 15 tomates.";"れいぞうこの中にバナナが十本とトマトが十五こあります";"れいぞうこ　の　なか　に　バナナ が　じゅっぽん　と　トマト　が　じゅうごこ　あります";;
+"metier.elements.Sentence";"L1>Thème>leçon 5>phrases";"Dans le frigidaire il y a 9 bananes et 15 tomates.";"れいぞうこの中にバナナが九本とトマトが十五こあります";"れいぞうこ　の　なか　に　バナナ が　きゅうほん　と　トマト　が　じゅうごこ　あります";;
 ;;;;;;
 "Phrases L1 Thème leçon 6";;;;;;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Cette (éloigné) supérette est proche de chez moi et est commode.";"あのコンビニはうちのちかくてべんりです";"あの　コンビニ　は　ちかくて　べんり　です";;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Avez-vous des enveloppes et du papier à lettre ?";"ふうとうとびんせんがありますか";"ふうとう　と　びんせん　が　あります　か";;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"J'ai des enveloppes mais je n'ai pas de papier à lettre.";"ふうとうはありますか、びんせんはありません";"ふうとう　は　あります　か、びんせん　は　ありません";;
-"metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Combien coûtent ces (ici) citrons ?";"このレモンはいくつですか";"この　レモン　は　いくつ　です　か";;
+"metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Combien coûtent ces (ici) citrons ?";"このレモンはいくらですか";"この　レモン　は　いくら　です　か";;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Ces citrons coûtent quatre-vingts yens l'un et deux cents yens les trois.";"このレモンは一つ八十円で、三つ二百円です";"この　レモン　は　ひとつ　はちじゅう　えん　で、みっつ　にひゃく　えん　です";;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"Avez-vous des écharpes ? Oui, nous avons beaucoup de belles écharpes.";"マフラーがありますか。はい、きれいなマフラーがたくさんあります";"マフラー　が　あります　か。はい、きれい　な　マフラー　が　たくさん　あります";;
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"(...) Vous en avez également d'autres couleurs ?";"ほかのいろのもありますか";"ほか　の　いろ　の　も　あります　か";;

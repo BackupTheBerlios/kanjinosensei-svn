@@ -943,4 +943,37 @@ public abstract class MyUtils
 		c.validate();
 		c.repaint();
 	}
+	
+	public static String timeToString(long time)
+	{		
+		long days = time / (1000*60*60*24);
+		time -= days * (1000*60*60*24);
+		long hours = time / (1000*60*60);
+		time -= hours * (1000*60*60);
+		long minutes = time / (1000*60);
+		time -= minutes * (1000*60);
+		long seconds = time / 1000;
+		
+		if (days > 0)
+		{
+			return days+"d "+hours+"h "+minutes+"min "+seconds+"s";
+		}
+		
+		if (hours > 0)
+		{
+			return hours+"h "+minutes+"min "+seconds+"s";
+		}
+		
+		if (minutes > 0)
+		{
+			return minutes+"min "+seconds+"s";
+		}
+		
+		if (seconds > 0)
+		{
+			return seconds+"s";
+		}
+		
+		return "0s";
+	}
 }
