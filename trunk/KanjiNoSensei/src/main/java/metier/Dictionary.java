@@ -348,7 +348,7 @@ public class Dictionary implements Serializable
 		
 		if (dico.isEmpty()) throw new DictionaryNoMoreElementException();
 
-		Vector<String> neverSeenElements = ((Vector<String>) dico.clone());
+		Vector<String> neverSeenElements = (Vector<String>) dico.clone();
 		neverSeenElements.removeAll(learningProfile.getElementsUID());
 		
 		// Never seen elements are return in first.

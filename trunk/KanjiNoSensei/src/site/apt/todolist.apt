@@ -9,8 +9,6 @@ TODO List
 	
 	Workflow passé et en cours.
 	
-	* Pouvoir sauvegarder/charger une configuration de Quiz.
-	
 	* Revoir les labels sur l'ihm, internationaliser.
 	
 	* Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.

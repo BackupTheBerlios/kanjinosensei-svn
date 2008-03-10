@@ -7,25 +7,17 @@ package metier;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import sun.util.calendar.CalendarSystem;
 import utils.MyUtils;
-
-import metier.Dictionary.DictionaryElementAlreadyPresentException;
-import metier.elements.Element;
 
 /**
  * This class represent a User learning profile, it keep quizz statistics foreach elements, so the quizz can choose the bests elements to ask (the less known).
@@ -232,10 +224,8 @@ public class LearningProfile implements Serializable
 		StringBuilder sb = new StringBuilder(String.format("%d/%d = %f\t", stats.getNbGoodAnswers(), stats.getNbQuestions(), stats.getSuccessRate()));
 		
 		long time = stats.getLastQuestionAge();
-		Date date = new Date(time);
 		
 		sb.append(MyUtils.timeToString(time));
-		sb.append("\tDate ["+date.toGMTString()+"]["+date.getYear()+"y "+date.getMonth()+"M "+date.getDate()+"d "+date.getHours()+"h "+date.getMinutes()+"m "+date.getSeconds()+"s]");
 		
 		return sb.toString();
 	}
