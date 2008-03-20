@@ -856,15 +856,18 @@ public abstract class MyUtils
 		void doIt(Component c);
 	};
 
-	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt)
+	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt, boolean thisComponentFirst)
 	{
-		doIt.doIt(c);
+		if (thisComponentFirst)
+		{
+			doIt.doIt(c);
+		}
 
 		if (Container.class.isInstance(c))
 		{
 			for (Component sc : ((Container) c).getComponents())
 			{
-				doItToAllSubComponents(sc, doIt);
+				doItToAllSubComponents(sc, doIt, thisComponentFirst);
 			}
 		}
 
@@ -872,8 +875,13 @@ public abstract class MyUtils
 		{
 			for (Window w : ((Window) c).getOwnedWindows())
 			{
-				doItToAllSubComponents(w, doIt);
+				doItToAllSubComponents(w, doIt, thisComponentFirst);
 			}
+		}
+		
+		if (!thisComponentFirst)
+		{
+			doIt.doIt(c);
 		}
 	}
 
@@ -925,7 +933,7 @@ public abstract class MyUtils
 
 					for (Component c : rootComponents)
 					{
-						doItToAllSubComponents(c, DO_UPDATEUI_REFRESH);
+						doItToAllSubComponents(c, DO_UPDATEUI_REFRESH, false);
 					}
 				}
 
@@ -935,6 +943,20 @@ public abstract class MyUtils
 		}
 
 		return jMenuUI;
+	}
+	
+	public static void refreshComponentAndSubs(Component c)
+	{
+		doItToAllSubComponents(c, new DoItToThisComponent()
+		{
+		
+			@Override
+			public void doIt(Component c)
+			{
+				refreshComponent(c);
+			}
+		
+		}, false);
 	}
 	
 	public static void refreshComponent(Component c)

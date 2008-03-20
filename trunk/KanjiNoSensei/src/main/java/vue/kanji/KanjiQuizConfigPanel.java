@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 
 import metier.elements.Kanji;
 import utils.Messages;
+import utils.MyUtils;
+import vue.Config;
 import vue.VueElement.QuizConfigPanel;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -108,8 +110,27 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	{
 		super();
 		initGUI();
+		loadConfig();
 	}
 
+	private void loadConfig()
+	{
+		affichageElementQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString()));
+		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("KanjiQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString()));
+		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageChoixReponsesQuiz", ETypeAff.LectureJaponaise.toString()));
+		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageReponseQuiz", ETypeAff.ImageTraceEtDetaille.toString()));
+		saisieReponseCompleteQuiz = Boolean.valueOf(Config.getString("KanjiQuizConfig.saisieReponseCompleteQuiz", "false"));
+	}
+	
+	private void saveConfig()
+	{
+		Config.setString("KanjiQuizConfig.affichageElementQuiz", affichageElementQuiz.toString());
+		Config.setString("KanjiQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString());
+		Config.setString("KanjiQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString());
+		Config.setString("KanjiQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString());
+		Config.setString("KanjiQuizConfig.saisieReponseCompleteQuiz", Boolean.toString(saisieReponseCompleteQuiz));
+	}
+	
 	private void initGUI()
 	{
 		try
@@ -194,10 +215,10 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	
 	private void miseAJourForm()
 	{
-		jComboBoxAffQuiz.setSelectedItem(affichageElementQuiz);
-		jComboBoxSaisieReponse.setSelectedItem(saisieReponseQuiz);
-		jComboBoxSaisieReponseChoixAff.setSelectedItem(affichageChoixReponsesQuiz);
-		jComboBoxAffReponse.setSelectedItem(affichageReponseQuiz);
+		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageElementQuiz.toString()));
+		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+saisieReponseQuiz.toString()));
+		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString()));
+		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageReponseQuiz.toString()));
 		jCheckBoxSaisieReponseComplete.setSelected(saisieReponseCompleteQuiz);
 	}
 
@@ -229,6 +250,8 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 		affichageChoixReponsesQuiz = typesAff.get(jComboBoxSaisieReponseChoixAff.getSelectedItem().toString());
 		affichageReponseQuiz = typesAff.get(jComboBoxAffReponse.getSelectedItem().toString());
 		saisieReponseCompleteQuiz = jCheckBoxSaisieReponseComplete.isSelected();
+		
+		saveConfig();
 	}
 
 	protected ETypeAff getAffichageElementQuiz()

@@ -204,7 +204,7 @@ public class KanjiNoSensei
 
 	public final String										KanjiNoSensei_VERSION			= "1.0c";																									//$NON-NLS-1$
 
-	static boolean											USE_ROMAJI						= false;
+	static boolean											USE_ROMAJI						= Boolean.parseBoolean(Config.getString("GeneralConfig.UseRomaji", "false"));
 
 	final KanjiNoSensei										app								= this;
 
@@ -724,7 +724,7 @@ public class KanjiNoSensei
 
 					}
 
-				});
+				}, true);
 
 				getJPanelElementsListe().add(vueElementDetaillePanel);
 			}
@@ -1387,7 +1387,7 @@ public class KanjiNoSensei
 		}
 		
 		// TODO : Add command line parameter
-		ficLearningProfile = new File(LearningProfile.DEFAULT_PROFILE);
+		ficLearningProfile = new File(Config.getString("LearningProfile.Default", "myProfile.ulp"));
 
 		if (args.length >= 2)
 		{
@@ -1688,6 +1688,7 @@ public class KanjiNoSensei
 				// </JiglooProtected>
 				public void componentShown(ComponentEvent evt)
 				{
+					MyUtils.trace("jConfigModalFrame.componentShown");
 					for (Component c : getJConfigFrameTabbedPane().getComponents())
 					{
 						if (VueElement.QuizConfigPanel.class.isInstance(c))
@@ -1696,8 +1697,8 @@ public class KanjiNoSensei
 						}
 					}
 
-					MyUtils.refreshComponent(getJConfigFrameTabbedPane().getSelectedComponent());
-					MyUtils.refreshComponent(getJConfigFrameTabbedPane());
+					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane().getSelectedComponent());
+					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane());
 				}
 			});
 
@@ -1783,7 +1784,9 @@ public class KanjiNoSensei
 
 					// On valide la page de config générale.
 					USE_ROMAJI = getJCheckBoxUseRomaji().isSelected();
-
+					Config.setString("GeneralConfig.UseRomaji", Boolean.toString(USE_ROMAJI));
+					
+					Config.save();
 					getJConfigFrame().dispose();
 				}
 
@@ -1974,7 +1977,7 @@ public class KanjiNoSensei
 				c.setBackground(bg);
 			}
 
-		});
+		}, true);
 
 		jPanelQuizAffReponse.add(panelSolution, BorderLayout.CENTER);
 		final JButton buttonContinuer = new JButton(Messages.getString("KanjiNoSensei.ButtonNext")); //$NON-NLS-1$
@@ -2122,14 +2125,8 @@ public class KanjiNoSensei
 			jPanelConfigGenerale.setLayout(jPanelConfigGeneraleLayout);
 			jPanelConfigGenerale.setDoubleBuffered(false);
 			jPanelConfigGenerale.setPreferredSize(new java.awt.Dimension(582, 201));
-			jPanelConfigGenerale.addComponentListener(new ComponentAdapter()
-			{
-				public void componentShown(ComponentEvent evt)
-				{
-					// On rafraichi le formulaire
-					getJCheckBoxUseRomaji().setSelected(USE_ROMAJI);
-				}
-			});
+			getJCheckBoxUseRomaji().setSelected(USE_ROMAJI);
+			
 			jPanelConfigGenerale.add(getJCheckBoxUseRomaji(), new CellConstraints("1, 1, 1, 1, default, default")); //$NON-NLS-1$
 		}
 		return jPanelConfigGenerale;
