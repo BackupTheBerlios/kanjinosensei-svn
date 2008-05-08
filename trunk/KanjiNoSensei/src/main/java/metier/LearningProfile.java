@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -34,6 +35,9 @@ public class LearningProfile implements Serializable
 	
 	/** Elements Unique ID / statistics map. */
 	TreeMap<String, Statistics>	statistics	= new TreeMap<String, Statistics>();
+	
+	/** Randomizer. */
+	private static final Random random = new Random();
 	
 	/** Constructor. */
 	public LearningProfile()
@@ -120,6 +124,9 @@ public class LearningProfile implements Serializable
 		// Minimum time to wait before to quizz a bad known element
 		public static float MIN_TimeToWaitBeforeQuizzBadElements = 1000 * 60 * 2; // 2 min
 		
+		// NeedScore precision (musn't be to precise for randomization to work fine), numbe of digits after the unit (0 = integer).
+		public static final int NEED_SCORE_PRECISION = 0;
+		
 		private int		nbQuestions			= 0;
 		private int		nbGoodAnswers		= 0;
 		private long	lastQuestionDate	= 0;
@@ -165,7 +172,9 @@ public class LearningProfile implements Serializable
 			long age = System.currentTimeMillis() - lastQuestionDate;
 			if (age < MIN_TimeToWaitBeforeQuizzBadElements) return -FACTOR_SuccessRate;
 			
-			float score = (-FACTOR_SuccessRate * (Float.valueOf(nbGoodAnswers) / Float.valueOf(nbQuestions)) ) + ((FACTOR_SuccessRate / FACTOR_LastQuestionMaxAge_MS) * age);
+			Float score = (-FACTOR_SuccessRate * (Float.valueOf(nbGoodAnswers) / Float.valueOf(nbQuestions)) ) + ((FACTOR_SuccessRate / FACTOR_LastQuestionMaxAge_MS) * age);
+			Float precision = Float.parseFloat(Double.toString(Math.pow(10, NEED_SCORE_PRECISION)));
+			score = Float.valueOf(score * precision).intValue() / precision;
 			return score;
 		}
 	}
@@ -185,10 +194,10 @@ public class LearningProfile implements Serializable
 	 */
 	public String getNextElement(Vector<String> dico)
 	{
-		String bestElementUID = null;
 		String currentElementUID = null;
 		float bestScore = Float.NEGATIVE_INFINITY;
 		float currentScore = bestScore;
+		Vector<String> bestsUIDs = new Vector<String>();
 		
 		Iterator<String> itElements = dico.iterator();
 		while(itElements.hasNext())
@@ -204,12 +213,17 @@ public class LearningProfile implements Serializable
 			currentScore = statistics.get(currentElementUID).getNeedScore();
 			if (currentScore > bestScore)
 			{
-				bestElementUID = currentElementUID;
+				bestsUIDs.removeAllElements();
+				bestsUIDs.add(currentElementUID);
 				bestScore = currentScore;
+			}
+			else if (currentScore == bestScore)
+			{
+				bestsUIDs.add(currentElementUID);
 			}
 		}
 		
-		return bestElementUID;
+		return bestsUIDs.get(random.nextInt(bestsUIDs.size()));
 	}
 
 	/**
@@ -225,7 +239,8 @@ public class LearningProfile implements Serializable
 		
 		long time = stats.getLastQuestionAge();
 		
-		sb.append(MyUtils.timeToString(time));
+		sb.append(MyUtils.timeToString(time)+"\t");
+		sb.append(String.format("Need Score : %f",stats.getNeedScore()));
 		
 		return sb.toString();
 	}

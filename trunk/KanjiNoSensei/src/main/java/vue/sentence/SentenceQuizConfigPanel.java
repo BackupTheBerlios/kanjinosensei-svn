@@ -12,7 +12,9 @@ import javax.swing.JPanel;
 
 import metier.Messages;
 import metier.elements.Sentence;
+import metier.elements.Word;
 
+import vue.Config;
 import vue.VueElement.QuizConfigPanel;
 
 import com.jgoodies.forms.layout.CellConstraints;
@@ -80,16 +82,33 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 	
 	private void miseAJourForm()
 	{
-		jComboBoxAffQuiz.setSelectedItem(affichageElementQuiz);
-		jComboBoxSaisieReponse.setSelectedItem(saisieReponseQuiz);
-		jComboBoxSaisieReponseChoixAff.setSelectedItem(affichageChoixReponsesQuiz);
-		jComboBoxAffReponse.setSelectedItem(affichageReponseQuiz);
+		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageElementQuiz.toString()));
+		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".IM."+saisieReponseQuiz.toString()));
+		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString()));
+		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageReponseQuiz.toString()));
 	}
 
 	private SentenceQuizConfigPanel()
 	{
 		super();
 		initGUI();
+		loadConfig();
+	}
+	
+	private void loadConfig()
+	{
+		affichageElementQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString()));
+		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("SentenceQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString()));
+		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageChoixReponsesQuiz", ETypeAff.Kanji.toString()));
+		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageReponseQuiz", ETypeAff.Detaille.toString()));
+	}
+	
+	private void saveConfig()
+	{
+		Config.setString("SentenceQuizConfig.affichageElementQuiz", affichageElementQuiz.toString());
+		Config.setString("SentenceQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString());
+		Config.setString("SentenceQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString());
+		Config.setString("SentenceQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString());
 	}
 
 	private void initGUI()
@@ -183,6 +202,8 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 		saisieReponseQuiz = typesSaisie.get(jComboBoxSaisieReponse.getSelectedItem().toString());
 		affichageChoixReponsesQuiz = typesAff.get(jComboBoxSaisieReponseChoixAff.getSelectedItem().toString());
 		affichageReponseQuiz = typesAff.get(jComboBoxAffReponse.getSelectedItem().toString());
+		
+		saveConfig();
 	}
 	
 	protected ETypeAff getAffichageElementQuiz()
