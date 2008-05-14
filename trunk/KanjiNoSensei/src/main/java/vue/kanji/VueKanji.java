@@ -32,7 +32,7 @@ public class VueKanji extends VueElement
 	{
 		try
 		{
-			strokeOrdersFont = Font.createFont(Font.TRUETYPE_FONT, new File(Element.DICO_DIR + "/fonts/KanjiStrokeOrders.ttf"));
+			strokeOrdersFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Element.DICO_DIR + File.separatorChar + "fonts" + File.separatorChar + "KanjiStrokeOrders.ttf"));
 		}
 		catch (Exception e)
 		{

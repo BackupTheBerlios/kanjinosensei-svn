@@ -9,6 +9,10 @@ TODO List
 	
 	Workflow passé et en cours.
 	
+	* Gérer le dépassement horizontal pour les phrases.
+	
+	* Ajouter des mots exemples pour les kanjis.
+	
 	* Revoir les labels sur l'ihm, internationaliser.
 	
 	* Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.
@@ -23,7 +27,7 @@ TODO List
 	
 	* Avoir la possibilité, lors d'un quiz, de jouer les phrases d'une leçon dans l'ordre.
 	
-	* Avoir un profil utilisateur qui tienne le compte du % d'erreur pour chaque éléments, et qui choisissent intelligement les éléments à inclure au quizz, en fonction.
+	* Réfléchir à un nouveau type pour l'étude de la grammaire (particules, fonctions, ...)
 	
 Bugs connus
 

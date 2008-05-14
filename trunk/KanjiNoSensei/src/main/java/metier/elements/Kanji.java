@@ -1,5 +1,6 @@
 package metier.elements;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -258,7 +259,7 @@ public class Kanji extends Element implements Serializable
 		lecturesKUN.removeEmptyElements();
 		lecturesON.removeEmptyElements();
 
-		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, DICO_DIR);
+		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
 	}
 
 	/**

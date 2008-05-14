@@ -966,7 +966,7 @@
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"décembre";"十二月";"じゅうにがつ";;
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"le jour anniversaire";"誕生日";"たんじょうび";;
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"le pays";"国";"くに";;
-"metier.elements.Word";"L1>Grammaire>leçon 7>mots";"l'université";"大学";"だがく";;
+"metier.elements.Word";"L1>Grammaire>leçon 7>mots";"l'université";"大学";"だいがく";;
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"cette année";"今年";"ことし";;
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"le calendrier occidental, l'ère chrétienne";"西暦";"せいれき";;
 "metier.elements.Word";"L1>Grammaire>leçon 7>mots";"une année";"一年";"いちねん";;
@@ -1539,8 +1539,8 @@
 "metier.elements.Sentence";"L1>Thème>leçon 8>phrases";"Quel genre de sports faites-vous ? -Je fais entre autres du tennis et du football. Je fais du sport tous les mardis.";"どんなスポーツをしますか。テニスやサッカーなどをします。毎週火曜日にスポーツをします";"どんな　スポーツ を　します　か。　テニス　や　サッカー など　を　します。まいしゅう　かようび　に　スポーツ を　します";;
 ;;;;;;
 "Phrases L1 Thème leçon 9";;;;;;
-"metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"En France il est maintenant 11 heures du matin, mais au Japon il est 7 heures du soir.";"フランスでは今午前一時ですが日本では午後七時です";"フランス で　は　いま　ごぜん　いち　じ　です　が　にほん　で　は　ごご　なな　じ　です";;
-"metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"Tous les matins je me lève à 6 heures et je quitte la maison entre 8 heures et 8 heures et quart.";"毎朝六時に起きて八時と八時十五分の間に家を出ます";"まい　あさ　ろく　じ　に　おきて　はち　じ　と　はち　じ　じゅうごふん　の　あいだ　に　うち　を　でます";;
+"metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"En France il est maintenant 11 heures du matin, mais au Japon il est 7 heures du soir.";"フランスでは今午前十一時ですが日本では午後七時です";"フランス で　は　いま　ごぜん　じゅういち　じ　です　が　にほん　で　は　ごご　なな　じ　です";;
+"metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"Tous les matins je me lève à 6 heures et je quitte la maison entre 8 heures et 8 heures et quart.";"毎朝六時に起きて八時と八時十五分の間に家を出ます";;;
 "metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"Est-ce que vous vous levez toujours tôt le matin ? - Non, le dimanche je prends mon temps : je me lève vers 9 heures et demie ou 10 heures.";"いつも朝早く起きますか。いいえ、日曜日にはゆっくりして、九時半か十時ごろ起きます";"いつも　あさ　はやく　おきますか。いいえ、にちようび　に　は　ゆっくりして、きゅう　じ　はん　か　じゅう　じ　ごろ　おきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"Il me faut (ça prend) environ 35 minutes en métro jusqu'à l'université.";"大学までちかてつで三十五分ぐらいかかります";"だいがく　まで　ちかてつ　で　さんじゅうごふん　ぐらい　かかります";;
 "metier.elements.Sentence";"L1>Thème>leçon 9>phrases";"De la station de métro à l'université il y a environ 3 minutes de marche (on marche 3 minutes).";"ちかてつの駅から大学まで三分ぐらいあるきます";"ちかてつ　の　えき　から　だいがく　まで　さんぷん　ぐらい　あるきます";;
@@ -1561,7 +1561,7 @@
 "metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Il n'as pas fait très froid hier. Mais aujourd'hui il fait très froid et il neige.";"昨日はあまりさむくありませんでした。しかし今日はとてもさむくて雪がふっています";"きのう　は　あまり　さむく　ありません　でした。しかし　きょう　は　とても　さむくて　ゆき　が　ふっています";;
 "metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Au Japon, quand arrive le printemps les cerisiers fleurissent.";"日本では春になると桜がさきます。";"にほん　で　は　はる　に　なる　と　さくら　が　さきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Est-ce qu'ils fleurissent partout au Japon en même temps ?";"日本のどこでも同じ時にさきますか";"にほん　の　どこでも　おなじ　とき　に　さきますか";;
-"metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Non, à Kyûshû, ils fleurissent généralement fin mars, mais à Tôkyô ils fleurissent début avril.";"いいえ、九州ではたいて三月のおわりにさきますが東京では四月の始めにさきます";"いいえ、きゅうしゅう　で　は　たいて　さんがつ　の　おわり　に　さきます　が　とうきょう　で　は　しがつ　の　はじめ　に　さきます";;
+"metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Non, à Kyûshû, ils fleurissent généralement fin mars, mais à Tôkyô ils fleurissent début avril.";"いいえ、九州ではたいてい三月のおわりにさきますが東京では四月の始めにさきます";"いいえ、きゅうしゅう　で　は　たいてい　さんがつ　の　おわり　に　さきます　が　とうきょう　で　は　しがつ　の　はじめ　に　さきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Lorsque les cerisiers fleurissent c'est très joli et (pour cette raison) beaucoup de gens vont « regarder les fleurs ».";"桜がさくととてもきれいですからたくさんの人が花見に行きます";"さくら　が　さく　と　とても　きれい　です　から　たくさん　の　ひと　が　はなみ　に　いきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 10>phrases";"Il fait beau (temps) aujourd'hui. Il fera sûrement beau demain aussi.";"今日はいい天気です。明日もたぶんいい天気でしょう";"きょう　は　いい　てんき　です。あした　も　たぶん　いい　てんき　でしょう";;
 ;;;;;;
@@ -1581,14 +1581,14 @@
 "Phrases L1 Thème leçon 12";;;;;;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Cet après-midi j'ai rendez-vous avec un ami.";"今日の午後友達と会うやくそくをしています";"きょう　の　ごご　ともだち　と　あう　やくそく　を　しています";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Où vous rencontrez-vous ? - Dans un café qui se trouve près de la sortie Sud de la gare de Shinjuku.";"どこで会いますか。新宿駅の南ぐちの近くにあるきっさてんで会います";"どこ　で　あいますか。しんじゅく　えき　の　みなみ　ぐち　の　ちかく　に　ある　きっさてん　で　あいます";;
-"metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Comment y vas-tu ? - J'y vai en bus et en train";"どうやって行きますか。バスと電車で行きます";"どう　やって　いきますか。バス　と　でんしゃ　で　いきます";;
+"metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Comment y vas-tu ? - J'y vais en bus et en train";"どうやって行きますか。バスと電車で行きます";"どう　やって　いきますか。バス　と　でんしゃ　で　いきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Ah, voilà le bus qui va à la gare (le bus qui va à la gare est venu). Il est bondé (n'es-ce pas ?)!";"駅へ行くバスが来ました。こんでいますね";"えき　へ　いく　バス　が　きました。こんで　います　ね";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Que font ces personnes là-bas ? - Elles attendent toutes le bus.";"あの人達は何をしていますか。皆バスを待っています";"あの　ひとたち　は　なに　を　しています　か。みんな　バス　を　まっています";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Il y a beaucoup de gens qui montent dans le bus, mais il y a sans doute aussi beaucoup de gens qui vont descendre du bus.";"バスに乗る人がたくさんいますが、バスをおりる人もたぶんおおぜいでしょ";"バス　に　のる　ひと　が　たくさん　います　が　バス　を　おりる　ひと　も　たぶん　おおぜい　でしょ";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"En général j'écris une lettre à mes parents une fois par semaine.";"たいてい、一週間一回りょうしんに手紙を書きます";"たいてい、いっしゅうかん　いっかい　りょうしん　に　てがみ　を　かきます";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Quand je n'ai pas le temps d'écrire une lettre je téléphone.";"手紙を書く時間がない時は電話をします";"てがみ　を　かく　じかん　が　ない　とき　は　だんわ　を　します";;
 "metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Comme je n'ai pas de téléphone chez moi, je téléphone d'un téléphone public.";"家に電話がありませんのでこうしゅう電話でかけます";"うち　に　でんわ　が　ありません　ので　こうしゅう電話　で　かけます";;
-"metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Les cartes téléphoniques, on les vend à la poste ou dans les kiosques de gare (entre autres). Il y en a à cinq yens et à mille yens.";"テレホンカードが郵便局や駅のばいてんなどでうっています。五百円のと十百円のがあります";"テレホンカード　が　ゆうびんきょく　や　えき　の　ばいてん　など　で　うっています。ごひゃく　えん　の　と　じゅうひゃく　えん　の　が　あります";;
+"metier.elements.Sentence";"L1>Thème>leçon 12>phrases";"Les cartes téléphoniques, on les vend à la poste ou dans les kiosques de gare (entre autres). Il y en a à cinq cent yens et à mille yens.";"テレホンカードが郵便局や駅のばいてんなどでうっています。五百円のと千円のがあります";"テレホンカード　が　ゆうびんきょく　や　えき　の　ばいてん　など　で　うっています。ごひゃく　えん　の　と　せん　えん　の　が　あります";;
 ;;;;;;
 "Phrases L1 Thème leçon 13";;;;;;
 "metier.elements.Sentence";"L1>Thème>leçon 13>phrases";"Le matin, je me lève, je me lave la figure, et je prends le petit déjeuner.";"朝起きて、かおをあらて、朝ご飯を食べます";"あさ　おきて、かお　を　あらて、　あさごはん　をたべます";;
@@ -1611,7 +1611,7 @@
 "metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Où est la cassette vidéo que j'ai louée au magasin ?";"店で借りたビデオテープはどこにありますか";"みせ　で　かりた　ビデオテープ　は　どこ　に　あります　か";;
 "metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Laisse tes affaires ici et va (et reviens après) garer ta voiture sur le parking.";"持ち物をここにおいて、車を駐車場にとめて来て下さい";"もちもの　を　ここ　に　おいて、くるま　を　ちゅうしゃじょう　に　とめて　きて　ください";;
 "metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Où est-ce que j'écris mon nom ? Ecrivez (le) tout en haut. N'oubliez pas non plus la signature.";"どこに名前を書きますか。一番上に書きって下さい。サインも忘れないで下さい。";"どこ　に　なまえ　を　かきますか。いちばん　うえ　に　かきって　ください。サイン　も　わすれないで　ください";;
-"metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Mme KATÔ a mis l'argent que je lui ai prêté dans son sac à main et l'a emporté chez elle.";"かとおさんは私が貸したお金をハンドバッグに入れて、家へ持ってかえりました";"かとおさん　は　わたし　が　かした　おかね　を　羽土バッグ　に　いれて、うち　へ　もって　かえりました";;
+"metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Mme KATÔ a mis l'argent que je lui ai prêté dans son sac à main et l'a emporté chez elle.";"かとおさんは私が貸したお金をハンドバッグに入れて、家へ持ってかえりました";"かとおさん　は　わたし　が　かした　おかね　を　ハンドバッグ　に　いれて、うち　へ　もって　かえりました";;
 "metier.elements.Sentence";"L1>Thème>leçon 14>phrases";"Apporte-moi du papier et un stylo, et assieds-toi sur cette chaise.";"紙とボールペンを持って来て、このいすに書けて下さい";"かみ　と　ボールペン　を　もって　きて、この　いす　に　かけて　ください";;
 ;;;;;;
 "Phrases L1 Thème leçon 15";;;;;;
@@ -1643,7 +1643,7 @@
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Au bureau, je porte toujours une chemise blanche et une cravate";"会社ではいつも白いシャツを着て、ネクタイを締めています";"かいしゃ　で　は　いつも　しろい　シャツ　を　きて、　ネクタイ　を　しめて　います";;
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Comment s'apelle la demoiselle qui porte des lunettes de soleil ?";"サングラスをかけてお嬢さんは何と言う人ですか";"サングラス　を　かけて　おじょうさん　は　なん　と　いう　ひと　です　か";;
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Lorsqu'il fait froid, même dans la maison, je porte toujours une écharpe.";"寒い時は家の中でもマフラーを巻いています";"さむい　とき　は　うち　の　なか　で　も　マフラー　を　まいて　います";;
-"metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"La dame qui portait un sac à main jaune est montée dans le bus.";"黄色いハンドバグを持った女の人はバスに乗りました";"きいろい　ハンドバグ　を　もった　おんな　の　ひと　は　バス　に　のりました";;
+"metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"La dame qui portait un sac à main jaune est montée dans le bus.";"黄色いハンドバッグを持った女の人はバスに乗りました";"きいろい　ハンドバッグ　を　もった　おんな　の　ひと　は　バス　に　のりました";;
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Le ciel est bien dégagé. Il fera sûrement beau demain aussi.";"空がはれています。明日も多分いい天気でしょう";"そら　が　はれて　います。　あした　も　たぶん　いい　てんき　でしょう";;
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Je connais le nom du magasin où Yoshida-san a acheté sa bague.";"吉田さんがゆびわを買った店の名前はしっています";"よしださん　が　ゆびわ　を　かった　みせ　の　なまえ　は　しって　います";;
 "metier.elements.Sentence";"L1>Thème>leçon 17>phrases";"Au Japon, lorsqu'on entre dans les toilettes, on enlève ses pantoufles et on met les pantoufles des toilettes.";"日本ではトイレに入る時じぶんのスリッパをぬいで、トイレのスリッパを履きます";"にほん　で　は　トイレ　に　はいる　とき　じぶん　の　スリッパ　を　ぬいで、　トイレ　の　スリッパ　を　はきます";;
@@ -1714,7 +1714,7 @@
 "metier.elements.Word";"L1>Version>leçon 3>mots";"compteur : âge";"ー歳";"ーさい";;
 "metier.elements.Word";"L1>Version>leçon 3>mots";"se marier";"結婚";"けっこん";;
 "metier.elements.Word";"L1>Version>leçon 3>mots";"avant, antérieurement, il y a";"前（に）";"まえ（に）";;
-"metier.elements.Word";"L1>Version>leçon 3>mots";"photographe";"写真屋";"しゃしにゃ";;
+"metier.elements.Word";"L1>Version>leçon 3>mots";"photographe";"写真屋";"しゃしんや";;
 "metier.elements.Word";"L1>Version>leçon 3>mots";"prendre (une photo)";"(写真を）とる";"（しゃしん　を）とる";;
 "metier.elements.Word";"L1>Version>leçon 3>mots";"salon de beauté (de coiffure) (pour dames)";"美容院";"びよういん";;
 "metier.elements.Word";"L1>Version>leçon 3>mots";"kimono";"着物";"きもの";;

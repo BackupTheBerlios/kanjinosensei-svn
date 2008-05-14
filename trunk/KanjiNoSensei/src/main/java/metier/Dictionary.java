@@ -203,6 +203,7 @@ public class Dictionary implements Serializable
 	 */
 	public void open(File file) throws IOException
 	{
+		System.out.println("Opening Dictionry \""+file.getAbsolutePath()+"\"");
 		// Open file stream
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -354,13 +355,11 @@ public class Dictionary implements Serializable
 		// Never seen elements are return in first.
 		if (neverSeenElements.size() > 0)
 		{
-			return elements.get(neverSeenElements.get(dice.nextInt(neverSeenElements.size())));
+			learningProfile.addNeverSeenElements(neverSeenElements);
 		}
-		else
-		{
-			// When the learning profile knows all elements, then it can be used to get the next element according to the user statistics.
-			return elements.get(learningProfile.getNextElement(dico));
-		}
+
+		// When the learning profile knows all elements, then it can be used to get the next element according to the user statistics.
+		return elements.get(learningProfile.getNextElement(dico));
 	}
 
 	/**

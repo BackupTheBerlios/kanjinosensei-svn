@@ -157,6 +157,7 @@
 										<exclude name="**/CVS" />
 									</fileset>
 								</copy>
+								<!-- Copie des fichiers batch et ressources -->
 								<copy
 									todir="${finalReleaseDirectory}">
 									<fileset
@@ -164,6 +165,12 @@
 										<exclude name="**/CVS" />
 									</fileset>
 								</copy>
+								<!-- Copie du fichier presets -->
+								<copy
+									file="${basedir}/presets"
+									todir="${finalReleaseDirectory}">
+								</copy>
+								
 								
 								<!-- On liste les fichiers à excludes de l'archive (dico/fonts/*) -->
 								<exec executable="echo" output="${project.build.directory}/excludes.txt"><arg value="dico/fonts/*.*"/></exec>

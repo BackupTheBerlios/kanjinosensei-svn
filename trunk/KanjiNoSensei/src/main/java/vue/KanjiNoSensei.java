@@ -126,38 +126,9 @@ public class KanjiNoSensei
 	{
 		TreeMap<String, Vector<String>>	presets	= new TreeMap<String, Vector<String>>();
 
-		File							file	= null;
-
-		public Presets(File file) throws IOException
+		public Presets()
 		{
-			this.file = file;
-			FileInputStream fis;
-			try
-			{
-				fis = new FileInputStream(file);
-			}
-			catch (FileNotFoundException e1)
-			{
-				System.err.println("Fichier presets vierge");
-				return;
-			}
-
-			ObjectInputStream ois = new ObjectInputStream(fis);
-
-			try
-			{
-				Object obj = ois.readObject();
-				if ( !presets.getClass().isInstance(obj)) throw new ClassNotFoundException();
-
-				presets = (TreeMap<String, Vector<String>>) obj;
-			}
-			catch (ClassNotFoundException e)
-			{
-				System.err.println("Erreur chargement fichier presets");
-			}
-
-			ois.close();
-			fis.close();
+			
 		}
 
 		public void addPreset(String presetName, Vector<String> themes)
@@ -170,15 +141,44 @@ public class KanjiNoSensei
 			String[] result = new String[presets.size()];
 			return presets.keySet().toArray(result);
 		}
+		
+		public static Presets open(File ficPresets) throws IOException
+		{
+			System.out.println("Opening Presets : \""+ficPresets.getAbsolutePath()+"\"");
+			
+			Presets presets = new Presets();
+			
+			FileInputStream fis = new FileInputStream(ficPresets);
+
+			ObjectInputStream ois = new ObjectInputStream(fis);
+
+			try
+			{
+				Object obj = ois.readObject();
+				if ( !presets.presets.getClass().isInstance(obj)) throw new ClassNotFoundException();
+
+				presets.presets = (TreeMap<String, Vector<String>>) obj;
+			}
+			catch (ClassNotFoundException e)
+			{
+				System.err.println(Messages.getString("Presets.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				throw new IOException(Messages.getString("Presets.Open.ErrorOnElement") + " : " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$)
+			}
+
+			ois.close();
+			fis.close();
+			
+			return presets;
+		}
 
 		/**
 		 * @throws IOException
 		 * @throws FileNotFoundException
 		 * 
 		 */
-		public void save() throws FileNotFoundException, IOException
+		public void save(File ficPresets) throws FileNotFoundException, IOException
 		{
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ficPresets));
 			oos.writeObject(presets);
 		}
 
@@ -200,7 +200,7 @@ public class KanjiNoSensei
 		}
 	};
 
-	private final Presets									presets							= new Presets(new File("presets.txt"));
+	private Presets									presets							= null;
 
 	public final String										KanjiNoSensei_VERSION			= "1.0c";																									//$NON-NLS-1$
 
@@ -404,6 +404,8 @@ public class KanjiNoSensei
 
 	private File			userLearningProfileFile = null;
 	private LearningProfile userLearningProfile = null;
+
+	private File	ficPresets;
 	
 	private static Vector<Class<? extends Element>> listPluginsClasses()
 	{
@@ -415,7 +417,7 @@ public class KanjiNoSensei
 		return v;
 	}
 
-	public KanjiNoSensei(File fic_dico, File fic_profile) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
+	public KanjiNoSensei(File fic_config, File fic_dico, File fic_profile, File fic_presets) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
 	{
 		plugins = listPluginsClasses();
 
@@ -426,20 +428,56 @@ public class KanjiNoSensei
 			vuesBlank.put(plugin, VueElement.genererVueBlankElement(app, plugin, USE_ROMAJI));
 		}
 		
+		if (fic_config == null)
+		{
+			fic_config = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.CONFIG_NAME);
+			Config.open(fic_config);
+		}
+		if (fic_dico == null)
+		{
+			fic_dico = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultDictionaryFile", "dico/dico.kjd"));
+		}
+		if (fic_profile == null)
+		{
+			fic_profile = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultUserProfile", "myProfile.ulp"));
+		}
+		if (fic_presets == null)
+		{
+			fic_presets = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultPresets","presets"));
+		}
+		
 		if (fic_profile.exists() && fic_profile.isFile())
 		{
 			this.userLearningProfile = LearningProfile.open(fic_profile);
 		}
 		else if (fic_profile.createNewFile() || fic_profile.canWrite())
 		{
+			System.out.println("Creating new User Profile : \""+fic_profile.getAbsolutePath()+"\"");
 			this.userLearningProfile = new LearningProfile();
+			this.userLearningProfile.save(fic_profile);
 		}
 		else
 		{
 			throw new IOException("Cannot create User Learning Profile file");
 		}
+		
+		if (fic_presets.exists() && fic_presets.isFile())
+		{
+			this.presets = Presets.open(fic_presets);
+		}
+		else if (fic_presets.createNewFile() || fic_presets.canWrite())
+		{
+			System.out.println("Creating new Presets file : \""+fic_presets.getAbsolutePath()+"\"");
+			this.presets = new Presets();
+			this.presets.save(fic_presets);
+		}
+		else
+		{
+			throw new IOException("Cannot create presets file");
+		}
 			
 		this.userLearningProfileFile = fic_profile;
+		this.ficPresets = fic_presets;
 		this.dictionnaire = new Dictionary(fic_dico);
 		this.dictionnaireQuiz = this.dictionnaire.clone();
 	}
@@ -1002,14 +1040,16 @@ public class KanjiNoSensei
 		{
 			saveDictionnaireMenuItem = new JMenuItem();
 			saveDictionnaireMenuItem.setText(Messages.getString("KanjiNoSensei.DictionarySave")); //$NON-NLS-1$
+			
+			final JFileChooser fc = new JFileChooser();
+
+			fc.setFileFilter(fileFilterDictionnaire);
+			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory")));
+			
 			saveDictionnaireMenuItem.addActionListener(new java.awt.event.ActionListener()
 			{
 				public void actionPerformed(java.awt.event.ActionEvent e)
 				{
-					JFileChooser fc = new JFileChooser();
-
-					fc.setFileFilter(fileFilterDictionnaire);
-
 					boolean retry = false;
 
 					do
@@ -1367,33 +1407,66 @@ public class KanjiNoSensei
 	 * @param args
 	 */
 	public static void main(String[] args)
-	{
+	{	
 		if (MyUtils.checkJREVersion("1.6") == false) //$NON-NLS-1$
 		{
 			System.err.println(Messages.getString("KanjiNoSensei.ErrorBadJREVersion")); //$NON-NLS-1$
 			return;
 		}
-
-		final File ficDico;
-		final File ficLearningProfile;
+		
+		File ficDico = null;
+		File ficLearningProfile = null;
+		File ficPresets = null;
+		File ficConfig = null;
+		
+		// KanjiNoSensei [--dic DICO_FILE] [--profile PROFILE_FILE] [--workingdir WORKING_DIR] [L&F commands]]
+		// If files are given in relative path, they are considered relative to specified WORKING_DIR.
+		
+		System.setProperty("KanjiNoSenseiWorkingDirectory", System.getProperty("user.dir"));
+		
+		while((args.length >= 2) && (args[0].matches("--profile|--presets|--workingdir|--dic|--config")))
+		{
+			if (args[0].compareTo("--dic") == 0)
+			{
+				ficDico = new File(args[1]);
+			}
+			
+			if (args[0].compareTo("--config") == 0)
+			{
+				ficConfig = new File(args[1]);
+			}
+			
+			if (args[0].compareTo("--workingdir") == 0)
+			{
+				File userdir = new File(args[1]);
+				if (!userdir.isDirectory() || !userdir.canRead())
+				{
+					System.err.println("--workingdir is not a directory or does not have read access.");
+					return;
+				}
+				else
+				{
+					System.setProperty("KanjiNoSenseiWorkingDirectory", userdir.getAbsolutePath());
+				}
+			}
+			if (args[0].compareTo("--profile") == 0)
+			{
+				ficLearningProfile = new File(args[1]);
+			}
+			if (args[0].compareTo("--presets") == 0)
+			{
+				ficPresets = new File(args[1]);
+			}
+			args = MyUtils.offsetObjectElements(args, 2);
+		}
+		
+		System.out.println("Using working directory : \""+System.getProperty("KanjiNoSenseiWorkingDirectory")+"\"");
 		
 		if (args.length > 0)
 		{
-			ficDico = new File(args[0]);
-		}
-		else
-		{
-			ficDico = null;
-		}
-		
-		// TODO : Add command line parameter
-		ficLearningProfile = new File(Config.getString("LearningProfile.Default", "myProfile.ulp"));
-
-		if (args.length >= 2)
-		{
 			try
 			{
-				MyUtils.manageLookAndFeelsOption(args[1]);
+				MyUtils.manageLookAndFeelsOption(args[0]);
 			}
 			catch (Exception e)
 			{
@@ -1401,6 +1474,11 @@ public class KanjiNoSensei
 				return;
 			}
 		}
+		
+		final File finalLearningProfileFile = ficLearningProfile;
+		final File finalPresetsFile = ficPresets;
+		final File finalDicoFile = ficDico;
+		final File finalConfigFile = ficConfig;
 
 		SwingUtilities.invokeLater(new Runnable()
 		{
@@ -1409,7 +1487,7 @@ public class KanjiNoSensei
 				KanjiNoSensei application;
 				try
 				{
-					application = new KanjiNoSensei(ficDico, ficLearningProfile);
+					application = new KanjiNoSensei(finalConfigFile, finalDicoFile, finalLearningProfileFile, finalPresetsFile);
 				}
 				catch (Exception e)
 				{
@@ -2164,14 +2242,16 @@ public class KanjiNoSensei
 		{
 			exportDicoMenuItem = new JMenuItem();
 			exportDicoMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.DictionaryExport")); //$NON-NLS-1$
+			
+			final JFileChooser fc = new JFileChooser();
+
+			fc.setFileFilter(fileFilterDictionnaireExport);
+			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory")));
+			
 			exportDicoMenuItem.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					JFileChooser fc = new JFileChooser();
-
-					fc.setFileFilter(fileFilterDictionnaireExport);
-
 					boolean retry = false;
 					do
 					{
@@ -2201,15 +2281,15 @@ public class KanjiNoSensei
 		{
 			importMenuItem = new JMenuItem();
 			importMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.DictionaryImport")); //$NON-NLS-1$
+			
+			final JFileChooser fc = new JFileChooser();
+			fc.setFileFilter(fileFilterDictionnaireExport);
+			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory"))); //$NON-NLS-1$
+
 			importMenuItem.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					JFileChooser fc = new JFileChooser();
-
-					fc.setFileFilter(fileFilterDictionnaireExport);
-					fc.setSelectedFile(new File(System.getProperty("user.dir"))); //$NON-NLS-1$
-
 					boolean retry = false;
 
 					do
@@ -2467,7 +2547,7 @@ public class KanjiNoSensei
 					presets.addPreset(getJComboBoxPresets().getSelectedItem().toString(), themes);
 					try
 					{
-						presets.save();
+						presets.save(ficPresets);
 					}
 					catch (IOException e)
 					{
@@ -2491,7 +2571,7 @@ public class KanjiNoSensei
 					presets.removePreset(getJComboBoxPresets().getSelectedItem().toString());
 					try
 					{
-						presets.save();
+						presets.save(ficPresets);
 					}
 					catch (FileNotFoundException e)
 					{

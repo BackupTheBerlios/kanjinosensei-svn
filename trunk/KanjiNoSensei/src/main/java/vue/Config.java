@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class Config
 {
-	private static final String			CONFIG_NAME		= "KanjiNoSensei.cfg";						//$NON-NLS-1$
+	public static final String			CONFIG_NAME		= "KanjiNoSensei.cfg";						//$NON-NLS-1$
 
 	private final Properties CONFIG = new Properties();
 	
@@ -27,18 +27,26 @@ public class Config
 	
 	private Config()
 	{
-		File fic = new File(CONFIG_NAME);
+		
+	}
+	
+	public static void open(File fic) throws IOException
+	{
+		System.out.println("Using config file : \""+fic.getAbsolutePath()+"\"");
 		
 		if (!fic.exists())
 		{
+			System.err.println("Warning: Config file does not exist, trying to create a new one.");
+			
 			try
 			{
 				fic.createNewFile();
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
-				System.err.println("Impossible de créer le fichier de config \""+CONFIG_NAME+"\"");
+				//e.printStackTrace();
+				System.err.println("Impossible de créer le fichier de config \""+fic.getAbsolutePath()+"\"");
+				throw e;
 			}
 		}
 		
@@ -46,13 +54,13 @@ public class Config
 		try
 		{
 			fis = new FileInputStream(fic);
-			CONFIG.load(fis);
+			SINGLETON.CONFIG.load(fis);
 			fis.close();
 		}
 		catch (IOException e)
 		{
 			System.err.println("Erreur de lecture du fichier de config.");
-			e.printStackTrace();
+			throw e;
 		}
 	}
 

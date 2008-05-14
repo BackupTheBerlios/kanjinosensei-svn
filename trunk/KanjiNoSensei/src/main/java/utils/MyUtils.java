@@ -625,7 +625,7 @@ public abstract class MyUtils
 			File f2 = new File(defaultDirectory + File.separatorChar + f.getName());
 			if ( !f2.exists())
 			{
-				System.err.println(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.err.println(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\" ou \"" + f2.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 			else
 			{

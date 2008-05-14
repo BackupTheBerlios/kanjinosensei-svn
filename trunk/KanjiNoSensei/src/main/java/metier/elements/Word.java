@@ -1,5 +1,6 @@
 package metier.elements;
 
+import java.io.File;
 import java.io.Serializable;
 
 import metier.Messages;
@@ -170,7 +171,7 @@ public class Word extends Element implements Serializable
 	@Override
 	public void pack()
 	{
-		sound = MyUtils.checkFileExists(sound, DICO_DIR);
+		sound = MyUtils.checkFileExists(sound, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
 	}
 
 	/**
