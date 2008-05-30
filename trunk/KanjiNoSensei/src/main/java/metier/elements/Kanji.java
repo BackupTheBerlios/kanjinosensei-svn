@@ -259,7 +259,7 @@ public class Kanji extends Element implements Serializable
 		lecturesKUN.removeEmptyElements();
 		lecturesON.removeEmptyElements();
 
-		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
+		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR); //$NON-NLS-1$
 	}
 
 	/**

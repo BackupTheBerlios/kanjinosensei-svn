@@ -17,6 +17,8 @@ import vue.sentence.SentenceQuizConfigPanel.ETypeAff;
 public class VueSentence extends VueElement
 {
 
+	public static final float	FONT_MAX_SIZE	= 50;
+	public static final float	FONT_MIN_SIZE	= 11;
 	private Sentence					phrase				= null;
 	private SentenceEditionDialog		jEditionDialog		= null;
 	private QuizQuestionPanel		jQuizQuestionPanel	= null;

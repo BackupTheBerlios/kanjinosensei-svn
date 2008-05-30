@@ -489,6 +489,18 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"réunion, association, rencontrer";"会";"kanji_会.png";"あ（う）";"エ,カイ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 11>kanjis";"sanctuaire shinto, société";"社";"kanji_社.png";"やしろ";"シャ"
 ;;;;;;
+"Mots L1 Ecriture leçon 11";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"littérature";"文学";"ぶんがく";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"excursion, visite";"見物";"けんぶつ";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"industrie, manufacture";"工業";"こうぎょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"usine";"工場";"こうじょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"voyage, excursion";"旅行";"りょこう";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"étude";"勉強";"べんきょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"ami";"友達";"ともだち";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"la poste (service postal)";"郵便局";"ゆうびんきょく";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"lettre";"手紙";"てがみ";;
+"metier.elements.Word";"L1>Ecriture>leçon 11>mots";"entreprise";"会社";"かいしゃ";;
+;;;;;;
 "Kanjis L1 Ecriture leçon 12";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"gare,station";"駅";"kanji_駅.png";;"エキ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"proche,près de";"近";"kanji_近.png";"ちか（い）";
@@ -505,6 +517,11 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"mère";"母";"kanji_母.png";"はは";"ボ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"couper, bien couper, se rompre, s'épuiser";"切";"kanji_切.png";"き（る）,き（れる）";"「サイ」、セツ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 12>kanjis";"passer, faire passer, aller régulièrement";"通";"kanji_通.png";"とお（る）、とお（す）、かよ（う）";"ツウ、「ツ」"
+;;;;;;
+"Mots L1 Ecriture leçon 12";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 12>mots";"opposé, opposition, contraire";"反対";"はんたい";;
+"metier.elements.Word";"L1>Ecriture>leçon 12>mots";"les gens";"人達";"ひとたち";;
+"metier.elements.Word";"L1>Ecriture>leçon 12>mots";"rue principale";"大通";"おおどおり";;
 ;;;;;;
 "Kanjis L1 Ecriture leçon 13";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 13>kanjis";"laver";"洗";"kanji_洗.png";"あら（う）";"セン"
@@ -523,6 +540,12 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 13>kanjis";"s'asseoir, siège, théâtre, constellation";"座";"kanji_座.png";"すわ（る）";"ザ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 13>kanjis";"se tourner vers (contre), se tourner, être adapté, diriger, l'autre côté";"向";"kanji_向.png";"む（かう）、む（く）、む（ける）、む（こう）";"コオ"
 ;;;;;;
+"Mots L1 Ecriture leçon 13";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 13>mots";"étudiant étranger (qui étudie dans un pays étranger)";"留学生";"りゅうがくせい";;
+"metier.elements.Word";"L1>Ecriture>leçon 13>mots";"le journal";"新聞";"しんぶん";;
+"metier.elements.Word";"L1>Ecriture>leçon 13>mots";"l'anglais";"英語";"えいご";;
+"metier.elements.Word";"L1>Ecriture>leçon 13>mots";"Ginza (quartier de Tôkyô)";"銀座";"ぎんざ";;
+;;;;;;
 "Kanjis L1 Ecriture leçon 14";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 14>kanjis";"carte, plan, schéma, comploter, calculer";"図";"kanji_図.png";"はか（る）";"ト、ズ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 14>kanjis";"chambre, salle, cellier";"室";"kanji_室.png";"むろ";"シツ"
@@ -539,6 +562,14 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 14>kanjis";"arrêt, résider";"駐";"kanji_駐.png";;"チュウ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 14>kanjis";"demander, prier, solliciter";"願";"kanji_願.png";"ねが（う）";"ガン"
 "metier.elements.Kanji";"L1>Ecriture>leçon 14>kanjis";"étagère";"棚";"kanji_棚.png";"たな";
+;;;;;;
+"Mots L1 Ecriture leçon 14";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"bibliothèque";"図書室";"としょしつ";;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"les mathématiques";"数学";"すうがく";;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"nom";"名前";"なまえ";;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"numéro";"番号";"ばんごう";;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"nom complet";"氏名";"しめい";;
+"metier.elements.Word";"L1>Ecriture>leçon 14>mots";"parking";"駐車場";"ちゅうしゃじょう";;
 ;;;;;;
 "Kanjis L1 Ecriture leçon 15";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 15>kanjis";"Han (dynastie),Chine,homme";"漢";"kanji_漢.png";;"カン"
@@ -560,6 +591,13 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 15>kanjis";"vache,boeuf,bovin";"牛";"kanji_牛.png";"うし";"ギュウ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 15>kanjis";"différent,séparé,autre,spécial,se séparer,se partager";"別";"kanji_別.png";"わか（れる）";"ベツ"
 ;;;;;;
+"Mots L1 Ecriture leçon 15";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 15>mots";"pendant la journée, le jour";"昼間";"ひるま";;
+"metier.elements.Word";"L1>Ecriture>leçon 15>mots";"kanji (caractère chinois)";"漢字";"かんじ";;
+"metier.elements.Word";"L1>Ecriture>leçon 15>mots";"lecture chinoise des kanji";"音読み";"おんよみ";;
+"metier.elements.Word";"L1>Ecriture>leçon 15>mots";"lecture japonaise des kanji";"訓読み";"くんよみ";;
+"metier.elements.Word";"L1>Ecriture>leçon 15>mots";"être en forme, aller bien";"元気";"げんき";;
+;;;;;;
 "Kanjis L1 Ecriture leçon 16";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 16>kanjis";"méchant,mauvais,néfaste";"悪";"kanji_悪.png";"わる（い）";"アク、オ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 16>kanjis";"descendre,faire descendre,déposer,démettre,tomber (pluie, neige)";"降";"kanji_降.png";"お（りる）、お（ろす）、ふ（る）";"コオ"
@@ -578,6 +616,10 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 16>kanjis";"frapper,battre";"打";"kanji_打.png";"う（つ）";"ダ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 16>kanjis";"courir";"走";"kanji_走.png";"はし（る）";"ソオ"
 ;;;;;;
+"Mots L1 Ecriture leçon 16";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 16>mots";"chambre, salle, pièce";"部屋";"へや";;
+"metier.elements.Word";"L1>Ecriture>leçon 16>mots";"directeur de société";"社長";"しゃちょう";;
+;;;;;;
 "Kanjis L1 Ecriture leçon 17";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 17>kanjis";"arrivée,vêtements,porter,mettre,habiller (quelqu'un),arriver";"着";;"き（る）、つ（ける）、き（せる）、つ（く）";"チャク、「ジャク」"
 "metier.elements.Kanji";"L1>Ecriture>leçon 17>kanjis";"thé";"茶";;;"チャ、サ"
@@ -591,6 +633,11 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 17>kanjis";"sac";"袋";"kanji_袋.png";"ふくろ";"タイ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 17>kanjis";"chaussure";"靴";"kanji_靴.png";"くつ";"カ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 17>kanjis";"rouleau,livre,volume,enrouler";"巻";"kanji_巻.png";"まき";"カン"
+;;;;;;
+"Mots L1 Ecriture leçon 17";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 17>mots";"brun, marron";"茶色";"ちゃいろ";;
+"metier.elements.Word";"L1>Ecriture>leçon 17>mots";"jaune";"黄色い";"きいろい";;
+"metier.elements.Word";"L1>Ecriture>leçon 17>mots";"gants";"手袋";"てぶくろ";;
 ;;;;;;
 "Kanjis L1 Ecriture leçon 18";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 18>kanjis";"mur";"壁";"kanji_壁.png";"かべ";"ヘキ"
@@ -612,6 +659,16 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 18>kanjis";"terre,sol";"地";"kanji_地.png";"じ";"チ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 18>kanjis";"bouche";"口";;"−ぐち,くち";"コオ,ク"
 ;;;;;;
+"Mots L1 Ecriture leçon 18";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"photo";"写真";"しゃしん";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"manteau, veste";"上着";"うわぎ";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"poupée, marionnette";"人形";"にんぎょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"bibliothèque (meuble), étagère";"本箱";"ほんばこ";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"coffre-fort";"金庫";"きんこ";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"tableau noir";"黒板";"こくばん";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"carte, plan";"地図";"ちず";;
+"metier.elements.Word";"L1>Ecriture>leçon 18>mots";"entrée";"出入口";"でいりぐち";;
+;;;;;;
 "Kanjis L1 Ecriture leçon 19";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 19>kanjis";"penser,croire";"思";"kanji_思.png";"おも（う）";"シ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 19>kanjis";"apprendre";"習";"kanji_習.png";"なら（う）";"シュウ"
@@ -628,6 +685,18 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 19>kanjis";"nouvelles,rapport,rendre la pareille,rétribuer";"報";"kanji_報.png";"むく（いる）";"ホオ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 19>kanjis";"poisson";"魚";"kanji_魚.png";"さかな,うお";"ギョ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 19>kanjis";"institution";"院";"kanji_院.png";;"イン"
+;;;;;;
+"Mots L1 Ecriture leçon 19";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"marchand, commerçant";"商人";"しょうにん";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"médecin, docteur";"医者";"いしゃ";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"musicien";"音楽家";"おんがくか";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"reporter, journaliste";"新聞記者";"しんぶんきしゃ";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"peintre, artiste (de l'image)";"画家";"がか";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"maire";"市長";"しちょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"fonctionnaire";"役人";"やくにん";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"employé de banque";"銀行員";"ぎんこういん";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"télégramme";"電報";"でんぽう";;
+"metier.elements.Word";"L1>Ecriture>leçon 19>mots";"3ème cycle universitaire (bâtiment)";"大学院";"だいがくいん";;
 ;;;;;;
 "Kanjis L1 Ecriture leçon 20";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 20>kanjis";"chair,viande";"肉";"kanji_肉.png";;"ニク"
@@ -653,6 +722,15 @@
 "metier.elements.Kanji";"L1>Ecriture>leçon 20>kanjis";"ancien, vieux,user";"古";;"ふる（い）、ふる（す）";"コ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 20>kanjis";"beaucoup,nombreux";"多";"kanji_多.png";"おお（い）";"タ"
 "metier.elements.Kanji";"L1>Ecriture>leçon 20>kanjis";"boire";"飲";"kanji_飲.png";"の（む）";"イン"
+;;;;;;
+"Mots L1 Ecriture leçon 20";;;;;;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"légume";"野菜";"やさい";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"cuisine";"料理";"りょうり";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"cuisine (lieu)";"台所";"だいどころ";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"soja";"大豆";"だいず";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"matière première";"原料";"げんりょう";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"laine à tricoter";"毛糸";"けいと";;
+"metier.elements.Word";"L1>Ecriture>leçon 20>mots";"eau de mer, eau salée";"海水";"かいすい";;
 ;;;;;;
 "Kanjis L1 Ecriture leçon 21";;;;;;
 "metier.elements.Kanji";"L1>Ecriture>leçon 21>kanjis";"sabre,épée";"刀";"kanji_刀.png";"かたな";"トオ"

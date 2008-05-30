@@ -162,7 +162,7 @@ public class Sentence extends Element implements Serializable
 	@Override
 	public void pack()
 	{
-		sound = MyUtils.checkFileExists(sound, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
+		sound = MyUtils.checkFileExists(sound, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR); //$NON-NLS-1$
 		
 		lecture = lecture.replace(' ', '　');
 	}

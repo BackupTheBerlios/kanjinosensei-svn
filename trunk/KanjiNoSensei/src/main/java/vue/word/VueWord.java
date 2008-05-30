@@ -17,6 +17,8 @@ import vue.word.WordQuizConfigPanel.ETypeAff;
 public class VueWord extends VueElement
 {
 
+	public static final float	FONT_MAX_SIZE	= 50;
+	public static final float	FONT_MIN_SIZE	= 11;
 	private Word					mot					= null;
 	private WordEditionDialog	jEditionDialog		= null;
 	private QuizQuestionPanel	jQuizQuestionPanel	= null;

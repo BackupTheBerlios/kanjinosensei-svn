@@ -12,8 +12,6 @@ import javax.swing.JPanel;
 
 import metier.Messages;
 import metier.elements.Sentence;
-import metier.elements.Word;
-
 import vue.Config;
 import vue.VueElement.QuizConfigPanel;
 
@@ -36,7 +34,7 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 	{
 		for(ETypeAff type : ETypeAff.values())
 		{
-			typesAff.put(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+type.toString()), type);
+			typesAff.put(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+type.toString()), type); //$NON-NLS-1$
 		}
 	}
 
@@ -48,7 +46,7 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 	{
 		for(ETypeSaisie type : ETypeSaisie.values())
 		{
-			typesSaisie.put(metier.Messages.getString(Sentence.class.getSimpleName()+".IM."+type.toString()), type);
+			typesSaisie.put(metier.Messages.getString(Sentence.class.getSimpleName()+".IM."+type.toString()), type); //$NON-NLS-1$
 		}
 	}
 	
@@ -82,10 +80,10 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 	
 	private void miseAJourForm()
 	{
-		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageElementQuiz.toString()));
-		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".IM."+saisieReponseQuiz.toString()));
-		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString()));
-		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageReponseQuiz.toString()));
+		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageElementQuiz.toString())); //$NON-NLS-1$
+		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".IM."+saisieReponseQuiz.toString())); //$NON-NLS-1$
+		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString())); //$NON-NLS-1$
+		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Sentence.class.getSimpleName()+".OM."+affichageReponseQuiz.toString())); //$NON-NLS-1$
 	}
 
 	private SentenceQuizConfigPanel()
@@ -97,18 +95,18 @@ class SentenceQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPa
 	
 	private void loadConfig()
 	{
-		affichageElementQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString()));
-		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("SentenceQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString()));
-		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageChoixReponsesQuiz", ETypeAff.Kanji.toString()));
-		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageReponseQuiz", ETypeAff.Detaille.toString()));
+		affichageElementQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString())); //$NON-NLS-1$
+		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("SentenceQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString())); //$NON-NLS-1$
+		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageChoixReponsesQuiz", ETypeAff.Kanji.toString())); //$NON-NLS-1$
+		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("SentenceQuizConfig.affichageReponseQuiz", ETypeAff.Detaille.toString())); //$NON-NLS-1$
 	}
 	
 	private void saveConfig()
 	{
-		Config.setString("SentenceQuizConfig.affichageElementQuiz", affichageElementQuiz.toString());
-		Config.setString("SentenceQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString());
-		Config.setString("SentenceQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString());
-		Config.setString("SentenceQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString());
+		Config.setString("SentenceQuizConfig.affichageElementQuiz", affichageElementQuiz.toString()); //$NON-NLS-1$
+		Config.setString("SentenceQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString()); //$NON-NLS-1$
+		Config.setString("SentenceQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString()); //$NON-NLS-1$
+		Config.setString("SentenceQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString()); //$NON-NLS-1$
 	}
 
 	private void initGUI()

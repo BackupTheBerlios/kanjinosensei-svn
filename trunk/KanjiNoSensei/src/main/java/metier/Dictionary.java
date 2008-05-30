@@ -28,6 +28,11 @@ import utils.MyUtils;
  */
 public class Dictionary implements Serializable
 {
+	public static interface DictionarySorter
+	{
+		boolean testElement(Element e);
+	}
+	
 	/**
 	 * Exception class, thrown when no element is available to match a correct result of the calling method.
 	 */
@@ -47,9 +52,9 @@ public class Dictionary implements Serializable
 		/** Serialization version. */
 		private static final long	serialVersionUID	= 1L;
 
-		DictionaryElementAlreadyPresentException(Element element)
+		DictionaryElementAlreadyPresentException(Element alreadyPresent, Element candidate)
 		{
-			super(Messages.getString("Dictionary.Exception.ElementAlreadyPresent") + " : " + element.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+			super(Messages.getString("Dictionary.Exception.ElementAlreadyPresent") + " : " + alreadyPresent.exportString() + "\t" + candidate.exportString()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 	}
 
@@ -182,7 +187,10 @@ public class Dictionary implements Serializable
 				// If translation fails, we try to guess if line is just a useless one, or if there was realy an element on it, and then we display apropriate error message.
 				if (current.contains(".")) //$NON-NLS-1$
 				{
-					e.printStackTrace();
+					if (!DictionaryElementAlreadyPresentException.class.isInstance(e))
+					{
+						e.printStackTrace();
+					}
 					System.err.println(Messages.getString("Dictionary.Import.ErrorOnElement") + " : \"" + line + "\" : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				else
@@ -203,7 +211,7 @@ public class Dictionary implements Serializable
 	 */
 	public void open(File file) throws IOException
 	{
-		System.out.println("Opening Dictionry \""+file.getAbsolutePath()+"\"");
+		System.out.println(Messages.getString("Dictionary.OpeningFile")+" \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		// Open file stream
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -251,7 +259,7 @@ public class Dictionary implements Serializable
 	{
 		if (elements.containsKey(element.getKey()))
 		{
-			throw new DictionaryElementAlreadyPresentException(element);
+			throw new DictionaryElementAlreadyPresentException(elements.get(element.getKey()), element);
 		}
 
 		elements.put(element.getKey(), element);
@@ -415,21 +423,37 @@ public class Dictionary implements Serializable
 	public Set<Element> getElementsList(String beginning)
 	{
 		if (beginning == null) beginning = ""; //$NON-NLS-1$
+		final String finalBeginning = beginning;
+		
+		return getElementsSelection(new DictionarySorter()
+		{
+		
+			@Override
+			public boolean testElement(Element e)
+			{
+				return e.match(finalBeginning);
+			}
+		
+		});
+		
+	}
 
+	public Set<Element> getElementsSelection(DictionarySorter sorter)
+	{
 		Set<Element> elementsReponses = new TreeSet<Element>();
-
+		
 		Iterator<String> it = elements.keySet().iterator();
-		while (it.hasNext())
+		while(it.hasNext())
 		{
 			Element element = elements.get(it.next());
-
-			if (element.match(beginning))
+			
+			if (sorter.testElement(element))
 			{
 				elementsReponses.add(element);
 			}
 		}
-
+		
 		return elementsReponses;
 	}
-
+	
 }

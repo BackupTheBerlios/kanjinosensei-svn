@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import metier.Dictionary;
 import metier.elements.Element;
 import metier.elements.Kanji;
+import utils.MyAutoResizingText;
 import vue.JPanelImageBg;
 import vue.KanjiNoSensei;
 import vue.VueElement;
@@ -28,11 +29,15 @@ public class VueKanji extends VueElement
 {
 	final private static Boolean	USE_ONLY_STROKEORDERS_FONT	= true;
 
+	public static final float	FONT_MAX_SIZE	= 22;
+
+	public static final float	FONT_MIN_SIZE	= 11;
+
 	private static Font				strokeOrdersFont			= null;
 	{
 		try
 		{
-			strokeOrdersFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Element.DICO_DIR + File.separatorChar + "fonts" + File.separatorChar + "KanjiStrokeOrders.ttf"));
+			strokeOrdersFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Element.DICO_DIR + File.separatorChar + "fonts" + File.separatorChar + "KanjiStrokeOrders.ttf")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		catch (Exception e)
 		{
@@ -218,7 +223,7 @@ public class VueKanji extends VueElement
 		{
 			try
 			{
-				if ((strokeOrdersFont != null) && USE_ONLY_STROKEORDERS_FONT) throw new ImageLoadingException("USE_ONLY_STROKEORDERS_FONT");
+				if ((strokeOrdersFont != null) && USE_ONLY_STROKEORDERS_FONT) throw new ImageLoadingException("USE_ONLY_STROKEORDERS_FONT"); //$NON-NLS-1$
 				jPanelImageBg = new JPanelImageBg(getKanji().getStrokeOrderPicture(), JPanelImageBg.eImageDisplayMode.CENTRE);
 				return jPanelImageBg;
 			}
@@ -233,10 +238,11 @@ public class VueKanji extends VueElement
 					if (strokeOrdersFont != null)
 					{
 						JLabel jLabelStrokeFont = new JLabel(getKanji().getCodeUTF8().toString());
+						jLabelStrokeFont.setFont(strokeOrdersFont);
+						MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = new MyAutoResizingText<JLabel>(jLabelStrokeFont, 100, Float.POSITIVE_INFINITY);
 						jLabelStrokeFont.setVisible(true);
 						jPanelStrokeOrdersFont.add(jLabelStrokeFont, BorderLayout.CENTER);
 						jPanelStrokeOrdersFont.setVisible(true);
-						jLabelStrokeFont.setFont(strokeOrdersFont.deriveFont((float) 200));
 						jPanelStrokeOrdersFont.doLayout();
 					}
 				}

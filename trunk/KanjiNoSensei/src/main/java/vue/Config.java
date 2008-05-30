@@ -7,12 +7,11 @@ package vue;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.MissingResourceException;
 import java.util.Properties;
-import java.util.ResourceBundle;
+
+import metier.Messages;
 
 /**
  * 
@@ -32,11 +31,11 @@ public class Config
 	
 	public static void open(File fic) throws IOException
 	{
-		System.out.println("Using config file : \""+fic.getAbsolutePath()+"\"");
+		System.out.println(Messages.getString("Config.OpeningFile") + " : \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		
 		if (!fic.exists())
 		{
-			System.err.println("Warning: Config file does not exist, trying to create a new one.");
+			System.err.println(Messages.getString("Config.Warning.FileDoesNotExist")); //$NON-NLS-1$
 			
 			try
 			{
@@ -45,7 +44,7 @@ public class Config
 			catch (IOException e)
 			{
 				//e.printStackTrace();
-				System.err.println("Impossible de créer le fichier de config \""+fic.getAbsolutePath()+"\"");
+				System.err.println(Messages.getString("Config.Error.CantCreateFile") + " \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				throw e;
 			}
 		}
@@ -59,7 +58,7 @@ public class Config
 		}
 		catch (IOException e)
 		{
-			System.err.println("Erreur de lecture du fichier de config.");
+			System.err.println(Messages.getString("Config.Error.OpeningFile")); //$NON-NLS-1$
 			throw e;
 		}
 	}
@@ -82,11 +81,11 @@ public class Config
 	{
 		try
 		{
-			SINGLETON.CONFIG.store(new FileOutputStream(CONFIG_NAME), "KanjiNoSensei config file");
+			SINGLETON.CONFIG.store(new FileOutputStream(CONFIG_NAME), "KanjiNoSensei config file"); //$NON-NLS-1$
 		}
 		catch (IOException e)
 		{
-			System.err.println("Erreur de sauvegarde du fichier de config.");
+			System.err.println(Messages.getString("Config.Error.SavingFile")); //$NON-NLS-1$
 			e.printStackTrace();
 		}
 	}

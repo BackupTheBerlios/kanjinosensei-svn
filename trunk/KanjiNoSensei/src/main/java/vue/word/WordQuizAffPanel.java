@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import metier.Messages;
-
+import utils.MyAutoResizingText;
 import vue.JPanelSonBtn;
 import vue.VueElement.NoAffException;
 import vue.VueElement.QuizQuestionPanel;
@@ -100,6 +100,8 @@ class WordQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, 
 		jLabel.setText(text);
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
 		jLabel.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
+		MyAutoResizingText<JLabel> jAutoSizeLabel = new MyAutoResizingText<JLabel>(jLabel, taille, VueWord.FONT_MAX_SIZE);
+		
 		this.add(jLabel, BorderLayout.NORTH);
 	}
 

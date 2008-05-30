@@ -144,7 +144,7 @@ public class KanjiNoSensei
 		
 		public static Presets open(File ficPresets) throws IOException
 		{
-			System.out.println("Opening Presets : \""+ficPresets.getAbsolutePath()+"\"");
+			System.out.println(Messages.getString("KanjiNoSensei.Presets.OpeningFile") + " : \""+ficPresets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			Presets presets = new Presets();
 			
@@ -204,7 +204,7 @@ public class KanjiNoSensei
 
 	public final String										KanjiNoSensei_VERSION			= "1.0c";																									//$NON-NLS-1$
 
-	static boolean											USE_ROMAJI						= Boolean.parseBoolean(Config.getString("GeneralConfig.UseRomaji", "false"));
+	static boolean											USE_ROMAJI						= Boolean.parseBoolean(Config.getString("GeneralConfig.UseRomaji", "false")); //$NON-NLS-1$ //$NON-NLS-2$
 
 	final KanjiNoSensei										app								= this;
 
@@ -430,20 +430,20 @@ public class KanjiNoSensei
 		
 		if (fic_config == null)
 		{
-			fic_config = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.CONFIG_NAME);
+			fic_config = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.CONFIG_NAME); //$NON-NLS-1$
 			Config.open(fic_config);
 		}
 		if (fic_dico == null)
 		{
-			fic_dico = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultDictionaryFile", "dico/dico.kjd"));
+			fic_dico = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultDictionaryFile", "dico/dico.kjd")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		if (fic_profile == null)
 		{
-			fic_profile = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultUserProfile", "myProfile.ulp"));
+			fic_profile = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultUserProfile", "myProfile.ulp")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		if (fic_presets == null)
 		{
-			fic_presets = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultPresets","presets"));
+			fic_presets = new File(System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+Config.getString("GeneralConfig.DefaultPresets","presets")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		
 		if (fic_profile.exists() && fic_profile.isFile())
@@ -452,13 +452,13 @@ public class KanjiNoSensei
 		}
 		else if (fic_profile.createNewFile() || fic_profile.canWrite())
 		{
-			System.out.println("Creating new User Profile : \""+fic_profile.getAbsolutePath()+"\"");
+			System.out.println(Messages.getString("KanjiNoSensei.LearningProfile.CreatingFile") + " : \""+fic_profile.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			this.userLearningProfile = new LearningProfile();
 			this.userLearningProfile.save(fic_profile);
 		}
 		else
 		{
-			throw new IOException("Cannot create User Learning Profile file");
+			throw new IOException(Messages.getString("KanjiNoSensei.LearningProfile.Error.CreatingFile")); //$NON-NLS-1$
 		}
 		
 		if (fic_presets.exists() && fic_presets.isFile())
@@ -467,13 +467,13 @@ public class KanjiNoSensei
 		}
 		else if (fic_presets.createNewFile() || fic_presets.canWrite())
 		{
-			System.out.println("Creating new Presets file : \""+fic_presets.getAbsolutePath()+"\"");
+			System.out.println(Messages.getString("KanjiNoSensei.Presets.CreatingFile") + " : \""+fic_presets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			this.presets = new Presets();
 			this.presets.save(fic_presets);
 		}
 		else
 		{
-			throw new IOException("Cannot create presets file");
+			throw new IOException(Messages.getString("KanjiNoSensei.Presets.Error.CreatingFile")); //$NON-NLS-1$
 		}
 			
 		this.userLearningProfileFile = fic_profile;
@@ -745,8 +745,7 @@ public class KanjiNoSensei
 												}
 												catch (DictionaryElementAlreadyPresentException e2)
 												{
-													System.err.println("Erreur : Ancien élément déjà présent");
-													e2.printStackTrace();
+													System.err.println(Messages.getString("KanjiNoSensei.Dictionary.AlreadyExistingElement")); //$NON-NLS-1$
 												}
 											}
 										}
@@ -1044,7 +1043,7 @@ public class KanjiNoSensei
 			final JFileChooser fc = new JFileChooser();
 
 			fc.setFileFilter(fileFilterDictionnaire);
-			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory")));
+			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory"))); //$NON-NLS-1$
 			
 			saveDictionnaireMenuItem.addActionListener(new java.awt.event.ActionListener()
 			{
@@ -1422,45 +1421,45 @@ public class KanjiNoSensei
 		// KanjiNoSensei [--dic DICO_FILE] [--profile PROFILE_FILE] [--workingdir WORKING_DIR] [L&F commands]]
 		// If files are given in relative path, they are considered relative to specified WORKING_DIR.
 		
-		System.setProperty("KanjiNoSenseiWorkingDirectory", System.getProperty("user.dir"));
+		System.setProperty("KanjiNoSenseiWorkingDirectory", System.getProperty("user.dir")); //$NON-NLS-1$ //$NON-NLS-2$
 		
-		while((args.length >= 2) && (args[0].matches("--profile|--presets|--workingdir|--dic|--config")))
+		while((args.length >= 2) && (args[0].matches("--profile|--presets|--workingdir|--dic|--config"))) //$NON-NLS-1$
 		{
-			if (args[0].compareTo("--dic") == 0)
+			if (args[0].compareTo("--dic") == 0) //$NON-NLS-1$
 			{
 				ficDico = new File(args[1]);
 			}
 			
-			if (args[0].compareTo("--config") == 0)
+			if (args[0].compareTo("--config") == 0) //$NON-NLS-1$
 			{
 				ficConfig = new File(args[1]);
 			}
 			
-			if (args[0].compareTo("--workingdir") == 0)
+			if (args[0].compareTo("--workingdir") == 0) //$NON-NLS-1$
 			{
 				File userdir = new File(args[1]);
 				if (!userdir.isDirectory() || !userdir.canRead())
 				{
-					System.err.println("--workingdir is not a directory or does not have read access.");
+					System.err.println("--workingdir is not a directory or does not have read access."); //$NON-NLS-1$
 					return;
 				}
 				else
 				{
-					System.setProperty("KanjiNoSenseiWorkingDirectory", userdir.getAbsolutePath());
+					System.setProperty("KanjiNoSenseiWorkingDirectory", userdir.getAbsolutePath()); //$NON-NLS-1$
 				}
 			}
-			if (args[0].compareTo("--profile") == 0)
+			if (args[0].compareTo("--profile") == 0) //$NON-NLS-1$
 			{
 				ficLearningProfile = new File(args[1]);
 			}
-			if (args[0].compareTo("--presets") == 0)
+			if (args[0].compareTo("--presets") == 0) //$NON-NLS-1$
 			{
 				ficPresets = new File(args[1]);
 			}
 			args = MyUtils.offsetObjectElements(args, 2);
 		}
 		
-		System.out.println("Using working directory : \""+System.getProperty("KanjiNoSenseiWorkingDirectory")+"\"");
+		System.out.println(Messages.getString("KanjiNoSensei.Info.WorkingDirectory")+ " : \""+System.getProperty("KanjiNoSenseiWorkingDirectory")+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		
 		if (args.length > 0)
 		{
@@ -1766,7 +1765,7 @@ public class KanjiNoSensei
 				// </JiglooProtected>
 				public void componentShown(ComponentEvent evt)
 				{
-					MyUtils.trace("jConfigModalFrame.componentShown");
+					MyUtils.trace("jConfigModalFrame.componentShown"); //$NON-NLS-1$
 					for (Component c : getJConfigFrameTabbedPane().getComponents())
 					{
 						if (VueElement.QuizConfigPanel.class.isInstance(c))
@@ -1862,7 +1861,7 @@ public class KanjiNoSensei
 
 					// On valide la page de config générale.
 					USE_ROMAJI = getJCheckBoxUseRomaji().isSelected();
-					Config.setString("GeneralConfig.UseRomaji", Boolean.toString(USE_ROMAJI));
+					Config.setString("GeneralConfig.UseRomaji", Boolean.toString(USE_ROMAJI)); //$NON-NLS-1$
 					
 					Config.save();
 					getJConfigFrame().dispose();
@@ -2005,14 +2004,14 @@ public class KanjiNoSensei
 		}
 		catch (IOException e)
 		{
-			System.err.println("IOException : Attention, le profil utilisateur n'as pas pu être sauvegardé : "+e.getMessage());
+			System.err.println(Messages.getString("KanjiNoSensei.LearningProfile.Error.SavingFile")+e.getMessage()); //$NON-NLS-1$
 		}
 	}
 
 	private void miseAJourQuizTitle()
 	{
 		getJQuizFrame().setTitle(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante + "; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
-		getJQuizFrame().setTitle(getJQuizFrame().getTitle()+"   "+"Stats ["+userLearningProfile.getElementStats(elementQuestionEnCours.getKey())+"]");
+		getJQuizFrame().setTitle(getJQuizFrame().getTitle()+"   "+"Stats ["+userLearningProfile.getElementStats(elementQuestionEnCours.getKey())+"]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	public synchronized void validerReponseQuiz(boolean reponseCorrecte, boolean nextQuestion)
@@ -2246,7 +2245,7 @@ public class KanjiNoSensei
 			final JFileChooser fc = new JFileChooser();
 
 			fc.setFileFilter(fileFilterDictionnaireExport);
-			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory")));
+			fc.setSelectedFile(new File(System.getProperty("KanjiNoSenseiWorkingDirectory"))); //$NON-NLS-1$
 			
 			exportDicoMenuItem.addActionListener(new ActionListener()
 			{
@@ -2460,7 +2459,7 @@ public class KanjiNoSensei
 		if (jLabelPreset == null)
 		{
 			jLabelPreset = new JLabel();
-			jLabelPreset.setText("Presets");
+			jLabelPreset.setText(Messages.getString("KanjiNoSensei.Presets.LabelPresets")); //$NON-NLS-1$
 			jLabelPreset.setLayout(null);
 		}
 		return jLabelPreset;
@@ -2500,12 +2499,12 @@ public class KanjiNoSensei
 		if (jButtonCharger == null)
 		{
 			jButtonCharger = new JButton();
-			jButtonCharger.setText("Charger");
+			jButtonCharger.setText(Messages.getString("KanjiNoSensei.Presets.BtnCharger")); //$NON-NLS-1$
 			jButtonCharger.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jButtonCharger.actionPerformed, event=" + evt);
+					System.out.println("jButtonCharger.actionPerformed, event=" + evt); //$NON-NLS-1$
 					Vector<String> themes = presets.getPreset(getJComboBoxPresets().getSelectedItem().toString());
 
 					Iterator<String> itThemes = themes.iterator();
@@ -2530,12 +2529,12 @@ public class KanjiNoSensei
 		if (jButtonSave == null)
 		{
 			jButtonSave = new JButton();
-			jButtonSave.setText("Sauver");
+			jButtonSave.setText(Messages.getString("KanjiNoSensei.Presets.BtnSauver")); //$NON-NLS-1$
 			jButtonSave.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jButtonSave.actionPerformed, event=" + evt);
+					System.out.println("jButtonSave.actionPerformed, event=" + evt); //$NON-NLS-1$
 
 					Vector<String> themes = new Vector<String>();
 
@@ -2564,10 +2563,10 @@ public class KanjiNoSensei
 	private JButton getJButtonSupprimer() {
 		if(jButtonSupprimer == null) {
 			jButtonSupprimer = new JButton();
-			jButtonSupprimer.setText("Supprimer");
+			jButtonSupprimer.setText(Messages.getString("KanjiNoSensei.Presets.BtnSupprimer")); //$NON-NLS-1$
 			jButtonSupprimer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					System.out.println("jButtonSupprimer.actionPerformed, event="+evt);
+					System.out.println("jButtonSupprimer.actionPerformed, event="+evt); //$NON-NLS-1$
 					presets.removePreset(getJComboBoxPresets().getSelectedItem().toString());
 					try
 					{

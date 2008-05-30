@@ -302,7 +302,7 @@ public class MySoundPlayer extends Thread
 						}
 						catch (JavaLayerException e)
 						{
-							System.err.println("Erreur : ZOOM_PLAYER play()");
+							System.err.println(Messages.getString("MySoundPlayer.MySoundPlayer.ZOOM_Player.Error")); //$NON-NLS-1$
 							e.printStackTrace();
 						}
 					}

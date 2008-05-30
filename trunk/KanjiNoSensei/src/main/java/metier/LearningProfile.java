@@ -18,8 +18,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import com.sun.net.httpserver.Authenticator.Success;
-
 import utils.MyUtils;
 
 /**
@@ -33,7 +31,7 @@ public class LearningProfile implements Serializable
 	private static final long	serialVersionUID	= 1L;
 
 	/** Default user learning profile filename. */
-	public static final String	DEFAULT_PROFILE		= "myProfile.ulp";
+	public static final String	DEFAULT_PROFILE		= "myProfile.ulp"; //$NON-NLS-1$
 
 	/** Elements Unique ID / statistics map. */
 	TreeMap<String, Statistics>	statistics			= new TreeMap<String, Statistics>();
@@ -57,7 +55,7 @@ public class LearningProfile implements Serializable
 	 */
 	public static LearningProfile open(File file) throws IOException
 	{
-		System.out.println("Opening LearningProfile : \""+file.getAbsolutePath()+"\"");
+		System.out.println(Messages.getString("LearningProfile.OpeningFile") + " : \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		
 		LearningProfile learningProfile = null;
 
@@ -257,7 +255,7 @@ public class LearningProfile implements Serializable
 
 			if ( !statistics.containsKey(currentElementUID))
 			{
-				System.err.println("Le profil utilisateur ne contient aucune donné sur l'élément '" + currentElementUID + "' qui est donc prioritaire.");
+				System.err.println(Messages.getString("LearningProfile.LearningProfile.WarningNeverSeenElement") + " : \"" + currentElementUID + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return currentElementUID;
 			}
 
@@ -286,12 +284,12 @@ public class LearningProfile implements Serializable
 		Statistics stats = statistics.get(elementUID);
 		if (stats == null) return null;
 
-		StringBuilder sb = new StringBuilder(String.format("%d/%d = %f\t", stats.getNbGoodAnswers(), stats.getNbQuestions(), stats.getSuccessRate()));
+		StringBuilder sb = new StringBuilder(String.format("%d/%d = %f\t", stats.getNbGoodAnswers(), stats.getNbQuestions(), stats.getSuccessRate())); //$NON-NLS-1$
 
 		long time = stats.getLastQuestionAge();
 
-		sb.append(MyUtils.timeToString(time) + "\t");
-		sb.append(String.format("Need Score : %f", stats.getNeedScore()));
+		sb.append(MyUtils.timeToString(time) + "\t"); //$NON-NLS-1$
+		sb.append(String.format(Messages.getString("LearningProfile.LearningProfile.Label.NeedScore") +" : %f", stats.getNeedScore())); //$NON-NLS-1$ //$NON-NLS-2$
 
 		return sb.toString();
 	}
@@ -309,7 +307,7 @@ public class LearningProfile implements Serializable
 			
 			if (statistics.containsKey(elementUID))
 			{
-				System.err.println("Learning Profile Error : Tried to add an already known elementUID as a new one.");
+				System.err.println(Messages.getString("LearningProfile.LearningProfile.ErrorAlreadyKnownElement")); //$NON-NLS-1$
 			}
 			else
 			{

@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
-import javax.swing.text.html.HTMLEditorKit;
 
 import metier.Messages;
+import utils.MyAutoResizingText;
 import vue.JPanelImageBg;
 import vue.JPanelImageBg.ImageLoadingException;
 import vue.VueElement.NoAffException;
@@ -94,17 +94,17 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 	
 			case KanjiEtSignification:
 			{
-				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>";
-				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : " + vue.getKanji().getSignifications() + "</font></td></tr></table>";
+				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>"; //$NON-NLS-1$ //$NON-NLS-2$
+				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : " + vue.getKanji().getSignifications() + "</font></td></tr></table>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				// taille_fonte = 100;
 				break;
 			}
 	
 			case KanjiEtLectures:
 			{
-				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>";
-				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : " + vue.getKanji().getLecturesON() + "<br/>";
-				texte += Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : " + vue.getKanji().getLecturesKUN() + "</font></td></tr></table>";
+				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>"; //$NON-NLS-1$ //$NON-NLS-2$
+				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : " + vue.getKanji().getLecturesON() + "<br/>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				texte += Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : " + vue.getKanji().getLecturesKUN() + "</font></td></tr></table>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				// taille_fonte = 12;
 				break;
 			}
@@ -144,19 +144,21 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 
 	private void addJLabel(JPanel panel, String text, int taille)
 	{
-		jEditorPane = new JEditorPane("text/html", null);
+		jEditorPane = new JEditorPane("text/html", null); //$NON-NLS-1$
 
-		HTMLEditorKit htmlEditoKit = (HTMLEditorKit) jEditorPane.getEditorKit();
+		//HTMLEditorKit htmlEditoKit = (HTMLEditorKit) jEditorPane.getEditorKit();
 
 		if (taille > 0)
 		{
 			// jEditorPane.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
-			text = "<font style=\"font-size: " + taille + "pt\">" + text + "</font>";
+			text = "<font style=\"font-size: " + taille + "pt\">" + text + "</font>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 
 		jEditorPane.setText(text);
 		jEditorPane.setEditable(false);
 
+		MyAutoResizingText<JEditorPane> jAutoSizeEditorPane = new MyAutoResizingText<JEditorPane>(jEditorPane, taille, VueKanji.FONT_MAX_SIZE);
+		
 		panel.add(jEditorPane, BorderLayout.NORTH);
 	}
 

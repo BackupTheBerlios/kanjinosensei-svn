@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import metier.elements.Kanji;
 import utils.Messages;
-import utils.MyUtils;
 import vue.Config;
 import vue.VueElement.QuizConfigPanel;
 
@@ -59,7 +58,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	{
 		for(ETypeAff type : ETypeAff.values())
 		{
-			typesAff.put(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+type.toString()), type);
+			typesAff.put(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+type.toString()), type); //$NON-NLS-1$
 		}
 	}
 
@@ -71,7 +70,7 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	{
 		for(ETypeSaisie type : ETypeSaisie.values())
 		{
-			typesSaisie.put(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+type.toString()), type);
+			typesSaisie.put(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+type.toString()), type); //$NON-NLS-1$
 		}
 	}
 
@@ -115,20 +114,20 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 
 	private void loadConfig()
 	{
-		affichageElementQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString()));
-		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("KanjiQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString()));
-		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageChoixReponsesQuiz", ETypeAff.LectureJaponaise.toString()));
-		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageReponseQuiz", ETypeAff.ImageTraceEtDetaille.toString()));
-		saisieReponseCompleteQuiz = Boolean.valueOf(Config.getString("KanjiQuizConfig.saisieReponseCompleteQuiz", "false"));
+		affichageElementQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageElementQuiz", ETypeAff.Signification.toString())); //$NON-NLS-1$
+		saisieReponseQuiz = ETypeSaisie.valueOf(Config.getString("KanjiQuizConfig.saisieReponseQuiz", ETypeSaisie.AttenteClick.toString())); //$NON-NLS-1$
+		affichageChoixReponsesQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageChoixReponsesQuiz", ETypeAff.LectureJaponaise.toString())); //$NON-NLS-1$
+		affichageReponseQuiz = ETypeAff.valueOf(Config.getString("KanjiQuizConfig.affichageReponseQuiz", ETypeAff.ImageTraceEtDetaille.toString())); //$NON-NLS-1$
+		saisieReponseCompleteQuiz = Boolean.valueOf(Config.getString("KanjiQuizConfig.saisieReponseCompleteQuiz", "false")); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
 	private void saveConfig()
 	{
-		Config.setString("KanjiQuizConfig.affichageElementQuiz", affichageElementQuiz.toString());
-		Config.setString("KanjiQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString());
-		Config.setString("KanjiQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString());
-		Config.setString("KanjiQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString());
-		Config.setString("KanjiQuizConfig.saisieReponseCompleteQuiz", Boolean.toString(saisieReponseCompleteQuiz));
+		Config.setString("KanjiQuizConfig.affichageElementQuiz", affichageElementQuiz.toString()); //$NON-NLS-1$
+		Config.setString("KanjiQuizConfig.saisieReponseQuiz", saisieReponseQuiz.toString()); //$NON-NLS-1$
+		Config.setString("KanjiQuizConfig.affichageChoixReponsesQuiz", affichageChoixReponsesQuiz.toString()); //$NON-NLS-1$
+		Config.setString("KanjiQuizConfig.affichageReponseQuiz", affichageReponseQuiz.toString()); //$NON-NLS-1$
+		Config.setString("KanjiQuizConfig.saisieReponseCompleteQuiz", Boolean.toString(saisieReponseCompleteQuiz)); //$NON-NLS-1$
 	}
 	
 	private void initGUI()
@@ -215,10 +214,10 @@ class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 	
 	private void miseAJourForm()
 	{
-		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageElementQuiz.toString()));
-		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+saisieReponseQuiz.toString()));
-		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString()));
-		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageReponseQuiz.toString()));
+		jComboBoxAffQuiz.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageElementQuiz.toString())); //$NON-NLS-1$
+		jComboBoxSaisieReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".IM."+saisieReponseQuiz.toString())); //$NON-NLS-1$
+		jComboBoxSaisieReponseChoixAff.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageChoixReponsesQuiz.toString())); //$NON-NLS-1$
+		jComboBoxAffReponse.setSelectedItem(metier.Messages.getString(Kanji.class.getSimpleName()+".OM."+affichageReponseQuiz.toString())); //$NON-NLS-1$
 		jCheckBoxSaisieReponseComplete.setSelected(saisieReponseCompleteQuiz);
 	}
 

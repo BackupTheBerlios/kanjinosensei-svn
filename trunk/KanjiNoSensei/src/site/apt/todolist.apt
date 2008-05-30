@@ -9,7 +9,8 @@ TODO List
 	
 	Workflow passé et en cours.
 	
-	* Gérer le dépassement horizontal pour les phrases.
+	* Faire s'afficher le tracé plus grand dans le quizz Tracé+Details
+	* Gérer le dépassement horizontal pour les phrases, intégrer des scrollbars et WordWrap à MyAutoResizingText.
 	
 	* Ajouter des mots exemples pour les kanjis.
 	

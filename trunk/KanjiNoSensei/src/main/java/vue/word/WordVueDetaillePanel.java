@@ -11,9 +11,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -23,6 +24,7 @@ import metier.Messages;
 import metier.elements.Element;
 import metier.elements.Kanji;
 import metier.elements.Word;
+import utils.MyAutoResizingText;
 import vue.JPanelSonBtn;
 import vue.VueElement;
 import vue.VueElement.QuizQuestionPanel;
@@ -47,9 +49,9 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	 */
 	private static final long	serialVersionUID				= 1L;
 	private VueWord				vue								= null;
-	private JPanel				jPanelCentre;
+	private JScrollPane				jPanelCentre;
 	private JToggleButton		jButtonJouerSon;
-	private JTextField			jTextFieldMot;
+	private JTextArea			jTextPaneMot;
 	private JLabel				jLabelSignifications;
 	private JLabel				jLabelThemes;
 	private JPanel				jPanelSouth;
@@ -105,6 +107,7 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 					jLabelLecture = new JLabel();
 					jPanelNorth.add(jLabelLecture, BorderLayout.WEST);
 					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
+					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = new MyAutoResizingText<JLabel>(jLabelLecture, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
 				}
 				{
 					jButtonJouerSon = new JPanelSonBtn(vue.getMot().getSoundFile(), false);
@@ -127,36 +130,34 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 					jLabelSignifications = new JLabel();
 					jPanelSouth.add(jLabelSignifications);
 					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$
+					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = new MyAutoResizingText<JLabel>(jLabelSignifications, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
 				}
 				{
 					jLabelThemes = new JLabel();
 					jPanelSouth.add(jLabelThemes);
 					jLabelThemes.setText("Thèmes : mot, patin, coufin"); //$NON-NLS-1$
+					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = new MyAutoResizingText<JLabel>(jLabelThemes, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
 				}
 			}
 			{
-				jPanelCentre = new JPanel();
-				FlowLayout jPanelCentreLayout = new FlowLayout();
-				jPanelCentreLayout.setVgap(0);
+				jPanelCentre = new JScrollPane();
 				this.add(jPanelCentre, BorderLayout.CENTER);
-				jPanelCentre.setLayout(jPanelCentreLayout);
-				jPanelCentre.setMinimumSize(new java.awt.Dimension(600, 45));
-				jPanelCentre.setSize(0, 45);
-				jPanelCentre.setPreferredSize(new java.awt.Dimension(0, 45));
 				{
-					jTextFieldMot = new JTextField();
-					jPanelCentre.add(jTextFieldMot, BorderLayout.CENTER);
-					jTextFieldMot.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
-					jTextFieldMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
-					jTextFieldMot.setHorizontalAlignment(SwingConstants.CENTER);
-					jTextFieldMot.setBorder(BorderFactory.createEmptyBorder());
-					jTextFieldMot.setEditable(false);
-					jTextFieldMot.setPreferredSize(new java.awt.Dimension(0, 47));
-					jTextFieldMot.setSize(0, 47);
-					jTextFieldMot.addMouseListener(vueDetaillePanelMouseAdapter);
-					jTextFieldMot.addCaretListener(new CaretListener() {
+					jTextPaneMot = new JTextArea();
+					jPanelCentre.setViewportView(jTextPaneMot);
+					jTextPaneMot.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
+					jTextPaneMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
+					jTextPaneMot.setBorder(BorderFactory.createEmptyBorder());
+					jTextPaneMot.setEditable(false);
+					jTextPaneMot.setPreferredSize(new java.awt.Dimension(0, 47));
+					jTextPaneMot.setSize(0, 47);
+					
+					MyAutoResizingText<JTextArea> jAutoSizeTextPane = new MyAutoResizingText<JTextArea>(jTextPaneMot, VueWord.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+					
+					jTextPaneMot.addMouseListener(vueDetaillePanelMouseAdapter);
+					jTextPaneMot.addCaretListener(new CaretListener() {
 						public void caretUpdate(CaretEvent evt) {
-							String sel = jTextFieldMot.getSelectedText();
+							String sel = jTextPaneMot.getSelectedText();
 							if ((sel != null) && (!sel.isEmpty()))
 							{
 								System.out.println("Selection '"+sel+"'"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -208,8 +209,8 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	{
 		Word mot = vue.getMot();
 		jLabelLecture.setText(Messages.getString("WordVueDetaillePanel.LabelLecture") + " : "+ vue.toRomajiIfNeeded(mot.getLecture())); //$NON-NLS-1$ //$NON-NLS-2$
-		jTextFieldMot.setText(mot.getWord());
-		jTextFieldMot.setColumns(Math.max(2, jTextFieldMot.getText().length()) * 2);
+		jTextPaneMot.setText(mot.getWord());
+		//jTextPaneMot.setColumns(Math.max(2, jTextPaneMot.getText().length()) * 2);
 		jLabelSignifications.setText(Messages.getString("WordVueDetaillePanel.LabelSignifications") + " : "+mot.getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
 		jLabelThemes.setText(Messages.getString("WordVueDetaillePanel.LabelThemes") + " : " +mot.getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
 	}

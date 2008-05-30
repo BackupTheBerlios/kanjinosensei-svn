@@ -625,7 +625,7 @@ public abstract class MyUtils
 			File f2 = new File(defaultDirectory + File.separatorChar + f.getName());
 			if ( !f2.exists())
 			{
-				System.err.println(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\" ou \"" + f2.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.err.println(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\" ou \"" + f2.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			}
 			else
 			{
@@ -978,24 +978,24 @@ public abstract class MyUtils
 		
 		if (days > 0)
 		{
-			return days+"d "+hours+"h "+minutes+"min "+seconds+"s";
+			return days+Messages.getString("MyUtils.SuffixDays")+hours+Messages.getString("MyUtils.SuffixHours")+minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
 		
 		if (hours > 0)
 		{
-			return hours+"h "+minutes+"min "+seconds+"s";
+			return hours+Messages.getString("MyUtils.SuffixHours")+minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		
 		if (minutes > 0)
 		{
-			return minutes+"min "+seconds+"s";
+			return minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		
 		if (seconds > 0)
 		{
-			return seconds+"s";
+			return seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$
 		}
 		
-		return "0s";
+		return "0"+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
