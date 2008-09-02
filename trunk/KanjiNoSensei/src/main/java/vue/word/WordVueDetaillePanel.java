@@ -1,7 +1,6 @@
 package vue.word;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -13,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
@@ -104,10 +102,10 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				jPanelNorth.setSize(600, 20);
 				jPanelNorth.setPreferredSize(new java.awt.Dimension(600, 20));
 				{
-					jLabelLecture = new JLabel();
-					jPanelNorth.add(jLabelLecture, BorderLayout.WEST);
-					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = new MyAutoResizingText<JLabel>(jLabelLecture, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = MyAutoResizingText.createSafely(JLabel.class, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					jLabelLecture = jAutoSizeLabelLecture.getJComponent();
+					jPanelNorth.add(jAutoSizeLabelLecture, BorderLayout.WEST);
+					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$					
 				}
 				{
 					jButtonJouerSon = new JPanelSonBtn(vue.getMot().getSoundFile(), false);
@@ -127,32 +125,31 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 				jPanelSouth.setLayout(jPanelSouthLayout);
 				jPanelSouth.setPreferredSize(new java.awt.Dimension(600, 28));
 				{
-					jLabelSignifications = new JLabel();
-					jPanelSouth.add(jLabelSignifications);
-					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = new MyAutoResizingText<JLabel>(jLabelSignifications, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = MyAutoResizingText.createSafely(JLabel.class, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					jLabelSignifications = jAutoSizeLabelSignifications.getJComponent();
+					jPanelSouth.add(jAutoSizeLabelSignifications);
+					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$					
 				}
 				{
-					jLabelThemes = new JLabel();
-					jPanelSouth.add(jLabelThemes);
-					jLabelThemes.setText("Thèmes : mot, patin, coufin"); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = new MyAutoResizingText<JLabel>(jLabelThemes, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = MyAutoResizingText.createSafely(JLabel.class, VueWord.FONT_MIN_SIZE, VueWord.FONT_MAX_SIZE);
+					jLabelThemes = jAutoSizeLabelThemes.getJComponent();
+					jPanelSouth.add(jAutoSizeLabelThemes);
+					jLabelThemes.setText("Thèmes : mot, patin, coufin"); //$NON-NLS-1$					
 				}
 			}
 			{
 				jPanelCentre = new JScrollPane();
 				this.add(jPanelCentre, BorderLayout.CENTER);
 				{
-					jTextPaneMot = new JTextArea();
-					jPanelCentre.setViewportView(jTextPaneMot);
+				MyAutoResizingText<JTextArea> jAutoSizeTextPane = MyAutoResizingText.createSafely(JTextArea.class, VueWord.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+					jTextPaneMot = jAutoSizeTextPane.getJComponent();
+					jPanelCentre.setViewportView(jAutoSizeTextPane);
 					jTextPaneMot.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
 					jTextPaneMot.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
 					jTextPaneMot.setBorder(BorderFactory.createEmptyBorder());
 					jTextPaneMot.setEditable(false);
 					jTextPaneMot.setPreferredSize(new java.awt.Dimension(0, 47));
-					jTextPaneMot.setSize(0, 47);
-					
-					MyAutoResizingText<JTextArea> jAutoSizeTextPane = new MyAutoResizingText<JTextArea>(jTextPaneMot, VueWord.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+					//TODO: useless ? jTextPaneMot.setSize(0, 47);
 					
 					jTextPaneMot.addMouseListener(vueDetaillePanelMouseAdapter);
 					jTextPaneMot.addCaretListener(new CaretListener() {

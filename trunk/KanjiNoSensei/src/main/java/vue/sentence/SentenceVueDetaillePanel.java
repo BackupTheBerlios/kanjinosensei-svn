@@ -103,10 +103,10 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 				jPanelNorth.setSize(600, 20);
 				jPanelNorth.setPreferredSize(new java.awt.Dimension(600, 20));
 				{
-					jLabelLecture = new JLabel();
-					jPanelNorth.add(jLabelLecture, BorderLayout.WEST);
+					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
+					jLabelLecture = jAutoSizeLabelLecture.getJComponent();
+					jPanelNorth.add(jAutoSizeLabelLecture, BorderLayout.WEST);
 					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = new MyAutoResizingText<JLabel>(jLabelLecture, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
 				}
 				{
 					jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSound(), false);
@@ -126,34 +126,33 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 				jPanelSouth.setLayout(jPanelSouthLayout);
 				jPanelSouth.setPreferredSize(new java.awt.Dimension(600, 28));
 				{
-					jLabelSignifications = new JLabel();
-					jPanelSouth.add(jLabelSignifications);
-					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = new MyAutoResizingText<JLabel>(jLabelSignifications, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
+					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
+					jLabelSignifications = jAutoSizeLabelSignifications.getJComponent();
+					jPanelSouth.add(jAutoSizeLabelSignifications);
+					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$					
 				}
 				{
-					jLabelThemes = new JLabel();
-					jPanelSouth.add(jLabelThemes);
-					jLabelThemes.setText("Thèmes : phrase, patin, coufin"); //$NON-NLS-1$
-					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = new MyAutoResizingText<JLabel>(jLabelSignifications, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
+					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
+					jLabelThemes = jAutoSizeLabelThemes.getJComponent();
+					jPanelSouth.add(jAutoSizeLabelThemes);
+					jLabelThemes.setText("Thèmes : phrase, patin, coufin"); //$NON-NLS-1$					
 				}
 			}
 			{
 				jPanelCentre = new JScrollPane();
 				this.add(jPanelCentre, BorderLayout.CENTER);
 				{
-					jTextPane = new JTextArea();
-					jPanelCentre.setViewportView(jTextPane);
+					MyAutoResizingText<JTextArea> jAutoSizeTextPane = MyAutoResizingText.createSafely(JTextArea.class, VueSentence.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+					jTextPane = jAutoSizeTextPane.getJComponent();
+					jPanelCentre.setViewportView(jAutoSizeTextPane);
 					
 					jTextPane.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
 					jTextPane.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
 					//jTextPane.setHorizontalAlignment(SwingConstants.CENTER);
 					jTextPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 					jTextPane.setEditable(false);
-					jTextPane.setPreferredSize(new java.awt.Dimension(47, 47));
-					jTextPane.setSize(0, 47);
-					
-					MyAutoResizingText<JTextArea> jAutoSizeTextPane = new MyAutoResizingText<JTextArea>(jTextPane, VueSentence.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+					jTextPane.setPreferredSize(new java.awt.Dimension(0, 47));
+					// TODO: useless ? jTextPane.setSize(0, 47);									
 					
 					jTextPane.addMouseListener(vueDetaillePanelMouseAdapter);
 					jTextPane.addCaretListener(new CaretListener() {

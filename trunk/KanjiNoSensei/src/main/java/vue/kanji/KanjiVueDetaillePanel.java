@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
@@ -25,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
@@ -65,8 +65,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 	private static final long	serialVersionUID				= 1L;
 
-	public static final int		vueHeight						= 100;
-
 	private VueKanji			vue								= null;
 
 	private JPanel				jPanelCodeUTF8					= null;
@@ -87,7 +85,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 	private JLabel				jLabelLecturesChinoises			= null;
 	
-	private JTextArea				jTextAreaMotsExemples				= null;
+	private JTextPane				jTextPaneMotsExemples				= null;
 
 	private JPanel				ImgTraceContentPane				= null;
 
@@ -133,11 +131,13 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private void initialize()
 	{
 		this.setLayout(new BorderLayout());
+		/* TODO : nécéssaire ?
 		this.setBounds(0, 0, 600, 100);
-		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		this.setPreferredSize(new java.awt.Dimension(600, 147));
 		this.setSize(600, 100);
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		*/
+		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));		
 		this.add(getJPanelCodeUTF8(), BorderLayout.WEST);
 		this.add(getJScrollPaneInfos(), BorderLayout.CENTER);
 
@@ -146,13 +146,12 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	// <NoJigloo>
 	private void dynamicInitialize()
 	{
+		/* TODO: nécéssaire ?
 		this.setBounds(new Rectangle(0, 0, 600, vueHeight));
 		this.setPreferredSize(new Dimension(0, vueHeight));
 		this.setSize(0, vueHeight);
-
-		//getJPanelCodeUTF8().setFont(new Font("SimSun", Font.PLAIN, vueHeight)); //$NON-NLS-1$
-		
 		jPanelCodeUTF8.setPreferredSize(new java.awt.Dimension(100, 100));
+		*/
 
 		miseAJourInfos();
 	}
@@ -188,7 +187,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			listeMotsExemples.append(String.format("%s (%s)", w.getWord(), w.getSignifications())); //$NON-NLS-1$
 		}
 		
-		jTextAreaMotsExemples.setText(Messages.getString("KanjiVueDetaillePanel.LabelMotsExemples") + " : " + listeMotsExemples.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+		jTextPaneMotsExemples.setText(Messages.getString("KanjiVueDetaillePanel.LabelMotsExemples") + " : " + listeMotsExemples.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 		
 		setVisible(false);
 		setVisible(true);
@@ -205,20 +204,19 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		if (jPanelCodeUTF8 == null)
 		{
-			jLabelCodeUTF8 = new JLabel();
+			MyAutoResizingText<JLabel> jAutoSizeLabelCodeUTF8 = MyAutoResizingText.createSafely(JLabel.class, VueKanji.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+			jLabelCodeUTF8 = jAutoSizeLabelCodeUTF8.getJComponent();
 			jLabelCodeUTF8.setText("猫"); //$NON-NLS-1$
 			jLabelCodeUTF8.setHorizontalAlignment(SwingConstants.LEFT);
-			jLabelCodeUTF8.setPreferredSize(new java.awt.Dimension(100, 100));
 			jLabelCodeUTF8.setFont(new Font("Kochi Mincho", Font.PLAIN, 98)); //$NON-NLS-1$
 			jLabelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			jLabelCodeUTF8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			
 			jPanelCodeUTF8 = new JPanel();
 			jPanelCodeUTF8.setLayout(new BorderLayout());
 			jPanelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jPanelCodeUTF8.setSize(100, 100);
-			jPanelCodeUTF8.setPreferredSize(new Dimension(100, 0));
-			jLabelCodeUTF8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			
-			MyAutoResizingText<JLabel> jAutoSizeLabelCodeUTF8 = new MyAutoResizingText<JLabel>(jLabelCodeUTF8, VueKanji.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
+			jPanelCodeUTF8.setPreferredSize(new Dimension(100, 0));
 			
 			jLabelCodeUTF8.addMouseListener(new MouseAdapter()
 			{
@@ -247,8 +245,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 				}
 			});
 
-			jPanelCodeUTF8.add(jLabelCodeUTF8, BorderLayout.CENTER);
-			jLabelCodeUTF8.setSize(100, 100);
+			jPanelCodeUTF8.add(jAutoSizeLabelCodeUTF8, BorderLayout.CENTER);
 		}
 		return jPanelCodeUTF8;
 	}
@@ -266,9 +263,11 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jScrollPaneInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jScrollPaneInfos.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 0));
 			jScrollPaneInfos.setViewportView(getJPanelInfos());
+			/* TODO: useless ?
 			jScrollPaneInfos.setPreferredSize(new java.awt.Dimension(0, 100));
 			jScrollPaneInfos.setOpaque(false);
 			jScrollPaneInfos.setSize(600, 100);
+			*/
 			jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16));
 			jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
 			jScrollPaneInfos.addMouseListener(vueDetaillePanelMouseAdapter);
@@ -286,49 +285,47 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		if (jPanelInfos == null)
 		{
-			jLabelThemes = new JLabel();
+			MyAutoResizingText<JLabel> jAutoSizeLabelThemes = MyAutoResizingText.createSafely(JLabel.class, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jLabelThemes = jAutoSizeLabelThemes.getJComponent();
 			jLabelThemes.setText(Messages.getString("KanjiVueDetaillePanel.LabelThemes")); //$NON-NLS-1$
 			jLabelThemes.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelThemes.setVerticalAlignment(SwingConstants.TOP);
-			jLabelThemes.setPreferredSize(new Dimension(0, 0));
 			jLabelThemes.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			MyAutoResizingText<JLabel> jAutoSizeLabelThemes = new MyAutoResizingText<JLabel>(jLabelThemes, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
 			
-			jLabelSignifications = new JLabel();
+			MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = MyAutoResizingText.createSafely(JLabel.class, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jLabelSignifications = jAutoSizeLabelSignifications.getJComponent();
 			jLabelSignifications.setText(Messages.getString("KanjiVueDetaillePanel.LabelSignifications")); //$NON-NLS-1$
-			jLabelSignifications.setPreferredSize(new Dimension(0, 0));
+			//jLabelSignifications.setOpaque(true);
 			jLabelSignifications.setHorizontalAlignment(SwingConstants.LEFT);
 			jLabelSignifications.setVerticalAlignment(SwingConstants.TOP);
-			jLabelSignifications.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = new MyAutoResizingText<JLabel>(jLabelSignifications, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jLabelSignifications.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);			
 			
-			jLabelLecturesJaponaises = new JLabel();
+			MyAutoResizingText<JLabel> jAutoSizeLabelLecturesJaponaises = MyAutoResizingText.createSafely(JLabel.class, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jLabelLecturesJaponaises = jAutoSizeLabelLecturesJaponaises.getJComponent();
 			jLabelLecturesJaponaises.setText(Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures")); //$NON-NLS-1$
-			jLabelLecturesJaponaises.setPreferredSize(new java.awt.Dimension(600, 25));
 			jLabelLecturesJaponaises.setVerticalAlignment(SwingConstants.TOP);
 			jLabelLecturesJaponaises.setHorizontalAlignment(SwingConstants.LEFT);
-			jLabelLecturesJaponaises.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			MyAutoResizingText<JLabel> jAutoSizeLabelLecturesJaponaises = new MyAutoResizingText<JLabel>(jLabelLecturesJaponaises, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
-			
-			jLabelLecturesChinoises = new JLabel();
+			jLabelLecturesJaponaises.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);			
+
+			MyAutoResizingText<JLabel> jAutoSizeLabelLecturesChinoises = MyAutoResizingText.createSafely(JLabel.class, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jLabelLecturesChinoises = jAutoSizeLabelLecturesChinoises.getJComponent();
 			jLabelLecturesChinoises.setText(Messages.getString("KanjiVueDetaillePanel.LabelONLectures")); //$NON-NLS-1$
-			jLabelLecturesChinoises.setPreferredSize(new java.awt.Dimension(600, 25));
 			jLabelLecturesChinoises.setVerticalAlignment(SwingConstants.TOP);
 			jLabelLecturesChinoises.setHorizontalTextPosition(SwingConstants.LEFT);
 			jLabelLecturesChinoises.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			MyAutoResizingText<JLabel> jAutoSizeLabelLecturesChinoises = new MyAutoResizingText<JLabel>(jLabelLecturesChinoises, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
 			
-			jTextAreaMotsExemples = new JTextArea();
-			jTextAreaMotsExemples.setText(Messages.getString("KanjiVueDetaillePanel.LabelMotsExemples")); //$NON-NLS-1$
-			//jLabelMotsExemples.setHorizontalAlignment(SwingConstants.LEFT);
-			//jLabelMotsExemples.setVerticalAlignment(SwingConstants.TOP);
-			jTextAreaMotsExemples.setPreferredSize(new Dimension(0, 0));
-			jTextAreaMotsExemples.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jTextAreaMotsExemples.setEditable(false);
-			MyAutoResizingText<JTextArea> jAutoSizeLabelMotsExemples = new MyAutoResizingText<JTextArea>(jTextAreaMotsExemples, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
-			jTextAreaMotsExemples.addCaretListener(new CaretListener() {
+			MyAutoResizingText<JTextPane> jAutoSizeLabelMotsExemples = MyAutoResizingText.createSafely(JTextPane.class, VueKanji.FONT_MIN_SIZE, VueKanji.FONT_MAX_SIZE);
+			jTextPaneMotsExemples = jAutoSizeLabelMotsExemples.getJComponent();
+			jTextPaneMotsExemples.setText(Messages.getString("KanjiVueDetaillePanel.LabelMotsExemples")); //$NON-NLS-1$
+			jTextPaneMotsExemples.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			jTextPaneMotsExemples.setEditable(false);
+			jTextPaneMotsExemples.setBackground(jLabelThemes.getBackground());
+			jTextPaneMotsExemples.setFont(jLabelThemes.getFont());
+			
+			jTextPaneMotsExemples.addMouseListener(vueDetaillePanelMouseAdapter);
+			jTextPaneMotsExemples.addCaretListener(new CaretListener() {
 				public void caretUpdate(CaretEvent evt) {
-					String sel = jTextAreaMotsExemples.getSelectedText();
+					String sel = jTextPaneMotsExemples.getSelectedText();
 					if ((sel != null) && (!sel.isEmpty()))
 					{
 						System.out.println("Selection '"+sel+"'"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -375,17 +372,14 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			
 			GridLayout gridLayout = new GridLayout(0, 1, 0, 0);
 			jPanelInfos = new JPanel();
-			jPanelInfos.setPreferredSize(new java.awt.Dimension(0, 0));
-			jPanelInfos.setBounds(new Rectangle(0, 0, 0, 0));
 			jPanelInfos.setLayout(gridLayout);
 			jPanelInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jPanelInfos.addMouseListener(vueDetaillePanelMouseAdapter);
-			jPanelInfos.add(jLabelLecturesChinoises);
-			jPanelInfos.add(jLabelLecturesJaponaises);
-			jPanelInfos.add(jLabelSignifications);
-			jPanelInfos.add(jTextAreaMotsExemples);
-			jLabelSignifications.setOpaque(true);
-			jPanelInfos.add(jLabelThemes);
+			jPanelInfos.add(jAutoSizeLabelLecturesChinoises);
+			jPanelInfos.add(jAutoSizeLabelLecturesJaponaises);
+			jPanelInfos.add(jAutoSizeLabelSignifications);
+			jPanelInfos.add(jAutoSizeLabelMotsExemples);
+			jPanelInfos.add(jAutoSizeLabelThemes);
 			
 			jPanelInfos.doLayout();
 		}
@@ -402,12 +396,14 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		if (ImgTraceDialog == null)
 		{
 			MyUtils.trace("[1] ImgTraceDialog creation"); //$NON-NLS-1$
-			ImgTraceDialog = new JDialog();
-			ImgTraceDialog.setSize(new Dimension(0, 0));
+			ImgTraceDialog = new JDialog();		
 			ImgTraceDialog.setTitle(Messages.getString("KanjiVueDetaillePanel.LabelStrokesOrder")); //$NON-NLS-1$
 			ImgTraceDialog.setModal(true);
+			/* TODO: useless ?
+			ImgTraceDialog.setSize(new Dimension(0, 0));
 			ImgTraceDialog.setMinimumSize(new Dimension(100, 100));
 			ImgTraceDialog.setPreferredSize(new Dimension(0, 0));
+			*/
 			ImgTraceDialog.setContentPane(getImgTraceContentPane());
 			ImgTraceDialog.setUndecorated(false);
 			ImgTraceDialog.setBackground(Color.black);

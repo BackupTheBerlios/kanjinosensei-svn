@@ -6,8 +6,8 @@
 		<title>Installation</title>
 		<faq id="faqIdDecompression">
 			<question>
-				Comment on fait une fois qu'on a téléchargé le fichier ?
-				C'est quoi *.7z ?
+				Comment fait-on une fois que le fichier est téléchargé ?
+				Qu'es-ce que c'est *.7z ?
 			</question>
 			<answer>
 				Pour décompresser le fichier, il faut utiliser l'outil
@@ -25,7 +25,7 @@
 		</faq>
 		<faq id="faqIdLancement">
 			<question>
-				Comment je fais pour lancer l'application ?
+				Comment lancer l'application ?
 			</question>
 			<answer>
 				Une fois décompressé, il suffit de lancer le fichier

@@ -237,11 +237,12 @@ public class VueKanji extends VueElement
 
 					if (strokeOrdersFont != null)
 					{
-						JLabel jLabelStrokeFont = new JLabel(getKanji().getCodeUTF8().toString());
+						MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = MyAutoResizingText.createSafely(JLabel.class, 100, Float.POSITIVE_INFINITY);
+						JLabel jLabelStrokeFont = jAutoSizeLabelStrokeFont.getJComponent(); 
+						jLabelStrokeFont.setText(getKanji().getCodeUTF8().toString());
 						jLabelStrokeFont.setFont(strokeOrdersFont);
-						MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = new MyAutoResizingText<JLabel>(jLabelStrokeFont, 100, Float.POSITIVE_INFINITY);
-						jLabelStrokeFont.setVisible(true);
-						jPanelStrokeOrdersFont.add(jLabelStrokeFont, BorderLayout.CENTER);
+						
+						jPanelStrokeOrdersFont.add(jAutoSizeLabelStrokeFont, BorderLayout.CENTER);
 						jPanelStrokeOrdersFont.setVisible(true);
 						jPanelStrokeOrdersFont.doLayout();
 					}

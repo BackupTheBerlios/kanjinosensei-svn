@@ -144,8 +144,10 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 
 	private void addJLabel(JPanel panel, String text, int taille)
 	{
-		jEditorPane = new JEditorPane("text/html", null); //$NON-NLS-1$
+		MyAutoResizingText<JEditorPane> jAutoSizeEditorPane = MyAutoResizingText.createSafely(JEditorPane.class, taille, VueKanji.FONT_MAX_SIZE);
+		jEditorPane = jAutoSizeEditorPane.getJComponent();
 
+		jEditorPane.setContentType("text/html");
 		//HTMLEditorKit htmlEditoKit = (HTMLEditorKit) jEditorPane.getEditorKit();
 
 		if (taille > 0)
@@ -157,9 +159,9 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 		jEditorPane.setText(text);
 		jEditorPane.setEditable(false);
 
-		MyAutoResizingText<JEditorPane> jAutoSizeEditorPane = new MyAutoResizingText<JEditorPane>(jEditorPane, taille, VueKanji.FONT_MAX_SIZE);
 		
-		panel.add(jEditorPane, BorderLayout.NORTH);
+		
+		panel.add(jAutoSizeEditorPane, BorderLayout.NORTH);
 	}
 
 	private void addImage(JPanel panel, String source)

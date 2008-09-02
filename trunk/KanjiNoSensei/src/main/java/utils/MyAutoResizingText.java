@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -38,8 +39,45 @@ import javax.swing.text.JTextComponent;
 /**
  * 
  */
-public class MyAutoResizingText<T extends JComponent>
+public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 {
+	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass)
+	{
+		return createSafely(fromClass, 9);
+	}
+	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass, float min)
+	{
+		return createSafely(fromClass, min, Float.POSITIVE_INFINITY);
+	}
+	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass, float min, float max)
+	{
+		try
+		{
+			return create(fromClass, min, max);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static <U extends JComponent> MyAutoResizingText<U> create(Class<U> fromClass) throws InstantiationException, IllegalAccessException
+	{
+		return create(fromClass, 9);
+	}
+
+	public static <U extends JComponent> MyAutoResizingText<U> create(Class<U> fromClass, float min) throws InstantiationException, IllegalAccessException
+	{
+		return create(fromClass, min, Float.POSITIVE_INFINITY);
+	}
+
+	public static <U extends JComponent> MyAutoResizingText<U> create(Class<U> fromClass, float min, float max) throws InstantiationException, IllegalAccessException
+	{
+		U component = fromClass.newInstance();
+		return new MyAutoResizingText<U>(component, min, max);
+	}
+
 	final T						component;
 
 	final MyAutoResizingText<T>	thisObject	= this;
@@ -48,49 +86,95 @@ public class MyAutoResizingText<T extends JComponent>
 
 	Timer						timer		= new Timer();
 
-	final float MIN_HEIGHT;
-	final float MAX_HEIGHT;
+	final float					MIN_HEIGHT;
+
+	final float					MAX_HEIGHT;
 
 	public T getJComponent()
 	{
 		return component;
 	}
-	
+
 	/**
 	 * 
 	 */
-	public MyAutoResizingText(T textComp)
-	{
-		component = textComp;
-		MIN_HEIGHT = 9;
-		MAX_HEIGHT = Float.POSITIVE_INFINITY;
-		Init();
-	}
-	
-	/**
-	 * 
-	 */
-	public MyAutoResizingText(T textComp, float min)
-	{
-		component = textComp;
-		MIN_HEIGHT = min;
-		MAX_HEIGHT = Float.POSITIVE_INFINITY;
-		Init();
-	}
-	
-	/**
-	 * 
-	 */
-	public MyAutoResizingText(T textComp, float min, float max)
+	private MyAutoResizingText(T textComp, float min, float max)
 	{
 		component = textComp;
 		MIN_HEIGHT = min;
 		MAX_HEIGHT = max;
-		Init();
-	}
+		
+		setAutoscrolls(true);
+		
+		setViewportView(component);
+		setVisible(true);
+			
+		setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+		setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
+		
+		
+		setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		
+		setBorder(BorderFactory.createEmptyBorder());
+		component.setBorder(BorderFactory.createEmptyBorder());
+		
+		/*
+		setBackground(Color.blue);
+		setBorder(BorderFactory.createLineBorder(Color.blue));
+		getHorizontalScrollBar().setBackground(Color.yellow);
+		getHorizontalScrollBar().setBorder(BorderFactory.createLineBorder(Color.yellow));
+		getVerticalScrollBar().setBackground(Color.green);
+		getVerticalScrollBar().setBorder(BorderFactory.createLineBorder(Color.green));
+		component.setBackground(Color.red);
+		component.setBorder(BorderFactory.createLineBorder(Color.red));
+		*/
 
-	private void Init()
-	{
+		addComponentListener(new ComponentAdapter()
+		{
+			private static final int SCROLLBAR_DEFAULT_SIZE = 10;
+			private static final double SCROLLBAR_REDUCED_FACTOR = 0.3;
+			private static final int SCROLLBAR_MIN_SIZE = 1;
+			
+			private boolean reducedHScrollBar = false;
+			private boolean reducedVScrollBar = false;
+			
+			@Override
+			public void componentResized(ComponentEvent e)
+			{
+				// TODO Auto-generated method stub
+				System.out.println("MyAutoResizingText scrollbar resized");
+				super.componentResized(e);
+				
+				Dimension size = getSize();
+				if ((size.height < SCROLLBAR_DEFAULT_SIZE*3) && (!reducedHScrollBar))
+				{
+					getHorizontalScrollBar().setPreferredSize(new Dimension(0, Math.max(SCROLLBAR_MIN_SIZE, Double.valueOf(size.height * SCROLLBAR_REDUCED_FACTOR).intValue())));
+					reducedHScrollBar = true;
+				}
+				else if (reducedHScrollBar)
+				{
+					getHorizontalScrollBar().setPreferredSize(new Dimension(0, SCROLLBAR_DEFAULT_SIZE));
+					reducedHScrollBar = false;
+				}
+				
+				if ((size.height < SCROLLBAR_DEFAULT_SIZE*3) && (!reducedVScrollBar))
+				{
+					getVerticalScrollBar().setPreferredSize(new Dimension(Math.max(SCROLLBAR_MIN_SIZE, Double.valueOf(size.height * SCROLLBAR_REDUCED_FACTOR).intValue()), 0));
+					reducedVScrollBar = true;
+				}
+				else if (reducedVScrollBar)
+				{
+					getVerticalScrollBar().setPreferredSize(new Dimension(SCROLLBAR_DEFAULT_SIZE, 0));
+					reducedVScrollBar = false;
+				}
+				
+				refreshSize();
+			}
+		
+		});
+		
 		component.addComponentListener(new ComponentAdapter()
 		{
 
@@ -98,7 +182,7 @@ public class MyAutoResizingText<T extends JComponent>
 			public void componentResized(ComponentEvent e)
 			{
 				// TODO Auto-generated method stub
-				System.out.println("["+component.getClass().getName()+"] componentResized"); //$NON-NLS-1$ //$NON-NLS-2$
+				System.out.println("[" + component.getClass().getName() + "] componentResized"); //$NON-NLS-1$ //$NON-NLS-2$
 				super.componentResized(e);
 				refreshSize();
 			}
@@ -138,10 +222,12 @@ public class MyAutoResizingText<T extends JComponent>
 			});
 		}
 
-		refreshSize();
+		//refreshSize();
 	}
 
 	private int	loopWatchDog	= 0;
+
+	public float	fontHeight;
 
 	public String getText()
 	{
@@ -151,13 +237,13 @@ public class MyAutoResizingText<T extends JComponent>
 			getText = component.getClass().getMethod("getText"); //$NON-NLS-1$
 			return (String) getText.invoke(component);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
 			System.err.println(Messages.getString("MyAutoResizingText.NoGetTextMethod")); //$NON-NLS-1$
 			return null;
 		}
 	}
-	
+
 	public void setText(String text)
 	{
 		Method setText = null;
@@ -166,107 +252,104 @@ public class MyAutoResizingText<T extends JComponent>
 			setText = component.getClass().getMethod("setText", String.class); //$NON-NLS-1$
 			setText.invoke(component, text);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			System.err.println(Messages.getString("MyAutoResizingText.NoSetTextMethod")); //$NON-NLS-1$
+			System.err.println(Messages.getString("MyAutoResizingText.NoSetTextMethod for component")); //$NON-NLS-1$
 			return;
 		}
 	}
-	
-	protected int getHeight()
-	{
-		return component.getHeight();
-	}
-	
-	protected int getWidth()
-	{
-		return component.getWidth();
-	}
-	
+
 	public void refreshSize()
 	{
 		/*
-		timer.cancel();
-		timer.purge();
-		
-		timer = new Timer();
-		timer.schedule(new TimerTask()
+		 * timer.cancel(); timer.purge();
+		 * 
+		 * timer = new Timer(); timer.schedule(new TimerTask() {
+		 * 
+		 * @Override public void run() { timer.purge();
+		 */
+
+		/*
+		long diff = System.currentTimeMillis() - lastCall;
+		if (diff < 1000)
 		{
-		
-			@Override
-			public void run()
-			{
-				timer.purge();
+			++loopWatchDog;
+		}
+		if (loopWatchDog > 10)
+		{
+			loopWatchDog = 0;
+			return;
+		}
 		*/
-				
-				// TODO Auto-generated method stub
-				long diff = System.currentTimeMillis() - lastCall;
-				if (diff < 1000)
-				{
-					++loopWatchDog;
-				}
-				if (loopWatchDog > 10)
-				{
-					loopWatchDog = 0;
-					return;
-				}
-				
-				String text = getText();
-				if (text == null) return;
-				
-				int rightMargin = 30;
-				int topMargin = 3;
-				
-				float boxHeight = getHeight() - topMargin;
-				float boxWidth = getWidth() - rightMargin;
-				
-				float min = MIN_HEIGHT;
-				float max = Math.min(MAX_HEIGHT, boxHeight);
-				
-				Graphics2D g = (Graphics2D) component.getGraphics();
 
-				if (max == 0 || g == null) return;
+		String text = getText();
+		if (text == null) return;
+		
+		float lastFontHeight = fontHeight;
+		int rightMargin = 30;
+		int topMargin = 3;
 
-				Font font = component.getFont();
-				Rectangle2D rect = null;
+		float boxHeight = getHeight() - topMargin;
+		float boxWidth = getWidth() - rightMargin;
 
-				float height = min;
-				do
-				{
-					font = font.deriveFont(height);
+		float min = MIN_HEIGHT;
+		float max = Math.min(MAX_HEIGHT, boxHeight);
 
-					rect = font.getStringBounds(text, g.getFontRenderContext());
+		Graphics2D g = (Graphics2D) component.getGraphics();
 
-					// Too big
-					if ((rect.getWidth() >= boxWidth) || (rect.getHeight() >= boxHeight))
-					{
-						max = height;
-						height -= (max - min) / 2;
-					}
-					else
-					{
-						min = height;
-						height += (max - min) / 2;
-					}
+		if (max == 0 || g == null) return;
 
-				} while((height > min) && (height < max));
+		Font font = component.getFont();
+		Rectangle2D rect = null;
 
-				final Font finalFont = font.deriveFont(min);
-				rect = font.getStringBounds(text, g.getFontRenderContext());
-				System.out.println("["+component.getClass().getCanonicalName()+"] OK pour "+rect.getWidth()+";"+rect.getHeight()+" < "+boxWidth+";"+boxHeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-				// jTextPane1.setFont(finalFont);
+		rect = font.deriveFont(min).getStringBounds(text, g.getFontRenderContext());
+		System.out.println("autoSize min size: "+rect.toString());
+		Dimension minDim = new Dimension((int) rect.getWidth()+rightMargin, (int) rect.getHeight()+topMargin);
+		
+		//getParent().setPreferredSize(minDim);
+		//setPreferredSize(minDim);
+		//component.setPreferredSize(minDim);
+		
+		float height = min;
+		do
+		{
+			font = font.deriveFont(height);
 
-				lastCall = System.currentTimeMillis();
-				
-				component.setFont(finalFont);
-				MyUtils.refreshComponent(component);
-				
-/*				
-			}		
-		}, 200);
-*/		
+			rect = font.getStringBounds(text, g.getFontRenderContext());
+
+			// Too big
+			if ((rect.getWidth() >= boxWidth) || (rect.getHeight() >= boxHeight))
+			{
+				max = height;
+				height -= (max - min) / 2;
+			}
+			else
+			{
+				min = height;
+				height += (max - min) / 2;
+			}
+
+		} while ((height > min) && (height < max));
+
+		final Font finalFont = font.deriveFont(min);
+		fontHeight = min;
+		
+		rect = font.getStringBounds(text, g.getFontRenderContext());
+		System.out.println("[" + component.getClass().getCanonicalName() + "] OK pour " + rect.getWidth() + ";" + rect.getHeight() + " < " + boxWidth + ";" + boxHeight+"\tfontHeight: "+fontHeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		// jTextPane1.setFont(finalFont);
+
+		lastCall = System.currentTimeMillis();
+
+		component.setFont(finalFont);
+		
+		MyUtils.refreshComponentAndSubs(this);
+		
+		/*
+		 * } }, 200);
+		 */
 	}
 
+	private static MyAutoResizingText<? extends JComponent> currentAR = null;
 	public static void main(String[] args)
 	{
 		final JFrame frame = new JFrame();
@@ -274,46 +357,85 @@ public class MyAutoResizingText<T extends JComponent>
 		frame.setLayout(borderLayout);
 
 		frame.setPreferredSize(new Dimension(200, 100));
-
-		final JScrollPane jScrollPanel = new JScrollPane();
-		final JPanel jPanel = new JPanel(new BorderLayout());
 		
+		final JScrollPane jScrollPane = new JScrollPane();
+		final JPanel jPanelIntermediaire = new JPanel(new BorderLayout());
+		jPanelIntermediaire.setPreferredSize(new Dimension(0, 0));
+		
+		final Vector<MyAutoResizingText<? extends JComponent>> myTexts = new Vector<MyAutoResizingText<? extends JComponent>>();
+
 		frame.addComponentListener(new ComponentAdapter()
 		{
-		
+
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
 				// TODO Auto-generated method stub
 				super.componentResized(e);
-				jPanel.setSize(jScrollPanel.getViewportBorderBounds().getSize());
-				//jScrollPanel.setSize(frame.getSize());
 				System.out.println("frame resized"); //$NON-NLS-1$
+				currentAR.setVisible(false);
+				jPanelIntermediaire.doLayout();
+				currentAR.setVisible(true);
+				
+				SwingUtilities.invokeLater(new Runnable()
+				{
+				
+					@Override
+					public void run()
+					{
+						try
+						{
+							Thread.sleep(1000);
+						}
+						catch (InterruptedException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println("frame: \t\t\t"+frame.getSize());
+						System.out.println("scrollPanel: \t\t\t"+jScrollPane.getSize());
+						System.out.println("panelIntermediaire: \t\t\t"+jPanelIntermediaire.getSize());
+						System.out.println("autoSize: \t\t\t"+currentAR.getSize());
+						System.out.println("autoSize.component: \t\t\t"+currentAR.getJComponent().getSize());
+					}
+				
+				});
 			}
-		
+
 		});
 		
-		final MyAutoResizingText<JLabel> jAutoResizingJLabel = new MyAutoResizingText<JLabel>(new JLabel(), 20, 30);
-		final MyAutoResizingText<JTextPane> jAutoResizingJTextPane = new MyAutoResizingText<JTextPane>(new JTextPane());
-		final MyAutoResizingText<JTextField> jAutoResizingJTextField = new MyAutoResizingText<JTextField>(new JTextField());
-		final MyAutoResizingText<JTextArea> jAutoResizingJTextArea = new MyAutoResizingText<JTextArea>(new JTextArea());
-	
-		final Vector<MyAutoResizingText<? extends JComponent>> myTexts = new Vector<MyAutoResizingText<? extends JComponent>>();
+		final MyAutoResizingText<JLabel> jAutoResizingJLabel;
+		final MyAutoResizingText<JTextPane> jAutoResizingJTextPane;
+		final MyAutoResizingText<JTextField> jAutoResizingJTextField;
+		final MyAutoResizingText<JTextArea> jAutoResizingJTextArea;
+		
+		float min = 30;
+		try
+		{
+			jAutoResizingJLabel = create(JLabel.class, min);
+			jAutoResizingJTextPane = create(JTextPane.class, min);
+			jAutoResizingJTextField = create(JTextField.class, min);
+			jAutoResizingJTextArea = create(JTextArea.class, min);
+		}
+		catch (Exception e)
+		{
+			System.err.println("creating Exception: ");
+			e.printStackTrace();
+			return;
+		}
+
+		JTextArea jTextArea = jAutoResizingJTextArea.getJComponent();
+		jTextArea.setWrapStyleWord(true);
+		
+		JTextField jTextField = jAutoResizingJTextField.getJComponent();
+		
+		
 		myTexts.add(jAutoResizingJLabel);
 		myTexts.add(jAutoResizingJTextArea);
 		myTexts.add(jAutoResizingJTextField);
 		myTexts.add(jAutoResizingJTextPane);
-		
-		//jPanel.add(jAutoResizingJLabel.getJComponent(), BorderLayout.NORTH);
-		jPanel.add(jAutoResizingJTextPane.getJComponent(), BorderLayout.CENTER);
-		// jTextPhrase.setText("猫はとてもかわい です\r\nから猫は とてもかわ いですから"); //$NON-NLS-1$
-
-		jScrollPanel.setViewportView(jPanel);
-
-		frame.add(jScrollPanel, BorderLayout.CENTER);
 
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
 
 		SwingUtilities.invokeLater(new Runnable()
 		{
@@ -322,12 +444,11 @@ public class MyAutoResizingText<T extends JComponent>
 			public void run()
 			{
 				Iterator<MyAutoResizingText<? extends JComponent>> it = myTexts.iterator();
-				while(it.hasNext())
+				while (it.hasNext())
 				{
 					MyAutoResizingText<? extends JComponent> current = it.next();
-					current.setText("猫はとてもかわい です;"+current.getJComponent().getClass().getName()); //$NON-NLS-1$
+					current.setText("猫はとてもかわい です;" + current.getJComponent().getClass().getName()); //$NON-NLS-1$
 				}
-				// jTextPhrase.setText("猫はとてもかわい です\r\nから猫は とてもかわ いですから"); //$NON-NLS-1$
 			}
 
 		});
@@ -340,36 +461,56 @@ public class MyAutoResizingText<T extends JComponent>
 			public void actionPerformed(ActionEvent e)
 			{
 				Iterator<MyAutoResizingText<? extends JComponent>> it = myTexts.iterator();
-				while(it.hasNext())
+				while (it.hasNext())
 				{
 					MyAutoResizingText<? extends JComponent> text = it.next();
-					text.setText(text.getText()+";"+text.getText()); //$NON-NLS-1$
+					text.setText(text.getText() + ";" + text.getText()); //$NON-NLS-1$
 				}
 			}
 
 		});
-		
+
 		JButton btnCycle = new JButton("NextComp"); //$NON-NLS-1$
 		btnCycle.addActionListener(new ActionListener()
 		{
-			private int current = 0;
-			
+			private int	current	= 0;
+
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				if (++current >= myTexts.size()) {current=0;}
+				int last = current;
 				
-				jPanel.removeAll();
-				jPanel.add(myTexts.get(current).getJComponent(), BorderLayout.CENTER);
-				MyUtils.refreshComponentAndSubs(jPanel);
+				if ( ++current >= myTexts.size())
+				{
+					current = 0;
+				}
+
+				currentAR = myTexts.get(current);
+				jPanelIntermediaire.removeAll();
+				jPanelIntermediaire.add(myTexts.get(current), BorderLayout.CENTER);
+				//jScrollPane.setViewportView(myTexts.get(current));
+				
+				/*
+				frame.remove(myTexts.get(last));
+				frame.add(myTexts.get(current), BorderLayout.CENTER);
+				*/
+				frame.setTitle(myTexts.get(current).getJComponent().getClass().getName());
+				
+				MyUtils.refreshComponentAndSubs(frame);
 			}
-		
+
 		});
 
+		jScrollPane.setViewportView(jPanelIntermediaire);
+		//frame.add(myTexts.get(0), BorderLayout.CENTER);
+		frame.add(jScrollPane, BorderLayout.CENTER);
+		
 		JPanel jPanelBtns = new JPanel(new FlowLayout());
 		jPanelBtns.add(btnCycle);
 		jPanelBtns.add(btnMoreText);
 		frame.add(jPanelBtns, BorderLayout.SOUTH);
+		
+		frame.pack();
 		frame.setVisible(true);
 	}
 }

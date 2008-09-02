@@ -9,6 +9,11 @@ TODO List
 	
 	Workflow passé et en cours.
 	
+	* Gérer intélligement les doublons du dictionnaire, lorsqu'un doublons est détecté, penser à mettre l'élément dans tous les thèmes où il était déclaré. Mais lors du Quizz, on ne le pose qu'une fois.
+	  Faire un petit utilitaire d'analyse du dico de base, qui repère les doublons avec certains paramètres de tolérence, pour aider à écrire un dico de base robuste.
+	  > Faire que l'utilitaire d'analyse du dico puisse prendre le fichier diso.csv tel quel, et sans y toucher, sauvegarde un dico.kjd avec les règles des modifs que l'on souhaite appliquer (gestion des doublons, transformations d'éléments, ..)
+	  dico.kjd = lecture du dico.csv + règles		Sachant que si le dico.csv évolue, les règles qui matches toujours restent appliquées.
+	
 	* Faire s'afficher le tracé plus grand dans le quizz Tracé+Details
 	* Gérer le dépassement horizontal pour les phrases, intégrer des scrollbars et WordWrap à MyAutoResizingText.
 	

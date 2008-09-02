@@ -42,8 +42,10 @@ public class OneStringList extends Vector<String>
 	 */
 	public OneStringList(OneStringList oneStringList)
 	{
+		super(oneStringList);
 		ALLOWED_SEPARATOR = oneStringList.ALLOWED_SEPARATOR;
 		SEPARATOR = oneStringList.SEPARATOR;
+		
 	}
 	
 	/**

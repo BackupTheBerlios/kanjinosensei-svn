@@ -72,6 +72,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileFilter;
 
 import metier.Dictionary;
+import metier.DictionaryAnalyser;
 import metier.LearningProfile;
 import metier.Messages;
 import metier.Dictionary.DictionaryElementAlreadyPresentException;
@@ -773,7 +774,7 @@ public class KanjiNoSensei
 
 		getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
 
-		getJPanelElementsListe().setPreferredSize(new Dimension(0, getJPanelElementsListe().getComponentCount() * VueElement.getVueDetailleHeight() + 20));
+		//TODO: Nécéssaire ? getJPanelElementsListe().setPreferredSize(new Dimension(0, getJPanelElementsListe().getComponentCount() * VueElement.getVueDetailleHeight() + 20));
 		MyUtils.refreshComponent(getJPanelElementsListe());
 
 		getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(10, Math.min(1000, (getJPanelElementsListe().getComponentCount() * 1))));
@@ -1168,9 +1169,8 @@ public class KanjiNoSensei
 		if (jScrollPaneElements == null)
 		{
 			jScrollPaneElements = new JScrollPane();
-			jScrollPaneElements.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jScrollPaneElements.setPreferredSize(new Dimension(0, 0));
 			jScrollPaneElements.setViewportView(getJPanelElementsListe());
+			jScrollPaneElements.setAutoscrolls(true);
 		}
 		return jScrollPaneElements;
 	}
@@ -1188,10 +1188,12 @@ public class KanjiNoSensei
 			gridLayout2.setColumns(1);
 			gridLayout2.setRows(0);
 			jPanelElementsListe = new JPanel();
+			/*
 			jPanelElementsListe.setLocation(new Point(0, 0));
 			jPanelElementsListe.setSize(new Dimension(0, 0));
-			jPanelElementsListe.setLayout(gridLayout2);
 			jPanelElementsListe.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			*/
+			jPanelElementsListe.setLayout(gridLayout2);
 		}
 		return jPanelElementsListe;
 	}

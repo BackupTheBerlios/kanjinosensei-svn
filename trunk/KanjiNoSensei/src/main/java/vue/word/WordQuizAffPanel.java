@@ -96,13 +96,13 @@ class WordQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, 
 
 	private void addJLabel(String text, int taille)
 	{
-		jLabel = new JLabel();
+		MyAutoResizingText<JLabel> jAutoSizeLabel = MyAutoResizingText.createSafely(JLabel.class, taille, VueWord.FONT_MAX_SIZE);
+		jLabel = jAutoSizeLabel.getJComponent();
 		jLabel.setText(text);
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
-		jLabel.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
-		MyAutoResizingText<JLabel> jAutoSizeLabel = new MyAutoResizingText<JLabel>(jLabel, taille, VueWord.FONT_MAX_SIZE);
+		jLabel.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$		
 		
-		this.add(jLabel, BorderLayout.NORTH);
+		this.add(jAutoSizeLabel, BorderLayout.NORTH);
 	}
 
 	private void addSon(String source)

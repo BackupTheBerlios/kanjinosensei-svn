@@ -66,7 +66,15 @@ public class Dictionary implements Serializable
 
 	/** Collection of all elements of the dictionnary. Ordered by a key that should always be {@link Element#getKey()}. */
 	private TreeMap<String, Element>	elements			= new TreeMap<String, Element>();
+	
+	/** Dictionary Analyser, if none, null. */
+	private DictionaryAnalyser	analyser					= null;
 
+	protected TreeMap<String, Element> getElements()
+	{
+		return elements;
+	}
+	
 	/**
 	 * Construction from existing element collection.
 	 * 
@@ -137,6 +145,26 @@ public class Dictionary implements Serializable
 	 */
 	public Dictionary(File file) throws IOException
 	{
+		if (file != null)
+		{
+			open(file);
+		}
+		else
+		{
+			System.err.println(Messages.getString("Dictionary.Warning.NoDictionnaryFile")); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * @param file
+	 * @param analyser
+	 * @throws IOException 
+	 */
+	public Dictionary(File file, DictionaryAnalyser analyser) throws IOException
+	{
+		this.analyser = analyser;
+		this.analyser.setDictionary(this);
+		
 		if (file != null)
 		{
 			open(file);
@@ -257,12 +285,15 @@ public class Dictionary implements Serializable
 	 */
 	public void addElement(Element element) throws DictionaryElementAlreadyPresentException
 	{
-		if (elements.containsKey(element.getKey()))
+		if ((analyser == null) || !analyser.addElement(element))
 		{
-			throw new DictionaryElementAlreadyPresentException(elements.get(element.getKey()), element);
-		}
+			if (elements.containsKey(element.getKey()))
+			{
+				throw new DictionaryElementAlreadyPresentException(elements.get(element.getKey()), element);
+			}
 
-		elements.put(element.getKey(), element);
+			elements.put(element.getKey(), element);
+		}
 	}
 
 	/**

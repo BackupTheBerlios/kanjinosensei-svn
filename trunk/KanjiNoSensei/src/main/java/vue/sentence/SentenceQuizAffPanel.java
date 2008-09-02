@@ -99,14 +99,14 @@ class SentenceQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPan
 
 	private void addJLabel(String text, int taille)
 	{
-		jLabel = new JLabel();
+		MyAutoResizingText<JLabel> jAutoSizeLabel = MyAutoResizingText.createSafely(JLabel.class, taille, VueSentence.FONT_MAX_SIZE);
+		jLabel = jAutoSizeLabel.getJComponent();
 		jLabel.setText(text);
 		jLabel.setHorizontalAlignment(JLabel.CENTER);
 		jLabel.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
-		jLabel.setOpaque(false);
-		MyAutoResizingText<JLabel> jAutoSizeLabel = new MyAutoResizingText<JLabel>(jLabel, taille, VueSentence.FONT_MAX_SIZE);
+		jLabel.setOpaque(false);		
 		
-		this.add(jLabel, BorderLayout.NORTH);
+		this.add(jAutoSizeLabel, BorderLayout.NORTH);
 	}
 
 	private void addSon(String source)
