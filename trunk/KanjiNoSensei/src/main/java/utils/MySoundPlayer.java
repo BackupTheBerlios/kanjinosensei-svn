@@ -8,8 +8,11 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
 
 import javax.media.Manager;
+
+import vue.KanjiNoSensei;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
@@ -236,7 +239,7 @@ public class MySoundPlayer extends Thread
 	@Override
 	public void run()
 	{
-		MyUtils.trace("MySoundPlayer running " + filename + "..."); //$NON-NLS-1$ //$NON-NLS-2$
+		MyUtils.trace(Level.FINEST, "MySoundPlayer running " + filename + "..."); //$NON-NLS-1$ //$NON-NLS-2$
 
 		String ext = MyUtils.getExtension(filename);
 
@@ -273,7 +276,7 @@ public class MySoundPlayer extends Thread
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("MySoundPlayer.JMF_Player.Error")+ " : " +e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.JMF_Player.Error")+ " : " +e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
@@ -302,7 +305,7 @@ public class MySoundPlayer extends Thread
 						}
 						catch (JavaLayerException e)
 						{
-							System.err.println(Messages.getString("MySoundPlayer.MySoundPlayer.ZOOM_Player.Error")); //$NON-NLS-1$
+							KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.MySoundPlayer.ZOOM_Player.Error")); //$NON-NLS-1$
 							e.printStackTrace();
 						}
 					}
@@ -319,23 +322,23 @@ public class MySoundPlayer extends Thread
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("MySoundPlayer.ZOOM_Player.Error")+ " : "+e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.ZOOM_Player.Error")+ " : "+e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
 		if (!ext.isEmpty())
 		{
-			System.err.println(Messages.getString("MySoundPlayer.ErrorNoPlayerFoundToPlayFile")+" : \""+filename+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.ErrorNoPlayerFoundToPlayFile")+" : \""+filename+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			processEvent(new MySoundPlayerEvent(this, MySoundPlayerEventId.noPlayer, false, filename));
 			return;
 		}
 		
 		processEvent(new MySoundPlayerEvent(this, MySoundPlayerEventId.stateChanged, true, filename));
 		player.play();
-		MyUtils.trace(player.getPlayerName() + " stoped " + player.getFileName()); //$NON-NLS-1$
+		MyUtils.trace(Level.FINEST, player.getPlayerName() + " stoped " + player.getFileName()); //$NON-NLS-1$
 		processEvent(new MySoundPlayerEvent(this, MySoundPlayerEventId.stateChanged, false, filename));
 
-		MyUtils.trace("MySoundPlayer finished " + filename + "..."); //$NON-NLS-1$ //$NON-NLS-2$
+		MyUtils.trace(Level.FINEST, "MySoundPlayer finished " + filename + "..."); //$NON-NLS-1$ //$NON-NLS-2$
 
 	}
 

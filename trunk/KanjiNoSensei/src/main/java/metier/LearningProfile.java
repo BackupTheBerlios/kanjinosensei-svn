@@ -17,8 +17,10 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import utils.MyUtils;
+import vue.KanjiNoSensei;
 
 /**
  * This class represent a User learning profile, it keep quizz statistics foreach elements, so the quizz can choose the bests elements to ask (the less known).
@@ -55,7 +57,7 @@ public class LearningProfile implements Serializable
 	 */
 	public static LearningProfile open(File file) throws IOException
 	{
-		System.out.println(Messages.getString("LearningProfile.OpeningFile") + " : \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		KanjiNoSensei.log(Level.INFO, Messages.getString("LearningProfile.OpeningFile") + " : \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		
 		LearningProfile learningProfile = null;
 
@@ -72,7 +74,7 @@ public class LearningProfile implements Serializable
 		}
 		catch (ClassNotFoundException e)
 		{
-			System.err.println(Messages.getString("LearningProfile.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("LearningProfile.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			throw new IOException(Messages.getString("LearningProfile.Open.ErrorOnElement") + " : " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$)
 		}
 
@@ -255,7 +257,7 @@ public class LearningProfile implements Serializable
 
 			if ( !statistics.containsKey(currentElementUID))
 			{
-				System.err.println(Messages.getString("LearningProfile.LearningProfile.WarningNeverSeenElement") + " : \"" + currentElementUID + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				KanjiNoSensei.log(Level.WARNING, Messages.getString("LearningProfile.LearningProfile.WarningNeverSeenElement") + " : \"" + currentElementUID + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				return currentElementUID;
 			}
 
@@ -307,7 +309,7 @@ public class LearningProfile implements Serializable
 			
 			if (statistics.containsKey(elementUID))
 			{
-				System.err.println(Messages.getString("LearningProfile.LearningProfile.ErrorAlreadyKnownElement")); //$NON-NLS-1$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("LearningProfile.LearningProfile.ErrorAlreadyKnownElement")); //$NON-NLS-1$
 			}
 			else
 			{

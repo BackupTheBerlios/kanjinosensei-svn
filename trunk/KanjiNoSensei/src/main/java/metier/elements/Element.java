@@ -5,10 +5,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 import metier.Messages;
 import utils.MyUtils;
 import utils.OneStringList;
+import vue.KanjiNoSensei;
 
 /**
  * Abstract class that represent an element of dictionary. Elements contains
@@ -163,7 +165,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 		catch (ArrayIndexOutOfBoundsException e)
 		{
 			String errMsg = Messages.getString("Element.Import.WarningMissingFields") + " : \"" + importLine + "\" : " + MyUtils.joinStringElements(MyUtils.offsetObjectElements(IMPORT_FIELDS, Integer.valueOf(e.getMessage())), ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-			System.err.println(errMsg);
+			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 		constructor(MyUtils.stripQuotes(significations), MyUtils.stripQuotes(themes));
 

@@ -4,6 +4,7 @@
 package vue.kanji;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 
@@ -243,6 +244,7 @@ public class VueKanji extends VueElement
 						jLabelStrokeFont.setFont(strokeOrdersFont);
 						
 						jPanelStrokeOrdersFont.add(jAutoSizeLabelStrokeFont, BorderLayout.CENTER);
+						jPanelStrokeOrdersFont.setPreferredSize(new Dimension(0, 0));
 						jPanelStrokeOrdersFont.setVisible(true);
 						jPanelStrokeOrdersFont.doLayout();
 					}

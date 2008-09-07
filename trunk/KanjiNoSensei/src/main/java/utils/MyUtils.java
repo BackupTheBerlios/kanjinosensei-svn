@@ -7,12 +7,15 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -24,6 +27,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
+import vue.KanjiNoSensei;
+
 import nl.jj.swingx.gui.modal.JModalFrame;
 
 /**
@@ -33,6 +38,8 @@ import nl.jj.swingx.gui.modal.JModalFrame;
  */
 public abstract class MyUtils
 {
+	static private final Logger	log = Logger.getLogger(MyUtils.class.getName());
+	
 	/**
 	 * Test the system fonts and report which ones are able to display testing character (unicode).
 	 */
@@ -184,7 +191,7 @@ public abstract class MyUtils
 	 */
 	public static void lockPanel(Component c)
 	{
-		trace("lockPanel : " + c.toString()); //$NON-NLS-1$
+		trace(Level.FINEST, "lockPanel : " + c.toString()); //$NON-NLS-1$
 		c.setEnabled(false);
 
 		if (Container.class.isInstance(c))
@@ -599,7 +606,7 @@ public abstract class MyUtils
 		}
 		else
 		{
-			System.err.println(Messages.getString("MyUtils.L&FManager.ErrorUnknownL&F") + " : \"" + arg + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("MyUtils.L&FManager.ErrorUnknownL&F") + " : \"" + arg + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			lf = arg;
 		}
 
@@ -607,15 +614,16 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Fix '\' and '/' to the current system separator, then look if the fileName exists. If it does not, try to look at it in the defaultDirectory. If file can't be found, error message is printed. Return the fixed fileName anyway.
+	 * Fix '\' and '/' to the current system separator, then look if the fileName exists. If it does not, try to look at it in the defaultDirectory. If file is found returns the fixed fileName, if not, FileNotFoundException is thrown.
 	 * 
 	 * @param fileName
 	 *            File to check.
 	 * @param defaultDirectory
 	 *            Default directory to check in if filename is not full path.
 	 * @return fixed filename.
+	 * @throws FileNotFoundException If filename cannot be fixed nor found.
 	 */
-	public static String checkFileExists(String fileName, String defaultDirectory)
+	public static String checkFileExists(String fileName, String defaultDirectory) throws FileNotFoundException
 	{
 		defaultDirectory = defaultDirectory.replace('/', File.separatorChar).replace('\\', File.separatorChar);
 		File f = new File(fileName.replace('/', File.separatorChar).replace('\\', File.separatorChar));
@@ -625,7 +633,7 @@ public abstract class MyUtils
 			File f2 = new File(defaultDirectory + File.separatorChar + f.getName());
 			if ( !f2.exists())
 			{
-				System.err.println(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\" ou \"" + f2.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				throw new FileNotFoundException(Messages.getString("MyUtils.CheckFileExists.ErrorFileNotFound") + " : \"" + f.getAbsolutePath() + "\" ou \"" + f2.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			}
 			else
 			{
@@ -788,13 +796,11 @@ public abstract class MyUtils
 		return subject;
 	}
 
-	public static boolean	tracesEnabled	= true;
+	public static boolean	logDisable	= false;
 
-	public static void trace(String trace)
+	public static void trace(Level level, String trace)
 	{
-		if ( !tracesEnabled) return;
-
-		System.out.println(System.currentTimeMillis() + "] " + trace); //$NON-NLS-1$
+		log.log(level, trace);
 	}
 
 	public static void assertFalse(boolean condition, String errMsg)
@@ -812,17 +818,17 @@ public abstract class MyUtils
 
 	public static void sleep(long millis)
 	{
-		trace("Debut sleep " + millis); //$NON-NLS-1$
+		trace(Level.FINEST, "Debut sleep " + millis); //$NON-NLS-1$
 		try
 		{
 			Thread.sleep(millis);
 		}
 		catch (InterruptedException e)
 		{
-			trace("Error during sleep " + millis); //$NON-NLS-1$
+			trace(Level.FINEST, "Error during sleep " + millis); //$NON-NLS-1$
 			return;
 		}
-		trace("Fin sleep " + millis); //$NON-NLS-1$
+		trace(Level.FINEST, "Fin sleep " + millis); //$NON-NLS-1$
 	}
 
 	public static class MyModalFrame extends JModalFrame

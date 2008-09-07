@@ -7,6 +7,9 @@ package utils;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+
+import vue.KanjiNoSensei;
 
 /**
  * 
@@ -29,7 +32,7 @@ public class Messages
 		}
 		catch (MissingResourceException e)
 		{
-			System.err.println("MissingResourceException : key \""+key+"\" is not found in resource file \""+BUNDLE_NAME+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.SEVERE, "MissingResourceException : key \""+key+"\" is not found in resource file \""+BUNDLE_NAME+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			return '!' + key + '!';
 		}
 	}

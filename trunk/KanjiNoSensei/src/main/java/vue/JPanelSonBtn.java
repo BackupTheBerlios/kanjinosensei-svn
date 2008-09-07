@@ -5,12 +5,14 @@ package vue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
 
 import javax.swing.JToggleButton;
 
 import metier.Messages;
 
 import utils.MySoundPlayer;
+import utils.MyUtils;
 import utils.MySoundPlayer.MySoundPlayerEvent;
 
 
@@ -72,7 +74,7 @@ public class JPanelSonBtn extends JToggleButton
 			{
 				if (nomFichierSon.compareToIgnoreCase(evt.fileName) == 0)
 				{
-					System.err.println(Messages.getString("JPanelSonBtn.ErrorPlayingSound")+" : \""+evt.fileName+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					KanjiNoSensei.log(Level.SEVERE, Messages.getString("JPanelSonBtn.ErrorPlayingSound")+" : \""+evt.fileName+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					setSelected((evt.isPlaying) && (nomFichierSon.compareToIgnoreCase(evt.fileName) == 0));
 				}
 				super.errorOccured(evt);

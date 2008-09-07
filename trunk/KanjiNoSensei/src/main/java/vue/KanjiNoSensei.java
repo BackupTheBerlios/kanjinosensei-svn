@@ -16,6 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -43,6 +44,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -107,7 +110,12 @@ import com.jgoodies.forms.layout.FormLayout;
  */
 public class KanjiNoSensei
 {
-
+	private static final Logger log = Logger.getLogger(KanjiNoSensei.class.getName());
+	public static void log(Level level, String msg)
+	{
+		log.log(level, msg);
+	}
+	
 	private final boolean	DEV_ACCESS	= ("axan".compareToIgnoreCase(System.getProperty("user.name")) == 0);	//$NON-NLS-1$ //$NON-NLS-2$
 
 	{
@@ -121,7 +129,7 @@ public class KanjiNoSensei
 			e.printStackTrace();
 		}
 
-		MyUtils.tracesEnabled = DEV_ACCESS;
+		MyUtils.logDisable = DEV_ACCESS;
 	}
 
 	private static class Presets
@@ -146,7 +154,7 @@ public class KanjiNoSensei
 		
 		public static Presets open(File ficPresets) throws IOException
 		{
-			System.out.println(Messages.getString("KanjiNoSensei.Presets.OpeningFile") + " : \""+ficPresets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.INFO, Messages.getString("KanjiNoSensei.Presets.OpeningFile") + " : \""+ficPresets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			Presets presets = new Presets();
 			
@@ -163,7 +171,7 @@ public class KanjiNoSensei
 			}
 			catch (ClassNotFoundException e)
 			{
-				System.err.println(Messages.getString("Presets.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("Presets.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 				throw new IOException(Messages.getString("Presets.Open.ErrorOnElement") + " : " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$)
 			}
 
@@ -455,7 +463,7 @@ public class KanjiNoSensei
 		}
 		else if (fic_profile.createNewFile() || fic_profile.canWrite())
 		{
-			System.out.println(Messages.getString("KanjiNoSensei.LearningProfile.CreatingFile") + " : \""+fic_profile.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.INFO, Messages.getString("KanjiNoSensei.LearningProfile.CreatingFile") + " : \""+fic_profile.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			this.userLearningProfile = new LearningProfile();
 			this.userLearningProfile.save(fic_profile);
 		}
@@ -470,7 +478,7 @@ public class KanjiNoSensei
 		}
 		else if (fic_presets.createNewFile() || fic_presets.canWrite())
 		{
-			System.out.println(Messages.getString("KanjiNoSensei.Presets.CreatingFile") + " : \""+fic_presets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			KanjiNoSensei.log(Level.INFO, Messages.getString("KanjiNoSensei.Presets.CreatingFile") + " : \""+fic_presets.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			this.presets = new Presets();
 			this.presets.save(fic_presets);
 		}
@@ -503,14 +511,14 @@ public class KanjiNoSensei
 				{
 					if (e.itemIsSelected)
 					{
-						System.out.println("'" + e.itemPath + "' ajouté"); //$NON-NLS-1$ //$NON-NLS-2$
+						MyUtils.trace(Level.FINE, "'" + e.itemPath + "' ajouté"); //$NON-NLS-1$ //$NON-NLS-2$
 						themesSelectionnes.add(e.itemPath);
 					}
 					else
 					{
 						if (themesSelectionnes.contains(e.itemPath))
 						{
-							System.out.println("'" + e.itemPath + "' retiré"); //$NON-NLS-1$ //$NON-NLS-2$
+							MyUtils.trace(Level.FINE, "'" + e.itemPath + "' retiré"); //$NON-NLS-1$ //$NON-NLS-2$
 							themesSelectionnes.remove(e.itemPath);
 						}
 					}
@@ -552,14 +560,14 @@ public class KanjiNoSensei
 
 					if (nouvelElement != null)
 					{
-						System.out.println(classeElement.getSimpleName() + " edité : '" + nouvelElement + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+						MyUtils.trace(Level.FINE, classeElement.getSimpleName() + " edité : '" + nouvelElement + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 						try
 						{
 							dictionnaire.addElement(nouvelElement);
 						}
 						catch (DictionaryElementAlreadyPresentException ex)
 						{
-							System.out.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + ex.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+							KanjiNoSensei.log(Level.WARNING, Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + ex.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 						}
 					}
 				}
@@ -667,10 +675,18 @@ public class KanjiNoSensei
 
 	private void afficherBaseFrameMAJZoneElements()
 	{
-		getJFrame().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		MyUtils.doItToAllSubComponents(getJFrame(), new MyUtils.DoItToThisComponent()
+		{
+		
+			@Override
+			public void doIt(Component c)
+			{
+				c.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		
+			}
+		}, true);
 
 		sousDictionnaire = dictionnaire.getSubDictionary(themesSelectionnes);
-
 		getJPanelElementsListe().removeAll();
 
 		String filtreElement = jTextFieldElementsFiltre.getText();
@@ -683,8 +699,12 @@ public class KanjiNoSensei
 		Set<Element> listeElementsFiltre = sousDictionnaire.getElementsList(filtreElement);
 		Iterator<Element> itElements = listeElementsFiltre.iterator();
 		Element element = null;
+		MyUtils.trace(Level.INFO, "<Pour Chaque Element>");
+		int i = 0;
 		while (itElements.hasNext())
 		{
+			++i;
+			MyUtils.trace(Level.INFO, "<Nouvel Element id="+i+">");
 			element = itElements.next();
 			try
 			{
@@ -696,18 +716,21 @@ public class KanjiNoSensei
 				selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 				selectablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 				
+				final int j = i;
 				SwingUtilities.invokeLater(new Runnable()
 				{
 				
 					@Override
 					public void run()
 					{
+						MyUtils.trace(Level.INFO, "<InvokeLater:selectablePanel sizing for Element id="+j+">");
 						int margin = 4;
 						selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
 						//selectablePanel.setMaximumSize(new Dimension(vueElementDetaillePanel.getMaximumSize().width + margin, vueElementDetaillePanel.getMaximumSize().height + margin));
 						selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
 
 						MyUtils.refreshComponentAndSubs(getJPanelElementsListe());
+						MyUtils.trace(Level.INFO, "</InvokeLater:selectablePanel sizing for Element id="+j+">");
 					}
 				});
 				
@@ -723,7 +746,7 @@ public class KanjiNoSensei
 							@Override
 							public void mouseWheelMoved(MouseWheelEvent e)
 							{
-								MyUtils.trace("mouseWheelMoved : " + e); //$NON-NLS-1$
+								MyUtils.trace(Level.FINEST, "mouseWheelMoved : " + e); //$NON-NLS-1$
 								getJScrollPaneElements().dispatchEvent(e);
 							}
 
@@ -740,7 +763,7 @@ public class KanjiNoSensei
 								@Override
 								public void mouseClicked(MouseEvent e)
 								{
-									MyUtils.trace("mouseClicked : " + e); //$NON-NLS-1$
+									MyUtils.trace(Level.FINEST, "mouseClicked : " + e); //$NON-NLS-1$
 
 									if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 1))
 									{
@@ -761,14 +784,14 @@ public class KanjiNoSensei
 											}
 											catch (DictionaryElementAlreadyPresentException e1)
 											{
-												System.err.println(Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+												KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 												try
 												{
 													dictionnaire.addElement(ancienElement);
 												}
 												catch (DictionaryElementAlreadyPresentException e2)
 												{
-													System.err.println(Messages.getString("KanjiNoSensei.Dictionary.AlreadyExistingElement")); //$NON-NLS-1$
+													KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.Dictionary.AlreadyExistingElement")); //$NON-NLS-1$
 												}
 											}
 										}
@@ -790,9 +813,12 @@ public class KanjiNoSensei
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
+			
+			MyUtils.trace(Level.INFO, "</Nouvel Element id="+i+">");
 		}
+		MyUtils.trace(Level.INFO, "</Pour Chaque Element>");
 
 		getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
 
@@ -813,7 +839,16 @@ public class KanjiNoSensei
 				
 				MyUtils.refreshComponentAndSubs(getJPanelElementsListe());
 				getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(10, Math.min(1000, (getJPanelElementsListe().getComponentCount() * 1))));
-				getJFrame().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				MyUtils.doItToAllSubComponents(getJFrame(), new MyUtils.DoItToThisComponent()
+				{
+				
+					@Override
+					public void doIt(Component c)
+					{
+						c.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				
+					}
+				}, true);
 			}
 		});
 		
@@ -984,7 +1019,7 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jTextFieldThemesFiltre.actionPerformed, event=" + evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jTextFieldThemesFiltre.actionPerformed, event=" + evt); //$NON-NLS-1$
 					jTextFieldElementsFiltre.transferFocus();
 				}
 			});
@@ -1441,7 +1476,7 @@ public class KanjiNoSensei
 	{	
 		if (MyUtils.checkJREVersion("1.6") == false) //$NON-NLS-1$
 		{
-			System.err.println(Messages.getString("KanjiNoSensei.ErrorBadJREVersion")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorBadJREVersion")); //$NON-NLS-1$
 			return;
 		}
 		
@@ -1472,7 +1507,7 @@ public class KanjiNoSensei
 				File userdir = new File(args[1]);
 				if (!userdir.isDirectory() || !userdir.canRead())
 				{
-					System.err.println("--workingdir is not a directory or does not have read access."); //$NON-NLS-1$
+					KanjiNoSensei.log(Level.SEVERE, "--workingdir is not a directory or does not have read access."); //$NON-NLS-1$
 					return;
 				}
 				else
@@ -1491,7 +1526,7 @@ public class KanjiNoSensei
 			args = MyUtils.offsetObjectElements(args, 2);
 		}
 		
-		System.out.println(Messages.getString("KanjiNoSensei.Info.WorkingDirectory")+ " : \""+System.getProperty("KanjiNoSenseiWorkingDirectory")+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		KanjiNoSensei.log(Level.INFO, Messages.getString("KanjiNoSensei.Info.WorkingDirectory")+ " : \""+System.getProperty("KanjiNoSenseiWorkingDirectory")+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		
 		if (args.length > 0)
 		{
@@ -1501,7 +1536,7 @@ public class KanjiNoSensei
 			}
 			catch (Exception e)
 			{
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorLook&FeelsManagement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorLook&FeelsManagement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 				return;
 			}
 		}
@@ -1523,7 +1558,7 @@ public class KanjiNoSensei
 				catch (Exception e)
 				{
 					e.printStackTrace();
-					System.err.println(Messages.getString("KanjiNoSensei.ErrorRunningApp") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+					KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorRunningApp") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 					return;
 				}
 
@@ -1797,7 +1832,7 @@ public class KanjiNoSensei
 				// </JiglooProtected>
 				public void componentShown(ComponentEvent evt)
 				{
-					MyUtils.trace("jConfigModalFrame.componentShown"); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jConfigModalFrame.componentShown"); //$NON-NLS-1$
 					for (Component c : getJConfigFrameTabbedPane().getComponents())
 					{
 						if (VueElement.QuizConfigPanel.class.isInstance(c))
@@ -1880,7 +1915,7 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jButtonOK.actionPerformed, event=" + evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jButtonOK.actionPerformed, event=" + evt); //$NON-NLS-1$
 
 					for (Component component : getJConfigFrameTabbedPane().getComponents())
 					{
@@ -1947,6 +1982,7 @@ public class KanjiNoSensei
 		if (jFrameQuizz == null)
 		{
 			jFrameQuizz = new JFrame();
+
 			// <NoJigloo>
 			jFrameQuizz = new MyModalFrame(getJFrame(), true);
 			// </NoJigloo>
@@ -1992,7 +2028,7 @@ public class KanjiNoSensei
 				dejaVus.add(elementQuestionEnCours);
 
 				e.printStackTrace();
-				System.err.println(Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + elementQuestionEnCours.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + elementQuestionEnCours.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				continue;
 			}
 
@@ -2036,7 +2072,7 @@ public class KanjiNoSensei
 		}
 		catch (IOException e)
 		{
-			System.err.println(Messages.getString("KanjiNoSensei.LearningProfile.Error.SavingFile")+e.getMessage()); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.LearningProfile.Error.SavingFile")+e.getMessage()); //$NON-NLS-1$
 		}
 	}
 
@@ -2251,7 +2287,7 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("lancerQuizMenuItem.actionPerformed, event=" + evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "lancerQuizMenuItem.actionPerformed, event=" + evt); //$NON-NLS-1$
 
 					jFrameQuizz = getJQuizFrame();
 
@@ -2406,7 +2442,7 @@ public class KanjiNoSensei
 						}
 						catch (IOException e2)
 						{
-							System.err.println(Messages.getString("KanjiNoSensei.ErrorUnableToFindInternetBrowser")); //$NON-NLS-1$
+							KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorUnableToFindInternetBrowser")); //$NON-NLS-1$
 						}
 					}
 				}
@@ -2536,7 +2572,7 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jButtonCharger.actionPerformed, event=" + evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jButtonCharger.actionPerformed, event=" + evt); //$NON-NLS-1$
 					Vector<String> themes = presets.getPreset(getJComboBoxPresets().getSelectedItem().toString());
 
 					Iterator<String> itThemes = themes.iterator();
@@ -2566,7 +2602,7 @@ public class KanjiNoSensei
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					System.out.println("jButtonSave.actionPerformed, event=" + evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jButtonSave.actionPerformed, event=" + evt); //$NON-NLS-1$
 
 					Vector<String> themes = new Vector<String>();
 
@@ -2598,7 +2634,7 @@ public class KanjiNoSensei
 			jButtonSupprimer.setText(Messages.getString("KanjiNoSensei.Presets.BtnSupprimer")); //$NON-NLS-1$
 			jButtonSupprimer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					System.out.println("jButtonSupprimer.actionPerformed, event="+evt); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "jButtonSupprimer.actionPerformed, event="+evt); //$NON-NLS-1$
 					presets.removePreset(getJComboBoxPresets().getSelectedItem().toString());
 					try
 					{

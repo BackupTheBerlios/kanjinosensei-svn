@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -27,7 +28,9 @@ import metier.elements.Kanji;
 import metier.elements.Sentence;
 import metier.elements.Word;
 import utils.MyAutoResizingText;
+import utils.MyUtils;
 import vue.JPanelSonBtn;
+import vue.KanjiNoSensei;
 import vue.VueElement;
 import vue.VueElement.QuizQuestionPanel;
 import vue.VueElement.QuizSolutionPanel;
@@ -138,7 +141,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 					String sel = jEditorPane.getSelectedText();
 					if ((sel != null) && ( !sel.isEmpty()))
 					{
-						System.out.println("Selection '" + sel + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+						MyUtils.trace(Level.FINE, "Selection '" + sel + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 						Dictionary dictionnaire = vue.getApp().getDictionnaire();
 
 						Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -150,13 +153,13 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 
 						if (e == null)
 						{
-							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorMissingWordOrKanji") + " : \"" + sel.charAt(0) + "(" + sel.substring(1) + ")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+							KanjiNoSensei.log(Level.WARNING, Messages.getString("SentenceVueDetaillePanel.ErrorMissingWordOrKanji") + " : \"" + sel.charAt(0) + "(" + sel.substring(1) + ")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 							return;
 						}
 
 						if (( !Kanji.class.isInstance(e)) && ( !Word.class.isInstance(e)))
 						{
-							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorSelectionIsNotCorrect") + " : " + e.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+							KanjiNoSensei.log(Level.WARNING, Messages.getString("SentenceVueDetaillePanel.ErrorSelectionIsNotCorrect") + " : " + e.toString()); //$NON-NLS-1$ //$NON-NLS-2$
 							return;
 						}
 
@@ -167,7 +170,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 						}
 						catch (Exception e1)
 						{
-							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorViewGeneration") + e.toString() + "\"\tMessage : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+							KanjiNoSensei.log(Level.SEVERE, Messages.getString("SentenceVueDetaillePanel.ErrorViewGeneration") + e.toString() + "\"\tMessage : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 							return;
 						}
 

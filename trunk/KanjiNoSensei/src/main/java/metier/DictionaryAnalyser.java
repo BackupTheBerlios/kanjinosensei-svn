@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 import utils.MyUtils;
 import utils.OneStringList;
@@ -33,7 +34,6 @@ public class DictionaryAnalyser
 	 */
 	public static void main(String[] args)
 	{
-		MyUtils.tracesEnabled = true;
 		DictionaryAnalyser analyser = new DictionaryAnalyser();
 		try
 		{
@@ -60,7 +60,7 @@ public class DictionaryAnalyser
 	 */
 	public boolean addElement(Element element)
 	{
-		MyUtils.trace("addElement "+element.getKey());
+		MyUtils.trace(Level.FINEST, "addElement "+element.getKey());
 		TreeMap<String, Element> elements = dico.getElements();
 		Iterator<Element> it = elements.values().iterator();
 		int currentResult = Integer.MIN_VALUE;
@@ -76,11 +76,7 @@ public class DictionaryAnalyser
 				mostSimilarElementResult = currentResult;
 				mostSimilarElement = current;
 			}
-			
-			traceCompareResult(element, current, currentResult);
 		}
-		
-		traceCompareResult(element, mostSimilarElement, mostSimilarElementResult);
 		
 		return false;
 	}
@@ -174,11 +170,4 @@ public class DictionaryAnalyser
 		return new Integer[]{nbTests, score};
 	}
 
-	private void traceCompareResult(Element e1, Element e2, int result)
-	{
-		if (result > 0)
-		{
-			System.out.println(String.format("%s\n%s\nScore: %d", e1.exportString(), e2.exportString(), result));
-		}
-	}
 }

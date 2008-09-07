@@ -1,11 +1,14 @@
 package metier.elements;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.logging.Level;
 
 import metier.Messages;
 
 import utils.MyUtils;
+import vue.KanjiNoSensei;
 
 /**
  * Represent a Sentence element, defined by its unicode string, its lecture and a
@@ -94,7 +97,7 @@ public class Sentence extends Element implements Serializable
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 			String errMsg = Messages.getString("Sentence.Import.WarningMissingFields") + " : \"" + importLine + "\" : " + MyUtils.joinStringElements(MyUtils.offsetObjectElements(IMPORT_FIELDS, Integer.valueOf(e.getMessage())), ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-			System.err.println(errMsg);
+			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 		
 		constructor(MyUtils.stripQuotes(phrase), MyUtils.stripQuotes(lecture), MyUtils.stripQuotes(son));
@@ -162,7 +165,14 @@ public class Sentence extends Element implements Serializable
 	@Override
 	public void pack()
 	{
-		sound = MyUtils.checkFileExists(sound, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR); //$NON-NLS-1$
+		try
+		{
+			sound = MyUtils.checkFileExists(sound, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
+		}
+		catch (FileNotFoundException e)
+		{
+			KanjiNoSensei.log(Level.INFO, e.getMessage());
+		}
 		
 		lecture = lecture.replace(' ', '　');
 	}

@@ -17,9 +17,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import metier.elements.Element;
 import utils.MyUtils;
+import vue.KanjiNoSensei;
 
 /**
  * Class that represent a dictionary with all available elements. A dictionary is opened with a source file (*.kjd). It can be exported/imported with *.csv extension, the file structure depends on the elements the dictionary contains.
@@ -151,7 +153,7 @@ public class Dictionary implements Serializable
 		}
 		else
 		{
-			System.err.println(Messages.getString("Dictionary.Warning.NoDictionnaryFile")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.WARNING, Messages.getString("Dictionary.Warning.NoDictionnaryFile")); //$NON-NLS-1$
 		}
 	}
 
@@ -171,12 +173,12 @@ public class Dictionary implements Serializable
 		}
 		else
 		{
-			System.err.println(Messages.getString("Dictionary.Warning.NoDictionnaryFile")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.WARNING, Messages.getString("Dictionary.Warning.NoDictionnaryFile")); //$NON-NLS-1$
 		}
 	}
 
 	/**
-	 * Import elements from *.csv file. Previous collection is cleared. Invalids lines or unavailables elements class are ignored, no Exception is thrown but an error is print on System.err stream.
+	 * Import elements from *.csv file. Previous collection is cleared. Invalids lines or unavailables elements class are ignored, no Exception is thrown but an error is logged.
 	 * 
 	 * @param file
 	 *            Source file to import.
@@ -219,18 +221,18 @@ public class Dictionary implements Serializable
 					{
 						e.printStackTrace();
 					}
-					System.err.println(Messages.getString("Dictionary.Import.ErrorOnElement") + " : \"" + line + "\" : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					KanjiNoSensei.log(Level.SEVERE, Messages.getString("Dictionary.Import.ErrorOnElement") + " : \"" + line + "\" : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 				else
 				{
-					System.err.println(Messages.getString("Dictionary.Import.WarningLineIgnored") + " : \"" + line + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					KanjiNoSensei.log(Level.WARNING, Messages.getString("Dictionary.Import.WarningLineIgnored") + " : \"" + line + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 			}
 		}
 	}
 
 	/**
-	 * Open dictionary from binary file (*.kjd). Previous collection is cleared. Unavailable class elements are ignored but an error is printed on System.err stream.
+	 * Open dictionary from binary file (*.kjd). Previous collection is cleared. Unavailable class elements are ignored but an error is logged.
 	 * 
 	 * @param file
 	 *            Dictionary file to open.
@@ -239,7 +241,7 @@ public class Dictionary implements Serializable
 	 */
 	public void open(File file) throws IOException
 	{
-		System.out.println(Messages.getString("Dictionary.OpeningFile")+" \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		KanjiNoSensei.log(Level.INFO, Messages.getString("Dictionary.OpeningFile")+" \""+file.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		// Open file stream
 		FileInputStream fis = new FileInputStream(file);
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -263,11 +265,11 @@ public class Dictionary implements Serializable
 			}
 			catch (ClassNotFoundException e)
 			{
-				System.err.println(Messages.getString("Dictionary.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("Dictionary.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			catch (DictionaryElementAlreadyPresentException e)
 			{
-				System.err.println(Messages.getString("Dictionary.Open.WarningElementAlreadyPresent") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+				KanjiNoSensei.log(Level.WARNING, Messages.getString("Dictionary.Open.WarningElementAlreadyPresent") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 

@@ -1,13 +1,16 @@
 package vue.kanji;
 
 import java.awt.BorderLayout;
+import java.util.logging.Level;
 
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 
 import metier.Messages;
 import utils.MyAutoResizingText;
+import utils.MyUtils;
 import vue.JPanelImageBg;
+import vue.KanjiNoSensei;
 import vue.JPanelImageBg.ImageLoadingException;
 import vue.VueElement.NoAffException;
 import vue.VueElement.QuizQuestionPanel;
@@ -182,7 +185,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			}
 			catch (ImageLoadingException e)
 			{
-				System.err.println(Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \"" + source + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \"" + source + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 
 		}

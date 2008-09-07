@@ -1,12 +1,15 @@
 package metier.elements;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 
 import metier.Messages;
 import utils.MyUtils;
 import utils.OneStringList;
+import vue.KanjiNoSensei;
 
 /**
  * Represent a Kanji element, defined by its unicode character, an image showing
@@ -126,7 +129,7 @@ public class Kanji extends Element implements Serializable
 		catch (ArrayIndexOutOfBoundsException e)
 		{
 			String errMsg = Messages.getString("Kanji.Import.WarningMissingFields") + " : \"" + importLine + "\" : " + MyUtils.joinStringElements(MyUtils.offsetObjectElements(IMPORT_FIELDS, Integer.valueOf(e.getMessage())), ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-			System.err.println(errMsg);
+			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 
 		constructor(MyUtils.stripQuotes(codeUTF8).charAt(0), MyUtils.stripQuotes(imageOrdreTraits), MyUtils
@@ -259,7 +262,14 @@ public class Kanji extends Element implements Serializable
 		lecturesKUN.removeEmptyElements();
 		lecturesON.removeEmptyElements();
 
-		strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR); //$NON-NLS-1$
+		try
+		{
+			strokeOrderPicture = MyUtils.checkFileExists(strokeOrderPicture, System.getProperty("KanjiNoSenseiWorkingDirectory")+File.separatorChar+DICO_DIR);
+		}
+		catch (FileNotFoundException e)
+		{
+			KanjiNoSensei.log(Level.INFO, e.getMessage());
+		}
 	}
 
 	/**

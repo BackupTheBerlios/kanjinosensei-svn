@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -35,6 +36,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
+
+import vue.KanjiNoSensei;
 
 /**
  * 
@@ -145,8 +148,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
-				// TODO Auto-generated method stub
-				System.out.println("MyAutoResizingText scrollbar resized");
+				MyUtils.trace(Level.FINEST, "MyAutoResizingText scrollbar resized");
 				super.componentResized(e);
 				
 				Dimension size = getSize();
@@ -183,8 +185,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
-				// TODO Auto-generated method stub
-				System.out.println("[" + component.getClass().getName() + "] componentResized"); //$NON-NLS-1$ //$NON-NLS-2$
+				MyUtils.trace(Level.FINEST, "[" + component.getClass().getName() + "] componentResized"); //$NON-NLS-1$ //$NON-NLS-2$
 				super.componentResized(e);
 				refreshSize();
 			}
@@ -204,7 +205,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 				public void removeUpdate(DocumentEvent e)
 				{
 					// TODO Auto-generated method stub
-					System.out.println("remove: " + e); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "remove: " + e); //$NON-NLS-1$
 					refreshSize();
 				}
 
@@ -212,7 +213,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 				public void insertUpdate(DocumentEvent e)
 				{
 					// TODO Auto-generated method stub
-					System.out.println("insert: " + e); //$NON-NLS-1$
+					MyUtils.trace(Level.FINEST, "insert: " + e); //$NON-NLS-1$
 					refreshSize();
 				}
 
@@ -244,7 +245,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		}
 		catch (Exception e)
 		{
-			System.err.println(Messages.getString("MyAutoResizingText.NoGetTextMethod")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("MyAutoResizingText.NoGetTextMethod")); //$NON-NLS-1$
 			return null;
 		}
 	}
@@ -259,7 +260,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		}
 		catch (Exception e)
 		{
-			System.err.println(Messages.getString("MyAutoResizingText.NoSetTextMethod for component")); //$NON-NLS-1$
+			MyUtils.trace(Level.SEVERE, Messages.getString("MyAutoResizingText.NoSetTextMethod for component")); //$NON-NLS-1$
 			return;
 		}
 	}
@@ -308,7 +309,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		Rectangle2D rect = null;
 
 		rect = font.deriveFont(min).getStringBounds(text, g.getFontRenderContext());
-		System.out.println("autoSize min size: "+rect.toString());
+		MyUtils.trace(Level.FINEST, "autoSize min size: "+rect.toString());
 		Dimension minDim = new Dimension((int) rect.getWidth()+rightMargin, (int) rect.getHeight()+topMargin);
 		
 		//getParent().setPreferredSize(minDim);
@@ -340,7 +341,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		fontHeight = min;
 		
 		rect = font.getStringBounds(text, g.getFontRenderContext());
-		System.out.println("[" + component.getClass().getCanonicalName() + "] OK pour " + rect.getWidth() + ";" + rect.getHeight() + " < " + boxWidth + ";" + boxHeight+"\tfontHeight: "+fontHeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		MyUtils.trace(Level.FINEST, "[" + component.getClass().getCanonicalName() + "] OK pour " + rect.getWidth() + ";" + rect.getHeight() + " < " + boxWidth + ";" + boxHeight+"\tfontHeight: "+fontHeight); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 		// jTextPane1.setFont(finalFont);
 
 		lastCall = System.currentTimeMillis();
@@ -377,7 +378,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			{
 				// TODO Auto-generated method stub
 				super.componentResized(e);
-				System.out.println("frame resized"); //$NON-NLS-1$
+				MyUtils.trace(Level.FINEST, "frame resized"); //$NON-NLS-1$
 				
 				if (currentAR == null) return;
 				currentAR.setVisible(false);
@@ -399,11 +400,11 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						System.out.println("frame: \t\t\t"+frame.getSize());
-						System.out.println("scrollPanel: \t\t\t"+jScrollPane.getSize());
-						System.out.println("panelIntermediaire: \t\t\t"+jPanelIntermediaire.getSize());
-						System.out.println("autoSize: \t\t\t"+currentAR.getSize());
-						System.out.println("autoSize.component: \t\t\t"+currentAR.getJComponent().getSize());
+						MyUtils.trace(Level.FINEST, "frame: \t\t\t"+frame.getSize());
+						MyUtils.trace(Level.FINEST, "scrollPanel: \t\t\t"+jScrollPane.getSize());
+						MyUtils.trace(Level.FINEST, "panelIntermediaire: \t\t\t"+jPanelIntermediaire.getSize());
+						MyUtils.trace(Level.FINEST, "autoSize: \t\t\t"+currentAR.getSize());
+						MyUtils.trace(Level.FINEST, "autoSize.component: \t\t\t"+currentAR.getJComponent().getSize());
 					}
 				
 				});
@@ -426,7 +427,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		}
 		catch (Exception e)
 		{
-			System.err.println("creating Exception: ");
+			MyUtils.trace(Level.SEVERE, "MyAutoResizingText creating Exception: ");
 			e.printStackTrace();
 			return;
 		}

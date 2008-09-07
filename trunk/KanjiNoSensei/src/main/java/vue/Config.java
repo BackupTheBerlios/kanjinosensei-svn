@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+
+import utils.MyUtils;
 
 import metier.Messages;
 
@@ -31,11 +34,11 @@ public class Config
 	
 	public static void open(File fic) throws IOException
 	{
-		System.out.println(Messages.getString("Config.OpeningFile") + " : \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		KanjiNoSensei.log(Level.INFO, Messages.getString("Config.OpeningFile") + " : \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		
 		if (!fic.exists())
 		{
-			System.err.println(Messages.getString("Config.Warning.FileDoesNotExist")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.WARNING, Messages.getString("Config.Warning.FileDoesNotExist")); //$NON-NLS-1$
 			
 			try
 			{
@@ -44,7 +47,7 @@ public class Config
 			catch (IOException e)
 			{
 				//e.printStackTrace();
-				System.err.println(Messages.getString("Config.Error.CantCreateFile") + " \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				KanjiNoSensei.log(Level.SEVERE, Messages.getString("Config.Error.CantCreateFile") + " \""+fic.getAbsolutePath()+"\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				throw e;
 			}
 		}
@@ -58,7 +61,7 @@ public class Config
 		}
 		catch (IOException e)
 		{
-			System.err.println(Messages.getString("Config.Error.OpeningFile")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("Config.Error.OpeningFile")); //$NON-NLS-1$
 			throw e;
 		}
 	}
@@ -85,7 +88,7 @@ public class Config
 		}
 		catch (IOException e)
 		{
-			System.err.println(Messages.getString("Config.Error.SavingFile")); //$NON-NLS-1$
+			KanjiNoSensei.log(Level.SEVERE, Messages.getString("Config.Error.SavingFile")); //$NON-NLS-1$
 			e.printStackTrace();
 		}
 	}

@@ -10,6 +10,7 @@ import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.util.logging.Level;
 
 import javax.swing.JComponent;
 
@@ -47,7 +48,7 @@ public class JPanelImageBg extends JComponent
 
 	public JPanelImageBg(final String fileName, final eImageDisplayMode mode) throws ImageLoadingException
 	{
-		MyUtils.trace("[3.1] JPanelImageBg creation"); //$NON-NLS-1$
+		MyUtils.trace(Level.FINEST, "[3.1] JPanelImageBg creation"); //$NON-NLS-1$
 
 		this.mode = mode;
 		this.fileName = fileName;
@@ -63,7 +64,7 @@ public class JPanelImageBg extends JComponent
 		/*
 		catch (ImageLoadingException e1)
 		{
-			System.err.println(Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \""+fileName + "\"\t(" + mode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			MyUtils.trace(Level.SEVERE, Messages.getString("JPanelImageBg.ErrorLoadingImageFile") + " : \""+fileName + "\"\t(" + mode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			thisPanel.mode = eImageDisplayMode.NONE;
 			// return;
 		}
@@ -89,7 +90,7 @@ public class JPanelImageBg extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		// <NoJigloo>
-		MyUtils.trace("[6] JPanelImageBg.paintComponent"); //$NON-NLS-1$
+		MyUtils.trace(Level.FINEST, "[6] JPanelImageBg.paintComponent"); //$NON-NLS-1$
 
 		switch (this.mode)
 		{
@@ -117,7 +118,7 @@ public class JPanelImageBg extends JComponent
 		// <NoJigloo>
 		if (bufferedImage == null)
 		{
-			MyUtils.trace("[5.1] bufferedImage creation"); //$NON-NLS-1$
+			MyUtils.trace(Level.FINEST, "[5.1] bufferedImage creation"); //$NON-NLS-1$
 
 			sourceImage = Toolkit.getDefaultToolkit().getImage(fileName);
 

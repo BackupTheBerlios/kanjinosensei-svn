@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -268,7 +269,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 						{
 							public void actionPerformed(ActionEvent evt)
 							{
-								System.out.println("jButtonAnnuler.actionPerformed, event=" + evt); //$NON-NLS-1$
+								MyUtils.trace(Level.FINEST, "jButtonAnnuler.actionPerformed, event=" + evt); //$NON-NLS-1$
 								dispose();
 							}
 						});
