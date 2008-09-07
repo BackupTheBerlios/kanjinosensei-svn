@@ -41,6 +41,8 @@ import javax.swing.text.JTextComponent;
  */
 public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 {
+	private static final boolean	REFRESH_SIZE_BY_GROWING	= false;
+
 	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass)
 	{
 		return createSafely(fromClass, 9);
@@ -192,6 +194,9 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		if (JTextComponent.class.isInstance(component))
 		{
 			JTextComponent textComponent = (JTextComponent) component;
+			
+			textComponent.setFont(textComponent.getFont().deriveFont(REFRESH_SIZE_BY_GROWING?MIN_HEIGHT:MAX_HEIGHT));
+			
 			textComponent.getDocument().addDocumentListener(new DocumentListener()
 			{
 
@@ -318,7 +323,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			rect = font.getStringBounds(text, g.getFontRenderContext());
 
 			// Too big
-			if ((rect.getWidth() >= boxWidth) || (rect.getHeight() >= boxHeight))
+			if ((rect.getWidth() > boxWidth) || (rect.getHeight() > boxHeight))
 			{
 				max = height;
 				height -= (max - min) / 2;
@@ -373,6 +378,8 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 				// TODO Auto-generated method stub
 				super.componentResized(e);
 				System.out.println("frame resized"); //$NON-NLS-1$
+				
+				if (currentAR == null) return;
 				currentAR.setVisible(false);
 				jPanelIntermediaire.doLayout();
 				currentAR.setVisible(true);
@@ -453,6 +460,19 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		});
 
+		
+		JButton btnRefreshSize = new JButton("refreshSize");
+		btnRefreshSize.addActionListener(new ActionListener()
+		{
+		
+			@Override
+			public void actionPerformed(ActionEvent arg0)
+			{
+				currentAR.refreshSize();
+				MyUtils.refreshComponentAndSubs(frame);
+			}
+		});
+		
 		JButton btnMoreText = new JButton("+Text"); //$NON-NLS-1$
 		btnMoreText.addActionListener(new ActionListener()
 		{
@@ -508,6 +528,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		JPanel jPanelBtns = new JPanel(new FlowLayout());
 		jPanelBtns.add(btnCycle);
 		jPanelBtns.add(btnMoreText);
+		jPanelBtns.add(btnRefreshSize);
 		frame.add(jPanelBtns, BorderLayout.SOUTH);
 		
 		frame.pack();

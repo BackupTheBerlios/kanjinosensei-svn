@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<shortcurts>
+	<programGroup defaultName="KanjiNoSensei" location="applications||startMenu" />
+	<shortcut 	name="KanjiNoSensei"
+				target="$INSTALL_PATH\run.bat"
+				workingDirectory="$INSTALL_PATH"
+				description="Lancer KanjiNoSensei"
+				iconFile="$INSTALL_PATH\ico\kanjinosensei_icon.ico"
+				iconIndex="0"
+				initialState="noShow||normal||maximized||minimized"
+				programGroup="yes||no"
+				desktop="yes||no"
+				applications="yes||no"
+				startMenu="yes||no"
+				startup="yes||no" />
+				
+	<shortcut	name="Désinstaller"
+				programGroup="yes"
+				desktop="yes"
+				target="java"
+				commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
+				initialState="noShow"
+				iconFile="trashcan_full"
+				iconIndex="0"
+				workingDirectory=""
+				type="Application"
+				encoding="UTF-8"
+				description="Désinstaller KanjiNoSensei"/>
+</shortcurts>

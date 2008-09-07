@@ -1,6 +1,7 @@
 package vue.sentence;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -8,10 +9,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
@@ -31,14 +34,7 @@ import vue.VueElement.QuizSolutionPanel;
 import vue.VueElement.VueDetaillePanel;
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePanel, QuizQuestionPanel, QuizSolutionPanel
 {
@@ -47,15 +43,14 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
-	private VueSentence				vue								= null;
-	private JScrollPane				jPanelCentre;
-	private JTextArea jTextPane;
+
+	private VueSentence			vue								= null;
+
+	private JScrollPane			jScrollPaneInfos;
+
+	private JTextArea			jTextPane;
+
 	private JToggleButton		jButtonJouerSon;
-	private JLabel				jLabelSignifications;
-	private JLabel				jLabelThemes;
-	private JPanel				jPanelSouth;
-	private JLabel				jLabelLecture;
-	private JPanel				jPanelNorth;
 
 	private final JPanel		vueDetaillePanel				= this;
 
@@ -70,6 +65,8 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 																	}
 
 																};
+
+	private JEditorPane			jEditorPane;
 
 	public SentenceVueDetaillePanel(VueSentence vue)
 	{
@@ -96,112 +93,12 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 			this.setLayout(thisLayout);
 			this.setSize(600, 100);
 			{
-				jPanelNorth = new JPanel();
-				BorderLayout jPanelNorthLayout = new BorderLayout();
-				jPanelNorth.setLayout(jPanelNorthLayout);
-				this.add(jPanelNorth, BorderLayout.NORTH);
-				jPanelNorth.setSize(600, 20);
-				jPanelNorth.setPreferredSize(new java.awt.Dimension(600, 20));
-				{
-					MyAutoResizingText<JLabel> jAutoSizeLabelLecture = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
-					jLabelLecture = jAutoSizeLabelLecture.getJComponent();
-					jPanelNorth.add(jAutoSizeLabelLecture, BorderLayout.WEST);
-					jLabelLecture.setText("Lecture : neko"); //$NON-NLS-1$
-				}
-				{
-					jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSound(), false);
-					jPanelNorth.add(jButtonJouerSon, BorderLayout.EAST);
-					jButtonJouerSon.setText(Messages.getString("SentenceVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
-					jButtonJouerSon.setSize(35, 20);			
-				}
+				jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSound(), false);
+				this.add(jButtonJouerSon, BorderLayout.EAST);
+				jButtonJouerSon.setText(Messages.getString("SentenceVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
+				jButtonJouerSon.setSize(35, 20);
 			}
-			{
-				jPanelSouth = new JPanel();
-				GridLayout jPanelSouthLayout = new GridLayout(2, 1);
-				jPanelSouthLayout.setHgap(5);
-				jPanelSouthLayout.setVgap(5);
-				jPanelSouthLayout.setColumns(1);
-				jPanelSouthLayout.setRows(2);
-				this.add(jPanelSouth, BorderLayout.SOUTH);
-				jPanelSouth.setLayout(jPanelSouthLayout);
-				jPanelSouth.setPreferredSize(new java.awt.Dimension(600, 28));
-				{
-					MyAutoResizingText<JLabel> jAutoSizeLabelSignifications = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
-					jLabelSignifications = jAutoSizeLabelSignifications.getJComponent();
-					jPanelSouth.add(jAutoSizeLabelSignifications);
-					jLabelSignifications.setText("Significations : chat, ..."); //$NON-NLS-1$					
-				}
-				{
-					MyAutoResizingText<JLabel> jAutoSizeLabelThemes = MyAutoResizingText.createSafely(JLabel.class, VueSentence.FONT_MIN_SIZE, VueSentence.FONT_MAX_SIZE);
-					jLabelThemes = jAutoSizeLabelThemes.getJComponent();
-					jPanelSouth.add(jAutoSizeLabelThemes);
-					jLabelThemes.setText("Thèmes : phrase, patin, coufin"); //$NON-NLS-1$					
-				}
-			}
-			{
-				jPanelCentre = new JScrollPane();
-				this.add(jPanelCentre, BorderLayout.CENTER);
-				{
-					MyAutoResizingText<JTextArea> jAutoSizeTextPane = MyAutoResizingText.createSafely(JTextArea.class, VueSentence.FONT_MIN_SIZE, Float.POSITIVE_INFINITY);
-					jTextPane = jAutoSizeTextPane.getJComponent();
-					jPanelCentre.setViewportView(jAutoSizeTextPane);
-					
-					jTextPane.setText("\u7f8e\u5c11\u5973"); //$NON-NLS-1$
-					jTextPane.setFont(new java.awt.Font("Kochi Mincho",Font.PLAIN,44)); //$NON-NLS-1$
-					//jTextPane.setHorizontalAlignment(SwingConstants.CENTER);
-					jTextPane.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-					jTextPane.setEditable(false);
-					jTextPane.setPreferredSize(new java.awt.Dimension(0, 47));
-					// TODO: useless ? jTextPane.setSize(0, 47);									
-					
-					jTextPane.addMouseListener(vueDetaillePanelMouseAdapter);
-					jTextPane.addCaretListener(new CaretListener() {
-						public void caretUpdate(CaretEvent evt) {
-							String sel = jTextPane.getSelectedText();
-							if ((sel != null) && (!sel.isEmpty()))
-							{
-								System.out.println("Selection '"+sel+"'"); //$NON-NLS-1$ //$NON-NLS-2$
-								Dictionary dictionnaire = vue.getApp().getDictionnaire();
-								
-								Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-								
-								if (e == null)
-								{
-									e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
-								}
-								
-								if (e == null)
-								{
-									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorMissingWordOrKanji") + " : \"" + sel.charAt(0) + "("+sel.substring(1)+")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-									return;
-								}
-					
-								if ((!Kanji.class.isInstance(e)) && (!Word.class.isInstance(e)))
-								{
-									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorSelectionIsNotCorrect")+ " : "+e.toString()); //$NON-NLS-1$ //$NON-NLS-2$
-									return;
-								}
-								
-								VueElement vueElement = null;
-								try
-								{
-									vueElement = VueElement.genererVueElement(vue.getApp(), e, vue.useRomaji());
-								}
-								catch (Exception e1)
-								{
-									System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorViewGeneration")+e.toString()+"\"\tMessage : "+e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
-									return;
-								}
-								
-								JDialog motkanjiDetail = new JDialog((JDialog) null, Messages.getString("SentenceVueDetaillePanel.Detail")+" : ("+Messages.getString(e.getClass().getSimpleName())+") \""+e.toString()+"\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-								motkanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
-								motkanjiDetail.pack();
-								motkanjiDetail.setVisible(true);
-							}
-						}
-					});
-				}
-			}
+			this.add(getJScrollPaneInfos(), BorderLayout.CENTER);
 		}
 		catch (Exception e)
 		{
@@ -209,15 +106,96 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 		}
 	}
 
+	private JScrollPane getJScrollPaneInfos()
+	{
+		if (jScrollPaneInfos == null)
+		{
+			jScrollPaneInfos = new JScrollPane();
+			jScrollPaneInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+			jScrollPaneInfos.setViewportView(getJEditorPane());
+			
+			jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16));
+			jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
+			jScrollPaneInfos.addMouseListener(vueDetaillePanelMouseAdapter);
+		}
+		
+		return jScrollPaneInfos;
+	}
+	
+	private JEditorPane getJEditorPane()
+	{
+		if (jEditorPane == null)
+		{
+			jEditorPane = new JEditorPane();
+			jEditorPane.setContentType("text/html");
+			jEditorPane.setEditable(false);
+
+			jEditorPane.addMouseListener(vueDetaillePanelMouseAdapter);
+			jEditorPane.addCaretListener(new CaretListener()
+			{
+				public void caretUpdate(CaretEvent evt)
+				{
+					String sel = jEditorPane.getSelectedText();
+					if ((sel != null) && ( !sel.isEmpty()))
+					{
+						System.out.println("Selection '" + sel + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+						Dictionary dictionnaire = vue.getApp().getDictionnaire();
+
+						Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+
+						if (e == null)
+						{
+							e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+						}
+
+						if (e == null)
+						{
+							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorMissingWordOrKanji") + " : \"" + sel.charAt(0) + "(" + sel.substring(1) + ")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+							return;
+						}
+
+						if (( !Kanji.class.isInstance(e)) && ( !Word.class.isInstance(e)))
+						{
+							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorSelectionIsNotCorrect") + " : " + e.toString()); //$NON-NLS-1$ //$NON-NLS-2$
+							return;
+						}
+
+						VueElement vueElement = null;
+						try
+						{
+							vueElement = VueElement.genererVueElement(vue.getApp(), e, vue.useRomaji());
+						}
+						catch (Exception e1)
+						{
+							System.err.println(Messages.getString("SentenceVueDetaillePanel.ErrorViewGeneration") + e.toString() + "\"\tMessage : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+							return;
+						}
+
+						JDialog motkanjiDetail = new JDialog((JDialog) null, Messages.getString("SentenceVueDetaillePanel.Detail") + " : (" + Messages.getString(e.getClass().getSimpleName()) + ") \"" + e.toString() + "\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+						motkanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
+						motkanjiDetail.pack();
+						motkanjiDetail.setVisible(true);
+					}
+				}
+			});
+		}
+		return jEditorPane;
+	}
+
 	// <NoJigloo>
 	private void dynamicInitialize()
 	{
 		Sentence phrase = vue.getPhrase();
-		jLabelLecture.setText(Messages.getString("SentenceVueDetaillePanel.LabelLecture") + " : " + vue.toRomajiIfNeeded(phrase.getLecture())); //$NON-NLS-1$ //$NON-NLS-2$
-		jTextPane.setText(phrase.getSentence());
-		//jTextFieldPhrase.setColumns(jTextFieldPhrase.getText().length() * 2);
-		jLabelSignifications.setText(Messages.getString("SentenceVueDetaillePanel.LabelSignifications") + " : " + phrase.getSignifications()); //$NON-NLS-1$ //$NON-NLS-2$
-		jLabelThemes.setText(Messages.getString("SentenceVueDetaillePanel.LabelThemes") + " : "+ phrase.getThemes()); //$NON-NLS-1$ //$NON-NLS-2$
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<b><center>" + phrase.getSentence() + "</center></b>");
+		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelLecture") + " : <b>" + vue.toRomajiIfNeeded(phrase.getLecture()) + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
+		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelSignifications") + " : <b>" + phrase.getSignifications() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
+		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelThemes") + " : <b>" + phrase.getThemes() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		getJEditorPane().setText(sb.toString());
+		setVisible(false);
+		setVisible(true);
 	}
 
 	// </NoJigloo>

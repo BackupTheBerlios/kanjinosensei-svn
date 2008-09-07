@@ -45,6 +45,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -308,6 +309,7 @@ public class KanjiNoSensei
 	private JSplitPane										jSplitPaneTopMiddle;
 
 	private JSplitPane										jSplitPaneTopMiddleBottom;
+	private JScrollPane jScrollPaneListThemesSelectionnes;
 	private JButton jButtonSupprimer;
 
 	private JFrame											jFrameQuizz;
@@ -350,7 +352,7 @@ public class KanjiNoSensei
 
 	private JScrollPane		jScrollPaneElements			= null;
 
-	private JPanel			jPanelElementsListe			= null;
+	private Box			jPanelElementsListe			= null;
 
 	private JPanel			jPanelThemesListe			= null;
 
@@ -687,9 +689,29 @@ public class KanjiNoSensei
 			try
 			{
 				final VueElement vueElement = VueElement.genererVueElement(this, element, USE_ROMAJI);
-				JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
+				final JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
 
-				MyUtils.doItToAllSubComponents(vueElementDetaillePanel, new DoItToThisComponent()
+				final JPanel selectablePanel = new JPanel(new BorderLayout(0, 0));
+				selectablePanel.add(vueElementDetaillePanel, BorderLayout.WEST);
+				selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+				selectablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+				
+				SwingUtilities.invokeLater(new Runnable()
+				{
+				
+					@Override
+					public void run()
+					{
+						int margin = 4;
+						selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
+						//selectablePanel.setMaximumSize(new Dimension(vueElementDetaillePanel.getMaximumSize().width + margin, vueElementDetaillePanel.getMaximumSize().height + margin));
+						selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
+
+						MyUtils.refreshComponentAndSubs(getJPanelElementsListe());
+					}
+				});
+				
+				MyUtils.doItToAllSubComponents(selectablePanel, new DoItToThisComponent()
 				{
 
 					@Override
@@ -763,8 +785,8 @@ public class KanjiNoSensei
 					}
 
 				}, true);
-
-				getJPanelElementsListe().add(vueElementDetaillePanel);
+				
+				getJPanelElementsListe().add(selectablePanel);
 			}
 			catch (Exception e)
 			{
@@ -775,11 +797,26 @@ public class KanjiNoSensei
 		getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
 
 		//TODO: Nécéssaire ? getJPanelElementsListe().setPreferredSize(new Dimension(0, getJPanelElementsListe().getComponentCount() * VueElement.getVueDetailleHeight() + 20));
-		MyUtils.refreshComponent(getJPanelElementsListe());
-
-		getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(10, Math.min(1000, (getJPanelElementsListe().getComponentCount() * 1))));
-
-		getJFrame().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		SwingUtilities.invokeLater(new Runnable()
+		{
+		
+			@Override
+			public void run()
+			{
+				try
+				{
+					Thread.sleep(1000);
+				}
+				catch (InterruptedException e)
+				{
+				}
+				
+				MyUtils.refreshComponentAndSubs(getJPanelElementsListe());
+				getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(10, Math.min(1000, (getJPanelElementsListe().getComponentCount() * 1))));
+				getJFrame().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+		});
+		
 	}
 
 	public void afficherBaseDialogMAJSelection(VueElement nouvelleSelection)
@@ -788,17 +825,18 @@ public class KanjiNoSensei
 
 		for (int i = 0; i < getJPanelElementsListe().getComponentCount(); ++i)
 		{
-			JPanel panel = ((VueDetaillePanel) getJPanelElementsListe().getComponent(i)).getPanel();
+			JPanel selectablePanel = (JPanel) getJPanelElementsListe().getComponent(i);
+			JPanel panel = ((VueDetaillePanel) selectablePanel.getComponent(0)).getPanel();
 
 			if ((elementSelectionne != null) && (elementSelectionne.getVueDetaillePanel().equals(panel)))
 			{
-				panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+				selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 				deselectionner = true;
 			}
 
 			if (nouvelleSelection.getVueDetaillePanel().equals(panel))
 			{
-				panel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
+				selectablePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 				selectionner = true;
 			}
 
@@ -1180,24 +1218,15 @@ public class KanjiNoSensei
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-	private JPanel getJPanelElementsListe()
+	private Box getJPanelElementsListe()
 	{
 		if (jPanelElementsListe == null)
 		{
-			GridLayout gridLayout2 = new GridLayout();
-			gridLayout2.setColumns(1);
-			gridLayout2.setRows(0);
-			jPanelElementsListe = new JPanel();
-			/*
-			jPanelElementsListe.setLocation(new Point(0, 0));
-			jPanelElementsListe.setSize(new Dimension(0, 0));
-			jPanelElementsListe.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			*/
-			jPanelElementsListe.setLayout(gridLayout2);
+			jPanelElementsListe = Box.createVerticalBox();
 		}
 		return jPanelElementsListe;
 	}
-
+	
 	/**
 	 * This method initializes jPanelThemesListe
 	 * 
@@ -1379,11 +1408,12 @@ public class KanjiNoSensei
 			gridBagConstraints23.weighty = 1.0;
 			gridBagConstraints23.gridx = 0;
 			jPanelThemesSelection = new JPanel();
-			jPanelThemesSelection.setLayout(new GridBagLayout());
+			BorderLayout jPanelThemesSelectionLayout = new BorderLayout();
+			jPanelThemesSelection.setLayout(jPanelThemesSelectionLayout);
 			jPanelThemesSelection.setPreferredSize(new java.awt.Dimension(0, 0));
 			jPanelThemesSelection.setMinimumSize(new java.awt.Dimension(135, 200));
 			jPanelThemesSelection.setSize(135, 200);
-			jPanelThemesSelection.add(getJListThemesSelectionnes(), gridBagConstraints23);
+			jPanelThemesSelection.add(getJScrollPaneListThemesSelectionnes(), BorderLayout.CENTER);
 		}
 		return jPanelThemesSelection;
 	}
@@ -1399,7 +1429,7 @@ public class KanjiNoSensei
 		{
 			jListThemesSelectionnes = new JList();
 			jListThemesSelectionnes.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jListThemesSelectionnes.setEnabled(false);
+			jListThemesSelectionnes.setFocusable(false);
 		}
 		return jListThemesSelectionnes;
 	}
@@ -2589,6 +2619,14 @@ public class KanjiNoSensei
 			});
 		}
 		return jButtonSupprimer;
+	}
+	
+	private JScrollPane getJScrollPaneListThemesSelectionnes() {
+		if(jScrollPaneListThemesSelectionnes == null) {
+			jScrollPaneListThemesSelectionnes = new JScrollPane();
+			jScrollPaneListThemesSelectionnes.setViewportView(getJListThemesSelectionnes());
+		}
+		return jScrollPaneListThemesSelectionnes;
 	}
 
 }

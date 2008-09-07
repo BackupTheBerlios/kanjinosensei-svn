@@ -1,1 +1,1 @@
-java -jar KanjiNoSensei.jar dico\dico.kjd %1
+java -jar KanjiNoSensei.jar %1

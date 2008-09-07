@@ -29,7 +29,7 @@ public class VueKanji extends VueElement
 {
 	final private static Boolean	USE_ONLY_STROKEORDERS_FONT	= true;
 
-	public static final float	FONT_MAX_SIZE	= 22;
+	public static final float	FONT_MAX_SIZE	= 98;//22;
 
 	public static final float	FONT_MIN_SIZE	= 11;
 

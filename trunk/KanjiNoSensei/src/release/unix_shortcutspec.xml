@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<shortcurts>
+	<programGroup defaultName="KanjiNoSensei" location="applications" />
+
+	<shortcut	name="KanjiNoSensei"
+				programGroup="yes"
+				desktop="yes"
+				applications="no"
+				startMenu="yes"
+				startup="no"
+				target="$INSTALL_PATH/run.sh"
+				commandLine=""
+				workingDirectory="$INSTALL_PATH"
+				description="Lancer KanjiNoSensei"
+				iconFile="$INSTALL_PATH/ico/kanjinosensei_icon.png"
+				iconIndex="0"
+				type="Application"
+				encoding="UTF-8"
+				terminal="true"
+				KdeSubstUID="false"
+				initialState="normal"/>
+				
+	<shortcut	name="Désinstaller"
+				programGroup="yes"
+				desktop="yes"
+				target="java"
+				commandLine="-jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
+				initialState="noShow"
+				iconFile="trashcan_full"
+				iconIndex="0"
+				workingDirectory=""
+				type="Application"
+				encoding="UTF-8"
+				description="Désinstaller KanjiNoSensei"/>
+</shortcurts>

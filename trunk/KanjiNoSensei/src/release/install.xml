@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+	<native type="izpack" name="ShellLink.dll"/>
+
+	<!--
+		The info section. The meaning of the tags should be natural ...
+	-->
+	<info>
+		<appname>KanjiNoSensei</appname>
+		<appversion>1.0c-SNAPSHOT</appversion>
+		<authors>
+			<author name="Pierre Escallier" email="p.escallier@laposte.net" />
+		</authors>
+		<url>http://kanjinosensei.berlios.de/</url>
+	</info>
+
+	<!--
+		The gui preferences indication. Sets the installer window to 640x480.
+		It will not be able to change the size.
+	-->
+	<guiprefs width="640" height="480" resizable="yes" />
+
+	<!--
+		The locale section. Asks here to include the English and French
+		langpacks.
+	-->
+	<locale>
+		<!-- <langpack iso3="eng" /> -->
+		<langpack iso3="fra" />
+	</locale>
+
+	<!--
+		The resources section. The ids must be these ones if you want to use
+		the LicencePanel and/or the InfoPanel.
+	-->
+	<!--
+		<resources> <res id="LicencePanel.licence" src="Licence.txt"/> <res
+		id="InfoPanel.info" src="Readme.txt"/> </resources>
+	-->
+	<resources>
+		<res src="default_shortcutspec.xml" id="shortcutSpec.xml"/>
+		<res src="unix_shortcutspec.xml" id="Unix_shortcutSpec.xml"/>
+	</resources>
+
+	<!--
+		The panels section. We indicate here which panels we want to use. The
+		order will be respected.
+	-->
+	<panels>
+		<panel classname="HelloPanel" />
+		<!-- <panel classname="InfoPanel"/> -->
+		<!-- <panel classname="LicencePanel"/> -->
+		<panel classname="TargetPanel" />
+		<panel classname="PacksPanel" />
+		<panel classname="ShortcutPanel" />
+		<panel classname="InstallPanel" />
+		<panel classname="FinishPanel" />
+	</panels>
+
+	<!--
+		The packs section. We specify here our packs.
+	-->
+	<packs>
+		<pack name="Base" required="yes">
+			<description>The base files</description>
+			<file src="KanjiNoSensei.jar" targetdir="$INSTALL_PATH" />
+			<file src="run.bat" targetdir="$INSTALL_PATH" />
+			<file src="run.sh" targetdir="$INSTALL_PATH" />
+			<file src="lib" targetdir="$INSTALL_PATH" />
+			<file src="dico/dico.kjd" targetdir="$INSTALL_PATH/dico" />
+			<file src="ico" targetdir="$INSTALL_PATH" />
+
+			<executable targetfile="$INSTALL_PATH/KanjiNoSensei.jar"
+				type="jar" stage="never" />
+			<executable targetfile="$INSTALL_PATH/run.sh" stage="never" />
+			<executable targetfile="$INSTALL_PATH/run.bat" stage="never" />
+		</pack>
+		<pack name="Sounds" required="no">
+			<description>Kana sounds files</description>
+			<fileset dir="dico/kana_female" targetdir="$INSTALL_PATH/dico/kana_female"
+				includes="*.wav" />
+		</pack>
+		<pack name="Kanji strokes pictures" required="no">
+			<description>Kanji strokes pictures</description>
+			<fileset dir="dico" targetdir="$INSTALL_PATH/dico" includes="**/*.png" />
+		</pack>
+		<pack name="Kanji strokes font" required="no">
+			<description>Kanji strokes font</description>
+			<file src="dico/fonts/KanjiStrokeOrders.ttf" targetdir="$INSTALL_PATH/dico/fonts" />
+		</pack>
+	</packs>
+
+</installation>

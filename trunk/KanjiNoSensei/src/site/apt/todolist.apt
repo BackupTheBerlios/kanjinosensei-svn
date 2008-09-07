@@ -9,6 +9,35 @@ TODO List
 	
 	Workflow passé et en cours.
 	
+	* Ajouter un bouton "Terminer Quizz" qui vide les éléments restants non posé, et ne pose plus que les éléments en erreurs.
+	
+	* Ecran "Base", arbre, cocher un répertoire devrait faire comme un clic sur "Tous"; Décocher un répertoire devrait faire comme un clic sur "Aucun".
+
+	* Maximiser par défaut la fenêtre de tracé de Kanji si on est en mode Fonte.
+	
+	* En "Quizz", les boutons "Bon/Mauvais" ne devraient pas se centrer avec la zone réponse, les fixer à gauche au pire.
+		
+	* Revoir l'affichage "détails" des éléments
+		agrandir la police des champs susceptibles de contenir des kanji,
+		retour à la ligne (exemples de mots),
+		centrage hors cadre; faire que les panels de chaque éléments dans la liste de partagent pas la même largeur.
+	
+	* Lors de la sélection de texte, l'algo de recherche doit inclure les éléments possibles en ignorant les parenthèses (et crochets).
+	
+	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quizz".
+	
+	* Améliorer le chargement et l'affichage général de la liste (ne charger que les éléments à afficher ?)
+	
+	* Dans la fenetre "Base" comme pendant le "Quizz", afficher le nombre d'éléments (restants) dans le dictionnaire.
+	
+	* Lors d'un filtrage sur la liste des éléments, vider/effacer la liste si aucun éléments n'est trouvé.
+	
+	* Dans le "Quizz", afficher le type de l'élément en question.
+	
+	* Dans le "Quizz", masquer automatiquement la zone sud si elle est non utilisée (pouvoir le détecter).
+	
+	* Masquer/Griser le bouton "Lire" lorsqu'aucun fichier son n'est renseigné.
+	
 	* Gérer intélligement les doublons du dictionnaire, lorsqu'un doublons est détecté, penser à mettre l'élément dans tous les thèmes où il était déclaré. Mais lors du Quizz, on ne le pose qu'une fois.
 	  Faire un petit utilitaire d'analyse du dico de base, qui repère les doublons avec certains paramètres de tolérence, pour aider à écrire un dico de base robuste.
 	  > Faire que l'utilitaire d'analyse du dico puisse prendre le fichier diso.csv tel quel, et sans y toucher, sauvegarde un dico.kjd avec les règles des modifs que l'on souhaite appliquer (gestion des doublons, transformations d'éléments, ..)
@@ -40,3 +69,5 @@ Bugs connus
 	* Détection de version de la JRE: si la version de la JRE n'est pas celle attendue, le programme crash avant de pouvoir faire le contrôle et afficher un message d'erreur décent.
 	
 	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.
+	
+	* Parfois l'écran "Base" s'ouvre avec une fenêtre agrandie mais sur laquelle tous les éléments ne sont pas affiché correctement, et resize la fenêtre n'y change rien, la seule solution est de redémarrer l'appli.
