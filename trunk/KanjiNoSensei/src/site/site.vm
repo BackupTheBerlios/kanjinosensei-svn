@@ -320,7 +320,7 @@
 
 #macro ( addDonationButton )
 
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=p%2eescallier%40laposte%2enet&item_name=Donate%20Project%3a%20kanjinosensei&item_number=kanjinosensei&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=FR&bn=PP%2dDonationsBF&charset=UTF%2d8" title="Dons" target="_blank" class="poweredBy">
+	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=p%2eescallier%40laposte%2enet&item_name=Donate%20Project%3a%20${projectArtifactId}&item_number=${projectArtifactId}&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=FR&bn=PP%2dDonationsBF&charset=UTF%2d8" title="Dons" target="_blank" class="poweredBy">
 		<img class="poweredBy"
 			alt="Don Paypal"
 			src="https://www.paypal.com/fr_FR/i/btn/x-click-but04.gif"

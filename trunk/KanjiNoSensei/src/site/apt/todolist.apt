@@ -13,7 +13,13 @@ TODO List
 	
 	* Maximiser par défaut la fenêtre de tracé de Kanji si on est en mode Fonte.
 	
-	* Ecran "Base", arbre, cocher un répertoire devrait faire comme un clic sur "Tous"; Décocher un répertoire devrait faire comme un clic sur "Aucun".
+	* CheckBoxTree :
+		On coche une feuille: on l'ajoute au thèmes sélectionnés.
+		On décoche une feuille: on la retire des thèmes sélectionnés.
+		On coche un noeud:	on ajoute toutes les feuilles filtrées par le filtre courant
+							on ajoute le noeud seulement si toutes les feuilles sont cochées (y compris hors filtre).
+		On décoche un noeud:	on retire toutes les feuilles filtrées par le filtre courant
+								on retire le noeud seulement s'il ne reste plus aucune feuille (y compris hors filtre).
 		
 	* Revoir l'affichage "détails" des éléments
 		agrandir la police des champs susceptibles de contenir des kanji,
@@ -34,11 +40,14 @@ TODO List
 	
 	* Ajouter des mots exemples pour les kanjis.
 	
+	* Changer les algo de trie des chaînes de caractères pour l'affichage de la liste de thèmes, forcer "Leçon 5" à être inférieur à "Leçon 10" (par exemple, utiliser une chaine modifiée pour le test, "Leçon 00005"?"Leçon 00010").
+	
 ** Améliorations
 
 	* Lors de la sélection de texte, l'algo de recherche doit inclure les éléments possibles en ignorant les parenthèses (et crochets).
 
-	* Améliorer le chargement et l'affichage général de la liste (ne charger que les éléments à afficher ?)
+	* Optimiser le chargement et l'affichage général de la liste (ne charger que les éléments à afficher ?)
+		Faire des tests de performance pour voir ce qui prend le plus de temps.
 	
 	* Ajouter un bouton "Terminer Quizz" qui vide les éléments restants non posé, et ne pose plus que les éléments en erreurs.
 	
@@ -69,8 +78,6 @@ TODO List
 	
 	* Détection de version de la JRE: si la version de la JRE n'est pas celle attendue, le programme crash avant de pouvoir faire le contrôle et afficher un message d'erreur décent.
 	
-	* Lors d'un filtrage sur la liste des éléments, vider/effacer la liste si aucun éléments n'est trouvé.
-	
 	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.
 	
 	* Parfois l'écran "Base" s'ouvre avec une fenêtre agrandie mais sur laquelle tous les éléments ne sont pas affiché correctement, et resize la fenêtre n'y change rien, la seule solution est de redémarrer l'appli.
@@ -80,3 +87,11 @@ TODO List
 	* Rédiger les commentaires javadoc pour tout le projet.
 	
 	* Rédiger les tests unitaires.
+	
+** Notes (brouillon)
+	
+	* ! bug: Temps de chargement anormal en quizz ! 
+
+	* Revoir la façon dont la priorité des éléments de quizz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
+	
+	* En plus de la liste des mots, afficher une liste des phrases où sont employés les Kanji / Mots. S'occuper d'abord de revoir l'algo de recherche (pour ignorer les parenthèses et autres crochets, notes et meta-marques). 

@@ -2,263 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/maven-v4_0_0.xsd">
-	<properties>
-		<berliOSid>9154</berliOSid>
-		<libDirectory>lib</libDirectory>
-		<!-- 
-		<releaseDirectory>release</releaseDirectory>
-		<versionedReleaseDirectory>
-			${releaseDirectory}-${project.version}
-		</versionedReleaseDirectory>
-		-->
-		<releaseDirectory>release</releaseDirectory>
-		<versionedReleaseDirectory>izpack</versionedReleaseDirectory>
-		<appname>KanjiNoSensei</appname>
-		<appversion>1.0c-SNAPSHOT</appversion>
-		<auteur>Escallier Pierre</auteur>
-	</properties>
+	<!--
+		//TODO: Externaliser toutes les valeurs dans <properties/>, y compris
+		les variables "à ne pas toucher" qui seront classées.
+	-->
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- The Basics -->
 	<groupId>epsofts</groupId>
-	<artifactId>KanjiNoSensei</artifactId>
-	<version>1.0c-SNAPSHOT</version>
-	<name>KanjiNoSensei</name>
-	<url>http://kanjinosensei.berlios.de/
-	</url>
-	<description>
-		Moteur Flashcard amélioré pour apprendre le japonais :
-		Kanji,
-		Kana, vocabulaire.
-	</description>
-	<issueManagement>
-		<system>BerliOS</system>
-		<url>
-			http://developer.berlios.de/bugs/?group_id=${berliOSid}
-		</url>
-	</issueManagement>
-	<developers>
-		<developer>
-			<name>Escallier Pierre</name>
-			<email>p.escallier@laposte.net</email>
-		</developer>
-	</developers>
-	<scm>
-		<connection>
-			scm:cvs:pserver:cvs.kanjinosensei.berlios.de:/cvsroot/kanjinosensei
-		</connection>
-		<developerConnection>
-			scm:cvs:extssh:cvs.kanjinosensei.berlios.de:/cvsroot/kanjinosensei
-		</developerConnection>
-	</scm>
-	<distributionManagement>
-		<site>
-			<id>default</id>
-			<name>Default Site</name>
-			<url>
-				scp://axan@shell.berlios.de:/home/groups/kanjinosensei/htdocs
-			</url>
-		</site>
-	</distributionManagement>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<encoding>UTF-8</encoding>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<outputEncoding>UTF-8</outputEncoding>
-					<inputEncoding>UTF-8</inputEncoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin
-				</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>clean</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin
-				</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>
-								${project.build.directory}/${versionedReleaseDirectory}/${libDirectory}
-							</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>
-								false
-							</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<finalName>KanjiNoSensei</finalName>
-					<outputDirectory>
-						${project.build.directory}/${versionedReleaseDirectory}
-					</outputDirectory>
-					<includes>*.properties</includes>
-					<archive>
-						<index>true</index>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<addDefaultSpecificationEntries>
-								false
-							</addDefaultSpecificationEntries>
-							<addDefaultImplementationEntries>
-								false
-							</addDefaultImplementationEntries>
-							<mainClass>vue.KanjiNoSensei</mainClass>
-							<classpathPrefix>
-								${libDirectory}
-							</classpathPrefix>
-						</manifest>
-						<manifestEntries>
-							<!-- 
-								<url>${pom.url}</url>
-								<key>value</key>
-							-->
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<configuration>
-
-							<tasks>
-								<property name="finalReleaseDirectory"
-									value="${project.build.directory}/${versionedReleaseDirectory}" />
-
-								<!-- Copie du dictionnaire et compilation de l'installeur IzPack -->
-								<copy todir="${finalReleaseDirectory}/dico">
-									<fileset dir="${basedir}/dico">
-										<exclude name="**/*.csv" />
-										<exclude name="**/CVS" />
-									</fileset>
-								</copy>
-								<!-- Copie des fichiers batch et ressources -->
-								<copy todir="${finalReleaseDirectory}">
-									<fileset dir="${basedir}/src/${releaseDirectory}">
-										<exclude name="**/CVS" />
-									</fileset>
-								</copy>
-								<!-- Copie du fichier presets -->
-								<copy file="${basedir}/presets" todir="${finalReleaseDirectory}">
-								</copy>
-
-
-								<!-- On liste les fichiers à excludes de l'archive (dico/fonts/*) -->
-								<exec executable="echo" output="${project.build.directory}/excludes.txt">
-									<arg value="dico/fonts/*.*" />
-								</exec>
-
-								<!-- On lance 7z en spécifiant la liste des fichiers à exclure -->
-								<!-- 
-								<exec executable="7z">
-									<arg value="a" />
-									<arg value="-r" />
-									<arg value="-x@${project.build.directory}/excludes.txt" />
-									<arg
-										value="${project.build.directory}/${project.name}-${project.version}.7z" />
-									<arg value="${finalReleaseDirectory}/*" />
-								</exec>
-								-->
-								<!-- On 7zip les fontes -->
-								<!-- 
-								<exec executable="echo" output="${project.build.directory}/excludes.txt">
-									<arg value=".*" />
-								</exec>
-								<exec executable="7z">
-									<arg value="a" />
-									<arg value="-r" />
-									<arg value="-x@${project.build.directory}/excludes.txt" />
-									<arg value="${project.build.directory}/fonts.7z" />
-									<arg value="${basedir}/dico/fonts/*" />
-								</exec>
-								-->
-								<!--
-									mvn install:install-file -DgroupId=GROUPID
-									-DartifactId=ARTIFACTID -Dversion=VERSION -Dpackaging=jar
-									-Dfile=/path/to/file TODO: Générer un script capable
-									d'installer toutes les libs sur un environnement maven vierge.
-									Comment avoir une ANT pour "FOR" !? <echo message="The first
-									five letters of the alphabet are:" /> <ac:for list="a,b,c,d,e"
-									param="letter"> <ac:sequential> <echo>Letter @{letter}</echo>
-									</ac:sequential> </ac:for>
-								-->
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-
-				<groupId>org.codehaus.izpack</groupId>
-				<artifactId>izpack-maven-plugin</artifactId>
-
-				<!-- common configuration by all executions -->
-				<configuration>
-					<izpackBasedir>${finalReleaseDirectory}</izpackBasedir>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>standard-installer</id>
-						<phase>package</phase>
-						<goals>
-							<goal>izpack</goal>
-						</goals>
-					</execution>
-
-					<!--
-						<execution> <id>web-installer</id> <phase>package</phase> <goals>
-						<goal>izpack</goal> </goals> <configuration>
-						<descriptor>${basedir}/izpack/install-web.xml</descriptor>
-						<kind>web</kind> </configuration> </execution>
-					-->
-
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+	<artifactId>${projectArtifactId}</artifactId>
+	<!--
+		Utiliser une property pour la version risque de poser problème ?
+	-->
+	<version>${projectVersion}</version>
+	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
+			<type>jar</type>
 			<scope>test</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>lablib</groupId>
@@ -285,13 +50,377 @@
 			<artifactId>jmodalwindow</artifactId>
 			<version>0203</version>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.izpack</groupId>
-			<artifactId>izpack-standalone-compiler
-			</artifactId>
-			<version>4.0.1</version>
-		</dependency>
 	</dependencies>
+	<!-- <parent></parent> -->
+	<!-- <dependencyManagement></dependencyManagement> -->
+	<!-- <modules></modules> -->
+	<properties>
+		<!-- project specific -->
+		<projectArtifactId>kanjinosensei</projectArtifactId>
+		<!--
+			Utiliser une property pour la version risque de poser problème ?
+		-->
+		<projectVersion>1.0-SNAPSHOT</projectVersion>
+		<mainClass>epsofts.KanjiNoSensei.vue.KanjiNoSensei</mainClass>
+
+		<projectName>KanjiNoSensei</projectName>
+		<description>
+		Moteur Flashcard amélioré pour apprendre le japonais :
+		Kanji,
+		Kana, vocabulaire.
+		</description>
+
+		<releaseResourcesBaseDirectory>${basedir}/src</releaseResourcesBaseDirectory>
+		<resourcesBaseDirectory>${basedir}/src/main</resourcesBaseDirectory>
+
+		<releaseResourcesSubDirectory>release</releaseResourcesSubDirectory>
+		<filteredReleaseResourcesSubDirectory>filtered-release</filteredReleaseResourcesSubDirectory>
+
+		<resourcesSubDirectory>resources</resourcesSubDirectory>
+		<filteredResourcesSubDirectory>filtered-resources</filteredResourcesSubDirectory>
+
+		<releaseResourcesDirectory>${releaseResourcesBaseDirectory}/${releaseResourcesSubDirectory}</releaseResourcesDirectory>
+		<filteredReleaseResourcesDirectory>${releaseResourcesBaseDirectory}/${filteredReleaseResourcesSubDirectory}</filteredReleaseResourcesDirectory>
+
+		<resourcesDirectory>${resourcesBaseDirectory}/${resourcesSubDirectory}</resourcesDirectory>
+		<filteredResourcesDirectory>${resourcesBaseDirectory}/${filteredResourcesSubDirectory}</filteredResourcesDirectory>
+
+		<processedFilesBaseDirectory>${project.build.directory}/classes</processedFilesBaseDirectory>
+		<processedReleaseResourcesDirectory>${processedFilesBaseDirectory}/${releaseResourcesSubDirectory}</processedReleaseResourcesDirectory>
+		<processedFilteredReleaseResourcesDirectory>${processedFilesBaseDirectory}/${filteredReleaseResourcesSubDirectory}</processedFilteredReleaseResourcesDirectory>
+		<processedFilteredResourcesDirectory>${processedFilesBaseDirectory}/${filteredResourcesSubDirectory}</processedFilteredResourcesDirectory>
+
+		<packagingDirectory>${project.build.directory}/izpack</packagingDirectory>
+		<libSubDirectory>lib</libSubDirectory>
+		<installersDirectory>${project.build.directory}/distribs</installersDirectory>
+		<siteDirectory>${basedir}/src/site</siteDirectory>
+		<downloadUrl>${url}/releases</downloadUrl>
+		<hostDomain>axan.org</hostDomain>
+
+		<!-- Auteur -->
+		<authorName>Pierre Escallier</authorName>
+		<authorMail>p.escallier@laposte.net</authorMail>
+
+		<!-- External tools -->
+		<izpack2exeDirectory>/home/axan/IzPack/utils/izpack2exe</izpack2exeDirectory>
+
+		<!-- Env -->
+		<tmp>/tmp</tmp>
+
+		<!-- computed -->
+		<url>http://${projectArtifactId}.${hostDomain}</url>
+		<finalReleaseResourcesDirectory>${packagingDirectory}</finalReleaseResourcesDirectory>
+		<packagingLibDirectory>${packagingDirectory}/${libSubDirectory}</packagingLibDirectory>
+	</properties>
+
+	<!-- Build Settings -->
+	<build>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>${releaseResourcesBaseDirectory}</directory>
+				<includes>
+					<include>${releaseResourcesSubDirectory}/**</include>
+				</includes>
+				<excludes>
+					<exclude>**/CVS</exclude>
+					<exclude>**/SVN</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>${releaseResourcesBaseDirectory}</directory>
+				<includes>
+					<include>${filteredReleaseResourcesSubDirectory}/**</include>
+				</includes>
+				<excludes>
+					<exclude>**/CVS</exclude>
+					<exclude>**/SVN</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>${resourcesDirectory}</directory>
+				<excludes>
+					<exclude>**/CVS</exclude>
+					<exclude>**/SVN</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>${resourcesBaseDirectory}</directory>
+				<includes>
+					<include>${filteredResourcesSubDirectory}/**</include>
+				</includes>
+				<excludes>
+					<exclude>**/CVS</exclude>
+					<exclude>**/SVN</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>1.0-alpha-5</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin
+				</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin
+				</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${packagingLibDirectory}</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>${projectName}</finalName>
+					<outputDirectory>${packagingDirectory}</outputDirectory>
+					<includes>**/*.properties</includes>
+					<archive>
+						<index>false</index>
+						<!--
+							packaging bug if both "index" and "addClasspath" are true
+						-->
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultSpecificationEntries>false</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>false</addDefaultImplementationEntries>
+							<mainClass>${mainClass}</mainClass>
+							<classpathPrefix>${libSubDirectory}</classpathPrefix>
+						</manifest>
+						<manifestEntries></manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>movefiles</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>process-resources</phase>
+						<inherited>false</inherited>
+						<configuration>
+							<tasks>
+								<!-- On s'assure que les répertoires existent -->
+								<mkdir dir="${processedReleaseResourcesDirectory}" />
+								<mkdir dir="${processedFilteredReleaseResourcesDirectory}" />
+								<mkdir dir="${processedFilteredResourcesDirectory}" />
+
+								<echo>Deplacement des resources release ${processedReleaseResourcesDirectory} vers le répertoire ${finalReleaseResourcesDirectory}</echo>
+								<move todir="${finalReleaseResourcesDirectory}">
+									<fileset dir="${processedReleaseResourcesDirectory}">
+										<exclude name="**/CVS" />
+										<exclude name="**/SVN" />
+									</fileset>
+								</move>
+
+								<echo>Deplacement des resources release ${processedFilteredReleaseResourcesDirectory} vers le répertoire ${finalReleaseResourcesDirectory}</echo>
+								<move todir="${finalReleaseResourcesDirectory}">
+									<fileset dir="${processedFilteredReleaseResourcesDirectory}">
+										<exclude name="**/CVS" />
+										<exclude name="**/SVN" />
+									</fileset>
+								</move>
+
+								<echo>Deplacement des resources ${processedFilteredResourcesDirectory} vers ${processedFilesBaseDirectory}</echo>
+								<move todir="${processedFilesBaseDirectory}">
+									<fileset dir="${processedFilteredResourcesDirectory}">
+										<exclude name="**/CVS" />
+										<exclude name="**/SVN" />
+									</fileset>
+								</move>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>izpack</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>deploy</phase>
+						<inherited>false</inherited>
+						<configuration>
+							<tasks>
+								<property name="izpackInput" value="${packagingDirectory}/install.xml" />
+								<property name="izpackOutput" value="${installersDirectory}/${projectName}-installer.jar" />
+
+								<echo>Creation du dossier ${installersDirectory}</echo>
+								<mkdir dir="${installersDirectory}" />
+
+								<echo>Execution de izpack: ${izpackInput} =>
+									${izpackOutput}</echo>
+								<taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask" />
+								<izpack input="${izpackInput}" output="${izpackOutput}" basedir="${packagingDirectory}" />
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>izpack2exe</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>deploy</phase>
+						<inherited>false</inherited>
+						<configuration>
+							<tasks>
+								<property name="izpack2exeInput" value="${installersDirectory}/${projectName}-installer.jar" />
+								<property name="izpack2exeOutput" value="${installersDirectory}/${projectName}-installer.exe" />
+
+								<echo>Execution de izpack2exe : ${izpack2exeInput} =>
+									${izpack2exeOutput}</echo>
+
+								<exec executable="python" dir="${izpack2exeDirectory}" output="${tmp}/izpack2exe.std" error="${tmp}/izpack2exe.err">
+									<arg value="${izpack2exeDirectory}/izpack2exe.py" />
+									<arg value="--file" />
+									<arg value="${izpack2exeInput}" />
+									<arg value="--output" />
+									<arg value="${izpack2exeOutput}" />
+									<arg value="--no-upx" />
+									<arg value="--with-7z" />
+									<arg value="7z" />
+								</exec>
+							</tasks>
+						</configuration>
+					</execution>
+					<!--
+						<execution> <id>googlecodeUpdate</id> <goals> <goal>run</goal> </goals> <phase>verify</phase> <inherited>false</inherited> <configuration> <tasks>
+					-->
+					<!--
+						Ne fonctionne pas, le password n'est pas passable en paramètre, et antrun ne donne pas la saisie clavier. Runs the fullrelease task and uploads the
+						nightly release on google code. <exec executable="python" dir="${project.build.directory}"> <arg value="/media/data/Download/Code/googlecode_upload.py"/>
+						<arg value='
+					-->
+					<!--
+						config-dir=none' /> <arg value='-p jneutron' /> <arg value='-s Uploaded from Maven Ant Task Runner.' /> <arg value='-u p.escallier@laposte.net' /> <arg
+						value='-l Test,Type-Archive,OpSys-All' /> <arg value='${project.build.directory}/test.txt' /> </exec>
+					-->
+					<!--
+						Ne fonctionne pas, erreur de lib non fournies.. <taskdef classpath="${env.HOME}/.m2/repository/google/ant-googlecode/0.0.1/ant-googlecode-0.0.1.jar"
+						classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" name="gcupload" /> <gcupload username="googleuser" password="secretpassword"
+						projectname="myproject" filename="${project.build.directory}/test.txt" targetfilename="test.txt" summary="upload test" labels="test, upload, ant,
+						googlecode" />
+					-->
+					<!--
+						</tasks> </configuration> </execution>
+					-->
+					<execution>
+						<id>protectsite</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>pre-site</phase>
+						<inherited>false</inherited>
+						<configuration>
+							<tasks>
+								<property name="htaccessmodel" value="${siteDirectory}/model.htaccess" />
+								<!--
+									Copie du fichier modèle .htaccess dans tous les dossiers à
+									protéger
+								-->
+								<echo>Protection des zones privés du site</echo>
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/apidocs/.htaccess" />
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/cobertura/.htaccess" />
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/testapidocs/.htaccess" />
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/usage/.htaccess" />
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/xref/.htaccess" />
+								<copy file="${htaccessmodel}" tofile="${siteDirectory}/resources/xref-test/.htaccess" />
+
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>site-site</id>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<phase>verify</phase>
+						<inherited>false</inherited>
+						<configuration>
+							<tasks>
+								<echo>On lance mvn site:deploy</echo>
+								<exec executable="mvn" dir="${basedir}">
+									<arg value="site:deploy" />
+								</exec>
+								<echo>On chmod u=rwX,go=rX le répertoire</echo>
+								<exec executable="ssh" dir="${basedir}">
+									<arg value="wwwaxan@axan.org" />
+									<arg value="chmod" />
+									<arg value="-R" />
+									<arg value="u=rwX,go=rX" />
+									<arg value="/home/wwwaxan/www/${projectArtifactId}" />
+								</exec>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.izpack</groupId>
+						<artifactId>izpack-standalone-compiler
+						</artifactId>
+						<version>4.0.1</version>
+					</dependency>
+					<!--
+						<dependency> <groupId>ant</groupId>
+						<artifactId>ant-utils</artifactId> </dependency>
+					-->
+					<!--
+						<dependency> <groupId>google</groupId>
+						<artifactId>ant-googlecode</artifactId> <version>0.0.1</version>
+
+						</dependency>
+					-->
+				</dependencies>
+			</plugin>
+			<!--
+				<plugin> <groupId>org.codehaus.izpack</groupId> <artifactId>izpack-maven-plugin</artifactId> <configuration> <izpackBasedir>${finalReleaseDirectory}
+				</izpackBasedir> </configuration> <executions> <execution> <id>standard-installer</id> <phase>package</phase> <goals> <goal>izpack</goal> </goals>
+				</execution> </executions> </plugin>
+			-->
+		</plugins>
+	</build>
 	<reporting>
 		<excludeDefaults>false</excludeDefaults>
 		<plugins>
@@ -310,11 +439,16 @@
 						<reports>
 							<report>project-team</report>
 							<report>license</report>
+							<report>issue-tracking</report>
+							<report>scm</report>
 							<!--
-								<report>summary</report> <report>index</report>
-								<report>cim</report> <report>dependencies</report>
+								<report>summary</report>
+								<report>index</report>
+								<report>cim</report>
+								<report>dependencies</report>
 								<report>dependency-convergence</report>
-								<report>issue-tracking</report> <report>mailing-list</report>
+								<report>issue-tracking</report>
+								<report>mailing-list</report> 
 								<report>scm</report>
 							-->
 						</reports>
@@ -324,13 +458,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>2.0-beta-7</version>
 				<configuration>
 					<locales>fr</locales>
 					<inputEncoding>UTF-8</inputEncoding>
 					<outputEncoding>UTF-8</outputEncoding>
-					<templateFile>
-						${basedir}/src/site/site.vm
-					</templateFile>
+					<templateFile>${siteDirectory}/site.vm</templateFile>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -380,5 +513,68 @@
 			<artifactId>maven-checkstyle-plugin</artifactId> </plugin>
 		-->
 	</reporting>
+
+	<!-- More Project Information -->
+	<name>${projectName}</name>
+	<description>${description}</description>
+	<url>${url}</url>
+	<!-- <inceptionYear></inceptionYear> -->
+	<!-- <licenses></licenses> -->
+	<!-- <organization></organization> -->
+	<developers>
+		<developer>
+			<id>axan</id>
+			<name>${authorName}</name>
+			<email>${authorMail}</email>
+			<url>http://www.axan.org</url>
+			<organization></organization>
+			<organizationUrl></organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+2</timezone>
+			<properties>
+				<picUrl>http://cv.axan.org/id.jpg</picUrl>
+			</properties>
+		</developer>
+	</developers>
+	<!-- <contributors></contributors> -->
+
+	<!-- Environment Settings -->
+	<issueManagement>
+		<system>GoogleCode</system>
+		<url>http://code.google.com/p/${projectArtifactId}/issues/list</url>
+	</issueManagement>
+	<!-- <ciManagement></ciManagement> -->
+	<!-- <mailingLists></mailingLists> -->
+	<scm>
+		<connection>scm:svn:http://${projectArtifactId}.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://${projectArtifactId}.googlecode.com/svn/trunk</developerConnection>
+		<url>http://code.google.com/p/${projectArtifactId}/source/browse</url>
+	</scm>
+	<!-- <prerequisites></prerequisites> -->
+	<repositories>
+		<repository>
+			<id>codehaus-repository</id>
+			<name>Codehaus Repository</name>
+			<url>http://repository.codehaus.org</url>
+		</repository>
+		<repository>
+			<id>codehaus-snapshots-repository</id>
+			<name>Codehaus Snapshots Repository</name>
+			<url>http://snapshots.repository.codehaus.org</url>
+		</repository>
+	</repositories>
+	<!-- <pluginRepositories></pluginRepositories> -->
+
+	<distributionManagement>
+		<downloadUrl>${downloadUrl}</downloadUrl>
+		<site>
+			<id>axan.org</id>
+			<name>${projectName} Maven Site</name>
+			<url>scpexe://axan.org:/home/wwwaxan/public_html/${projectArtifactId}</url>
+		</site>
+	</distributionManagement>
+	<!-- <profiles></profiles> -->
 
 </project>

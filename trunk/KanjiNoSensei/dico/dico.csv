@@ -415,8 +415,8 @@
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Que fais-tu dimanche ?";"日曜日には何をしますか";"にちようび　に　は　なに　を　します　か";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Aujourd'hui nous sommes samedi";"今日は土曜日です";"きょう　は　どようび　です";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Demain nous serons mardi";"明日は火曜日です";"あした　は　かようび　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Après demain nous serons jeudi";"あさっては水曜日です";"あさって　は　すいようび　です";;
-"metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Hier nous étions mercredi";"昨日は木曜日でした";"きのう　は　もくようび　でした";;
+"metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Après demain nous serons mercredi";"あさっては水曜日です";"あさって　は　すいようび　です";;
+"metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Hier nous étions jeudi";"昨日は木曜日でした";"きのう　は　もくようび　でした";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"J'étudie le japonais 3 fois par semaine";"私は一週間に三回日本語の勉強をします";"わたし　は　いち　しゅう　かん　に　さん　かい　にほんご　の　べんきょう　を　します";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Je fait des étirements chaque jour";"私は毎日運動をします";"わたし　は　まいにち　うんどう　を　します";;
 "metier.elements.Sentence";"L1>Ecriture>leçon 8>phrases";"Je regarde la télé";"テレビを見ます";"テレビ　を　みます";;
@@ -1653,7 +1653,7 @@
 "metier.elements.Sentence";"L1>Thème>leçon 6>phrases";"J'ai acheté un sapin de Noël chez le marchand de fleurs. Combien a-t-il coûté ?";"花屋でクリスマスツリーを買いました。いくらでしたか";"はなや　で　クリスマスツリー　を　かいました。いくら　でした　か";;
 ;;;;;;
 "Phrases L1 Thème leçon 7";;;;;;
-"metier.elements.Sentence";"L1>Thème>leçon 7>phrases";"Une année dure (c'est) 12 mois, de janvier (jusqu')à décembre.";"一年は一月から十二月まで十二か月です　A CHECKER";"いちねん　は　いちがつ　から　じゅうに　がつ　まで　じゅうに　かげつ　です";;
+"metier.elements.Sentence";"L1>Thème>leçon 7>phrases";"Une année dure (c'est) 12 mois, de janvier (jusqu')à décembre.";"一年は一月から十二月まで十二か月です";"いちねん　は　いちがつ　から　じゅうに　がつ　まで　じゅうに　かげつ　です";;
 "metier.elements.Sentence";"L1>Thème>leçon 7>phrases";"Au Japon il y a 4 saisons qui sont : le printemps, l'été, l'automne et l'hiver.";"日本には春と夏と秋と冬の四つのきさつがあります";"にほん　に　は　はる　と　なつ　と　あき　と　ふゆ　の　よっつ　の　きさつ　が　あります";;
 "metier.elements.Sentence";"L1>Thème>leçon 7>phrases";"Quelle est la date (le mois et le jour du mois) d'aujourd'hui ? - Nous sommes le 15 janvier.";"今日は何月何日ですか。　一月十五日です";"きょう　は　なん　がつ　なん　にち　です　か。　いちがつ　じゅうごにち　です";;
 "metier.elements.Sentence";"L1>Thème>leçon 7>phrases";"Demain nous serons le 16 et après-demain le 17.";"明日は十六日で明後日は十七日です";"あした　は　じゅうろく　にち　で　あさって　は　じゅうなな　にち　です";;

@@ -6,21 +6,10 @@
 		<title>Installation</title>
 		<faq id="faqIdDecompression">
 			<question>
-				Comment fait-on une fois que le fichier est téléchargé ?
-				Qu'es-ce que c'est *.7z ?
+				Question
 			</question>
 			<answer>
-				Pour décompresser le fichier, il faut utiliser l'outil
-				<a href="http://www.7-zip.org/fr/" target="_blank">
-					7-zip
-				</a>
-				, logiciel gratuit et libre disponible pour la pluspart
-				des OS.
-				<br />
-				C'est un des rares formats de compressions qui ne pose
-				pas de problèmes avec les noms de fichiers contenants
-				des kanjis, et qui soit disponible sur autant de
-				plateforme.
+				Réponse
 			</answer>
 		</faq>
 		<faq id="faqIdLancement">

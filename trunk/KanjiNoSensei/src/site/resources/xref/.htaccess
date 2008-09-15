@@ -1,6 +1,4 @@
-AuthName "Members Only"
+AuthName "Restricted Area"
 AuthType Basic
-AuthBasicProvider dbm
-AuthDBMUserFile /opt/csw/apache2/etc/passwd/passwd_authdb
-AuthDBMGroupFile /opt/csw/apache2/etc/passwd/passwd_authdb
-require group kanjinosensei
+AuthUserFile "/home/wwwaxan/.htpasswds/public_html/kanjinosensei/passwd"
+Require valid-user
