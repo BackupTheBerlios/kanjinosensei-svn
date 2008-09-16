@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
+import epsofts.KanjiNoSensei.metier.Dictionary.IDictionaryAnalyser;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
@@ -24,11 +25,10 @@ import epsofts.KanjiNoSensei.utils.OneStringList;
 
 
 /**
- * 
+ * TODO
  */
-public class DictionaryAnalyser
+public class DictionaryAnalyser implements IDictionaryAnalyser
 {
-	private Dictionary dico = null;
 	
 	/**
 	 * @param args
@@ -45,41 +45,6 @@ public class DictionaryAnalyser
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * @param dictionary
-	 */
-	public void setDictionary(Dictionary dictionary)
-	{
-		dico = dictionary;
-	}
-
-	/**
-	 * @param element
-	 * @return True if element were added within this method code, false if Dictionary still have to do it.
-	 */
-	public boolean addElement(Element element)
-	{
-		MyUtils.trace(Level.FINEST, "addElement "+element.getKey());
-		TreeMap<String, Element> elements = dico.getElements();
-		Iterator<Element> it = elements.values().iterator();
-		int currentResult = Integer.MIN_VALUE;
-		int mostSimilarElementResult = Integer.MIN_VALUE;
-		Element mostSimilarElement = null;
-		
-		while(it.hasNext())
-		{
-			Element current = it.next();
-			currentResult = compare(element, current);
-			if (currentResult > mostSimilarElementResult)
-			{
-				mostSimilarElementResult = currentResult;
-				mostSimilarElement = current;
-			}
-		}
-		
-		return false;
 	}
 	
 	Comparator<String> comparator = MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd;
@@ -169,6 +134,33 @@ public class DictionaryAnalyser
 		}
 		
 		return new Integer[]{nbTests, score};
+	}
+
+	/* (non-Javadoc)
+	 * @see epsofts.KanjiNoSensei.metier.Dictionary.IDictionaryAnalyser#canElementBeAdded(epsofts.KanjiNoSensei.metier.Dictionary, epsofts.KanjiNoSensei.metier.elements.Element)
+	 */
+	@Override
+	public boolean addElement(Dictionary dictionary, Element element)
+	{
+		MyUtils.trace(Level.FINEST, "addElement "+element.getKey());
+		TreeMap<String, Element> elements = dictionary.getElements();
+		Iterator<Element> it = elements.values().iterator();
+		int currentResult = Integer.MIN_VALUE;
+		int mostSimilarElementResult = Integer.MIN_VALUE;
+		Element mostSimilarElement = null;
+		
+		while(it.hasNext())
+		{
+			Element current = it.next();
+			currentResult = compare(element, current);
+			if (currentResult > mostSimilarElementResult)
+			{
+				mostSimilarElementResult = currentResult;
+				mostSimilarElement = current;
+			}
+		}
+		
+		return false;
 	}
 
 }

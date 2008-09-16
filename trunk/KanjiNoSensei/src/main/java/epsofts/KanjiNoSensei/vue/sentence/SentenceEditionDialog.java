@@ -149,7 +149,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 									if (Character.isSpaceChar(c)) continue;
 									if (Character.isWhitespace(c)) continue;
 
-									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+									if (dictionnaire.getElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 									{
 										jLabelMsg.setText(jLabelMsg.getText() + "\n" + Messages.getString("SentenceEditionDialog.WarningMissingKanji") + " : '" + c + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									}

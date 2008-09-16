@@ -13,18 +13,28 @@ import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 
 
 /**
- * 
+ * Utility class that provide access to Messages resource.
+ * Use {@link Messages#getString(String)} to get message for given key.
  */
 public class Messages
 {
+	/** Resource bundle name. */
 	private static final String			BUNDLE_NAME		= Messages.class.getPackage().getName() + ".messages";						//$NON-NLS-1$
 
+	/** Resource bundle. */
 	private static final ResourceBundle	RESOURCE_BUNDLE	= ResourceBundle.getBundle(BUNDLE_NAME);
 
+	/** Must not be instanciate. */
 	private Messages()
 	{
 	}
 
+	/**
+	 * Return message for the given key.
+	 * If the key isn't found, error is logged, {@code "!"+key+"!"} value is returned, and no exception is thrown.
+	 * @param key Message key.
+	 * @return message for the given key.
+	 */
 	public static String getString(String key)
 	{
 		try

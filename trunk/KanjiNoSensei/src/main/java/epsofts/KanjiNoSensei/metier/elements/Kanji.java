@@ -15,7 +15,7 @@ import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 /**
  * Represent a Kanji element, defined by its unicode character, an image showing
  * how to draw it, its ON and KUN lectures. As all elements, it is defined by
- * its significations and classed in themes.
+ * its significations and categorized by themes.
  * 
  * @author Escallier Pierre
  */
@@ -60,7 +60,7 @@ public class Kanji extends Element implements Serializable
 			String significations, String themes)
 	{
 		super(significations, themes);
-		constructor(codeUTF8, strokeOrderPicture, lecturesON, lecturesKUN);
+		setKanjiFields(codeUTF8, strokeOrderPicture, lecturesON, lecturesKUN);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class Kanji extends Element implements Serializable
 	 * @param lecturesKUN
 	 *            One string list of KUN lectures.
 	 */
-	private void constructor(char codeUTF8, String strokeOrderPicture, String lecturesON, String lecturesKUN)
+	private void setKanjiFields(char codeUTF8, String strokeOrderPicture, String lecturesON, String lecturesKUN)
 	{
 		this.codeUTF8 = codeUTF8;
 		this.strokeOrderPicture = strokeOrderPicture;
@@ -96,8 +96,7 @@ public class Kanji extends Element implements Serializable
 	 */
 	public Kanji(String importLine)
 	{
-		super();
-		importString(importLine);
+		super(importLine);
 	}
 
 	/** Imported ordered fields names. Used in warnings messages. */
@@ -133,7 +132,7 @@ public class Kanji extends Element implements Serializable
 			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 
-		constructor(MyUtils.stripQuotes(codeUTF8).charAt(0), MyUtils.stripQuotes(imageOrdreTraits), MyUtils
+		setKanjiFields(MyUtils.stripQuotes(codeUTF8).charAt(0), MyUtils.stripQuotes(imageOrdreTraits), MyUtils
 				.stripQuotes(lectureChinoises), MyUtils.stripQuotes(lecturesJaponaises));
 
 		return MyUtils.joinStringElements(MyUtils.offsetObjectElements(attributs, 4), EXPORT_SEPARATOR);

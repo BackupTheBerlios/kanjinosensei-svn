@@ -26,6 +26,18 @@ public class Word extends Element implements Serializable
 	/** Blank word constant. */
 	public static final Word	BLANK				= new Word(" ", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
+	/** Imported ordered fields names. Used in warnings messages. */
+	final static String[] IMPORT_FIELDS = {Messages.getString("Word.Field.Word"), Messages.getString("Word.Field.Lecture"), Messages.getString("Word.Field.Sound")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	
+	/** Unicode string of this word. */
+	private String	word	= null;
+
+	/** Lecture. */
+	private String	lecture	= null;
+
+	/** Path to a sound file of this word. */
+	private String	sound	= null;
+	
 	/**
 	 * Constructor from all fields.
 	 * 
@@ -43,7 +55,7 @@ public class Word extends Element implements Serializable
 	public Word(String word, String lecture, String sound, String significations, String themes)
 	{
 		super(significations, themes);
-		constructor(word, lecture, sound);
+		setWordFields(word, lecture, sound);
 	}
 
 	/**
@@ -56,7 +68,7 @@ public class Word extends Element implements Serializable
 	 * @param sound
 	 *            Path to a sound file representing this word.
 	 */
-	private void constructor(String word, String lecture, String sound)
+	private void setWordFields(String word, String lecture, String sound)
 	{
 		this.word = word;
 		this.lecture = lecture;
@@ -71,12 +83,8 @@ public class Word extends Element implements Serializable
 	 */
 	public Word(String importLine)
 	{
-		super();
-		importString(importLine);
-	}
-
-	/** Imported ordered fields names. Used in warnings messages. */
-	final static String[] IMPORT_FIELDS = {Messages.getString("Word.Field.Word"), Messages.getString("Word.Field.Lecture"), Messages.getString("Word.Field.Sound")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		super(importLine);
+	}	
 	
 	/**
 	 * Define this word values from an import string.
@@ -107,7 +115,7 @@ public class Word extends Element implements Serializable
 			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 
-		constructor(MyUtils.stripQuotes(mot), MyUtils.stripQuotes(lecture), MyUtils.stripQuotes(son));
+		setWordFields(MyUtils.stripQuotes(mot), MyUtils.stripQuotes(lecture), MyUtils.stripQuotes(son));
 
 		return MyUtils.joinStringElements(MyUtils.offsetObjectElements(attributs, 3), EXPORT_SEPARATOR);
 	}
@@ -127,15 +135,6 @@ public class Word extends Element implements Serializable
 		sb.append("\"" + sound + "\"" + EXPORT_SEPARATOR); //$NON-NLS-1$ //$NON-NLS-2$
 		return sb.toString();
 	}
-
-	/** Unicode string of this word. */
-	private String	word	= null;
-
-	/** Lecture. */
-	private String	lecture	= null;
-
-	/** Path to a sound file of this word. */
-	private String	sound	= null;
 
 	/**
 	 * Return this word unicode string.

@@ -39,13 +39,17 @@ public abstract class Element implements Serializable, Comparable<Element>
 
 	/** Separators that are allowed in one string list format. */
 	public static final String[]	FIELD_ALLOWED_SEPARATORS	= {",", ":", ";", "、", "；"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+	
 	/** Separator to be used to export one string lists. */
 	public static final String	FIELD_SEPARATOR				= FIELD_ALLOWED_SEPARATORS[0];
+	
+	/** Imported ordered fields names. Used in warnings messages. */
+	final static String[] IMPORT_FIELDS = {Messages.getString("Element.Field.Themes"), Messages.getString("Element.Field.Significations")}; //$NON-NLS-1$ //$NON-NLS-2$
 
 	/** Significations of the element. */
 	protected OneStringList	significations				= new OneStringList(FIELD_ALLOWED_SEPARATORS);
 
-	/** Themes in which the element is classed. */
+	/** Themes in which the element is categorized. */
 	protected OneStringList	themes						= new OneStringList(FIELD_ALLOWED_SEPARATORS);
 
 	/**
@@ -87,7 +91,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	}
 
 	/**
-	 * This method add element common fields to a string buffer, and then call
+	 * This method adds element common fields to a string buffer, and then call
 	 * _export() method which must be implemented in final classes.
 	 * 
 	 * @return String export line of this element.
@@ -140,9 +144,6 @@ public abstract class Element implements Serializable, Comparable<Element>
 	{
 		return getKey().compareTo(o.getKey());
 	}
-
-	/** Imported ordered fields names. Used in warnings messages. */
-	final static String[] IMPORT_FIELDS = {Messages.getString("Element.Field.Themes"), Messages.getString("Element.Field.Significations")}; //$NON-NLS-1$ //$NON-NLS-2$
 	
 	/**
 	 * Import element from import line. And return a new import line without the
@@ -168,21 +169,22 @@ public abstract class Element implements Serializable, Comparable<Element>
 			String errMsg = Messages.getString("Element.Import.WarningMissingFields") + " : \"" + importLine + "\" : " + MyUtils.joinStringElements(MyUtils.offsetObjectElements(IMPORT_FIELDS, Integer.valueOf(e.getMessage())), ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
-		constructor(MyUtils.stripQuotes(significations), MyUtils.stripQuotes(themes));
+		setElementFields(MyUtils.stripQuotes(significations), MyUtils.stripQuotes(themes));
 
 		return MyUtils.joinStringElements(MyUtils.offsetObjectElements(attributs, 3), EXPORT_SEPARATOR);
 	}
-
+	
 	/**
-	 * Empty constructor.
+	 * Import string constructor.
+	 * @param importLine Full import line.
 	 */
-	protected Element()
+	protected Element(String importLine)
 	{
-
+		importString(importLine);
 	}
-
+	
 	/**
-	 * Constructor with signification and themes fields.
+	 * Constructor.
 	 * 
 	 * @param significations
 	 *            Element significations string (can use any
@@ -192,13 +194,13 @@ public abstract class Element implements Serializable, Comparable<Element>
 	 *            Element themes (can use any FIELD_ALLOWED_SEPARATORS to
 	 *            separate each themes in the string).
 	 */
-	public Element(String significations, String themes)
+	protected Element(String significations, String themes)
 	{
-		constructor(significations, themes);
+		setElementFields(significations, themes);
 	}
-
+	
 	/**
-	 * Private method used as constructor.
+	 * Clear and set the significations and themes attributes.
 	 * 
 	 * @param significations
 	 *            Element significations string (can use any
@@ -208,7 +210,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	 *            Element themes (can use any FIELD_ALLOWED_SEPARATORS to
 	 *            separate each themes in the string).
 	 */
-	private void constructor(String significations, String themes)
+	protected void setElementFields(String significations, String themes)
 	{
 		this.significations.clear();
 		this.significations.addFromString(significations);
@@ -218,7 +220,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	}
 
 	/**
-	 * Get all this elements themes which starts with the begenning filter.
+	 * Get all this elements themes which starts with the beginning filter.
 	 * 
 	 * @param beginning
 	 *            Theme filter.
@@ -230,7 +232,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 	}
 
 	/**
-	 * Return all this element themes in one string format.
+	 * Return all this element themes in one string list format.
 	 * <code>"theme1" + FIELD_SEPARATOR + "theme2" + FIELD_SEPARATOR + "theme3" ...</code>
 	 * 
 	 * @return String of all this element themes separated by FIELD_SEPARATOR.
@@ -285,18 +287,21 @@ public abstract class Element implements Serializable, Comparable<Element>
 	/**
 	 * Do some cleaning task on the object, used to ensure compatibility with previous import/export method versions
 	 * This method can be overridden in subclasses, but must always call the superclass.pack().
-	 * This method should be always call before to export/save, or just after import/load an element.
+	 * This method should be always called before to export/save, or just after import/load an element.
 	 */
 	public void pack()
 	{
+		// Clean the OneStringLists
 		significations.removeEmptyElements();
 		themes.removeEmptyElements();
 		
+		// In old versions, class name was added to themes. We do not want it anymore.
 		if (themes.contains(this.getClass().getSimpleName()))
 		{
 			themes.remove(this.getClass().getSimpleName());
 		}
 		
+		// The element must be added to it's class translated theme, obtained via Messages resource.
 		if (!themes.contains(Messages.getString(this.getClass().getSimpleName())))
 		{
 			themes.add(Messages.getString(this.getClass().getSimpleName()));

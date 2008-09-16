@@ -29,29 +29,23 @@ import epsofts.KanjiNoSensei.utils.RefactoredClassNameTolerantObjectInputStream;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 
 /**
- * This class represent a User learning profile, it keep quizz statistics foreach elements, so the quizz can choose the bests elements to ask (the less known).
+ * This class represent a User learning profile, it keep quizz statistics for each elements, so the quizz can choose the bests elements to ask (the less known).
  */
 public class LearningProfile implements Serializable
 {
 	/**
 	 * Serialization version.
 	 */
-	private static final long					serialVersionUID	= 1L;
+	private static final long	serialVersionUID	= 1L;
 
 	/** Default user learning profile filename. */
-	public static final String					DEFAULT_PROFILE		= "myProfile.ulp";						//$NON-NLS-1$
+	public static final String	DEFAULT_PROFILE		= "myProfile.ulp";						//$NON-NLS-1$
 
 	/** Elements Unique ID / statistics map. */
-	TreeMap<String, Statistics>					statistics			= new TreeMap<String, Statistics>();
+	TreeMap<String, Statistics>	statistics			= new TreeMap<String, Statistics>();
 
 	/** Randomizer. */
-	private static final Random					random				= new Random();
-
-	/** Constructor. */
-	public LearningProfile()
-	{
-
-	}
+	private static final Random	random				= new Random();
 
 	/**
 	 * Loads a learning profile from File, throws IOException on ClassNotFound.
@@ -68,14 +62,12 @@ public class LearningProfile implements Serializable
 		LearningProfile learningProfile = null;
 
 		// Open file stream
-		FileInputStream fis = new FileInputStream(file);
-		ObjectInputStream ois = new RefactoredClassNameTolerantObjectInputStream(fis, RefactoringInfos.REFACTORED_PACKAGES);
+		ObjectInputStream ois = null;
 		try
 		{
+			ois = new RefactoredClassNameTolerantObjectInputStream(new FileInputStream(file), RefactoringInfos.REFACTORED_PACKAGES);
 			Object obj = ois.readObject();
-
 			if ( !LearningProfile.class.isInstance(obj)) throw new ClassNotFoundException();
-
 			learningProfile = (LearningProfile) obj;
 		}
 		catch (ClassNotFoundException e)
@@ -83,9 +75,10 @@ public class LearningProfile implements Serializable
 			KanjiNoSensei.log(Level.SEVERE, Messages.getString("LearningProfile.Open.ErrorOnElement") + " : " + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			throw new IOException(Messages.getString("LearningProfile.Open.ErrorOnElement") + " : " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$)
 		}
-
-		ois.close();
-		fis.close();
+		finally
+		{
+			if (ois != null) ois.close();
+		}
 
 		return learningProfile;
 	}
@@ -100,11 +93,24 @@ public class LearningProfile implements Serializable
 	 */
 	public void save(File file) throws IOException
 	{
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-		oos.writeObject(this);
-		oos.close();
+		ObjectOutputStream oos = null;
+		try
+		{
+			oos = new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(this);
+		}
+		finally
+		{
+			if (oos != null) oos.close();
+		}
 	}
 
+	/**
+	 * Update the stats for the given element and answer result.
+	 * @param elementUID
+	 * @param answerIsGood
+	 * @see Statistics
+	 */
 	public void addToStats(String elementUID, boolean answerIsGood)
 	{
 		Statistics stats = null;
@@ -129,48 +135,71 @@ public class LearningProfile implements Serializable
 		/** Serializable version. */
 		private static final long	serialVersionUID						= 1L;
 
+		/** One hour in miliseconds. */
 		public static final int		HEURE_MS								= 3600000;
 
+		/** SuccessRate weight in choice algorithm. */
 		public static final float	FACTOR_SuccessRate						= 100;
 
-		// Maximum age (millis) to force the element to be quizzed, even if success rate is 100%
+		/** Maximum age (ms) to force the element to be quizzed, even if success rate is 100%. */
 		public static float			FACTOR_LastQuestionMaxAge_MS			= HEURE_MS * 24 * 7;	// 7 days
 
-		// Minimum time to wait before to quizz a bad known element
+		/** Minimum time to wait before to quizz a bad known element. */
 		public static float			MIN_TimeToWaitBeforeQuizzBadElements	= 1000 * 60 * 2;		// 2 min
 
-		// NeedScore precision (musn't be to precise for randomization to work fine), numbe of digits after the unit (0 = integer).
+		/** NeedScore precision (must not be to precise for randomization to work fine), number of digits after the unit (0 = integer). */
 		public static final int		NEED_SCORE_PRECISION					= 0;
 
-		// Size of the unknown serie to roll, all the fist [UNKNOWN_SERIE_SIZE] unknown elements are loop quizzed. 0 disable the unknown serie loop.
+		/** Size of the unknown series to roll, all the fist [UNKNOWN_SERIE_SIZE] unknown elements are loop quizzed. 0 disable the unknown series loop. */
 		public static final int		UNKNOWN_SERIE_LOOP_SIZE					= 5;
 
-		public static int			unknownSerieLoopCurrentSize				= 0;
+		/** Unknown series current size. */
+		public int			unknownSerieLoopCurrentSize				= 0;
 
+		/** Flag set to true if quizz is currently in unknown series. */
 		transient private boolean	inUnknownSerie							= false;
 
+		/** Number of time the element was quizzed. */
 		private int					nbQuestions								= 0;
 
+		/** Number of good answers for this element. */
 		private int					nbGoodAnswers							= 0;
 
+		/** Last date this element was quizzed. */
 		private long				lastQuestionDate						= 0;
 
+		/**
+		 * Return number of time the element was quizzed.
+		 * @return number of time the element was quizzed.
+		 */
 		public int getNbQuestions()
 		{
 			return nbQuestions;
 		}
 
+		/**
+		 * Number of good answers for this element.
+		 * @return Number of good answers for this element.
+		 */
 		public int getNbGoodAnswers()
 		{
 			return nbGoodAnswers;
 		}
 
+		/**
+		 * Success rate defined such as {@code SuccessRate = nbGoodAnswers / nbQuestions}
+		 * @return success rate.
+		 */
 		public float getSuccessRate()
 		{
 			if (nbQuestions == 0) return 0;
 			return (Float.valueOf(nbGoodAnswers) / Float.valueOf(nbQuestions));
 		}
 
+		/**
+		 * Return last time this element was quizzed.
+		 * @return last time this element was quizzed.
+		 */
 		public long getLastQuestionAge()
 		{
 			return (System.currentTimeMillis() - lastQuestionDate);
@@ -178,8 +207,7 @@ public class LearningProfile implements Serializable
 
 		/**
 		 * Update this statistic with new answer.
-		 * 
-		 * @param answerIsGood
+		 * @param answerIsGood whether the answer was good or not.
 		 */
 		public synchronized void addToStats(boolean answerIsGood)
 		{
@@ -236,7 +264,8 @@ public class LearningProfile implements Serializable
 	}
 
 	/**
-	 * @return
+	 * Return set of elements UID for which statistics are available.
+	 * @return set of elements UID for which statistics are available.
 	 */
 	public Set<String> getElementsUID()
 	{
@@ -244,19 +273,19 @@ public class LearningProfile implements Serializable
 	}
 
 	/**
-	 * Compute which element should be quizzed next, according to the statistics of each elements.
+	 * Compute which element should be quizzed next from the given set of elements UID, according to the statistics of each elements.
 	 * 
-	 * @param dico
+	 * @param elementsUID Set of elementsUID from which to found the next element. 
 	 * @return String Element Unique ID
 	 */
-	public String getNextElement(Vector<String> dico)
+	public String getNextElement(Vector<String> elementsUID)
 	{
 		String currentElementUID = null;
 		float bestScore = Float.NEGATIVE_INFINITY;
 		float currentScore = bestScore;
 		Vector<String> bestsUIDs = new Vector<String>();
 
-		Iterator<String> itElements = dico.iterator();
+		Iterator<String> itElements = elementsUID.iterator();
 		while (itElements.hasNext())
 		{
 			currentElementUID = itElements.next();
@@ -284,8 +313,9 @@ public class LearningProfile implements Serializable
 	}
 
 	/**
-	 * @param key
-	 * @return
+	 * Return printable statistics for a given element UID.
+	 * @param elementUID of which we want statistic for.
+	 * @return printable statistics.
 	 */
 	public String getElementStats(String elementUID)
 	{
@@ -303,7 +333,9 @@ public class LearningProfile implements Serializable
 	}
 
 	/**
-	 * @param neverSeenElements
+	 * Add elements with empty statistics.
+	 * If an element from neverSeenElements is already known and has statistics, a SEVERE error is logged, but no exception is thrown.
+	 * @param neverSeenElements Set of elements UID of never seen elements.
 	 */
 	public void addNeverSeenElements(Vector<String> neverSeenElements)
 	{

@@ -153,7 +153,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 									}
 									
 
-									if (dictionnaire.chercherElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+									if (dictionnaire.getElement(new Kanji(c, "", "", "", "", "").getKey()) == null) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 									{
 										jLabelMsg.setText(jLabelMsg.getText() + "\n" + Messages.getString("WordEditionDialog.WarningKanjiMissing") + "'" + c + "'" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 									}

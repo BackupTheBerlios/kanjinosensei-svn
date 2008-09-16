@@ -26,6 +26,18 @@ public class Sentence extends Element implements Serializable
 	/** Blank sentence constant. */
 	public static final Sentence BLANK = new Sentence(" ", "", "", "", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 	
+	/** Imported ordered fields names. Used in warnings messages. */
+	final static String[] IMPORT_FIELDS = {Messages.getString("Sentence.Field.Sentence"), Messages.getString("Sentence.Field.Lecture"), Messages.getString("Sentence.Field.Sound")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	
+	/** Unicode string for this sentence. */
+	private String sentence = null;
+	
+	/** Lecture. */
+	private String lecture = null;
+	
+	/** Path to a sound file of this sentence. */
+	private String sound = null;
+	
 	/**
 	 * Constructor from all fields.
 	 * 
@@ -41,7 +53,7 @@ public class Sentence extends Element implements Serializable
 	public Sentence(String sentence, String lecture, String sound, String significations, String themes)
 	{
 		super(significations, themes);
-		constructor(sentence, lecture, sound);
+		setSentenceFields(sentence, lecture, sound);
 	}
 	
 	/**
@@ -50,7 +62,7 @@ public class Sentence extends Element implements Serializable
 	 * @param lecture Lecture of this sentence.
 	 * @param sound Path to a sound file representing this sentence.
 	 */
-	private void constructor(String sentence, String lecture, String sound)
+	private void setSentenceFields(String sentence, String lecture, String sound)
 	{
 		this.sentence = sentence;
 		this.lecture = lecture;
@@ -65,12 +77,8 @@ public class Sentence extends Element implements Serializable
 	 */
 	public Sentence(String importLine)
 	{
-		super();
-		importString(importLine);
+		super(importLine);
 	}
-	
-	/** Imported ordered fields names. Used in warnings messages. */
-	final static String[] IMPORT_FIELDS = {Messages.getString("Sentence.Field.Sentence"), Messages.getString("Sentence.Field.Lecture"), Messages.getString("Sentence.Field.Sound")}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	
 	/**
 	 * Define this sentence values from an import string.
@@ -101,7 +109,7 @@ public class Sentence extends Element implements Serializable
 			KanjiNoSensei.log(Level.WARNING, errMsg);
 		}
 		
-		constructor(MyUtils.stripQuotes(phrase), MyUtils.stripQuotes(lecture), MyUtils.stripQuotes(son));
+		setSentenceFields(MyUtils.stripQuotes(phrase), MyUtils.stripQuotes(lecture), MyUtils.stripQuotes(son));
 		
 		return MyUtils.joinStringElements(MyUtils.offsetObjectElements(attributs, 3), EXPORT_SEPARATOR);
 	}
@@ -121,15 +129,6 @@ public class Sentence extends Element implements Serializable
 		sb.append("\""+sound+"\""+EXPORT_SEPARATOR); //$NON-NLS-1$ //$NON-NLS-2$
 		return sb.toString();
 	}
-	
-	/** Unicode string for this sentence. */
-	private String sentence = null;
-	
-	/** Lecture. */
-	private String lecture = null;
-	
-	/** Path to a sound file of this sentence. */
-	private String sound = null;
 
 	/**
 	 * Return this sentence unicode string.
