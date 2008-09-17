@@ -271,6 +271,16 @@
 										<exclude name="**/SVN" />
 									</fileset>
 								</move>
+								
+								<!-- Copie spécifique à KanjiNoSensei -->
+								<echo>Copie du répertoire dico vers ${packagingDirectory}</echo>
+								<copy
+									todir="${packagingDirectory}/dico">
+									<fileset dir="${basedir}/dico">
+										<exclude name="**/*.csv" />
+										<exclude name="**/CVS" />
+									</fileset>
+								</copy>
 							</tasks>
 						</configuration>
 					</execution>
@@ -279,12 +289,14 @@
 						<goals>
 							<goal>run</goal>
 						</goals>
-						<phase>deploy</phase>
+						<phase>package</phase>
 						<inherited>false</inherited>
 						<configuration>
 							<tasks>
+								<!-- On génère l'installeur JAR-->
+								<property name="filenameBase" value="${projectName}-${projectVersion}" />
 								<property name="izpackInput" value="${packagingDirectory}/install.xml" />
-								<property name="izpackOutput" value="${installersDirectory}/${projectName}-installer.jar" />
+								<property name="izpackOutput" value="${installersDirectory}/${filenameBase}-installer.jar" />
 
 								<echo>Creation du dossier ${installersDirectory}</echo>
 								<mkdir dir="${installersDirectory}" />
@@ -293,20 +305,10 @@
 									${izpackOutput}</echo>
 								<taskdef name="izpack" classname="com.izforge.izpack.ant.IzPackTask" />
 								<izpack input="${izpackInput}" output="${izpackOutput}" basedir="${packagingDirectory}" />
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>izpack2exe</id>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<phase>deploy</phase>
-						<inherited>false</inherited>
-						<configuration>
-							<tasks>
-								<property name="izpack2exeInput" value="${installersDirectory}/${projectName}-installer.jar" />
-								<property name="izpack2exeOutput" value="${installersDirectory}/${projectName}-installer.exe" />
+								
+								<!-- On génère l'installeur EXE -->
+								<property name="izpack2exeInput" value="${installersDirectory}/${filenameBase}-installer.jar" />
+								<property name="izpack2exeOutput" value="${installersDirectory}/${filenameBase}-installer.exe" />
 
 								<echo>Execution de izpack2exe : ${izpack2exeInput} =>
 									${izpack2exeOutput}</echo>

@@ -12,7 +12,7 @@ import java.util.Vector;
 
 /**
  * This class represent a list of elements which support "one string format" input/output.
- * This class extends TreeSet&lt;E&gt; so each element is unique on the list.
+ * This class extends Vector&lt;String&gt; so each element is unique on the list.
  */
 public class OneStringList extends Vector<String>
 {

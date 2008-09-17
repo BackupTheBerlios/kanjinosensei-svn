@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
 <installation version="1.0">
-	<native type="izpack" name="ShellLink.dll"/>
 
 	<!--
 		The info section. The meaning of the tags should be natural ...
 	-->
 	<info>
-		<appname>KanjiNoSensei</appname>
-		<appversion>1.0c-SNAPSHOT</appversion>
+		<appname>${projectName}</appname>
+		<appversion>${projectVersion}</appversion>
 		<authors>
-			<author name="Pierre Escallier" email="p.escallier@laposte.net" />
+			<author name="${authorName}" email="${authorMail}" />
 		</authors>
-		<url>http://kanjinosensei.berlios.de/</url>
+		<url>${url}</url>
 	</info>
 
 	<!--
@@ -26,8 +25,8 @@
 		langpacks.
 	-->
 	<locale>
-		<!-- <langpack iso3="eng" /> -->
 		<langpack iso3="fra" />
+		<langpack iso3="eng" />
 	</locale>
 
 	<!--
@@ -55,7 +54,7 @@
 		<panel classname="PacksPanel" />
 		<panel classname="ShortcutPanel" />
 		<panel classname="InstallPanel" />
-		<panel classname="FinishPanel" />
+		<panel classname="SimpleFinishPanel" />
 	</panels>
 
 	<!--
@@ -64,15 +63,16 @@
 	<packs>
 		<pack name="Base" required="yes">
 			<description>The base files</description>
-			<file src="KanjiNoSensei.jar" targetdir="$INSTALL_PATH" />
+			<file src="${projectName}.jar" targetdir="$INSTALL_PATH" />
 			<file src="run.bat" targetdir="$INSTALL_PATH" />
 			<file src="run.sh" targetdir="$INSTALL_PATH" />
+			<file src="logging.properties" targetdir="$INSTALL_PATH" />
+			<file src="ico" targetdir="$INSTALL_PATH" />
 			<file src="lib" targetdir="$INSTALL_PATH" />
 			<file src="dico/dico.kjd" targetdir="$INSTALL_PATH/dico" />
-			<file src="ico" targetdir="$INSTALL_PATH" />
 
-			<executable targetfile="$INSTALL_PATH/KanjiNoSensei.jar"
-				type="jar" stage="never" />
+			<executable targetfile="$INSTALL_PATH/${projectName}.jar"
+				type="jar" stage="never" keep="true"/>
 			<executable targetfile="$INSTALL_PATH/run.sh" stage="never" />
 			<executable targetfile="$INSTALL_PATH/run.bat" stage="never" />
 		</pack>
@@ -91,4 +91,5 @@
 		</pack>
 	</packs>
 
+	<native type="izpack" name="ShellLink.dll"/>
 </installation>

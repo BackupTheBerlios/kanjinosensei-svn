@@ -32,7 +32,7 @@ public class MySoundPlayer extends Thread
 	/** JMF library supported extensions. */
 	final static String[]	JMF_PLAYER_SUPPORT	= {"gsm", "wav", "aif", "au"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	
-	/** ZOOM library suppoerted extentions. */
+	/** ZOOM library supported extensions. */
 	final static String[]	ZOOM_PLAYER			= {"mp3"}; //$NON-NLS-1$
 
 	/** MySoundPlayer event Id enumerated type. */
@@ -116,7 +116,10 @@ public class MySoundPlayer extends Thread
 	 */
 	public static abstract class MySoundPlayerAdapter implements MySoundPlayerListener
 	{
+		@Override
 		public void stateChanged(MySoundPlayerEvent evt) {}
+		
+		@Override
 		public void errorOccured(MySoundPlayerEvent evt) {}
 	}
 
@@ -244,31 +247,35 @@ public class MySoundPlayer extends Thread
 
 		String ext = MyUtils.getExtension(filename);
 
+		// We try to find a player to play the given file extension
+		
 		if (MyUtils.arrayToVector(JMF_PLAYER_SUPPORT).contains(ext))
 		{
 			File f = new File(filename);
+			javax.media.Player jmPlayer = null;
 			try
 			{
-				final javax.media.Player jmPlayer = Manager.createPlayer(f.toURI().toURL());
+				jmPlayer = Manager.createPlayer(f.toURI().toURL());
+				final javax.media.Player finalJmPlayer = jmPlayer;
 				
 				player = new AnyPlayer(filename, "JMF_PLAYER") //$NON-NLS-1$
 				{
 					@Override
 					void stop()
 					{
-						jmPlayer.stop();
+						finalJmPlayer.stop();
 					}
 
 					@Override
 					void play()
 					{
-						jmPlayer.start();
+						finalJmPlayer.start();
 					}
 
 					@Override
 					void close()
 					{
-						jmPlayer.close();
+						finalJmPlayer.close();
 					}
 
 				};
@@ -277,24 +284,29 @@ public class MySoundPlayer extends Thread
 			}
 			catch (Exception e)
 			{
+				MyUtils.safeClose(jmPlayer);
 				KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.JMF_Player.Error")+ " : " +e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
 
 		if (MyUtils.arrayToVector(ZOOM_PLAYER).contains(ext))
 		{
+			InputStream fis = null;
+			BufferedInputStream bis = null;
+			AdvancedPlayer advPlayer = null;
 			try
 			{
-				InputStream fin = new FileInputStream(filename);
-				final BufferedInputStream bin = new BufferedInputStream(fin);
-				final AdvancedPlayer advPlayer = new AdvancedPlayer(bin, FactoryRegistry.systemRegistry().createAudioDevice());
+				fis = new FileInputStream(filename);
+				bis = new BufferedInputStream(fis);
+				advPlayer = new AdvancedPlayer(bis, FactoryRegistry.systemRegistry().createAudioDevice());
+				final AdvancedPlayer finalAdvPlayer = advPlayer;
 				
 				player = new AnyPlayer(filename, "ZOOM_PLAYER") //$NON-NLS-1$
 				{
 					@Override
 					void stop()
 					{
-						advPlayer.stop();
+						finalAdvPlayer.stop();
 					}
 
 					@Override
@@ -302,7 +314,7 @@ public class MySoundPlayer extends Thread
 					{
 						try
 						{
-							advPlayer.play();
+							finalAdvPlayer.play();
 						}
 						catch (JavaLayerException e)
 						{
@@ -314,7 +326,7 @@ public class MySoundPlayer extends Thread
 					@Override
 					void close()
 					{
-						advPlayer.close();
+						finalAdvPlayer.close();
 					}
 
 				};
@@ -323,6 +335,9 @@ public class MySoundPlayer extends Thread
 			}
 			catch (Exception e)
 			{
+				MyUtils.safeClose(fis);
+				MyUtils.safeClose(bis);
+				MyUtils.safeClose(advPlayer);
 				KanjiNoSensei.log(Level.SEVERE, Messages.getString("MySoundPlayer.ZOOM_Player.Error")+ " : "+e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 		}
@@ -375,7 +390,7 @@ public class MySoundPlayer extends Thread
 	{
 		if (player != null)
 		{
-			player.close();
+			MyUtils.safeClose(player);
 			try
 			{
 				this.join();

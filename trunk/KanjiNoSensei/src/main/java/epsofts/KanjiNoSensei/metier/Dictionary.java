@@ -187,7 +187,14 @@ public class Dictionary implements Serializable
 		}
 		finally
 		{
-			if (oos != null) oos.close();
+			try
+			{
+				if (oos != null) oos.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 	}
 
@@ -293,7 +300,14 @@ public class Dictionary implements Serializable
 		}
 		finally
 		{
-			if (br != null) br.close();
+			try
+			{
+				if (br != null) br.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 	}
 
@@ -310,15 +324,17 @@ public class Dictionary implements Serializable
 		KanjiNoSensei.log(Level.INFO, Messages.getString("Dictionary.OpeningFile") + " \"" + file.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		// Open file stream
 		ObjectInputStream ois = null;
+		FileInputStream fis = null;
 		try
 		{
-			ois = new RefactoredClassNameTolerantObjectInputStream(new FileInputStream(file), RefactoringInfos.REFACTORED_PACKAGES);
+			fis = new FileInputStream(file);
+			ois = new RefactoredClassNameTolerantObjectInputStream(fis, RefactoringInfos.REFACTORED_PACKAGES);
 
 			elements.clear();
 
 			// While objects are available on stream, add them to the dictionnary.
 			Object obj = null;
-			while (ois.available() > 0) // TODO: ObjectInputStream.available() == FileInputStream.available() ?
+			while (fis.available() > 0) // TODO: ObjectInputStream.available() == FileInputStream.available() ?
 			{
 				Element element = null;
 				try
@@ -343,7 +359,15 @@ public class Dictionary implements Serializable
 		}
 		finally
 		{
-			ois.close();
+			try
+			{
+				if (fis != null) fis.close();
+				if (ois != null) ois.close();				
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 	}
 

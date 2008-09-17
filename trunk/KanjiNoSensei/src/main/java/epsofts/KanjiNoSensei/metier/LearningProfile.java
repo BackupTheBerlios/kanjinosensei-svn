@@ -77,7 +77,14 @@ public class LearningProfile implements Serializable
 		}
 		finally
 		{
-			if (ois != null) ois.close();
+			try
+			{
+				if (ois != null) ois.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 
 		return learningProfile;
@@ -101,7 +108,14 @@ public class LearningProfile implements Serializable
 		}
 		finally
 		{
-			if (oos != null) oos.close();
+			try
+			{
+				if (oos != null) oos.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 	}
 

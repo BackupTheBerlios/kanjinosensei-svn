@@ -6,10 +6,12 @@ import java.awt.Container;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,10 +43,15 @@ import nl.jj.swingx.gui.modal.JModalFrame;
  */
 public abstract class MyUtils
 {
+	/** Trace Logger.
+	 * @see MyUtils#trace(Level, String)
+	 */
 	static private final Logger	log = Logger.getLogger(MyUtils.class.getName());
+	static public Level logMinLevel = Level.ALL;
 	
 	/**
 	 * Test the system fonts and report which ones are able to display testing character (unicode).
+	 * Use System I/O.
 	 */
 	static public void testFonts()
 	{
@@ -495,13 +502,13 @@ public abstract class MyUtils
 	/**
 	 * Convert kana string to romaji, whatever the kana type.
 	 * 
-	 * @param kanas
+	 * @param kana
 	 *            Kana string to convert.
 	 * @return romaji converted string.
 	 */
-	public static String kanasToRomaji(String kanas)
+	public static String kanaToRomaji(String kana)
 	{
-		return katakanaToRomaji(hiraganaToRomaji(kanas));
+		return katakanaToRomaji(hiraganaToRomaji(kana));
 	}
 
 	/** List of all available Look&Feels. */
@@ -672,15 +679,15 @@ public abstract class MyUtils
 																															// Naturaly equals (ignore case)
 																															if (natural == 0) return 0;
 
-																															// o1 in kanas, o2 romaji
-																															String wo1 = kanasToRomaji(o1);
+																															// o1 in kana, o2 romaji
+																															String wo1 = kanaToRomaji(o1);
 																															if (( !wo1.isEmpty()) && (wo1.compareToIgnoreCase(o2) == 0)) return 0;
 
-																															// o1 in romaji, o2 in kanas
-																															String wo2 = kanasToRomaji(o2);
+																															// o1 in romaji, o2 in kana
+																															String wo2 = kanaToRomaji(o2);
 																															if (( !wo2.isEmpty()) && (wo2.compareToIgnoreCase(o1) == 0)) return 0;
 
-																															// o1 and o2 in kanas (one in hiragana, the other in katakana),
+																															// o1 and o2 in kana (one in hiragana, the other in katakana),
 																															// we assume it is not ok.
 																															// no condition met, return natural comparison result.
 																															return natural;
@@ -799,18 +806,36 @@ public abstract class MyUtils
 		return subject;
 	}
 
-	public static boolean	logDisable	= false;
-
+	/**
+	 * Log in MyUtils.log logger.
+	 * Logger can be defined in properties file, using JVM option {@literal -Djava.util.logging.config.file=[properties file]}
+	 * @see Logger
+	 * @param level Trace level.
+	 * @param trace Trace message.
+	 */
 	public static void trace(Level level, String trace)
 	{
+		if (level.intValue() < logMinLevel.intValue()) return;
 		log.log(level, trace);
 	}
 
+	/**
+	 * Throw RuntimeException with given error message if condition is not false. 
+	 * @param condition Condition supposed to be false.
+	 * @param errMsg Error message if condition is true.
+	 * @throws RuntimeException if condition is true.
+	 */
 	public static void assertFalse(boolean condition, String errMsg)
 	{
 		assertTrue( !condition, errMsg);
 	}
 
+	/**
+	 * Throw RuntimeException with given error message if condition is false.
+	 * @param condition Condition supposed to be true.
+	 * @param errMsg Error message if condition is false.
+	 * @throws RuntimeException if condition is false.
+	 */
 	public static void assertTrue(boolean condition, String errMsg)
 	{
 		if ( !condition)
@@ -819,6 +844,10 @@ public abstract class MyUtils
 		}
 	}
 
+	/**
+	 * Safe sleep, call {@link Thread#sleep(long)} and catch InterruptedException.
+	 * @param millis time to sleep (milliseconds).
+	 */
 	public static void sleep(long millis)
 	{
 		trace(Level.FINEST, "Debut sleep " + millis); //$NON-NLS-1$
@@ -834,37 +863,24 @@ public abstract class MyUtils
 		trace(Level.FINEST, "Fin sleep " + millis); //$NON-NLS-1$
 	}
 
-	public static class MyModalFrame extends JModalFrame
-	{
-
-		private static final long	serialVersionUID	= 1L;
-
-		private static final Component getFirstComponent(Window window)
-		{
-			if (window == null) return null;
-
-			if (window.getComponentCount() <= 0)
-			{
-				JButton jButton = new JButton("FAKE"); //$NON-NLS-1$
-				jButton.setVisible(true);
-				window.add(jButton, BorderLayout.CENTER);
-			}
-
-			return window.getComponent(0);
-		}
-
-		public MyModalFrame(Window owner, boolean modal)
-		{
-			super(owner, getFirstComponent(owner), modal);
-		}
-
-	}
-
+	/**
+	 * Interface that define something can be done on a Component.
+	 */
 	public static interface DoItToThisComponent
 	{
+		/**
+		 * Implement what must be done on the given component.
+		 * @param c The target component.
+		 */
 		void doIt(Component c);
 	};
 
+	/**
+	 * Apply a {@link DoItToThisComponent} from the given Component c to every of its sub component (if c is instance of {@link Container} or {@link Window}.
+	 * @param c Parent component.
+	 * @param doIt DoItToThisComponent object to apply.
+	 * @param thisComponentFirst Specify is the parent component is processed first (true) or last (false).
+	 */
 	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt, boolean thisComponentFirst)
 	{
 		if (thisComponentFirst)
@@ -894,6 +910,7 @@ public abstract class MyUtils
 		}
 	}
 
+	/** Static DoItToThisComponent used to refresh UI. */
 	public static DoItToThisComponent	DO_UPDATEUI_REFRESH	= new DoItToThisComponent()
 															{
 
@@ -908,12 +925,22 @@ public abstract class MyUtils
 
 															};
 
+	/**
+	 * Generate the L&F menu, which will be applied from the given rootComponent. 
+	 * @param rootComponent Root component on which to apply refresh when L&F is changed.
+	 * @return L&F menu.
+	 */
 	public static JMenu getUIMenu(final Component rootComponent)
 	{
 		Component[] roots = {rootComponent};
 		return getUIMenu(roots);
 	}
 
+	/**
+	 * Generate the L&F menu, which will be applied from all the given rootComponents.
+	 * @param rootComponents Root components on which to apply refresh when L&F is changed.
+	 * @return L&F menu.
+	 */
 	public static JMenu getUIMenu(final Component[] rootComponents)
 	{
 		final HashMap<String, String> vLFclass = listLookAndFeels();
@@ -954,6 +981,12 @@ public abstract class MyUtils
 		return jMenuUI;
 	}
 	
+	/**
+	 * Call {@link refreshComponent} on the given component and all its sub components.
+	 * @see doItToAllSubComponents
+	 * @see refreshComponent
+	 * @param c Root component to refresh.
+	 */
 	public static void refreshComponentAndSubs(Component c)
 	{
 		doItToAllSubComponents(c, new DoItToThisComponent()
@@ -968,6 +1001,10 @@ public abstract class MyUtils
 		}, false);
 	}
 	
+	/**
+	 * Call {@link Component#invalidate()}, {@link Component#validate()} and {@link Component#repaint()} on the given component.
+	 * @param c Component to refresh.
+	 */
 	public static void refreshComponent(Component c)
 	{
 		c.invalidate();
@@ -975,6 +1012,11 @@ public abstract class MyUtils
 		c.repaint();
 	}
 	
+	/**
+	 * Convert milliseconds time to String, using {@link Messages} strings resource.
+	 * @param time Time to convert.
+	 * @return Readable time.
+	 */
 	public static String timeToString(long time)
 	{		
 		long days = time / (1000*60*60*24);
@@ -1008,6 +1050,11 @@ public abstract class MyUtils
 		return "0"+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 	
+	/**
+	 * Ensure the given runnable will be run in the EventDispatchThread.
+	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeLater(Runnable)} the given runnable.
+	 * @param runnable Runnable to run in EDT.
+	 */
 	public static void InvokeLaterEDT(Runnable runnable)
 	{
 		if (SwingUtilities.isEventDispatchThread())
@@ -1020,6 +1067,11 @@ public abstract class MyUtils
 		}
 	}
 	
+	/**
+	 * Ensure the given runnable will be run in the EventDispatchThread, and wait it finishes.
+	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeAndWait(Runnable)} the given runnable.
+	 * @param runnable Runnable to run in EDT.
+	 */
 	public static void InvokeAndWaitEDT(Runnable runnable) throws InterruptedException, InvocationTargetException
 	{
 		if (SwingUtilities.isEventDispatchThread())
@@ -1032,6 +1084,12 @@ public abstract class MyUtils
 		}
 	}
 	
+	/**
+	 * Ensure the given runnable will not be run in the EventDispatchThread.
+	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}.
+	 * If it is, create and start a new {@link Thread} with the given runnable, else, run the given runnable (in the current Thread).
+	 * @param runnable Runnable to run out of EDT.
+	 */
 	public static void InvokeNoEDT(Runnable runnable)
 	{
 		if (SwingUtilities.isEventDispatchThread())
@@ -1044,6 +1102,14 @@ public abstract class MyUtils
 		}
 	}
 	
+	/**
+	 * Compare strings that can be null.
+	 * Strings are assumed to be equals if they're both null or if {@code s1.compareTo(s2) == 0}.
+	 * @see String#compareTo(String)
+	 * @param s1 String to compare.
+	 * @param s2 String to compare.
+	 * @return True if {@code s1.compareTo(s2) == 0} or if both s1 and s2 are null.
+	 */
 	public static boolean compareNullableStrings(String s1, String s2)
 	{
 		if (s1 == null)
@@ -1052,5 +1118,50 @@ public abstract class MyUtils
 		}
 		
 		return (s1.compareTo(s2) == 0);
+	}
+	
+	/**
+	 * Try to find a close() method on the object, and call it.
+	 * Every exception are caught, NoSuchMethodException is logged.
+	 * @param obj Object to call close() method on.
+	 */
+	public static void safeClose(Object obj)
+	{
+		if (obj != null)
+		{
+			try
+			{
+				Method close = obj.getClass().getMethod("close"); //$NON-NLS-1$
+				close.invoke(obj);
+			}
+			catch(NoSuchMethodException e1)
+			{
+				MyUtils.trace(Level.WARNING, "Try to close an object that has no close() method : "+e1.getMessage());
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
+		}
+	}
+	
+	/**
+	 * Try to call close() method on the given closeable, and catch every exception thrown.
+	 * This method is safe if the object is already closed, or never been opened.
+	 * @param closeable Closeable to close.
+	 */
+	public static void safeClose(Closeable closeable)
+	{
+		if (closeable != null)
+		{
+			try
+			{
+				closeable.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
+		}
 	}
 }

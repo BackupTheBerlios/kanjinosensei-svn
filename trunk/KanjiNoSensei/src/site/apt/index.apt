@@ -7,39 +7,39 @@
 
 Présentation brève
 
-	Kanji no Sensei est un moteur de flashcard amélioré dont le but est d'aider à l'apprentissage des kanjis et du vocabulaire de la langue japonaise.
+	Kanji no Sensei est un moteur de flashcard amélioré dont le but est d'aider à l'apprentissage des kanji et du vocabulaire de la langue japonaise.
 	Un logiciel dit "flashcard" est un logiciel qui se propose d'aider les utilisateurs à étudier, apprendre ou réviser des connaissances, celles-ci étant généralement scolaires.
 	L'étude se fait par des exercices interactifs et souvent répétitifs qui doivent permettre à l'utilisateur de mémoriser les connaissances.
 	
-	Ce type de logiciel est dont spécialement adapté pour les connaissances à aquérir par le "par coeur", et l'exercice de base pour celà est le Quiz. 
-	Le Quiz permet d'interroger l'utilisateur sur les connaissances à apprendre, de façon aléatoire et automatique de sorte que les connaissances soient assimilées naturellement à force de les répéter.
+	Ce type de logiciel est donc spécialement adapté pour les connaissances à acquérir par le "par coeur" et l'exercice de base pour cela est le Quiz.
+	Le Quiz permet à l'utilisateur de tester lui-même ces connaissances (ou d'auto-tester son niveau) et surtout d'en acquérir naturellement d'autres par le biais de la répétition aléatoire et automatique que propose le logiciel.
 
 Un moteur de flashcard évolutif
 
 	Le moteur de flashcard de Kanji no Sensei permet de manière générale :
 	
-		* De naviguer parmis la base de connaissances des éléments d'apprentissage.
+		* De naviguer parmi la base de connaissances des éléments d'apprentissage.
 		
-		* De sélectionner ceux que l'ont souhaite intégrer au prochain Quiz.
+		* De sélectionner ceux que l'on souhaite intégrer au prochain Quiz.
 		
-		* De configurer le Quiz pour chaque type d'élements :
+		* De configurer le Quiz pour chaque type d'éléments :
 			
-			* Choisir parmis les différentes vues disponible pour l'affichage de la question.
+			* Choisir parmi les différentes vues disponible pour l'affichage de la question.
 			
-			* Choisir parmis les différents modes de saisie de la réponse.
+			* Choisir parmi les différents modes de saisie de la réponse.
 			
-			* Choisir parmis les différentes vues disponibles pour l'affichage de la solution.
+			* Choisir parmi les différentes vues disponibles pour l'affichage de la solution.
 		
 		* De jouer en Quiz les éléments sélectionnés dans la base de connaissance.
 	 
 	Les types d'éléments disponibles sont définis dans des plugins, ce qui rend le moteur évolutif et adaptable à tout type de données.
 
-	Des plugins sont développés initialement pour l'apprentissage des kanjis et du vocabulaire japonais.
+	Des plugins sont développés initialement pour l'apprentissage des kanji et du vocabulaire japonais.
 
 Contenu pour l'apprentissage du Japonais
 
-	Kanji no Sensei est développé de sorte que le moteur soit découplé du contenu (grace à un systeme de plugins), mais un contenu de base pour l'apprentissage de kanjis et de vocabulaire japonais est constitué en parallèle.
+	Kanji no Sensei est développé de sorte que le moteur soit découplé du contenu (grâce à un systeme de plugins), mais un contenu de base pour l'apprentissage de kanjis et de vocabulaire japonais est constitué en parallèle.
 	Ce contenu prend modèle sur les cours délivrés en section LEA de l'Université Toulouse le Mirail.
-	Etant moi même étudiant et développant sur mon temps libre, je ne peux pas garantir l'entière fiabilité des données que je saisie (coquilles, ...), néanmoins je fais de mon mieux et je compte sur la bonne volonté des utilisateurs pour me signaler toute erreur restante afin que je la corrige.
+	Etant moi même étudiant et développant sur mon temps libre, je ne peux pas garantir l'entière fiabilité des données que je saisis (coquilles, ...), néanmoins je fais de mon mieux et je compte sur la bonne volonté des utilisateurs pour me signaler toute erreur restante afin que je la corrige.
 
 	{{{mailto:p.escallier@laposte.net}Escallier Pierre}}

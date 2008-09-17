@@ -53,17 +53,27 @@ public class Config
 			}
 		}
 		
-		FileInputStream fis;
+		FileInputStream fis = null;
 		try
 		{
 			fis = new FileInputStream(fic);
 			SINGLETON.CONFIG.load(fis);
-			fis.close();
 		}
 		catch (IOException e)
 		{
 			KanjiNoSensei.log(Level.SEVERE, Messages.getString("Config.Error.OpeningFile")); //$NON-NLS-1$
 			throw e;
+		}
+		finally
+		{
+			try
+			{
+				if (fis != null) fis.close();
+			}
+			catch(Exception e)
+			{
+				// Nothing.
+			}
 		}
 	}
 

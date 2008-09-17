@@ -91,7 +91,7 @@ public abstract class VueElement
 	{
 		if (useRomaji)
 		{
-			return MyUtils.kanasToRomaji(subject);
+			return MyUtils.kanaToRomaji(subject);
 		}
 
 		return subject;

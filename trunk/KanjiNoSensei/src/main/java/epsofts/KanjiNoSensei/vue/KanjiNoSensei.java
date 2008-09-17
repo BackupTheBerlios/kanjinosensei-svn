@@ -110,7 +110,7 @@ import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeEvent;
 import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeListener;
 import epsofts.KanjiNoSensei.utils.MyUtils.DoItToThisComponent;
-import epsofts.KanjiNoSensei.utils.MyUtils.MyModalFrame;
+import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.vue.VueElement.NoAffException;
 import epsofts.KanjiNoSensei.vue.VueElement.NoSaisieException;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizConfigPanel;
@@ -142,7 +142,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			e.printStackTrace();
 		}
 
-		MyUtils.logDisable = !DEV_ACCESS;
+		MyUtils.logMinLevel = (DEV_ACCESS?Level.ALL:Level.WARNING);
 	}
 
 	private static class Presets
@@ -225,7 +225,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private Presets											presets							= null;
 
-	public final String										KanjiNoSensei_VERSION			= "1.0c";																									//$NON-NLS-1$
+	public final String										KanjiNoSensei_VERSION			= "1.0-SNAPSHOT";																									//$NON-NLS-1$
 
 	static boolean											USE_ROMAJI						= Boolean.parseBoolean(Config.getString("GeneralConfig.UseRomaji", "false"));								//$NON-NLS-1$ //$NON-NLS-2$
 
@@ -2644,7 +2644,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		if (jLabelLien == null)
 		{
 			jLabelLien = new JTextPane();
-			jLabelLien.setText("http://kanjinosensei.berlios.de"); //$NON-NLS-1$
+			jLabelLien.setText("http://kanjinosensei.axan.org"); //$NON-NLS-1$
 			jLabelLien.setEditable(false);
 			jLabelLien.addMouseListener(new MouseAdapter()
 			{

@@ -40,6 +40,11 @@ public class MyCheckBoxTree extends CheckboxTree
 	private Boolean							isTreeStable		= true;
 
 	
+	/**
+	 * Clear the tree and set the new data. The data is defined by a Map<String, Boolean> object, each key represent a node full path, and the value specify if the node is currently checked or not.
+	 * @param nodes Map, the key represent a node full path, the value define if the node is currently checked.
+	 * @see MyCheckBoxTree#addTreeData(Map)
+	 */
 	public synchronized void setTreeData(Map<String, Boolean> nodes)
 	{
 		setTreeStable(false);
@@ -47,6 +52,11 @@ public class MyCheckBoxTree extends CheckboxTree
 		addTreeData(nodes);
 	}
 	
+	/**
+	 * Add the data to the current ones.
+	 * @param nodes Map, the key represent a node full path, the value define if the node is currently checked.
+	 * @see MyCheckBoxTree#setTreeData(Map)
+	 */
 	public synchronized void addTreeData(Map<String, Boolean> nodes)
 	{
 		setTreeStable(false);
@@ -161,16 +171,19 @@ public class MyCheckBoxTree extends CheckboxTree
 			@Override
 			public void treeStructureChanged(TreeModelEvent e)
 			{
+				// Nothing.
 			}
 
 			@Override
 			public void treeNodesRemoved(TreeModelEvent e)
 			{
+				// Nothing.
 			}
 
 			@Override
 			public void treeNodesInserted(TreeModelEvent e)
 			{
+				// Nothing.
 			}
 
 			@Override
@@ -194,7 +207,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	}
 
 	/**
-	 * Private method called to fire {@link MyCheckBoxTreeListener#treeNodesChanged(utils.MyCheckBoxTree.MyCheckBoxTreeEvent)} on listener.
+	 * Private method called to fire {@link MyCheckBoxTreeListener#treeNodesChanged(MyCheckBoxTreeEvent)} on listener.
 	 * 
 	 * @param path
 	 *            The path who changed.
@@ -220,7 +233,6 @@ public class MyCheckBoxTree extends CheckboxTree
 
 			MyCheckBoxTreeEvent chkEvent = new MyCheckBoxTreeEvent(completeNodePath, item, selected, isTreeStable);
 			listener.treeNodesChanged(chkEvent);
-
 		}
 	}
 
@@ -236,7 +248,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	}
 
 	/**
-	 * Event class used to fire {@link MyCheckBoxTreeListener} methods. This event provide item path wich fire the event, its label and selection state.
+	 * Event class used to fire {@link MyCheckBoxTreeListener} methods. This event provide item path which fire the event, its label and selection state.
 	 * 
 	 * @author Escallier Pierre
 	 */
@@ -284,20 +296,20 @@ public class MyCheckBoxTree extends CheckboxTree
 		 * Fire when a tree node has changed (check state changed).
 		 * 
 		 * @param e
-		 *            MyCheckBoxTreeEvent providing usefull informations.
+		 *            MyCheckBoxTreeEvent providing useful informations.
 		 */
 		void treeNodesChanged(MyCheckBoxTreeEvent e);
 	}
 
 	/**
-	 * Set the selection state of all the given path subnodes.
+	 * Set the selection state of all the given path sub nodes.
 	 * 
 	 * @param path
 	 *            Parent path from where to set the selection state.
 	 * @param selected
 	 *            Selection state to set.
 	 * @param subLevel
-	 *            Maximum sublevel depth to visit.
+	 *            Maximum sub level depth to visit.
 	 */
 	public synchronized void setSubTreeSelected(TreePath path, boolean selected, int subLevel)
 	{
@@ -309,7 +321,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	}
 
 	/**
-	 * Private recursive method used to set subnodes selection state.
+	 * Private recursive method used to set sub nodes selection state.
 	 * 
 	 * @param node
 	 *            Current visited node.
@@ -318,7 +330,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	 * @param level
 	 *            Current depth level.
 	 * @param subLevel
-	 *            Maxmimum sublevel depth to visit.
+	 *            Maxmimum sub level depth to visit.
 	 */
 	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	private void checkSubsFrom(DefaultMutableTreeNode node, boolean parentState, int level, int subLevel)
@@ -357,10 +369,6 @@ public class MyCheckBoxTree extends CheckboxTree
 		{
 			getCheckingModel().removeCheckingPath(path);
 		}
-		
-		/*
-		 * Useless untill getCheckingModel().add/removeCheckingPath() fire treeModelListener.treeNodesChanged. processTreeNodesChanged(path);
-		 */
 	}
 
 	/**
