@@ -5,6 +5,7 @@ import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingEvent;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingListener;
 import it.cnr.imaa.essi.lablib.gui.checkboxtree.TreeCheckingModel.CheckingMode;
 
+import java.lang.ref.WeakReference;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class MyCheckBoxTree extends CheckboxTree
 	private final DefaultMutableTreeNode	root;
 
 	/** Current tree listener. */
-	private MyCheckBoxTreeListener			listener			= null;
+	private MyCheckBoxTreeListener			listener = null;
 
 	/** State flag. */
 	private Boolean							isTreeStable		= true;

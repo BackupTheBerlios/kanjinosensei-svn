@@ -62,7 +62,7 @@ class KanjiQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRepon
 	 * @return
 	 * @throws NoSaisieException 
 	 */
-	public static QuizSaisieReponsePanel getKanjiQuizSaisiePanel(VueKanji vue, Dictionary dictionnaire) throws NoSaisieException
+	public static QuizSaisieReponsePanel getKanjiQuizSaisiePanel(VueKanji vue) throws NoSaisieException
 	{
 		if (singleton == null)
 		{

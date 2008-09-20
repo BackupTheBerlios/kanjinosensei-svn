@@ -448,6 +448,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 		return v;
 	}
 
+	public static KanjiNoSensei getApp()
+	{
+		return app;
+	}
+	
 	private KanjiNoSensei(File fic_config, File fic_dico, File fic_profile, File fic_presets) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
 	{
 		assert (app == null);
@@ -458,7 +463,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		while (itPlugins.hasNext())
 		{
 			Class<? extends Element> plugin = itPlugins.next();
-			vuesBlank.put(plugin, VueElement.genererVueBlankElement(app, plugin, USE_ROMAJI));
+			vuesBlank.put(plugin, VueElement.genererVueBlankElement(plugin, USE_ROMAJI));
 		}
 
 		if (fic_config == null)
@@ -632,7 +637,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 			afficherBaseFrame.setMinimumSize(getAfficherBaseContentPane().getMinimumSize());
 			afficherBaseFrame.setMaximumSize(getAfficherBaseContentPane().getMaximumSize());
 			afficherBaseFrame.setPreferredSize(getAfficherBaseContentPane().getPreferredSize());
-			afficherBaseFrame.doLayout();
+			
+			Point loc = getJFrame().getLocation();
+			loc.translate(20, 20);
+			afficherBaseFrame.setLocation(loc);
+			afficherBaseFrame.pack();
 			
 			// <JiglooProtected>
 			afficherBaseFrame.addComponentListener(new ComponentAdapter()
@@ -644,14 +653,15 @@ public class KanjiNoSensei implements PropertyChangeListener
 					getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif);
 					getJTextFieldElementsFiltre().setText(filtreElementsTxt);
 					getJCheckBoxElementsFiltre().setSelected(filtreElementsActif);
-					afficherBaseFrame.doLayout();
 					
+					//TODO: Eviter d'apeller ces méthodes lorsque le contenu n'as pas de raison d'avoir changé (lorsqu'on a validé avec "Valider").
 					afficherBaseFrameMAJZoneThemes();
 					afficherBaseFrameMAJZoneElements();
 				}
 			});
 			// <JiglooProtected>
 
+			/*
 			afficherBaseFrame.addWindowListener(new WindowAdapter()
 			{
 				// </JiglooProtected>
@@ -667,6 +677,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 					afficherBaseFrameMAJZoneElements();
 				}
 			});
+			*/
 		}
 
 		return afficherBaseFrame;
@@ -842,7 +853,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 				element = itElements.next();
 				try
 				{
-					final VueElement vueElement = VueElement.genererVueElement(KanjiNoSensei.app, element, USE_ROMAJI);
+					final VueElement vueElement = VueElement.genererVueElement(element, USE_ROMAJI);
 					final JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
 
 					final JPanel selectablePanel = new JPanel(new BorderLayout(0, 0));
@@ -975,7 +986,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 				}
 			}
 			
-			KanjiNoSensei.app.getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(10, Math.min(1000, (KanjiNoSensei.app.getJPanelElementsListe().getComponentCount() * 1))));
+			int incMin = 10, incMax = 100; 
+			KanjiNoSensei.app.getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(incMin, Math.min(incMax, (KanjiNoSensei.app.getJPanelElementsListe().getComponentCount() * 1))));
 			MyUtils.refreshComponentAndSubs(KanjiNoSensei.app.getAfficherBaseContentPane());
 			MyUtils.trace(Level.INFO, "</GetListeElements.done>");
 		}
@@ -1001,7 +1013,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		}
 		// We are in EDT
 
-		String filtreElement = jTextFieldElementsFiltre.getText();
+		String filtreElement = getJTextFieldElementsFiltre().getText();
 		if ( !jCheckBoxElementsFiltre.isSelected())
 		{
 			filtreElement = null;
@@ -1208,7 +1220,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 				public void actionPerformed(ActionEvent evt)
 				{
 					MyUtils.trace(Level.FINEST, "jTextFieldThemesFiltre.actionPerformed, event=" + evt); //$NON-NLS-1$
-					jTextFieldElementsFiltre.transferFocus();
+					jTextFieldThemesFiltre.transferFocus();
 				}
 			});
 		}
@@ -1352,10 +1364,6 @@ public class KanjiNoSensei implements PropertyChangeListener
 				public void actionPerformed(java.awt.event.ActionEvent e)
 				{
 					JFrame afficherBaseFrame = getAfficherBaseFrame();
-					afficherBaseFrame.pack();
-					Point loc = getJFrame().getLocation();
-					loc.translate(20, 20);
-					afficherBaseFrame.setLocation(loc);
 					afficherBaseFrame.setVisible(true);
 				}
 			});
@@ -2214,7 +2222,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				elementQuestionEnCours = dictionnaireQuizEnCours.getNextElementFromLearningProfile(dejaVus, userLearningProfile);
 				// elementQuestionEnCours = dictionnaireQuizEnCours.getRandomElement(dejaVus);
-				vueElementQuestionEnCours = VueElement.genererVueElement(this, elementQuestionEnCours, USE_ROMAJI);
+				vueElementQuestionEnCours = VueElement.genererVueElement(elementQuestionEnCours, USE_ROMAJI);
 			}
 			catch (DictionaryNoMoreElementException e1)
 			{
@@ -2236,7 +2244,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			try
 			{
 				panelQuestion = vueElementQuestionEnCours.getQuizQuestionPanel().getPanel();
-				panelSaisieReponse = vueElementQuestionEnCours.getQuizSaisieReponsePanel(dictionnaire).getPanel();
+				panelSaisieReponse = vueElementQuestionEnCours.getQuizSaisieReponsePanel().getPanel();
 			}
 			catch (NoAffException e)
 			{

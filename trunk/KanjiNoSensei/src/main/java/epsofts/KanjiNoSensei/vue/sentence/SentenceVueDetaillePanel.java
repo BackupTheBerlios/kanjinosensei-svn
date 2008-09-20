@@ -103,7 +103,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	{
 		if (jButtonJouerSon == null)
 		{
-			jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSound(), false);
+			jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSoundFile(), false);
 			jButtonJouerSon.setText(Messages.getString("SentenceVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
 			jButtonJouerSon.setSize(35, 20);
 		}
@@ -143,7 +143,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 					if ((sel != null) && ( !sel.isEmpty()))
 					{
 						MyUtils.trace(Level.FINE, "Selection '" + sel + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-						Dictionary dictionnaire = vue.getApp().getDictionnaire();
+						Dictionary dictionnaire = KanjiNoSensei.getApp().getDictionnaire();
 
 						Element e = dictionnaire.getElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
@@ -167,7 +167,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 						VueElement vueElement = null;
 						try
 						{
-							vueElement = VueElement.genererVueElement(vue.getApp(), e, vue.useRomaji());
+							vueElement = VueElement.genererVueElement(e, vue.useRomaji());
 						}
 						catch (Exception e1)
 						{

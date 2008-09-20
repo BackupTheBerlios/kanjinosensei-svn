@@ -33,7 +33,7 @@ class SentenceQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRe
 	 * @return
 	 * @throws NoSaisieException 
 	 */
-	public static QuizSaisieReponsePanel getPhraseQuizSaisiePanel(VueSentence vue, Dictionary dictionnaire) throws NoSaisieException
+	public static QuizSaisieReponsePanel getPhraseQuizSaisiePanel(VueSentence vue) throws NoSaisieException
 	{
 		if (singleton == null)
 		{

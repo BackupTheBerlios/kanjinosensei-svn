@@ -28,6 +28,7 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement.EditionDialog;
 
 
@@ -78,7 +79,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 	{
 		super();
 		this.vue = vue;
-		this.dictionnaire = vue.getApp().getDictionnaire();
+		this.dictionnaire = KanjiNoSensei.getApp().getDictionnaire();
 		initGUI();
 	}
 
@@ -190,7 +191,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 								JFileChooser fc = new JFileChooser();
 
 								fc.setFileFilter(fileFilterSons);
-								if (fc.showOpenDialog(vue.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
+								if (fc.showOpenDialog(KanjiNoSensei.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
 								{
 									File fic = fc.getSelectedFile();
 									jTextFieldSon.setText(fic.getAbsolutePath());

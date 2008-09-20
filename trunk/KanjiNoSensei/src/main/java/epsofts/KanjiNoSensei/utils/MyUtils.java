@@ -12,14 +12,23 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.management.BadStringOperationException;
+import javax.naming.OperationNotSupportedException;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
@@ -33,7 +42,6 @@ import javax.swing.filechooser.FileFilter;
 
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 
-
 import nl.jj.swingx.gui.modal.JModalFrame;
 
 /**
@@ -43,15 +51,28 @@ import nl.jj.swingx.gui.modal.JModalFrame;
  */
 public abstract class MyUtils
 {
-	/** Trace Logger.
+	/**
+	 * Trace Logger.
+	 * 
 	 * @see MyUtils#trace(Level, String)
 	 */
-	static private final Logger	log = Logger.getLogger(MyUtils.class.getName());
-	static public Level logMinLevel = Level.ALL;
+	static private final Logger	log			= Logger.getLogger(MyUtils.class.getName());
+
+	static public Level			logMinLevel	= Level.ALL;
+
+	static public class BadStringFormatException extends Exception
+	{
+		/**
+		 * 
+		 */
+		public BadStringFormatException(String msg)
+		{
+			super(msg);
+		}
+	}
 	
 	/**
-	 * Test the system fonts and report which ones are able to display testing character (unicode).
-	 * Use System I/O.
+	 * Test the system fonts and report which ones are able to display testing character (unicode). Use System I/O.
 	 */
 	static public void testFonts()
 	{
@@ -163,6 +184,8 @@ public abstract class MyUtils
 	public static String getExtension(String fileName)
 	{
 		String ext = null;
+
+		if ((fileName == null) || (fileName.isEmpty())) return null;
 
 		int i = fileName.lastIndexOf('.');
 
@@ -316,43 +339,102 @@ public abstract class MyUtils
 	}
 
 	/** Romaji standard table. */
-	private static final String[]	tRomaji		= {"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$
+	private static final String[]	tRomaji				= {"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$
 		"ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "wo", "n", "ga", "gi", "gu", "ge", "go", "za", "ji", "zu", "ze", "zo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$
-		"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
+		"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};									//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
 
 	/** Romaji composed characters table. */
-	private static final String[]	tRomaYaYuYo	= {"kya", "kyu", "kyo", "sha", "shu", "sho", "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu", "ryo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$
-		"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};						//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+	private static final String[]	tRomaYaYuYo			= {"kya", "kyu", "kyo", "sha", "shu", "sho", "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu", "ryo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$
+		"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};											//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Hiragana standard table. */
-	private static final String[]	tHiragana	= {"あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
+	private static final String[]	tHiragana			= {"あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 		"ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-		"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"					};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"							};																			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Hiragana composed characters table. */
-	private static final String[]	tHiraYaYuYo	= {"きゃ", "きゅ", "きょ", "しゃ", "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ", "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ", "りょ", "ぎゃ", "ぎゅ", "ぎょ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-		"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};													//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+	private static final String[]	tHiraYaYuYo			= {"きゃ", "きゅ", "きょ", "しゃ", "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ", "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ", "りょ", "ぎゃ", "ぎゅ", "ぎょ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
+		"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};																		//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Hiragana little TSU character. */
-	private static final String		hiraTsu		= "っ";															//$NON-NLS-1$
+	private static final String		hiraTsu				= "っ";																		//$NON-NLS-1$
 
 	/** Katakana standard table. */
-	private static final String[]	tKatakana	= {"ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
+	private static final String[]	tKatakana			= {"ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 		"ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-		"パ", "ピ", "プ", "ペ", "ポ"					};																//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"パ", "ピ", "プ", "ペ", "ポ"							};																			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Katakana composed characters table. */
-	private static final String[]	tKataYaYuYo	= {"キャ", "キュ", "キョ", "シャ", "シュ", "ショ", "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ", "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-		"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};													//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+	private static final String[]	tKataYaYuYo			= {"キャ", "キュ", "キョ", "シャ", "シュ", "ショ", "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ", "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
+		"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};																		//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Katakana little TSU character. */
-	private static final String		kataTsu		= "ッ";															//$NON-NLS-1$
+	private static final String		kataTsu				= "ッ";																		//$NON-NLS-1$
 
 	/** Kanas punctuation. */
-	private static final String[]	tKanaPunc	= {"　", "、", "。", "？", "！", "；", "−", "ー", "（", "）", "「", "」"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+	protected static final String[]	tKanaPunc			= {"　", "、", "。", "？", "！", "；", "−", "ー", "（", "）", "「", "」", "｛", "｝"};	//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+
+	/** Kanas braces. */
+	protected static final String[]	tKanaBraces			= {"（", "）", "「", "」", "｛", "｝"};
 
 	/** Romaji punctuation. */
-	private static final String[]	tRomaPunc	= {" ", ",", ".", "?", "!", ";", "-", "-", "(", ")", "[", "]"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+	protected static final String[]	tRomaPunc			= {" ", ",", ".", "?", "!", ";", "-", "-", "(", ")", "[", "]", "{", "}"};	//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+
+	/** Romaji braces. */
+	protected static final String[]	tRomaBraces			= {"(", ")", "[", "]", "{", "}"};
+
+	/** Kana starting braces. */
+	protected static final String[]	tKanaStartingBraces	= (String[]) Array.newInstance(String.class, tKanaBraces.length / 2);
+
+	/** Romaji starting braces. */
+	protected static final String[]	tRomaStartingBraces	= (String[]) Array.newInstance(String.class, tRomaBraces.length / 2);
+
+	/** Kana ending braces. */
+	protected static final String[]	tKanaEndingBraces	= (String[]) Array.newInstance(String.class, tKanaBraces.length / 2);
+
+	/** Romaji ending braces. */
+	protected static final String[]	tRomaEndingBraces	= (String[]) Array.newInstance(String.class, tRomaBraces.length / 2);
+
+	/** All braces. */
+	protected static final String[]	braces = (String[]) Array.newInstance(String.class, tKanaBraces.length + tRomaBraces.length);
+	
+	/** All starting braces. */
+	protected static final String[]	startingBraces = (String[]) Array.newInstance(String.class, braces.length / 2);
+	
+	/** All ending braces. */
+	protected static final String[]	endingBraces = (String[]) Array.newInstance(String.class, braces.length / 2);
+	
+	static
+	{
+		for (int i = 0; i < tKanaBraces.length; i += 2)
+		{
+			tKanaStartingBraces[i / 2] = tKanaBraces[i];
+			tKanaEndingBraces[i / 2] = tKanaBraces[i + 1];
+		}
+
+		for (int i = 0; i < tRomaBraces.length; i += 2)
+		{
+			tRomaStartingBraces[i / 2] = tRomaBraces[i];
+			tRomaEndingBraces[i / 2] = tRomaBraces[i + 1];
+		}
+		
+		int j;
+		for(j = 0; j < tKanaBraces.length; ++j)
+		{
+			braces[j] = tKanaBraces[j];
+		}
+		
+		for(int i=0; i < tRomaBraces.length; ++i)
+		{
+			braces[i+j] = tRomaBraces[i];
+		}
+		
+		for(int i=0; i < braces.length; i+=2)
+		{
+			startingBraces[i / 2] = braces[i];
+			endingBraces[i / 2] = braces[i+1];
+		}
+	}
 
 	/**
 	 * Private method used to convert romaji to kana. This method is not perfect, because it uses algorithms to replace characters, instead of a real knowledge of the language.
@@ -631,7 +713,8 @@ public abstract class MyUtils
 	 * @param defaultDirectory
 	 *            Default directory to check in if filename is not full path.
 	 * @return fixed filename.
-	 * @throws FileNotFoundException If filename cannot be fixed nor found.
+	 * @throws FileNotFoundException
+	 *             If filename cannot be fixed nor found.
 	 */
 	public static String checkFileExists(String fileName, String defaultDirectory) throws FileNotFoundException
 	{
@@ -780,6 +863,138 @@ public abstract class MyUtils
 	}
 
 	/**
+	 * This method return every declined strings of the subject in a String array. The subject is declined without braces (), {}, [], （）, 「」
+	 * 
+	 * @see tKanaBraces
+	 * @see tRomaBraces
+	 * @see tKanaPunc
+	 * @see tRomaPunc
+	 * @param subject
+	 *            Subject string to decline.
+	 * @return
+	 * @throws OperationNotSupportedException
+	 */
+	public static String[] declinedStrings(String subject) throws OperationNotSupportedException
+	{
+		// TODO if needed, or use simplifiedString(String)
+		throw new OperationNotSupportedException("Not implemented");
+	}
+
+	public static String simplifiedString(String subject) throws BadStringFormatException
+	{		
+		if (subject == null || subject.isEmpty()) return subject;
+		
+		subject = replaceAll(subject, tRomaStartingBraces, "(");
+		subject = replaceAll(subject, tKanaStartingBraces, "(");
+		subject = replaceAll(subject, tRomaEndingBraces, ")");
+		subject = replaceAll(subject, tKanaEndingBraces, ")");
+		
+		subject = removeBraced(subject, "(", ")");
+		
+		subject = replaceAll(subject, tKanaPunc, "");
+		subject = replaceAll(subject, tRomaPunc, "");
+		
+		subject = subject.toLowerCase();
+		
+		return subject;
+	}
+
+	public static String removeBraced(String subject, String startBrace, String endBrace) throws BadStringFormatException
+	{
+		if (subject == null || subject.isEmpty()) return subject;
+		
+		int sc, ec, pos;
+		for(sc=0, pos=0; (pos = subject.indexOf(startBrace, pos)+1) > 0; ++sc);
+		for(ec=0, pos=0; (pos = subject.indexOf(endBrace, pos)+1) > 0; ++ec);
+		
+		if (ec != sc)
+		{
+			trace(Level.WARNING, "Braces count does not match in \""+subject+"\"");
+			throw new BadStringFormatException("Braces count does not match in \""+subject+"\"");
+		}
+		
+		int startPos = 0, nextStartPos, endPos;
+		do
+		{
+			startPos = subject.indexOf(startBrace, startPos+1);
+			nextStartPos = subject.indexOf(startBrace, startPos+1);
+			endPos = subject.indexOf(endBrace);
+
+			if (startPos >= 0)
+			{
+				if ((nextStartPos < 0) || (endPos < nextStartPos))
+				{
+					if (endPos < startPos)
+					{
+						subject = subject.substring(0, endPos) + subject.substring(endPos + endBrace.length());
+					}
+					else
+					{
+						subject = subject.substring(0, startPos) + subject.substring(endPos + endBrace.length());
+					}
+					startPos = 0;
+				}
+			}
+
+		} while (startPos >= 0);
+
+		return subject;
+	}
+	
+	public static int firstIndexOf(String subject, String[] patterns)
+	{
+		return firstIndexOf(subject, patterns, 0);
+	}
+	public static int firstIndexOf(String subject, String[] patterns, int fromIndex)
+	{
+		if (subject == null || subject.isEmpty() || patterns == null || patterns.length == 0) return -1;
+		
+		int first = -1;
+		for(String pattern : patterns)
+		{
+			int pos = subject.indexOf(pattern, fromIndex);
+			if (pos >= 0)
+			{
+				first = Math.min((first<0)?Integer.MAX_VALUE:first, pos);
+			}
+		}
+		
+		return first;
+	}
+	
+	public static String bestStartsWith(String subject, String[] patterns, int toffset)
+	{
+		String bestMatch = null;
+		int bestMatchLength = 0;
+		
+		for(String pattern: patterns)
+		{
+			if (subject.startsWith(pattern, toffset))
+			{
+				if (pattern.length() > bestMatchLength)
+				{
+					bestMatchLength = pattern.length();
+					bestMatch = pattern;
+				}
+			}
+		}
+		
+		return bestMatch;
+	}
+
+	private String withoutEndingBracedSubstring(String s)
+	{
+		int lastClose = s.lastIndexOf(')');
+		if (lastClose < 0) return s;
+
+		int lastOpen = s.substring(0, lastClose).indexOf('(');
+		if (lastOpen < 0) return s;
+
+		String ws = s.substring(0, lastOpen) + s.substring(lastClose + 1);
+		return (ws.isEmpty() ? s : ws);
+	}
+
+	/**
 	 * Replace all searches substring in the subject with it's corresponding replace string.<br>
 	 * <code>subject = subject.replace(searches[i], replaces[i]);</code>
 	 * 
@@ -807,11 +1022,13 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Log in MyUtils.log logger.
-	 * Logger can be defined in properties file, using JVM option {@literal -Djava.util.logging.config.file=[properties file]}
+	 * Log in MyUtils.log logger. Logger can be defined in properties file, using JVM option {@literal -Djava.util.logging.config.file=[properties file]}
+	 * 
 	 * @see Logger
-	 * @param level Trace level.
-	 * @param trace Trace message.
+	 * @param level
+	 *            Trace level.
+	 * @param trace
+	 *            Trace message.
 	 */
 	public static void trace(Level level, String trace)
 	{
@@ -820,10 +1037,14 @@ public abstract class MyUtils
 	}
 
 	/**
-	 * Throw RuntimeException with given error message if condition is not false. 
-	 * @param condition Condition supposed to be false.
-	 * @param errMsg Error message if condition is true.
-	 * @throws RuntimeException if condition is true.
+	 * Throw RuntimeException with given error message if condition is not false.
+	 * 
+	 * @param condition
+	 *            Condition supposed to be false.
+	 * @param errMsg
+	 *            Error message if condition is true.
+	 * @throws RuntimeException
+	 *             if condition is true.
 	 */
 	public static void assertFalse(boolean condition, String errMsg)
 	{
@@ -832,9 +1053,13 @@ public abstract class MyUtils
 
 	/**
 	 * Throw RuntimeException with given error message if condition is false.
-	 * @param condition Condition supposed to be true.
-	 * @param errMsg Error message if condition is false.
-	 * @throws RuntimeException if condition is false.
+	 * 
+	 * @param condition
+	 *            Condition supposed to be true.
+	 * @param errMsg
+	 *            Error message if condition is false.
+	 * @throws RuntimeException
+	 *             if condition is false.
 	 */
 	public static void assertTrue(boolean condition, String errMsg)
 	{
@@ -846,7 +1071,9 @@ public abstract class MyUtils
 
 	/**
 	 * Safe sleep, call {@link Thread#sleep(long)} and catch InterruptedException.
-	 * @param millis time to sleep (milliseconds).
+	 * 
+	 * @param millis
+	 *            time to sleep (milliseconds).
 	 */
 	public static void sleep(long millis)
 	{
@@ -870,16 +1097,22 @@ public abstract class MyUtils
 	{
 		/**
 		 * Implement what must be done on the given component.
-		 * @param c The target component.
+		 * 
+		 * @param c
+		 *            The target component.
 		 */
 		void doIt(Component c);
 	};
 
 	/**
 	 * Apply a {@link DoItToThisComponent} from the given Component c to every of its sub component (if c is instance of {@link Container} or {@link Window}.
-	 * @param c Parent component.
-	 * @param doIt DoItToThisComponent object to apply.
-	 * @param thisComponentFirst Specify is the parent component is processed first (true) or last (false).
+	 * 
+	 * @param c
+	 *            Parent component.
+	 * @param doIt
+	 *            DoItToThisComponent object to apply.
+	 * @param thisComponentFirst
+	 *            Specify is the parent component is processed first (true) or last (false).
 	 */
 	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt, boolean thisComponentFirst)
 	{
@@ -903,8 +1136,8 @@ public abstract class MyUtils
 				doItToAllSubComponents(w, doIt, thisComponentFirst);
 			}
 		}
-		
-		if (!thisComponentFirst)
+
+		if ( !thisComponentFirst)
 		{
 			doIt.doIt(c);
 		}
@@ -926,8 +1159,10 @@ public abstract class MyUtils
 															};
 
 	/**
-	 * Generate the L&F menu, which will be applied from the given rootComponent. 
-	 * @param rootComponent Root component on which to apply refresh when L&F is changed.
+	 * Generate the L&F menu, which will be applied from the given rootComponent.
+	 * 
+	 * @param rootComponent
+	 *            Root component on which to apply refresh when L&F is changed.
 	 * @return L&F menu.
 	 */
 	public static JMenu getUIMenu(final Component rootComponent)
@@ -938,7 +1173,9 @@ public abstract class MyUtils
 
 	/**
 	 * Generate the L&F menu, which will be applied from all the given rootComponents.
-	 * @param rootComponents Root components on which to apply refresh when L&F is changed.
+	 * 
+	 * @param rootComponents
+	 *            Root components on which to apply refresh when L&F is changed.
 	 * @return L&F menu.
 	 */
 	public static JMenu getUIMenu(final Component[] rootComponents)
@@ -980,30 +1217,34 @@ public abstract class MyUtils
 
 		return jMenuUI;
 	}
-	
+
 	/**
 	 * Call {@link refreshComponent} on the given component and all its sub components.
+	 * 
 	 * @see doItToAllSubComponents
 	 * @see refreshComponent
-	 * @param c Root component to refresh.
+	 * @param c
+	 *            Root component to refresh.
 	 */
 	public static void refreshComponentAndSubs(Component c)
 	{
 		doItToAllSubComponents(c, new DoItToThisComponent()
 		{
-		
+
 			@Override
 			public void doIt(Component c)
 			{
 				refreshComponent(c);
 			}
-		
+
 		}, false);
 	}
-	
+
 	/**
 	 * Call {@link Component#invalidate()}, {@link Component#validate()} and {@link Component#repaint()} on the given component.
-	 * @param c Component to refresh.
+	 * 
+	 * @param c
+	 *            Component to refresh.
 	 */
 	public static void refreshComponent(Component c)
 	{
@@ -1011,49 +1252,52 @@ public abstract class MyUtils
 		c.validate();
 		c.repaint();
 	}
-	
+
 	/**
 	 * Convert milliseconds time to String, using {@link Messages} strings resource.
-	 * @param time Time to convert.
+	 * 
+	 * @param time
+	 *            Time to convert.
 	 * @return Readable time.
 	 */
 	public static String timeToString(long time)
-	{		
-		long days = time / (1000*60*60*24);
-		time -= days * (1000*60*60*24);
-		long hours = time / (1000*60*60);
-		time -= hours * (1000*60*60);
-		long minutes = time / (1000*60);
-		time -= minutes * (1000*60);
+	{
+		long days = time / (1000 * 60 * 60 * 24);
+		time -= days * (1000 * 60 * 60 * 24);
+		long hours = time / (1000 * 60 * 60);
+		time -= hours * (1000 * 60 * 60);
+		long minutes = time / (1000 * 60);
+		time -= minutes * (1000 * 60);
 		long seconds = time / 1000;
-		
+
 		if (days > 0)
 		{
-			return days+Messages.getString("MyUtils.SuffixDays")+hours+Messages.getString("MyUtils.SuffixHours")+minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			return days + Messages.getString("MyUtils.SuffixDays") + hours + Messages.getString("MyUtils.SuffixHours") + minutes + Messages.getString("MyUtils.SuffixMinutes") + seconds + Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 		}
-		
+
 		if (hours > 0)
 		{
-			return hours+Messages.getString("MyUtils.SuffixHours")+minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return hours + Messages.getString("MyUtils.SuffixHours") + minutes + Messages.getString("MyUtils.SuffixMinutes") + seconds + Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
-		
+
 		if (minutes > 0)
 		{
-			return minutes+Messages.getString("MyUtils.SuffixMinutes")+seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
+			return minutes + Messages.getString("MyUtils.SuffixMinutes") + seconds + Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		
+
 		if (seconds > 0)
 		{
-			return seconds+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$
+			return seconds + Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$
 		}
-		
-		return "0"+Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
+
+		return "0" + Messages.getString("MyUtils.SuffixSeconds"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
-	
+
 	/**
-	 * Ensure the given runnable will be run in the EventDispatchThread.
-	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeLater(Runnable)} the given runnable.
-	 * @param runnable Runnable to run in EDT.
+	 * Ensure the given runnable will be run in the EventDispatchThread. Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeLater(Runnable)} the given runnable.
+	 * 
+	 * @param runnable
+	 *            Runnable to run in EDT.
 	 */
 	public static void InvokeLaterEDT(Runnable runnable)
 	{
@@ -1066,11 +1310,12 @@ public abstract class MyUtils
 			SwingUtilities.invokeLater(runnable);
 		}
 	}
-	
+
 	/**
-	 * Ensure the given runnable will be run in the EventDispatchThread, and wait it finishes.
-	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeAndWait(Runnable)} the given runnable.
-	 * @param runnable Runnable to run in EDT.
+	 * Ensure the given runnable will be run in the EventDispatchThread, and wait it finishes. Test if current thread {@link SwingUtilities#isEventDispatchThread()}, if it is, run the given runnable, if not, {@link SwingUtilities#invokeAndWait(Runnable)} the given runnable.
+	 * 
+	 * @param runnable
+	 *            Runnable to run in EDT.
 	 */
 	public static void InvokeAndWaitEDT(Runnable runnable) throws InterruptedException, InvocationTargetException
 	{
@@ -1083,12 +1328,12 @@ public abstract class MyUtils
 			SwingUtilities.invokeAndWait(runnable);
 		}
 	}
-	
+
 	/**
-	 * Ensure the given runnable will not be run in the EventDispatchThread.
-	 * Test if current thread {@link SwingUtilities#isEventDispatchThread()}.
-	 * If it is, create and start a new {@link Thread} with the given runnable, else, run the given runnable (in the current Thread).
-	 * @param runnable Runnable to run out of EDT.
+	 * Ensure the given runnable will not be run in the EventDispatchThread. Test if current thread {@link SwingUtilities#isEventDispatchThread()}. If it is, create and start a new {@link Thread} with the given runnable, else, run the given runnable (in the current Thread).
+	 * 
+	 * @param runnable
+	 *            Runnable to run out of EDT.
 	 */
 	public static void InvokeNoEDT(Runnable runnable)
 	{
@@ -1101,13 +1346,15 @@ public abstract class MyUtils
 			runnable.run();
 		}
 	}
-	
+
 	/**
-	 * Compare strings that can be null.
-	 * Strings are assumed to be equals if they're both null or if {@code s1.compareTo(s2) == 0}.
+	 * Compare strings that can be null. Strings are assumed to be equals if they're both null or if {@code s1.compareTo(s2) == 0}.
+	 * 
 	 * @see String#compareTo(String)
-	 * @param s1 String to compare.
-	 * @param s2 String to compare.
+	 * @param s1
+	 *            String to compare.
+	 * @param s2
+	 *            String to compare.
 	 * @return True if {@code s1.compareTo(s2) == 0} or if both s1 and s2 are null.
 	 */
 	public static boolean compareNullableStrings(String s1, String s2)
@@ -1116,14 +1363,15 @@ public abstract class MyUtils
 		{
 			return (s2 == null);
 		}
-		
+
 		return (s1.compareTo(s2) == 0);
 	}
-	
+
 	/**
-	 * Try to find a close() method on the object, and call it.
-	 * Every exception are caught, NoSuchMethodException is logged.
-	 * @param obj Object to call close() method on.
+	 * Try to find a close() method on the object, and call it. Every exception are caught, NoSuchMethodException is logged.
+	 * 
+	 * @param obj
+	 *            Object to call close() method on.
 	 */
 	public static void safeClose(Object obj)
 	{
@@ -1134,21 +1382,22 @@ public abstract class MyUtils
 				Method close = obj.getClass().getMethod("close"); //$NON-NLS-1$
 				close.invoke(obj);
 			}
-			catch(NoSuchMethodException e1)
+			catch (NoSuchMethodException e1)
 			{
-				MyUtils.trace(Level.WARNING, "Try to close an object that has no close() method : "+e1.getMessage());
+				MyUtils.trace(Level.WARNING, "Try to close an object that has no close() method : " + e1.getMessage());
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				// Nothing.
 			}
 		}
 	}
-	
+
 	/**
-	 * Try to call close() method on the given closeable, and catch every exception thrown.
-	 * This method is safe if the object is already closed, or never been opened.
-	 * @param closeable Closeable to close.
+	 * Try to call close() method on the given closeable, and catch every exception thrown. This method is safe if the object is already closed, or never been opened.
+	 * 
+	 * @param closeable
+	 *            Closeable to close.
 	 */
 	public static void safeClose(Closeable closeable)
 	{
@@ -1158,10 +1407,69 @@ public abstract class MyUtils
 			{
 				closeable.close();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				// Nothing.
 			}
 		}
+	}
+
+	public static <T extends Number> double sum(Set<T> values)
+	{
+		double sum = 0;
+		Iterator<T> it = values.iterator();
+		while (it.hasNext())
+		{
+			T value = it.next();
+			sum = sum + value.doubleValue();
+		}
+
+		return sum;
+	}
+
+	public static <T extends Number> double esperence(Set<T> values)
+	{
+		return sum(values) / values.size();
+	}
+
+	public static <T extends Number> double variance(Set<T> values)
+	{
+		double esperence = esperence(values);
+		Iterator<T> it = values.iterator();
+		double dv = 0;
+		while (it.hasNext())
+		{
+			T value = it.next();
+			dv += Math.pow((value.doubleValue() - esperence), 2);
+		}
+
+		return dv / values.size();
+	}
+
+	public static <T extends Number> double ecartType(Set<T> values)
+	{
+		return Math.sqrt(variance(values));
+	}
+
+	public static <T extends Number> double[] minmax(Set<T> values)
+	{
+		double min = Double.POSITIVE_INFINITY;
+		double max = Double.NEGATIVE_INFINITY;
+
+		Iterator<T> it = values.iterator();
+		while (it.hasNext())
+		{
+			T value = it.next();
+			min = Math.min(min, value.doubleValue());
+			max = Math.max(max, value.doubleValue());
+		}
+
+		return new double[] {min, max};
+	}
+
+	public static <T extends Number> String explainStats(Set<T> values)
+	{
+		double[] minmax = minmax(values);
+		return String.format("Min: %f\tMax: %f\tSum: %f\tE: %f\tV: %f\tð: %f", minmax[0], minmax[1], sum(values), esperence(values), variance(values), ecartType(values));
 	}
 }

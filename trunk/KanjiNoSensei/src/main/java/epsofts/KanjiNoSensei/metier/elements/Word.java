@@ -83,7 +83,8 @@ public class Word extends Element implements Serializable
 	 */
 	public Word(String importLine)
 	{
-		super(importLine);
+		super();
+		importString(importLine);
 	}	
 	
 	/**
@@ -199,7 +200,7 @@ public class Word extends Element implements Serializable
 	{
 		if ((beginning == null) || (beginning.isEmpty())) return true;
 
-		if (beginning.matches(getWord())) return true;
+		if (getWord().matches(beginning)) return true;
 		if (MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd.compare(beginning, getWord()) == 0) return true;
 		if (significations.contains(beginning, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd)) return true;
 

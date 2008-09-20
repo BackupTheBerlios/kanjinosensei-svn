@@ -27,19 +27,22 @@ import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement.EditionDialog;
 
 
 /**
- * @author Axan
- * 
+ * Kanji edition dialog class.
  */
 class KanjiEditionDialog extends JDialog implements EditionDialog
 {
-
+	/** Kanji stroke picture file filter extensions. */
 	static final private String[] extFilterTrace = {"png", "jpg", "bmp"}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	
+	/** Kanji stroke picture file filter. */
 	static final private FileFilter fileFilterTrace = MyUtils.generateFileFilter(Messages.getString("KanjiEditionDialog.ImageFileFilterName"), extFilterTrace); //$NON-NLS-1$
 	
+	/** Serialization version. */
 	private static final long	serialVersionUID	= 1L;
 
 	private JPanel ajouterKanjiContentPane = null;
@@ -62,15 +65,15 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 	private JButton	jButtonOK = null;
 	private JPanel	jPanelBtns = null;
 	
+	/** Kanji view associated with the edition dialog. */
 	private VueKanji vue = null;
 	
-	private KanjiEditionDialog jKanjiEditionDialog = this;
-	
+	/** Flag to mark if a kanji was edited. */
 	private boolean kanjiEdite = false;
 	
 	/**
-	 * Constructeur
-	 * 
+	 * Constructor, associate the edition dialog with its kanji view.
+	 * @param vue Kanji view to associate with this edition dialog.
 	 */
 	public KanjiEditionDialog(VueKanji vue)
 	{
@@ -81,7 +84,6 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 
 	/**
 	 * This method initializes this
-	 * 
 	 */
 	private void initialize() {
         this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -302,7 +304,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 					JFileChooser fc = new JFileChooser();
 
 					fc.setFileFilter(fileFilterTrace);
-					if (fc.showOpenDialog(vue.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
+					if (fc.showOpenDialog(KanjiNoSensei.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
 					{
 						File fic = fc.getSelectedFile();
 						jTextFieldTrace.setText(fic.getAbsolutePath());
@@ -419,7 +421,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 				{
 					vue.setKanji(new Kanji(jTextFieldCodeUTF8.getText().charAt(0), jTextFieldTrace.getText(), jTextFieldLecturesChinoises.getText(), jTextFieldLecturesJaponaises.getText(), jTextFieldSignifications.getText(), jTextFieldThemes.getText()));
 					kanjiEdite = true;
-					jKanjiEditionDialog.dispose();
+					KanjiEditionDialog.this.dispose();
 				}
 			
 			});
@@ -445,7 +447,7 @@ class KanjiEditionDialog extends JDialog implements EditionDialog
 			
 				public void actionPerformed(ActionEvent e)
 				{
-					jKanjiEditionDialog.dispose();
+					KanjiEditionDialog.this.dispose();
 				}
 			
 			});

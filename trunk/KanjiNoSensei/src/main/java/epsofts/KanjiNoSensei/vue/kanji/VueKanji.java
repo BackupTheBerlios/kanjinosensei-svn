@@ -4,15 +4,20 @@
 package epsofts.KanjiNoSensei.vue.kanji;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 import epsofts.KanjiNoSensei.metier.Dictionary;
+import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
@@ -22,30 +27,36 @@ import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;
 import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
 
-
 /**
  * @author Axan
  * 
  */
 public class VueKanji extends VueElement
 {
-	final private static Boolean	USE_ONLY_STROKEORDERS_FONT	= true;
+	private static enum StrokeOrdersType
+	{
+		FONT, IMG
+	};
 
-	public static final float		FONT_MAX_SIZE				= 98;	// 22;
+	static private final StrokeOrdersType	STROKE_ORDERS_TYPE			= StrokeOrdersType.FONT;
 
-	public static final float		FONT_MIN_SIZE				= 11;
+	static private final Boolean			STROKE_ORDERS_TYPE_FALLBACK	= true;
 
-	private static Font				strokeOrdersFont			= null;
+	public static final float				FONT_MAX_SIZE				= 98;						// 22;
 
-	private Kanji					kanji						= null;
+	public static final float				FONT_MIN_SIZE				= 11;
 
-	private KanjiVueDetaillePanel	jVueDetaillePanel			= null;
+	private static Font						strokeOrdersFont			= null;
 
-	private KanjiEditionDialog		jEditionDialog				= null;
+	private Kanji							kanji						= null;
 
-	private QuizQuestionPanel		jQuizQuestionPanel			= null;
+	private KanjiVueDetaillePanel			jVueDetaillePanel			= null;
 
-	private QuizSolutionPanel		jQuizSolutionPanel			= null;
+	private KanjiEditionDialog				jEditionDialog				= null;
+
+	private QuizQuestionPanel				jQuizQuestionPanel			= null;
+
+	private QuizSolutionPanel				jQuizSolutionPanel			= null;
 
 	private static Font getStrokeOrdersFont()
 	{
@@ -64,9 +75,9 @@ public class VueKanji extends VueElement
 		return strokeOrdersFont;
 	}
 
-	public VueKanji(KanjiNoSensei app, Kanji kanji, boolean useRomaji)
+	public VueKanji(Kanji kanji, boolean useRomaji)
 	{
-		super(app, useRomaji);
+		super(useRomaji);
 		this.kanji = kanji;
 	}
 
@@ -111,9 +122,9 @@ public class VueKanji extends VueElement
 	 * 
 	 * @see vue.VueElement#getQuizSaisieReponsePanel(java.lang.String)
 	 */
-	public QuizSaisieReponsePanel getQuizSaisieReponsePanel(Dictionary dico) throws NoSaisieException
+	public QuizSaisieReponsePanel getQuizSaisieReponsePanel() throws NoSaisieException
 	{
-		return KanjiQuizSaisiePanel.getKanjiQuizSaisiePanel(this, dico);
+		return KanjiQuizSaisiePanel.getKanjiQuizSaisiePanel(this);
 	}
 
 	public synchronized QuizSolutionPanel getQuizSolutionPanelCopy()
@@ -228,39 +239,95 @@ public class VueKanji extends VueElement
 
 	private JPanel			jPanelStrokeOrders		= null;
 
-	protected JComponent getStrokeOrdersImgComponent()
+	private void addStrokeOrderImgToPanel(JPanel panel) throws ImageLoadingException
+	{
+		JPanelImageBg panelImgBg = new JPanelImageBg(getKanji().getStrokeOrderPicture());
+		panel.add(panelImgBg, BorderLayout.CENTER);
+	}
+
+	private void addStrokeOrderFontToPanel(JPanel panel) throws Exception
+	{
+		if (getStrokeOrdersFont() == null)
+		{
+			throw new Exception("Font can't loaded");
+		}
+
+		MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = MyAutoResizingText.createSafely(JLabel.class, 100, Float.POSITIVE_INFINITY, 0, (float) -0.5);
+		jAutoSizeLabelStrokeFont.setScrollBarsVisibility(false);
+		
+		JLabel jLabelStrokeFont = jAutoSizeLabelStrokeFont.getJComponent();
+		
+		jLabelStrokeFont.setFont(getStrokeOrdersFont());
+		jLabelStrokeFont.setText(getKanji().getCodeUTF8().toString());
+		jLabelStrokeFont.setHorizontalAlignment(JLabel.CENTER);
+
+		panel.add(jAutoSizeLabelStrokeFont, BorderLayout.CENTER);
+		panel.setPreferredSize(new Dimension(0, 0));
+	}
+
+	protected JPanel getStrokeOrdersPanel()
 	{
 		if (jPanelStrokeOrders == null)
 		{
 			jPanelStrokeOrders = new JPanel(new BorderLayout());
-			
+
 			try
 			{
-				if ((getStrokeOrdersFont() != null) && USE_ONLY_STROKEORDERS_FONT) throw new ImageLoadingException("USE_ONLY_STROKEORDERS_FONT"); //$NON-NLS-1$
-				JPanelImageBg panelImgBg = new JPanelImageBg(getKanji().getStrokeOrderPicture(), JPanelImageBg.eImageDisplayMode.CENTRE);
-				jPanelStrokeOrders.add(jPanelImageBg, BorderLayout.CENTER);				
+				switch (STROKE_ORDERS_TYPE)
+				{
+				case FONT:
+				{
+					try
+					{
+						addStrokeOrderFontToPanel(jPanelStrokeOrders);
+					}
+					catch (Exception e)
+					{
+						if (STROKE_ORDERS_TYPE_FALLBACK)
+						{
+							addStrokeOrderImgToPanel(jPanelStrokeOrders);
+						}
+						else
+						{
+							throw e;
+						}
+					}
+					break;
+				}
+				case IMG:
+				{
+					try
+					{
+						addStrokeOrderImgToPanel(jPanelStrokeOrders);
+					}
+					catch (Exception e)
+					{
+						if (STROKE_ORDERS_TYPE_FALLBACK)
+						{
+							addStrokeOrderFontToPanel(jPanelStrokeOrders);
+						}
+						else
+						{
+							throw e;
+						}
+					}
+					break;
+				}
+				default:
+				{
+					throw new Exception("StrokeOrderType \"" + STROKE_ORDERS_TYPE + "\" not supported.");
+				}
+				}
 			}
-			catch (ImageLoadingException e)
+			catch (Exception e)
 			{
-				if (getStrokeOrdersFont() == null)
-				{
-					jPanelStrokeOrders.add(new JLabel("Image et fonte introuvable"), BorderLayout.CENTER);
-				}
-				else
-				{
-					MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = MyAutoResizingText.createSafely(JLabel.class, 100, Float.POSITIVE_INFINITY);
-					JLabel jLabelStrokeFont = jAutoSizeLabelStrokeFont.getJComponent();
-					jLabelStrokeFont.setText(getKanji().getCodeUTF8().toString());
-					jLabelStrokeFont.setFont(getStrokeOrdersFont());
-
-					jPanelStrokeOrders.add(jAutoSizeLabelStrokeFont, BorderLayout.CENTER);
-					jPanelStrokeOrders.setPreferredSize(new Dimension(0, 0));
-				}
+				String errMsg = (STROKE_ORDERS_TYPE_FALLBACK?"Aucun tracé disponible.":"Tracé ("+STROKE_ORDERS_TYPE+") introuvable.");
+				jPanelStrokeOrders.add(new JLabel("Erreur: "+errMsg), BorderLayout.CENTER);
 			}
-			
+
 			jPanelStrokeOrders.doLayout();
 		}
-		
+
 		return jPanelStrokeOrders;
 	}
 }

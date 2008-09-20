@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+import epsofts.KanjiNoSensei.RefactoringInfos;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.utils.OneStringList;
@@ -83,8 +84,8 @@ public abstract class Element implements Serializable, Comparable<Element>
 	public static Element generateImportedElement(String className, String importLine) throws ClassNotFoundException,
 			SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException,
 			IllegalAccessException, InvocationTargetException
-	{
-		Class<? extends Element> classElement = (Class<? extends Element>) Class.forName(className);
+	{		
+		Class<? extends Element> classElement = (Class<? extends Element>) RefactoringInfos.forName(className);
 		Constructor<?> constructor = classElement.getConstructor(String.class);
 		Element element = (Element) constructor.newInstance(importLine);
 		return element;
@@ -175,12 +176,11 @@ public abstract class Element implements Serializable, Comparable<Element>
 	}
 	
 	/**
-	 * Import string constructor.
+	 * Empty constructor, used by subclasses to implement ImportString constructors.
 	 * @param importLine Full import line.
 	 */
-	protected Element(String importLine)
+	protected Element()
 	{
-		importString(importLine);
 	}
 	
 	/**

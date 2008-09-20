@@ -7,11 +7,9 @@
 
 TODO List
 	
-* Workflow passé et en cours.
+* Workflow en cours.
 	
 ** Interface
-	
-	* Maximiser par défaut la fenêtre de tracé de Kanji si on est en mode Fonte.
 	
 	* CheckBoxTree :
 		On coche une feuille: on l'ajoute au thèmes sélectionnés.
@@ -53,6 +51,8 @@ TODO List
 	
 	* Dans le "Quizz", masquer automatiquement la zone sud si elle est non utilisée (pouvoir le détecter).
 	
+	* Revoir la façon dont la priorité des éléments de quizz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
+	
 	* Masquer/Griser le bouton "Lire" lorsqu'aucun fichier son n'est renseigné.
 	
 	* Revoir les labels sur l'ihm, internationaliser.
@@ -68,6 +68,8 @@ TODO List
 	  > Faire que l'utilitaire d'analyse du dico puisse prendre le fichier diso.csv tel quel, et sans y toucher, sauvegarde un dico.kjd avec les règles des modifs que l'on souhaite appliquer (gestion des doublons, transformations d'éléments, ..)
 	  dico.kjd = lecture du dico.csv + règles		Sachant que si le dico.csv évolue, les règles qui matches toujours restent appliquées.
 	
+	* En plus de la liste des mots, afficher une liste des phrases où sont employés les Kanji / Mots. S'occuper d'abord de revoir l'algo de recherche (pour ignorer les parenthèses et autres crochets, notes et meta-marques).
+	
 	* Ajouter méthode de saisie "au hasard" qui pour chaque question tire une méthode de saisie au hasard (excluant la méthode d'affichage).
 	
 	* Avoir la possibilité, lors d'un quiz, de jouer les phrases d'une leçon dans l'ordre.
@@ -80,7 +82,7 @@ TODO List
 	
 	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.
 	
-	* Parfois l'écran "Base" s'ouvre avec une fenêtre agrandie mais sur laquelle tous les éléments ne sont pas affiché correctement, et resize la fenêtre n'y change rien, la seule solution est de redémarrer l'appli.
+	* Surveiller: java memory leaks ?
 	
 ** Gestion projet
 	
@@ -88,10 +90,15 @@ TODO List
 	
 	* Rédiger les tests unitaires.
 	
-** Notes (brouillon)
-	
-	* ! bug: Temps de chargement anormal en quizz ! 
+** Notes (brouillon)  
 
-	* Revoir la façon dont la priorité des éléments de quizz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
+	* Lors de l'import d'un dictionnaire *.csv; attribuer pour chaque élément un rang qui permet de tracer l'ordre dans lequel écrire les éléments lors d'un export csv. Ainsi il sera possible de faire des cycles import/export/merge.
 	
-	* En plus de la liste des mots, afficher une liste des phrases où sont employés les Kanji / Mots. S'occuper d'abord de revoir l'algo de recherche (pour ignorer les parenthèses et autres crochets, notes et meta-marques). 
+	* Plutôt que d'effacer les faux doublons (pour les vrais, il suffit de faire un merge des thèmes) ajouter une partie règles au dictionnaire, permettant d'appliquer une règle distincte pour chaque élément (sachant que l'ajout de règle ne se fera que par un admin, et ne devrait concerner qu'une minorité d'éléments, histoire d'affiner le comportement final de l'appli).
+	Les rèlges pourraient être:
+		* Masquer(bool): l'élément n'apparait jamais.
+		* NonQuizzable(bool): l'élément aparait dans la base, mais ne sort jamais en quizz.
+		* NbBonnesReponsesMax(int): l'élément est lié au learningProfile, il ne sort qu'un nomre limitée de fois.
+		* Lié(Element): l'élément est lié à un autre, si l'un des deux sort en quizz, l'autre sera sauté (cardinalités 1..* <-> 1..*).
+		* MasquerSiRessemblant(int): l'élément est automatiquement comparé à tous les éléménts déjà sortis, et il est passé si la ressemblence avec un élémént déjà vu dépasse le pourcentage donné.
+		

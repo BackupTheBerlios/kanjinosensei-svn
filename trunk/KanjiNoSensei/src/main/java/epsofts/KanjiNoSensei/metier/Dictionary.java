@@ -556,7 +556,11 @@ public class Dictionary implements Serializable
 	 */
 	public Set<Element> getElementsList(String beginning)
 	{
-		if (beginning == null) beginning = ""; //$NON-NLS-1$
+		if ((beginning == null) || (beginning.isEmpty()))
+		{
+			return new TreeSet<Element>(elements.values());
+		}
+		
 		final String finalBeginning = beginning;
 
 		return getElementsSelection(new DictionarySorter()
@@ -565,7 +569,15 @@ public class Dictionary implements Serializable
 			@Override
 			public boolean testElement(Element e)
 			{
-				return e.match(finalBeginning);
+				try
+				{
+					return e.match(finalBeginning);
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+					return false;
+				}
 			}
 
 		});

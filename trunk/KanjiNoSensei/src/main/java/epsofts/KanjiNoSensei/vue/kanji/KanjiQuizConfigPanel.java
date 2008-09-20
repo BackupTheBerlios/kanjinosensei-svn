@@ -24,18 +24,6 @@ import epsofts.KanjiNoSensei.vue.VueElement.QuizConfigPanel;
 class KanjiQuizConfigPanel extends javax.swing.JPanel implements QuizConfigPanel
 {
 
-	{
-		// Set Look & Feel
-		try
-		{
-			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); //$NON-NLS-1$
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 	/**
 	 * 
 	 */

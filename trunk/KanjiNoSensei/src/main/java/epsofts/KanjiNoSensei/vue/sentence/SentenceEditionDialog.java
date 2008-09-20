@@ -28,6 +28,7 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement.EditionDialog;
 
 
@@ -78,7 +79,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 	{
 		super();
 		this.vue = vue;
-		this.dictionnaire = vue.getApp().getDictionnaire();
+		this.dictionnaire = KanjiNoSensei.getApp().getDictionnaire();
 		initGUI();
 	}
 
@@ -186,7 +187,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 								JFileChooser fc = new JFileChooser();
 
 								fc.setFileFilter(fileFilterSons);
-								if (fc.showOpenDialog(vue.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
+								if (fc.showOpenDialog(KanjiNoSensei.getApp().getJFrame()) == JFileChooser.APPROVE_OPTION)
 								{
 									File fic = fc.getSelectedFile();
 									jTextFieldSon.setText(fic.getAbsolutePath());
@@ -284,7 +285,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 			{
 				jTextFieldPhrase.setText(phrase.getSentence());
 				jTextFieldLecture.setText(phrase.getLecture());
-				jTextFieldSon.setText(phrase.getSound());
+				jTextFieldSon.setText(phrase.getSoundFile());
 				jTextFieldSignifications.setText(phrase.getSignifications());
 				jTextFieldThemes.setText(phrase.getThemes());
 				

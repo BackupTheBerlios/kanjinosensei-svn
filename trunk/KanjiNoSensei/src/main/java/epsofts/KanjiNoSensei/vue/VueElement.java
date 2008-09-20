@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import epsofts.KanjiNoSensei.RefactoringInfos;
 import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
@@ -37,56 +38,105 @@ import epsofts.KanjiNoSensei.utils.OneStringList;
 public abstract class VueElement
 {
 
+	/** Full view height. */
 	private static final int		VUE_DETAILLE_HEIGHT	= 100;
 
-	protected static KanjiNoSensei	app					= null;
-
+	/** Flag to define if Romaji is used instead of Kana. */
 	protected boolean				useRomaji			= false;
 
+	/**
+	 * Return the associated element.
+	 * @return the associated element.
+	 */
 	public abstract Element getElement();
 
+	/**
+	 * Return the VueXXX class associated with the given Element class.
+	 * The VueXXX class must exist as {@code VueElement.class.getPackage().getName)+"."+elementClass.getSimpleName().toLowerCase()+".Vue"+elementClass.getSimpleName()}.
+	 * @param elementClass Element class we need to know the associated Vue class.
+	 * @return the VueXXX class associated with the given Element class.
+	 * @throws ClassNotFoundException if VueXXX class can't be found.
+	 */
 	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	private static Class<? extends VueElement> getVueClassFromElementClass(Class<? extends Element> elementClass) throws ClassNotFoundException
 	{
 		String className = VueElement.class.getPackage().getName() + "." + elementClass.getSimpleName().toLowerCase() + ".Vue" + elementClass.getSimpleName(); //$NON-NLS-1$ //$NON-NLS-2$
-		return (Class<? extends VueElement>) Class.forName(className);
+		return (Class<? extends VueElement>) RefactoringInfos.forName(className);
 	}
 
-	public static VueElement genererVueElement(KanjiNoSensei app, Element element, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
+	/**
+	 * Generate a VueXXX class for the given Element.
+	 * @param element Element to generate the Vue class.
+	 * @param useRomaji Specify if Romaji is used instead of Kana.
+	 * @return VueXXX object for the given element.
+	 * @throws ClassNotFoundException If VueXXX class can't be found for this element.
+	 * @throws SecurityException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchMethodException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalArgumentException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InstantiationException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalAccessException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InvocationTargetException If VueXXX class has no expected constructor to be instanciate.
+	 */
+	public static VueElement genererVueElement(Element element, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
 	{
 		Class<? extends Element> classElement = element.getClass();
 		Class<?> classeVue = getVueClassFromElementClass(classElement);
-		Constructor<?> constructor = classeVue.getConstructor(KanjiNoSensei.class, classElement, boolean.class);
-		VueElement vue = (VueElement) constructor.newInstance(app, element, useRomaji);
+		Constructor<?> constructor = classeVue.getConstructor(classElement, boolean.class);
+		VueElement vue = (VueElement) constructor.newInstance(element, useRomaji);
 		return vue;
 	}
 
-	public static VueElement genererVueBlankElement(KanjiNoSensei app, Class<? extends Element> elementClass, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
+	//　TODO: C'est moche.. instancier une VueXXX lié à un objet "BLANK".. parcequ'on a pas trouvé de solution statique..
+	/**
+	 * Used to generate a blank VueXXX object.
+	 * A blank VueXXX object is associated with the BLANK element of the given elementClass.
+	 * @param elementClass element class for which to generate the VueXXX object.
+	 * @param useRomaji Specify if Romaji is used instead of Kana.
+	 * @return VueXXX object for the BLANK element of the specified Element class.
+	 * @throws ClassNotFoundException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws SecurityException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchMethodException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalArgumentException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InstantiationException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalAccessException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InvocationTargetException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchFieldException If elementClass does not define public static field {@code static public final Element BLANK = ...}. 
+	 */
+	public static VueElement genererVueBlankElement(Class<? extends Element> elementClass, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
 	{
 		Class<?> classeVue = getVueClassFromElementClass(elementClass);
 		Field fieldBlank = elementClass.getDeclaredField("BLANK"); //$NON-NLS-1$
+		ClassLoader.getSystemClassLoader().loadClass(elementClass.getCanonicalName());
 		Element blank = (Element) fieldBlank.get(null);
-		Constructor<?> constructor = classeVue.getConstructor(KanjiNoSensei.class, elementClass, boolean.class);
-		VueElement vue = (VueElement) constructor.newInstance(app, blank, useRomaji);
+		Constructor<?> constructor = classeVue.getConstructor(elementClass, boolean.class);
+		VueElement vue = (VueElement) constructor.newInstance(blank, useRomaji);
 		return vue;
 	}
 
-	protected VueElement(KanjiNoSensei app, boolean useRomaji)
+	/**
+	 * Constructor, define if Romaji is used instead of Kana.
+	 * @param useRomaji
+	 */
+	protected VueElement(boolean useRomaji)
 	{
-		VueElement.app = app;
 		this.useRomaji = useRomaji;
 	}
 
-	public static enum EFormat
-	{
-		Romaji, Katakana, Hiragana
-	}
-
+	/**
+	 * Return the current useRomaji flag state.
+	 * @return true if Romaji are used instead of Kana, false if not.
+	 */
 	public boolean useRomaji()
 	{
 		return useRomaji;
 	}
 
+	/**
+	 * Convert the subject to Romaji if the useRomaji flag is set.
+	 * Do nothing if useRomaji flag is not set.
+	 * @param subject String to process.
+	 * @return Romaji converted subject if useRomaji flag is set, subject if not.
+	 */
 	public String toRomajiIfNeeded(String subject)
 	{
 		if (useRomaji)
@@ -97,87 +147,100 @@ public abstract class VueElement
 		return subject;
 	}
 
-	public KanjiNoSensei getApp()
-	{
-		return app;
-	}
-
 	/**
-	 * Interface de la vue détaillé de tous les types d'éléments.
+	 * Interface that define a complete view of an element.
 	 * 
 	 * @author Escallier Pierre
 	 */
-	// public static abstract class VueDetaillePanel extends JPanel
 	public static interface VueDetaillePanel
 	{
 		/**
-		 * Méthode apellée pour récupérer l'objet JPanel.
+		 * This method must return the complete view displayable JPanel.
+		 * @return displayable JPanel.
 		 */
 		public JPanel getPanel();
 
 	};
 
 	/**
-	 * Interface de la boite de dialogue d'édition de tout type d'éléménts.
+	 * Interface that define edition dialog of an element.
 	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface EditionDialog
 	{
-
+		/**
+		 * This method must return the last edited element.
+		 * @return last edited element.
+		 */
 		public Element getElementEdite();
 
 		/**
-		 * 
+		 * Display the edition dialog.
+		 * @return true if an element was edited, false if not.
+		 * @see getElementEdite()
 		 */
 		public boolean afficher();
 
 	};
 
 	/**
-	 * Interface du panel de configuration de tout type d'élément.
+	 * Interface that define the configuration panel of an element type.
 	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface QuizConfigPanel
 	{
 		/**
-		 * Récupère l'objet JPanel.
+		 * Must return the configuration panel.
 		 * 
-		 * @return Objet JPanel formulaire de config de la vue.
+		 * @return the configuration panel to display.
 		 */
 		public JPanel getPanel();
 
 		/**
-		 * Valide le formulaire de config.
+		 * This method must be called to validate the configuration panel. 
 		 */
 		public void valider();
 
 		/**
-		 * Redéfini le formulaire avec les valeurs en cours.
+		 * Refresh the panel display with current values.
 		 */
 		public void resetDisplay();
 
 	};
 
+	/**
+	 * Exception thrown when element can't be displayed in specified mode.
+	 */
 	public static class NoAffException extends Exception
 	{
 
-		/**
-		 * 
-		 */
+		/** Serialization version. */
 		private static final long	serialVersionUID	= 1L;
 
+		/**
+		 * Constructor which specify the display mode that was not supported.
+		 * @param typeAff Display mode that was not supported.
+		 */
 		public NoAffException(String typeAff)
 		{
 			super(Messages.getString("VueElement.NoAffException") + " : " + typeAff); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
+	/**
+	 * Exception thrown when element can't use the specified input mode.
+	 */
 	public static class NoSaisieException extends Exception
 	{
+		/** Serialization version. */
 		private static final long	serialVersionUID	= 1L;
 
+		/**
+		 * Constructor which specify the non supported input mode.
+		 * @param typeSaisie Non supported input mode.
+		 */
 		public NoSaisieException(String typeSaisie)
 		{
 			super(Messages.getString("VueElement.NoSaisieException") + " : " + typeSaisie); //$NON-NLS-1$ //$NON-NLS-2$
@@ -185,83 +248,90 @@ public abstract class VueElement
 	}
 
 	/**
-	 * Interface du panel Question de Quiz.
+	 * Interface that define an element question panel.
 	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface QuizQuestionPanel
 	{
+		/**
+		 * Must return a displayable question panel.
+		 * @return a displayable question panel.
+		 */
 		JPanel getPanel();
 	};
 
 	/**
-	 * Interface du panel Saisie Réponse de Quiz.
+	 * Interface that define an answer input panel.
 	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface QuizSaisieReponsePanel
 	{
+		/**
+		 * Must return a displayable answer input panel.
+		 * @return a displayable answer input panel.
+		 */
 		JPanel getPanel();
 
 		/**
-		 * @return
+		 * Must test if the given answer was correct or not.
+		 * @return true if the answer was correct, false if not.
 		 */
 		boolean getResultat();
 	};
 
 	/**
-	 * Interface du panel Solution de Quiz.
+	 * Interface that define a solution panel.
 	 * 
 	 * @author Escallier Pierre
 	 */
 	public static interface QuizSolutionPanel
 	{
+		/**
+		 * Must return a displayable solution panel.
+		 * @return a displayable solution panel.
+		 */
 		JPanel getPanel();
 	};
 
 	/**
-	 * Retourne la vue détaillée de l'élément.
-	 * 
-	 * @return La vue détaillée de l'élément.
+	 * Return the element complete view.
+	 * @return the element complete view.
 	 */
 	public abstract VueDetaillePanel getVueDetaillePanel();
 
 	/**
-	 * Retourne le dialogue d'édition de l'élément.
-	 * 
-	 * @return Le dialogue d'édition de l'élémént.
+	 * Return the edition dialog of this element.
+	 * @return the edition dialog of this element.
 	 */
 	public abstract EditionDialog getEditionDialog();
 
 	/**
-	 * Retourne le panel de configuration de la classe d'élément.
-	 * 
-	 * @return Le panel de configuration de la classe d'élément.
+	 * Return the configuration panel of this element class.
+	 * @return the configuration panel of this element class.
 	 */
 	public abstract QuizConfigPanel getQuizConfigPanel();
 
 	/**
-	 * Affiche l'élément dans le cadre d'un quiz, suivant le type d'affichage choisi. Le type d'affichage devrait être parmis ceux proposé sur le panel de configuration de Quiz de l'élément.
-	 * 
+	 * Return the quizz question panel with the current question display mode (chosen with configuration panel).
 	 * @see getQuizConfigPanel
-	 * @param typeAffichage
-	 *            Type d'affichage souhaité.
-	 * @throws NoAffException
+	 * @throws NoAffException If element can't be displayed in the current question display mode.
 	 */
 	public abstract QuizQuestionPanel getQuizQuestionPanel() throws NoAffException;
 
 	/**
-	 * Affiche la zone de saisie de réponse suivant le type de réponse choisi. Le type d'affichage devrait être parmis ceux proposé sur le panel de configuration de Quiz de l'élément.
-	 * 
-	 * @param typeReponse
-	 *            Type d'affichage de saisi réponse souhaité.
-	 * @throws NoSaisieException
+	 * Return the quizz answer panel with the current answer input mode (chosen with configuration panel).
+	 * @see getQuizConfigPanel
+	 * @throws NoSaisieException If element can't be displayed in the current answer input mode.
 	 */
-	public abstract QuizSaisieReponsePanel getQuizSaisieReponsePanel(Dictionary dico) throws NoSaisieException;
+	public abstract QuizSaisieReponsePanel getQuizSaisieReponsePanel() throws NoSaisieException;
 
-	/**
-	 * Affiche la solution de réponse suivant le type de réponse choisi.
-	 * 
+	/** SUIS LA
+	 * Return the quizz solution panel with the current solution display mode (chosen with configuration panel).
+	 * If current solution display mode can't be rendered, the solution panel must fall back in a supported one.
+	 * If newCopy is true, the method must return a new copy of the panel.
+	 * @see getQuizConfigPanel
 	 * @param newCopy
 	 */
 	public abstract QuizSolutionPanel getQuizSolutionPanel(boolean newCopy);
@@ -295,7 +365,6 @@ public abstract class VueElement
 			consigne = Messages.getString("VueElement.ClickWaitDirective"); //$NON-NLS-1$
 		}
 
-		final KanjiNoSensei app = vue.getApp();
 		component.addMouseListener(new MouseAdapter()
 		{
 
@@ -315,7 +384,7 @@ public abstract class VueElement
 						@Override
 						public void actionPerformed(ActionEvent e)
 						{
-							app.validerReponseQuiz(true, true);
+							KanjiNoSensei.getApp().validerReponseQuiz(true, true);
 						}
 
 					});
@@ -327,7 +396,7 @@ public abstract class VueElement
 						@Override
 						public void actionPerformed(ActionEvent e)
 						{
-							app.validerReponseQuiz(false, true);
+							KanjiNoSensei.getApp().validerReponseQuiz(false, true);
 						}
 
 					});
@@ -408,7 +477,7 @@ public abstract class VueElement
 					result = reponses.containsAll(saisie, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd);
 				}
 
-				vue.getApp().validerReponseQuiz(result, false);
+				KanjiNoSensei.getApp().validerReponseQuiz(result, false);
 			}
 
 		});

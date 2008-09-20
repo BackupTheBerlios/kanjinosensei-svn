@@ -19,21 +19,22 @@ import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
 
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ * This class is used to compute Kanji display panel.
  */
 class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, QuizSolutionPanel
 {
-	/**
-	 * 
-	 */
+	/** Serialization version. */
 	private static final long	serialVersionUID	= 1L;
 
 	private JEditorPane			jEditorPane;
 
+	/** Kanji view associated with this panel. */
 	VueKanji					vue					= null;
 
+	/** Display mode. */
 	ETypeAff					typeAff				= null;
 
+	
 	public KanjiQuizAffPanel(VueKanji vue, ETypeAff typeAff) throws NoAffException
 	{
 		super();
@@ -174,14 +175,14 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 	{
 		if (source.compareTo(vue.getKanji().getStrokeOrderPicture()) == 0)
 		{
-			panel.add(vue.getStrokeOrdersImgComponent());
+			panel.add(vue.getStrokeOrdersPanel());
 		}
 		else
 		{
 			JPanelImageBg jPanelImageBg;
 			try
 			{
-				jPanelImageBg = new JPanelImageBg(source, JPanelImageBg.eImageDisplayMode.CENTRE);
+				jPanelImageBg = new JPanelImageBg(source);
 				jPanelImageBg.setPreferredSize(jPanelImageBg.getImageDimension());
 				panel.add(jPanelImageBg, BorderLayout.CENTER);
 				jPanelImageBg.setVisible(true);

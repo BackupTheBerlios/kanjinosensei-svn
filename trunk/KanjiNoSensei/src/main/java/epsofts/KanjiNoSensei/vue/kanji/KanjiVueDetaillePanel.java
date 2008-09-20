@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -37,6 +38,7 @@ import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
+import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
@@ -80,15 +82,13 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 	// private JPanel jPanelStrokeOrdersFont = null;
 
-	private final JPanel		vueDetaillePanel				= this;
-
 	private final MouseAdapter	vueDetaillePanelMouseAdapter	= new MouseAdapter()
 																{
 
 																	@Override
 																	public void mouseClicked(MouseEvent e)
 																	{
-																		vueDetaillePanel.dispatchEvent(e);
+																		KanjiVueDetaillePanel.this.dispatchEvent(e);
 																		super.mouseClicked(e);
 																	}
 
@@ -166,7 +166,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : <b>" + vue.getKanji().getSignifications() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
 		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelThemes") + " : <b>" + vue.getKanji().getThemes() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
 
-		Dictionary dico = vue.getApp().getDictionnaire();
+		Dictionary dico = KanjiNoSensei.getApp().getDictionnaire();
 		Set<Element> motsExemples = dico.getElementsSelection(new Dictionary.DictionarySorter()
 		{
 
@@ -234,9 +234,18 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 						{
 							ImgTraceDialog = null; // Force recreate the ImgTraceDialog
 							JDialog imageTraceDialog = getImgTraceDialog();
-							imageTraceDialog.pack();
+							//imageTraceDialog.pack();
 							Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-							Point loc = new Point(screen.width / 4, screen.height / 4);
+							Point loc;
+							if ((imageTraceDialog.getPreferredSize().width >= (screen.width / 2)) || (imageTraceDialog.getPreferredSize().height >= (screen.height / 2)))
+							{
+								loc = new Point(0, 0);
+							}
+							else
+							{
+								loc = new Point(screen.width / 4, screen.height / 4);
+							}
+							
 							/*
 							 * Point loc = e.getLocationOnScreen(); loc.translate(20, 20);
 							 */
@@ -271,9 +280,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jScrollPaneInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jScrollPaneInfos.setBorder(BorderFactory.createEmptyBorder(INFOS_PANEL_V_MARGIN, INFOS_PANEL_H_MARGIN, INFOS_PANEL_V_MARGIN, 0));
 			jScrollPaneInfos.setViewportView(getJPanelInfos());
-			/*
-			 * TODO: useless ? jScrollPaneInfos.setPreferredSize(new java.awt.Dimension(0, 100)); jScrollPaneInfos.setOpaque(false); jScrollPaneInfos.setSize(600, 100);
-			 */
 			jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16));
 			jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
 			jScrollPaneInfos.addMouseListener(vueDetaillePanelMouseAdapter);
@@ -296,7 +302,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jPanelInfos.setLayout(jPanelInfosLayout);
 			jPanelInfos.addMouseListener(vueDetaillePanelMouseAdapter);
 			jPanelInfos.add(getJInfosEditorPane(), BorderLayout.CENTER);
-			// jPanelInfos.doLayout();
 		}
 		return jPanelInfos;
 	}
@@ -310,31 +315,38 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		if (ImgTraceDialog == null)
 		{
-			MyUtils.trace(Level.FINEST, "[1] ImgTraceDialog creation"); //$NON-NLS-1$
+			MyUtils.trace(Level.FINEST, "[1] ImgTraceFrame creation"); //$NON-NLS-1$
+			//ImgTraceDialog = new MyModalFrame(KanjiNoSensei.getApp().getJFrame(), true);
 			ImgTraceDialog = new JDialog();
 			ImgTraceDialog.setTitle(Messages.getString("KanjiVueDetaillePanel.LabelStrokesOrder")); //$NON-NLS-1$
 			ImgTraceDialog.setModal(true);
-			ImgTraceDialog.setContentPane(getImgTraceContentPane());
+			ImgTraceDialog.setContentPane(vue.getStrokeOrdersPanel());
 			ImgTraceDialog.setUndecorated(false);
 			ImgTraceDialog.setBackground(Color.black);
 
-			Dimension d = vue.getStrokeOrdersImgComponent().getPreferredSize();
+			Dimension d = vue.getStrokeOrdersPanel().getPreferredSize();
 			Dimension nd;
 
 			if ((d.height == 0) && (d.width == 0))
 			{
 				nd = Toolkit.getDefaultToolkit().getScreenSize();
-				nd = new Dimension(nd.width / 2, nd.height / 2);
+				//nd = new Dimension(nd.width / 2, nd.height / 2);
+				
+				//ImgTraceDialog.setMinimumSize(nd);
+				ImgTraceDialog.setPreferredSize(nd);
+				ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
 			}
 			else
 			{
 				nd = new Dimension(d.width + 20, d.height + 30);
-				MyUtils.assertFalse((d.width <= 10) || (d.height <= 10), "ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$				
+				MyUtils.assertFalse((d.width <= 10) || (d.height <= 10), "ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
+				
+				ImgTraceDialog.setMinimumSize(nd);
+				ImgTraceDialog.setPreferredSize(ImgTraceDialog.getMinimumSize());
+				ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
 			}
 
-			ImgTraceDialog.setMinimumSize(nd);
-			ImgTraceDialog.setPreferredSize(ImgTraceDialog.getMinimumSize());
-			ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
+			
 
 			final MouseListener closer = new MouseAdapter()
 			{
@@ -377,7 +389,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			MyUtils.trace(Level.FINEST, "[2] ImgTraceContentPane creation"); //$NON-NLS-1$
 			ImgTraceContentPane = new JPanel();
 			ImgTraceContentPane.setLayout(new BorderLayout());
-			ImgTraceContentPane.add(vue.getStrokeOrdersImgComponent(), BorderLayout.CENTER);
+			ImgTraceContentPane.add(vue.getStrokeOrdersPanel(), BorderLayout.CENTER);
 		}
 		return ImgTraceContentPane;
 	}

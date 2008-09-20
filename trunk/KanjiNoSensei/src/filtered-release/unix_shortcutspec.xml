@@ -9,7 +9,7 @@
 				startMenu="yes"
 				startup="no"
 				target="java"
-				commandLine="-Djava.util.logging.config.file=&quot;$INSTALL_PATH/logging.properties&quot; -jar &quot;$INSTALL_PATH/${projectName}.jar&quot;"
+				commandLine="${jvmArgs} -jar &quot;$INSTALL_PATH/${projectName}.jar&quot;"
 				workingDirectory="$INSTALL_PATH"
 				description="Lancer ${projectName}"
 				iconFile="$INSTALL_PATH/ico/icon.png"

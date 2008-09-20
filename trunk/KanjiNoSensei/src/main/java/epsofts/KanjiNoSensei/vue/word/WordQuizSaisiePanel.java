@@ -33,7 +33,7 @@ class WordQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRepons
 	 * @return
 	 * @throws NoSaisieException 
 	 */
-	public static QuizSaisieReponsePanel getMotQuizSaisiePanel(VueWord vue, Dictionary dictionnaire) throws NoSaisieException
+	public static QuizSaisieReponsePanel getMotQuizSaisiePanel(VueWord vue) throws NoSaisieException
 	{
 		if (singleton == null)
 		{

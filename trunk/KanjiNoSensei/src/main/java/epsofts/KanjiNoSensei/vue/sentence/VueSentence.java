@@ -28,9 +28,9 @@ public class VueSentence extends VueElement
 	/**
 	 * @param app
 	 */
-	public VueSentence(KanjiNoSensei app, Sentence phrase, boolean useRomaji)
+	public VueSentence(Sentence phrase, boolean useRomaji)
 	{
-		super(app, useRomaji);
+		super(useRomaji);
 		this.phrase = phrase;
 	}
 
@@ -81,9 +81,9 @@ public class VueSentence extends VueElement
 	 * @see vue.VueElement#getQuizSaisieReponsePanel(metier.Dictionnaire)
 	 */
 	@Override
-	public QuizSaisieReponsePanel getQuizSaisieReponsePanel(Dictionary dico) throws NoSaisieException
+	public QuizSaisieReponsePanel getQuizSaisieReponsePanel() throws NoSaisieException
 	{
-		return SentenceQuizSaisiePanel.getPhraseQuizSaisiePanel(this, dico);
+		return SentenceQuizSaisiePanel.getPhraseQuizSaisiePanel(this);
 	}
 
 	public synchronized QuizSolutionPanel getQuizSolutionPanelCopy()

@@ -6,10 +6,13 @@
 package epsofts.KanjiNoSensei.utils;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -19,6 +22,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
@@ -31,6 +35,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
@@ -57,12 +62,14 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	/** Scrollbar min size. */
 	private static final int		SCROLLBAR_MIN_SIZE			= 1;
+	
+	private Boolean					hideScrollBars = false;
 
 	/** Inset width margin. */
-	private static final int		WIDTH_MARGIN				= 0;
+	private final float				WIDTH_MARGIN_PERCENT;
 
 	/** Inset height margin. */
-	private static final int		HEIGHT_MARGIN				= 0;
+	private final float				HEIGHT_MARGIN_PERCENT;
 
 	/**
 	 * Create a new MyAutoResizingText with given class associated component.
@@ -109,9 +116,31 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 	 */
 	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass, float min, float max)
 	{
+		return createSafely(fromClass, min, max, 0, 0);
+	}
+
+	/**
+	 * Create a new MyAutoResizingText with given class associated component.
+	 * 
+	 * @param <U>
+	 *            fromClass class.
+	 * @param fromClass
+	 *            Class object from which to instanciate the associated component, must implement a public empty constructor.
+	 * @param min
+	 *            Minimum text size.
+	 * @param max
+	 *            Maximum test size.
+	 * @param widthMargin
+	 *            Width margin.
+	 * @param heightMargin
+	 *            Height margin.
+	 * @return new MyAutoResizingText object, or null if any exception was caught.
+	 */
+	public static <U extends JComponent> MyAutoResizingText<U> createSafely(Class<U> fromClass, float min, float max, float widthMargin, float heightMargin)
+	{
 		try
 		{
-			return create(fromClass, min, max);
+			return create(fromClass, min, max, widthMargin, heightMargin);
 		}
 		catch (Exception e)
 		{
@@ -177,8 +206,34 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 	 */
 	public static <U extends JComponent> MyAutoResizingText<U> create(Class<U> fromClass, float min, float max) throws InstantiationException, IllegalAccessException
 	{
+		return create(fromClass, min, max, 0, 0);
+	}
+
+	/**
+	 * Create a new MyAutoResizingText with given class associated component.
+	 * 
+	 * @param <U>
+	 *            fromClass class.
+	 * @param fromClass
+	 *            Class object from which to instanciate the associated component, must implement a public empty constructor.
+	 * @param min
+	 *            Minimum text size.
+	 * @param max
+	 *            Maximum text size.
+	 * @param widthMargin
+	 *            Width margin.
+	 * @param heightMargin
+	 *            Height margin.
+	 * @return new MyAutoResizingText object.
+	 * @throws InstantiationException
+	 *             on U instanciation error.
+	 * @throws IllegalAccessException
+	 *             on U instanciation error.
+	 */
+	public static <U extends JComponent> MyAutoResizingText<U> create(Class<U> fromClass, float min, float max, float widthMargin, float heightMargin) throws InstantiationException, IllegalAccessException
+	{
 		U component = fromClass.newInstance();
-		return new MyAutoResizingText<U>(component, min, max);
+		return new MyAutoResizingText<U>(component, min, max, widthMargin, heightMargin);
 	}
 
 	/** Associated component. */
@@ -210,14 +265,15 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 	 * @param max
 	 *            maximum font size.
 	 */
-	private MyAutoResizingText(T textComp, float min, float max)
+	private MyAutoResizingText(T textComp, float min, float max, float widthMargin, float heightMargin)
 	{
 		component = textComp;
 		MIN_HEIGHT = min;
 		MAX_HEIGHT = max;
+		WIDTH_MARGIN_PERCENT = widthMargin;
+		HEIGHT_MARGIN_PERCENT = heightMargin;
 
 		setAutoscrolls(true);
-
 		setViewportView(component);
 		setVisible(true);
 
@@ -227,9 +283,24 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		setBorder(BorderFactory.createEmptyBorder());
 		component.setBorder(BorderFactory.createEmptyBorder());
 
-		/*
-		 * Trace useful coloring setBackground(Color.blue); setBorder(BorderFactory.createLineBorder(Color.blue)); getHorizontalScrollBar().setBackground(Color.yellow); getHorizontalScrollBar().setBorder(BorderFactory.createLineBorder(Color.yellow)); getVerticalScrollBar().setBackground(Color.green); getVerticalScrollBar().setBorder(BorderFactory.createLineBorder(Color.green)); component.setBackground(Color.red); component.setBorder(BorderFactory.createLineBorder(Color.red));
-		 */
+		// {
+		// // Trace useful coloring
+		// setBackground(Color.blue);
+		// setBorder(BorderFactory.createLineBorder(Color.blue));
+		//		
+		// viewportPanel.setBackground(Color.gray);
+		// viewportPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+		//		
+		// component.setBackground(Color.red);
+		// component.setBorder(BorderFactory.createLineBorder(Color.red));
+		//		
+		//		
+		// getVerticalScrollBar().setBackground(Color.green);
+		// getVerticalScrollBar().setBorder(BorderFactory.createLineBorder(Color.green));
+		//		
+		// getHorizontalScrollBar().setBackground(Color.yellow);
+		// getHorizontalScrollBar().setBorder(BorderFactory.createLineBorder(Color.yellow));
+		// }
 
 		addComponentListener(new ComponentAdapter()
 		{
@@ -331,6 +402,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	/**
 	 * Try to return the associated component getText() value, if no getText() method are available on the associated component, an error is logged but no exception are thrown.
+	 * 
 	 * @return associated component getText() value, or null if none.
 	 */
 	public String getText()
@@ -350,7 +422,9 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	/**
 	 * Try to call the associated component setText(String) method, if no setText(String) method are available on the associated component, an error is logged but no exception are thrown.
-	 * @param text text to set.
+	 * 
+	 * @param text
+	 *            text to set.
 	 */
 	public void setText(String text)
 	{
@@ -369,23 +443,24 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	/**
 	 * Return the minimum dimension that the associated component need to display the full text (with minimum font height).
+	 * 
 	 * @return minimum dimension needed to display the associated component full text in minimum font height.
 	 */
 	private Dimension getMinDim()
 	{
 		String text = getText();
-		if (text == null) return new Dimension(WIDTH_MARGIN, HEIGHT_MARGIN);
+		if (text == null) return new Dimension(0, 0);
 
 		Graphics2D g = (Graphics2D) component.getGraphics();
 		Rectangle2D rect = component.getFont().deriveFont(MIN_HEIGHT).getStringBounds(text, g.getFontRenderContext());
 		MyUtils.trace(Level.FINEST, "autoSize min size: " + rect.toString());
-		Dimension minDim = new Dimension((int) rect.getWidth() + WIDTH_MARGIN, (int) rect.getHeight() + HEIGHT_MARGIN);
+
+		Dimension minDim = new Dimension((int) (rect.getWidth() * (1 + WIDTH_MARGIN_PERCENT)), (int) (rect.getHeight() * (1 + HEIGHT_MARGIN_PERCENT)));
 		return minDim;
 	}
 
 	/**
-	 * Compute the font size depending on current object state.
-	 * This method is called every time the component size or text is changed.
+	 * Compute the font size depending on current object state. This method is called every time the component size or text is changed.
 	 */
 	private void refreshSize()
 	{
@@ -394,8 +469,8 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		MyUtils.trace(Level.INFO, "MyAutoResizingText resize (" + text + ")");
 
-		float boxHeight = getHeight() - HEIGHT_MARGIN;
-		float boxWidth = getWidth() - WIDTH_MARGIN;
+		float boxHeight = getHeight() * (1 - HEIGHT_MARGIN_PERCENT);
+		float boxWidth = getWidth() * (1 - WIDTH_MARGIN_PERCENT);
 
 		float min = MIN_HEIGHT;
 		float max = Math.min(MAX_HEIGHT, boxHeight);
@@ -441,17 +516,46 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		component.setFont(finalFont);
 
-		MyUtils.refreshComponentAndSubs(this);
+		if (HEIGHT_MARGIN_PERCENT < 0 || WIDTH_MARGIN_PERCENT < 0)
+		{
+			centerScrollBars();
+		}
+		
+		setScrollBarsVisibles(!hideScrollBars);
 
+		MyUtils.refreshComponentAndSubs(this);
 		/*
 		 * } }, 200);
 		 */
 	}
 
+	public void setScrollBarsVisibility(boolean visibles)
+	{
+		hideScrollBars = !visibles;
+	}
+	
+	private void setScrollBarsVisibles(boolean visibles)
+	{
+		getHorizontalScrollBar().setVisible(visibles);
+		getVerticalScrollBar().setVisible(visibles);
+		
+		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+	}
+	
+	public void centerScrollBars()
+	{
+		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		
+		getVerticalScrollBar().setValue((getVerticalScrollBar().getMaximum() + getVerticalScrollBar().getVisibleAmount()) / getVerticalScrollBar().getBlockIncrement());
+		getHorizontalScrollBar().setValue((getHorizontalScrollBar().getMaximum() + getHorizontalScrollBar().getVisibleAmount()) / getHorizontalScrollBar().getBlockIncrement());
+	}
+
 	public static void main(String[] args)
 	{
 		final Object currentAR[] = {null};
-		
+
 		final JFrame frame = new JFrame();
 		BorderLayout borderLayout = new BorderLayout();
 		frame.setLayout(borderLayout);
@@ -461,7 +565,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		// final JScrollPane jScrollPane = new JScrollPane();
 		final JPanel jPanelIntermediaire = new JPanel(new BorderLayout());
 
-		final Set<MyAutoResizingText<? extends JComponent>> myTexts = new HashSet<MyAutoResizingText<? extends JComponent>>();
+		final Stack<MyAutoResizingText<? extends JComponent>> myTexts = new Stack<MyAutoResizingText<? extends JComponent>>();
 
 		frame.addComponentListener(new ComponentAdapter()
 		{
@@ -471,7 +575,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			public void componentResized(ComponentEvent e)
 			{
 				final MyAutoResizingText<JComponent> current = ((MyAutoResizingText<JComponent>) currentAR[0]);
-				
+
 				MyUtils.trace(Level.FINEST, "frame resized"); //$NON-NLS-1$
 
 				if (current == null) return;
@@ -505,6 +609,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		});
 
+		final MyAutoResizingText<JLabel> jAutoResizingJLabelOneChar;
 		final MyAutoResizingText<JLabel> jAutoResizingJLabel;
 		final MyAutoResizingText<JTextPane> jAutoResizingJTextPane;
 		final MyAutoResizingText<JTextField> jAutoResizingJTextField;
@@ -513,6 +618,9 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		float min = 10;
 		try
 		{
+			jAutoResizingJLabelOneChar = create(JLabel.class, min, Float.POSITIVE_INFINITY, 0, (float) -0.5);
+			jAutoResizingJLabelOneChar.setScrollBarsVisibility(false);
+			
 			jAutoResizingJLabel = create(JLabel.class, min);
 			jAutoResizingJTextPane = create(JTextPane.class, min);
 			jAutoResizingJTextField = create(JTextField.class, min);
@@ -530,6 +638,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		// JTextField jTextField = jAutoResizingJTextField.getJComponent(); does not extends JComponent
 
+		myTexts.add(jAutoResizingJLabelOneChar);
 		myTexts.add(jAutoResizingJLabel);
 		myTexts.add(jAutoResizingJTextArea);
 		myTexts.add(jAutoResizingJTextField);
@@ -544,9 +653,11 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			public void run()
 			{
 				Iterator<MyAutoResizingText<? extends JComponent>> it = myTexts.iterator();
+				it.next().setText("あ");
 				while (it.hasNext())
 				{
 					MyAutoResizingText<? extends JComponent> current = it.next();
+
 					current.setText("猫はとてもかわい です;" + current.getJComponent().getClass().getName()); //$NON-NLS-1$
 				}
 			}
@@ -561,9 +672,32 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				MyAutoResizingText<JComponent> current = (MyAutoResizingText<JComponent>) currentAR[0];
+				final MyAutoResizingText<JComponent> current = (MyAutoResizingText<JComponent>) currentAR[0];
 				current.refreshSize();
 				MyUtils.refreshComponentAndSubs(frame);
+
+				MyUtils.InvokeLaterEDT(new Runnable()
+				{
+
+					@Override
+					public void run()
+					{
+						// current.getViewport().scrollRectToVisible(new Rectangle(current.getSize()));
+						// current.getVerticalScrollBar().setValueIsAdjusting(true);
+						// current.getHorizontalScrollBar().setValueIsAdjusting(true);
+
+						MyUtils.trace(Level.INFO, "H: value: " + current.getHorizontalScrollBar().getValue() + "; blockInc: " + current.getHorizontalScrollBar().getBlockIncrement());
+						MyUtils.trace(Level.INFO, "V: " + current.getVerticalScrollBar().getValue() + "; blockInc: " + current.getVerticalScrollBar().getBlockIncrement());
+
+						MyUtils.trace(Level.INFO, "H Max: " + current.getHorizontalScrollBar().getMaximum() + "; Min: " + current.getHorizontalScrollBar().getMinimum() + "; Vis: " + current.getHorizontalScrollBar().getVisibleAmount());
+						MyUtils.trace(Level.INFO, "V Max: " + current.getVerticalScrollBar().getMaximum() + "; Min: " + current.getVerticalScrollBar().getMinimum() + "; Vis: " + current.getVerticalScrollBar().getVisibleAmount());
+
+						current.getVerticalScrollBar().setValue((current.getVerticalScrollBar().getMaximum() + current.getVerticalScrollBar().getVisibleAmount()) / current.getVerticalScrollBar().getBlockIncrement());
+
+						MyUtils.trace(Level.INFO, "H: " + current.getHorizontalScrollBar().getValue());
+						MyUtils.trace(Level.INFO, "V: " + current.getVerticalScrollBar().getValue());
+					}
+				});
 			}
 		});
 
@@ -593,7 +727,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			public void actionPerformed(ActionEvent e)
 			{
 				MyAutoResizingText<? extends JComponent> current = null;
-				
+
 				if ( !it.hasNext())
 				{
 					it = myTexts.iterator();

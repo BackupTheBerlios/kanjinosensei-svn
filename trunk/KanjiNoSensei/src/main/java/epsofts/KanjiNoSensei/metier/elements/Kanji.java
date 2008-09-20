@@ -96,7 +96,8 @@ public class Kanji extends Element implements Serializable
 	 */
 	public Kanji(String importLine)
 	{
-		super(importLine);
+		super();
+		importString(importLine);
 	}
 
 	/** Imported ordered fields names. Used in warnings messages. */
@@ -240,7 +241,7 @@ public class Kanji extends Element implements Serializable
 	{
 		if ((beginning == null) || (beginning.isEmpty())) return true;
 
-		if (beginning.matches(getCodeUTF8().toString())) return true;
+		if (getCodeUTF8().toString().matches(beginning)) return true;
 
 		if (lecturesON.contains(beginning, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd)) return true;
 		if (lecturesKUN.contains(beginning, MyUtils.STRING_COMPARATOR_IgnoreCase_AllowRomajiKana_NoPunctuation_OptionalEnd)) return true;

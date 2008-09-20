@@ -14,18 +14,25 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * 
+ * Extends {@link ObjectInputStream} to implement Class/Package refactoring tolerance.
+ * This mean you can use your {@link RefactoredClassNameTolerantObjectInputStream} to readObject from an old saved file where the data class name was oldPackage.ClassName instead of the new newPackage.NewClassName.
  */
 public class RefactoredClassNameTolerantObjectInputStream extends ObjectInputStream
 {
 
+	/** Map of mapped class, key is old class name, value is the new Class object to be use. */
 	private final Map<String, Class<?>>	mappedClasses;
 
+	/** Map of mapped packages, key is old package name, value is the new Package object to be use. */
 	private final Map<String, Package>	mappedPackages;
 
 	/**
-	 * @param in
-	 * @throws IOException
+	 * Constructor with InputStream, mappedPackages and mappedClasses specified.
+	 * Note that mapped class must be compatible with old version streamed objects.
+	 * @param in InputStream to use.
+	 * @param mappedPackages mapped packages such as key is the old package name, and value the new Package object.
+	 * @param mappedClasses mapped classes such as key is the old class name, and value the new Class object.
+	 * @throws IOException can be thrown by {@link ObjectInputStream#ObjectInputStream(InputStream)}.
 	 */
 	public RefactoredClassNameTolerantObjectInputStream(InputStream in, Map<String, Package> mappedPackages, Map<String, Class<?>> mappedClasses) throws IOException
 	{
@@ -35,8 +42,11 @@ public class RefactoredClassNameTolerantObjectInputStream extends ObjectInputStr
 	}
 
 	/**
-	 * @param in
-	 * @throws IOException
+	 * Constructor with InputStream and mappedPackages specified.
+	 * Note that mapped class must be compatible with old version streamed objects.
+	 * @param in InputStream to use.
+	 * @param mappedPackages mapped packages such as key is the old package name, and value the new Package object.
+	 * @throws IOException can be thrown by {@link ObjectInputStream#ObjectInputStream(InputStream)}.
 	 */
 	public RefactoredClassNameTolerantObjectInputStream(InputStream in, Map<String, Package> mappedPackages) throws IOException
 	{
@@ -46,8 +56,10 @@ public class RefactoredClassNameTolerantObjectInputStream extends ObjectInputStr
 	}
 
 	/**
-	 * @throws IOException
-	 * 
+	 * Constructor with only mappedPackages specified.
+	 * Note that mapped class must be compatible with old version streamed objects.
+	 * @param mappedPackages mapped packages such as key is the old package name, and value the new Package object.
+	 * @throws IOException can be thrown by {@link ObjectInputStream#ObjectInputStream()}.
 	 */
 	public RefactoredClassNameTolerantObjectInputStream(Map<String, Package> mappedPackages) throws IOException
 	{
@@ -56,6 +68,15 @@ public class RefactoredClassNameTolerantObjectInputStream extends ObjectInputStr
 		this.mappedPackages = mappedPackages;
 	}
 
+	/**
+	 * Resolve the class from the ObjectStreamClass description, using the tolerance algorithm and given mapped packages and classes.
+	 * Note that mapped class must be compatible with old version streamed objects.
+	 * @param desc Current object stream class description.
+	 * @throws IOException if {@link ObjectInputStream#resolveClass(ObjectStreamClass)} throws it.
+	 * @throws ClassNotFoundException if {@link ObjectInputStream#resolveClass(ObjectStreamClass)} throws it, and no mapping class found.
+	 * @see ObjectInputStream#resolveClass(ObjectStreamClass)
+	 * @return Class object to use for reading current object from stream.
+	 */
 	@Override
 	protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
 	{

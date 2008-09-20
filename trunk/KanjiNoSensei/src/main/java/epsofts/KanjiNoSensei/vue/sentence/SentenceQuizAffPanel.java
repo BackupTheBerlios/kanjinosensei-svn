@@ -64,7 +64,7 @@ class SentenceQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPan
 
 				case Son:
 				{
-					son = vue.getPhrase().getSound();
+					son = vue.getPhrase().getSoundFile();
 					break;
 				}
 
