@@ -7,10 +7,19 @@
 
 TODO List
 	
-* Workflow en cours.
+* Work flow en cours.
 	
 ** Interface
 	
+	* Revoir l'affichage "détails" des éléments
+		agrandir la police des champs susceptibles de contenir des kanji,
+		retour à la ligne (exemples de mots),
+		centrage hors cadre; faire que les panels de chaque éléments dans la liste de partagent pas la même largeur.
+		
+		* Gérer le dépassement horizontal pour les phrases, intégrer des scroll bars et WordWrap à MyAutoResizingText.
+		
+		* En "Quiz", les boutons "Bon/Mauvais" ne devraient pas se centrer avec la zone réponse, les fixer à gauche au pire.
+		
 	* CheckBoxTree :
 		On coche une feuille: on l'ajoute au thèmes sélectionnés.
 		On décoche une feuille: on la retire des thèmes sélectionnés.
@@ -18,73 +27,71 @@ TODO List
 							on ajoute le noeud seulement si toutes les feuilles sont cochées (y compris hors filtre).
 		On décoche un noeud:	on retire toutes les feuilles filtrées par le filtre courant
 								on retire le noeud seulement s'il ne reste plus aucune feuille (y compris hors filtre).
-		
-	* Revoir l'affichage "détails" des éléments
-		agrandir la police des champs susceptibles de contenir des kanji,
-		retour à la ligne (exemples de mots),
-		centrage hors cadre; faire que les panels de chaque éléments dans la liste de partagent pas la même largeur.
-	
-		* En "Quizz", les boutons "Bon/Mauvais" ne devraient pas se centrer avec la zone réponse, les fixer à gauche au pire.
 
-	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quizz".
+	* Dans le "Quiz", afficher le type de l'élément en question.
 	
-	* Dans la fenetre "Base" comme pendant le "Quizz", afficher le nombre d'éléments (restants) dans le dictionnaire.
+	* Changer les algorithmes de trie des chaînes de caractères pour l'affichage de la liste de thèmes, forcer "Leçon 5" à être inférieur à "Leçon 10" (par exemple, utiliser une chaîne modifiée pour le test, "Leçon 00005"?"Leçon 00010").
 	
-	* Dans le "Quizz", afficher le type de l'élément en question.
+	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quiz".
 	
-	* Faire s'afficher le tracé plus grand dans le quizz Tracé+Details
+	* Faire s'afficher le tracé plus grand dans le quiz Tracé+Details
 	
-	* Gérer le dépassement horizontal pour les phrases, intégrer des scrollbars et WordWrap à MyAutoResizingText.
-	
-	* Ajouter des mots exemples pour les kanjis.
-	
-	* Changer les algo de trie des chaînes de caractères pour l'affichage de la liste de thèmes, forcer "Leçon 5" à être inférieur à "Leçon 10" (par exemple, utiliser une chaine modifiée pour le test, "Leçon 00005"?"Leçon 00010").
-	
-** Améliorations
-
-	* Lors de la sélection de texte, l'algo de recherche doit inclure les éléments possibles en ignorant les parenthèses (et crochets).
+** Permanent, récurent
 
 	* Optimiser le chargement et l'affichage général de la liste (ne charger que les éléments à afficher ?)
 		Faire des tests de performance pour voir ce qui prend le plus de temps.
 	
-	* Ajouter un bouton "Terminer Quizz" qui vide les éléments restants non posé, et ne pose plus que les éléments en erreurs.
+	* Revoir les labels sur l'ihm, internationaliser.
 	
-	* Dans le "Quizz", masquer automatiquement la zone sud si elle est non utilisée (pouvoir le détecter).
+	* Surveiller: java memory leaks ?
 	
-	* Revoir la façon dont la priorité des éléments de quizz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
+** Améliorations
+
+	* Lors de la sélection de texte, l'algo de recherche doit inclure les éléments possibles en ignorant les parenthèses (et crochets).
+		Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.
+
+	* Ajouter un bouton "Terminer Quiz" qui vide les éléments restants non posé, et ne pose plus que les éléments en erreurs.
+	
+	* Dans le "Quiz", masquer automatiquement la zone sud si elle est non utilisée (pouvoir le détecter).
 	
 	* Masquer/Griser le bouton "Lire" lorsqu'aucun fichier son n'est renseigné.
 	
-	* Revoir les labels sur l'ihm, internationaliser.
-	
-	* Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.
+	* Revoir la façon dont la priorité des éléments de quiz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
 	
 	* Implémenter les méthodes de saisies "liste de choix".
 	
 ** Nouvelles fonctionnalités
 
-	* Gérer intélligement les doublons du dictionnaire, lorsqu'un doublons est détecté, penser à mettre l'élément dans tous les thèmes où il était déclaré. Mais lors du Quizz, on ne le pose qu'une fois.
-	  Faire un petit utilitaire d'analyse du dico de base, qui repère les doublons avec certains paramètres de tolérence, pour aider à écrire un dico de base robuste.
-	  > Faire que l'utilitaire d'analyse du dico puisse prendre le fichier diso.csv tel quel, et sans y toucher, sauvegarde un dico.kjd avec les règles des modifs que l'on souhaite appliquer (gestion des doublons, transformations d'éléments, ..)
+	* Réfléchir à un nouveau type pour l'étude de la grammaire (particules, fonctions, ...)
+	
+	* Gérer intelligemment les doublons du dictionnaire, lorsqu'un doublons est détecté, penser à mettre l'élément dans tous les thèmes où il était déclaré. Mais lors du Quiz, on ne le pose qu'une fois.
+	  Faire un petit utilitaire d'analyse du dico de base, qui repère les doublons avec certains paramètres de tolérance, pour aider à écrire un dico de base robuste.
+	  > Faire que l'utilitaire d'analyse du dico puisse prendre le fichier diso.csv tel quel, et sans y toucher, sauvegarde un dico.kjd avec les règles des modifications que l'on souhaite appliquer (gestion des doublons, transformations d'éléments, ..)
 	  dico.kjd = lecture du dico.csv + règles		Sachant que si le dico.csv évolue, les règles qui matches toujours restent appliquées.
+	
+	* Plutôt que d'effacer les faux doublons (pour les vrais, il suffit de faire un merge des thèmes) ajouter une partie règles au dictionnaire, permettant d'appliquer une règle distincte pour chaque élément (sachant que l'ajout de règle ne se fera que par un admin, et ne devrait concerner qu'une minorité d'éléments, histoire d'affiner le comportement final de l'appli).
+	Les règles pourraient être:
+		** Masquer(bool): l'élément n'apparait jamais.
+		** NonQuizzable(bool): l'élément apparaît dans la base, mais ne sort jamais en quiz.
+		** NbBonnesReponsesMax(int): l'élément est lié au learningProfile, il ne sort qu'un nombre limité de fois.
+		** Lié(Element): l'élément est lié à un autre, si l'un des deux sort en quiz, l'autre sera sauté (cardinalités 1..* <-> 1..*).
+		** MasquerSiRessemblant(int): l'élément est automatiquement comparé à tous les éléments déjà sortis, et il est passé si la ressemblance avec un élément déjà vu dépasse le pourcentage donné.
+		
+	* Lors de l'import d'un dictionnaire *.csv; attribuer pour chaque élément un rang qui permet de tracer l'ordre dans lequel écrire les éléments lors d'un export csv. Ainsi il sera possible de faire des cycles import/export/merge.
+	
+	* En quiz, avoir accès à une fonction "signaler erreur". Celle-ci note l'élément courant dans un liste "erreurs", puis, à la fermeture ou au lancement de l'appli propose à l'utilisateur de soumettre la liste au rapport de bug en ligne (ex: passer par un script php qui s'occupe d'envoyer un mail, ou bien même de générer tout seul un rapport de bug sur GoogleCode).
 	
 	* En plus de la liste des mots, afficher une liste des phrases où sont employés les Kanji / Mots. S'occuper d'abord de revoir l'algo de recherche (pour ignorer les parenthèses et autres crochets, notes et meta-marques).
 	
-	* Ajouter méthode de saisie "au hasard" qui pour chaque question tire une méthode de saisie au hasard (excluant la méthode d'affichage).
-	
 	* Avoir la possibilité, lors d'un quiz, de jouer les phrases d'une leçon dans l'ordre.
 	
-	* Réfléchir à un nouveau type pour l'étude de la grammaire (particules, fonctions, ...)
-	
-	* En quizz, avoir accès à une fonction "signaler erreur". Celle-ci note l'élément courant dans un liste "erreurs", puis, à la fermeture ou au lancement de l'appli propose à l'utilisateur de soumettre la liste au rapport de bug en ligne (ex: passer par un script php qui s'occupe d'envoyer un mail, ou bien même de générer tout seul un rapport de bug sur GoogleCode).
+	* Ajouter méthode de saisie "au hasard" qui pour chaque question tire une méthode de saisie au hasard (excluant la méthode d'affichage).
 	
 ** Bugs
 	
 	* Détection de version de la JRE: si la version de la JRE n'est pas celle attendue, le programme crash avant de pouvoir faire le contrôle et afficher un message d'erreur décent.
 	
-	* Ecran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et celà change sitôt qu'on edite le kanji.
-	
-	* Surveiller: java memory leaks ?
+	* Écran base de connaissances: Sélectionner toute l'arborescence L1, afficher le tracé de chaque kanji un à un, après quelques essai, on fini par rencontrer un problème d'affichage de l'image du tracé, en fait c'est le contentPane entier qui n'est pas affiché. C'est aléatoire et cela change sitôt qu'on édite le kanji (puisqu'on recréé un nouveau panel).
 	
 ** Gestion projet
 	
@@ -93,14 +100,4 @@ TODO List
 	* Rédiger les tests unitaires.
 	
 ** Notes (brouillon)  
-
-	* Lors de l'import d'un dictionnaire *.csv; attribuer pour chaque élément un rang qui permet de tracer l'ordre dans lequel écrire les éléments lors d'un export csv. Ainsi il sera possible de faire des cycles import/export/merge.
-	
-	* Plutôt que d'effacer les faux doublons (pour les vrais, il suffit de faire un merge des thèmes) ajouter une partie règles au dictionnaire, permettant d'appliquer une règle distincte pour chaque élément (sachant que l'ajout de règle ne se fera que par un admin, et ne devrait concerner qu'une minorité d'éléments, histoire d'affiner le comportement final de l'appli).
-	Les rèlges pourraient être:
-		* Masquer(bool): l'élément n'apparait jamais.
-		* NonQuizzable(bool): l'élément aparait dans la base, mais ne sort jamais en quizz.
-		* NbBonnesReponsesMax(int): l'élément est lié au learningProfile, il ne sort qu'un nomre limitée de fois.
-		* Lié(Element): l'élément est lié à un autre, si l'un des deux sort en quizz, l'autre sera sauté (cardinalités 1..* <-> 1..*).
-		* MasquerSiRessemblant(int): l'élément est automatiquement comparé à tous les éléménts déjà sortis, et il est passé si la ressemblence avec un élémént déjà vu dépasse le pourcentage donné.
 		
