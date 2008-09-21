@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeMap;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -55,14 +56,16 @@ public abstract class MyUtils
 
 		/**
 		 * Message constructor.
-		 * @param msg Message.
+		 * 
+		 * @param msg
+		 *            Message.
 		 */
 		public BadStringFormatException(String msg)
 		{
 			super(msg);
 		}
 	}
-	
+
 	/**
 	 * Test the system fonts and report which ones are able to display testing character (unicode). Use System I/O.
 	 */
@@ -333,44 +336,44 @@ public abstract class MyUtils
 	/** Romaji standard table. */
 	private static final String[]	tRomaji				= {"a", "i", "u", "e", "o", "ka", "ki", "ku", "ke", "ko", "sa", "shi", "su", "se", "so", "ta", "chi", "tsu", "te", "to", "na", "ni", "nu", "ne", "no", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$
 		"ha", "hi", "fu", "he", "ho", "ma", "mi", "mu", "me", "mo", "ya", "yu", "yo", "ra", "ri", "ru", "re", "ro", "wa", "wo", "n", "ga", "gi", "gu", "ge", "go", "za", "ji", "zu", "ze", "zo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$
-		"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};									//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
+		"da", "ji", "zu", "de", "do", "ba", "bi", "bu", "be", "bo", "pa", "pi", "pu", "pe", "po"};												//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$
 
 	/** Romaji composed characters table. */
 	private static final String[]	tRomaYaYuYo			= {"kya", "kyu", "kyo", "sha", "shu", "sho", "cha", "chu", "cho", "nya", "nyu", "nyo", "hya", "hyu", "hyo", "mya", "myu", "myo", "rya", "ryu", "ryo", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$
-		"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};											//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+		"gya", "gyu", "gyo", "ja", "ju", "jo", "bya", "byu", "byo", "pya", "pyu", "pyo"};														//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Hiragana standard table. */
 	private static final String[]	tHiragana			= {"あ", "い", "う", "え", "お", "か", "き", "く", "け", "こ", "さ", "し", "す", "せ", "そ", "た", "ち", "つ", "て", "と", "な", "に", "ぬ", "ね", "の", "は", "ひ", "ふ", "へ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 		"ほ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "わ", "を", "ん", "が", "ぎ", "ぐ", "げ", "ご", "ざ", "じ", "ず", "ぜ", "ぞ", "だ", "ぢ", "づ", "で", "ど", "ば", "び", "ぶ", "べ", "ぼ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-		"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"							};																			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"ぱ", "ぴ", "ぷ", "ぺ", "ぽ"							};																						//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Hiragana composed characters table. */
 	private static final String[]	tHiraYaYuYo			= {"きゃ", "きゅ", "きょ", "しゃ", "しゅ", "しょ", "ちゃ", "ちゅ", "ちょ", "にゃ", "にゅ", "にょ", "ひゃ", "ひゅ", "ひょ", "みゃ", "みゅ", "みょ", "りゃ", "りゅ", "りょ", "ぎゃ", "ぎゅ", "ぎょ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-		"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};																		//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+		"じゃ", "じゅ", "じょ", "びゃ", "びゅ", "びょ", "ぴゃ", "ぴゅ", "ぴょ"};																					//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Hiragana little TSU character. */
-	private static final String		hiraTsu				= "っ";																		//$NON-NLS-1$
+	private static final String		hiraTsu				= "っ";																					//$NON-NLS-1$
 
 	/** Katakana standard table. */
 	private static final String[]	tKatakana			= {"ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "ケ", "コ", "サ", "シ", "ス", "セ", "ソ", "タ", "チ", "ツ", "テ", "ト", "ナ", "ニ", "ヌ", "ネ", "ノ", "ハ", "ヒ", "フ", "ヘ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$
 		"ホ", "マ", "ミ", "ム", "メ", "モ", "ヤ", "ユ", "ヨ", "ラ", "リ", "ル", "レ", "ロ", "ワ", "ヲ", "ン", "ガ", "ギ", "グ", "ゲ", "ゴ", "ザ", "ジ", "ズ", "ゼ", "ゾ", "ダ", "ヂ", "ヅ", "デ", "ド", "バ", "ビ", "ブ", "ベ", "ボ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$ //$NON-NLS-25$ //$NON-NLS-26$ //$NON-NLS-27$ //$NON-NLS-28$ //$NON-NLS-29$ //$NON-NLS-30$ //$NON-NLS-31$ //$NON-NLS-32$ //$NON-NLS-33$ //$NON-NLS-34$ //$NON-NLS-35$ //$NON-NLS-36$ //$NON-NLS-37$
-		"パ", "ピ", "プ", "ペ", "ポ"							};																			//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+		"パ", "ピ", "プ", "ペ", "ポ"							};																						//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 	/** Katakana composed characters table. */
 	private static final String[]	tKataYaYuYo			= {"キャ", "キュ", "キョ", "シャ", "シュ", "ショ", "チャ", "チュ", "チョ", "ニャ", "ニュ", "ニョ", "ヒャ", "ヒュ", "ヒョ", "ミャ", "ミュ", "ミョ", "リャ", "リュ", "リョ", "ギャ", "ギュ", "ギョ", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$ //$NON-NLS-15$ //$NON-NLS-16$ //$NON-NLS-17$ //$NON-NLS-18$ //$NON-NLS-19$ //$NON-NLS-20$ //$NON-NLS-21$ //$NON-NLS-22$ //$NON-NLS-23$ //$NON-NLS-24$
-		"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};																		//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
+		"ジャ", "ジュ", "ジョ", "ビャ", "ビュ", "ビョ", "ピャ", "ピュ", "ピョ"};																					//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
 
 	/** Katakana little TSU character. */
-	private static final String		kataTsu				= "ッ";																		//$NON-NLS-1$
+	private static final String		kataTsu				= "ッ";																					//$NON-NLS-1$
 
 	/** Kanas punctuation. */
-	protected static final String[]	tKanaPunc			= {"　", "、", "。", "？", "！", "；", "−", "ー", "（", "）", "「", "」", "｛", "｝"};	//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+	protected static final String[]	tKanaPunc			= {"　", "、", "。", "？", "！", "；", "−", "ー", "（", "）", "「", "」", "｛", "｝"};				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Kanas braces. */
 	protected static final String[]	tKanaBraces			= {"（", "）", "「", "」", "｛", "｝"};
 
 	/** Romaji punctuation. */
-	protected static final String[]	tRomaPunc			= {" ", ",", ".", "?", "!", ";", "-", "-", "(", ")", "[", "]", "{", "}"};	//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+	protected static final String[]	tRomaPunc			= {" ", ",", ".", "?", "!", ";", "-", "-", "(", ")", "[", "]", "{", "}"};				//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
 
 	/** Romaji braces. */
 	protected static final String[]	tRomaBraces			= {"(", ")", "[", "]", "{", "}"};
@@ -388,14 +391,14 @@ public abstract class MyUtils
 	protected static final String[]	tRomaEndingBraces	= (String[]) Array.newInstance(String.class, tRomaBraces.length / 2);
 
 	/** All braces. */
-	protected static final String[]	braces = (String[]) Array.newInstance(String.class, tKanaBraces.length + tRomaBraces.length);
-	
+	protected static final String[]	braces				= (String[]) Array.newInstance(String.class, tKanaBraces.length + tRomaBraces.length);
+
 	/** All starting braces. */
-	protected static final String[]	startingBraces = (String[]) Array.newInstance(String.class, braces.length / 2);
-	
+	protected static final String[]	startingBraces		= (String[]) Array.newInstance(String.class, braces.length / 2);
+
 	/** All ending braces. */
-	protected static final String[]	endingBraces = (String[]) Array.newInstance(String.class, braces.length / 2);
-	
+	protected static final String[]	endingBraces		= (String[]) Array.newInstance(String.class, braces.length / 2);
+
 	static
 	{
 		for (int i = 0; i < tKanaBraces.length; i += 2)
@@ -409,22 +412,22 @@ public abstract class MyUtils
 			tRomaStartingBraces[i / 2] = tRomaBraces[i];
 			tRomaEndingBraces[i / 2] = tRomaBraces[i + 1];
 		}
-		
+
 		int j;
-		for(j = 0; j < tKanaBraces.length; ++j)
+		for (j = 0; j < tKanaBraces.length; ++j)
 		{
 			braces[j] = tKanaBraces[j];
 		}
-		
-		for(int i=0; i < tRomaBraces.length; ++i)
+
+		for (int i = 0; i < tRomaBraces.length; ++i)
 		{
-			braces[i+j] = tRomaBraces[i];
+			braces[i + j] = tRomaBraces[i];
 		}
-		
-		for(int i=0; i < braces.length; i+=2)
+
+		for (int i = 0; i < braces.length; i += 2)
 		{
 			startingBraces[i / 2] = braces[i];
-			endingBraces[i / 2] = braces[i+1];
+			endingBraces[i / 2] = braces[i + 1];
 		}
 	}
 
@@ -873,43 +876,43 @@ public abstract class MyUtils
 	}
 
 	public static String simplifiedString(String subject) throws BadStringFormatException
-	{		
+	{
 		if (subject == null || subject.isEmpty()) return subject;
-		
+
 		subject = replaceAll(subject, tRomaStartingBraces, "(");
 		subject = replaceAll(subject, tKanaStartingBraces, "(");
 		subject = replaceAll(subject, tRomaEndingBraces, ")");
 		subject = replaceAll(subject, tKanaEndingBraces, ")");
-		
+
 		subject = removeBraced(subject, "(", ")");
-		
+
 		subject = replaceAll(subject, tKanaPunc, "");
 		subject = replaceAll(subject, tRomaPunc, "");
-		
+
 		subject = subject.toLowerCase();
-		
+
 		return subject;
 	}
 
 	public static String removeBraced(String subject, String startBrace, String endBrace) throws BadStringFormatException
 	{
 		if (subject == null || subject.isEmpty()) return subject;
-		
+
 		int sc, ec, pos;
-		for(sc=0, pos=0; (pos = subject.indexOf(startBrace, pos)+1) > 0; ++sc);
-		for(ec=0, pos=0; (pos = subject.indexOf(endBrace, pos)+1) > 0; ++ec);
-		
+		for (sc = 0, pos = 0; (pos = subject.indexOf(startBrace, pos) + 1) > 0; ++sc);
+		for (ec = 0, pos = 0; (pos = subject.indexOf(endBrace, pos) + 1) > 0; ++ec);
+
 		if (ec != sc)
 		{
-			trace(Level.WARNING, "Braces count does not match in \""+subject+"\"");
-			throw new BadStringFormatException("Braces count does not match in \""+subject+"\"");
+			trace(Level.WARNING, "Braces count does not match in \"" + subject + "\"");
+			throw new BadStringFormatException("Braces count does not match in \"" + subject + "\"");
 		}
-		
+
 		int startPos = 0, nextStartPos, endPos;
 		do
 		{
-			startPos = subject.indexOf(startBrace, startPos+1);
-			nextStartPos = subject.indexOf(startBrace, startPos+1);
+			startPos = subject.indexOf(startBrace, startPos + 1);
+			nextStartPos = subject.indexOf(startBrace, startPos + 1);
 			endPos = subject.indexOf(endBrace);
 
 			if (startPos >= 0)
@@ -932,34 +935,115 @@ public abstract class MyUtils
 
 		return subject;
 	}
-	
+
+	public static class BadTaggedStringFormatException extends Exception
+	{
+		private final String	parsedString;
+
+		public String getParsedString()
+		{
+			return parsedString;
+		}
+
+		public BadTaggedStringFormatException(String msg, String parsedString)
+		{
+			super(msg);
+			this.parsedString = parsedString;
+		}
+	}
+
+	public static interface ITaggedStringParseListener
+	{
+		String processTag(String tagValue) throws Exception;
+	}
+
+	// TODO: refaire en récursif
+	public static String parseTaggedString(String taggedString, String startTag, String endTag, ITaggedStringParseListener tagProcessor) throws BadTaggedStringFormatException
+	{
+		if (taggedString == null || taggedString.isEmpty()) return taggedString;
+		String exMsg = null;
+
+		// We test the string is valid before to work with it.
+		int sc, ec, pos;
+		for (sc = 0, pos = 0; (pos = taggedString.indexOf(startTag, pos) + startTag.length()) >= startTag.length(); ++sc);
+		for (ec = 0, pos = 0; (pos = taggedString.indexOf(endTag, pos) + endTag.length()) >= endTag.length(); ++ec);
+
+		if (ec != sc)
+		{
+			String errMsg = "parseTaggedString: Starting tags (" + startTag + ") and ending tags (" + endTag + ") count does not match in \"" + taggedString + "\"";
+			MyUtils.trace(Level.WARNING, errMsg);
+			throw new BadTaggedStringFormatException(errMsg, taggedString);
+		}
+
+		if (sc == 0)
+		{
+			return taggedString;
+		}
+
+		// The startingTag the most at right must be an leaf.
+		int st = taggedString.lastIndexOf(startTag);
+
+		while (st >= 0)
+		{
+			// The nearest endingTag from the last startingTag must match it.
+			int et = taggedString.indexOf(endTag, st + startTag.length());
+
+			String subTaggedString = taggedString.substring(st + startTag.length(), et);
+			String parsedSubTaggedString = parseTaggedString(subTaggedString, startTag, endTag, tagProcessor);
+			String processedSubTaggedString = null;
+
+			try
+			{
+				processedSubTaggedString = tagProcessor.processTag(parsedSubTaggedString);
+			}
+			catch (Exception e)
+			{
+				MyUtils.trace(Level.WARNING, "VueElement.computeTemplate: " + e.getMessage());
+				processedSubTaggedString = "!TemplateError!";
+				exMsg = e.getMessage();
+			}
+
+			taggedString = taggedString.substring(0, st) + processedSubTaggedString + taggedString.substring(et + endTag.length());
+
+			st = taggedString.lastIndexOf(startTag);
+		}
+
+		if (exMsg != null)
+		{
+			throw new BadTaggedStringFormatException(exMsg, taggedString);
+		}
+
+		return taggedString;
+	}
+
 	public static int firstIndexOf(String subject, String[] patterns)
 	{
 		return firstIndexOf(subject, patterns, 0);
 	}
+
 	public static int firstIndexOf(String subject, String[] patterns, int fromIndex)
 	{
 		if (subject == null || subject.isEmpty() || patterns == null || patterns.length == 0) return -1;
-		
+
 		int first = -1;
-		for(String pattern : patterns)
+		for (String pattern : patterns)
 		{
 			int pos = subject.indexOf(pattern, fromIndex);
 			if (pos >= 0)
 			{
-				first = Math.min((first<0)?Integer.MAX_VALUE:first, pos);
+				first = Math.min((first < 0) ? Integer.MAX_VALUE : first, pos);
 			}
 		}
-		
+
 		return first;
 	}
-	
+
 	public static String bestStartsWith(String subject, String[] patterns, int toffset)
 	{
 		String bestMatch = null;
 		int bestMatchLength = 0;
-		
-		for(String pattern: patterns)
+
+		for (String pattern : patterns)
 		{
 			if (subject.startsWith(pattern, toffset))
 			{
@@ -970,23 +1054,17 @@ public abstract class MyUtils
 				}
 			}
 		}
-		
+
 		return bestMatch;
 	}
 
 	/*
-	private String withoutEndingBracedSubstring(String s)
-	{
-		int lastClose = s.lastIndexOf(')');
-		if (lastClose < 0) return s;
-
-		int lastOpen = s.substring(0, lastClose).indexOf('(');
-		if (lastOpen < 0) return s;
-
-		String ws = s.substring(0, lastOpen) + s.substring(lastClose + 1);
-		return (ws.isEmpty() ? s : ws);
-	}
-	*/
+	 * private String withoutEndingBracedSubstring(String s) { int lastClose = s.lastIndexOf(')'); if (lastClose < 0) return s;
+	 * 
+	 * int lastOpen = s.substring(0, lastClose).indexOf('('); if (lastOpen < 0) return s;
+	 * 
+	 * String ws = s.substring(0, lastOpen) + s.substring(lastClose + 1); return (ws.isEmpty() ? s : ws); }
+	 */
 
 	/**
 	 * Replace all searches substring in the subject with it's corresponding replace string.<br>

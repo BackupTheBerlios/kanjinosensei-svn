@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -608,6 +609,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		final MyAutoResizingText<JTextPane> jAutoResizingJTextPane;
 		final MyAutoResizingText<JTextField> jAutoResizingJTextField;
 		final MyAutoResizingText<JTextArea> jAutoResizingJTextArea;
+		final MyAutoResizingText<JEditorPane> jAutoResizingJEditorPane;
 
 		float min = 10;
 		try
@@ -619,6 +621,11 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			jAutoResizingJTextPane = create(JTextPane.class, min);
 			jAutoResizingJTextField = create(JTextField.class, min);
 			jAutoResizingJTextArea = create(JTextArea.class, min);
+			
+			jAutoResizingJEditorPane = create(JEditorPane.class, min);
+			JEditorPane editorPane = jAutoResizingJEditorPane.getJComponent();
+			editorPane.setContentType("text/html");
+			editorPane.setText("<h1>Titre 1</h1><br>Deuxième ligne</br>");
 		}
 		catch (Exception e)
 		{
@@ -633,6 +640,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		// JTextField jTextField = jAutoResizingJTextField.getJComponent(); does not extends JComponent
 
 		myTexts.add(jAutoResizingJLabelOneChar);
+		myTexts.add(jAutoResizingJEditorPane);
 		myTexts.add(jAutoResizingJLabel);
 		myTexts.add(jAutoResizingJTextArea);
 		myTexts.add(jAutoResizingJTextField);

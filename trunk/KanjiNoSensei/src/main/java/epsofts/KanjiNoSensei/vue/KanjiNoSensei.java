@@ -839,19 +839,22 @@ public class KanjiNoSensei implements PropertyChangeListener
 				element = itElements.next();
 				try
 				{
-					final VueElement vueElement = VueElement.genererVueElement(element, USE_ROMAJI);
+					final VueElement vueElement = VueElement.genererVueElement(element);
 					final JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
 
 					final JPanel selectablePanel = new JPanel(new BorderLayout(0, 0));
-					selectablePanel.add(vueElementDetaillePanel, BorderLayout.WEST);
+					selectablePanel.add(vueElementDetaillePanel, BorderLayout.CENTER);
 					selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 					selectablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 					MyUtils.trace(Level.FINE, "<InvokeLater:selectablePanel sizing for Element id=" + i + ">");
 					int margin = 4;
-					selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
-					// selectablePanel.setMaximumSize(new Dimension(vueElementDetaillePanel.getMaximumSize().width + margin, vueElementDetaillePanel.getMaximumSize().height + margin));
-					selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
+				
+					selectablePanel.setMinimumSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getMinimumSize().width, vueElementDetaillePanel.getMinimumSize().height + margin));
+					selectablePanel.setPreferredSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getPreferredSize().width, selectablePanel.getMinimumSize().height));
+					
+					//selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
+					//selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
 
 					MyUtils.trace(Level.FINE, "</InvokeLater:selectablePanel sizing for Element id=" + i + ">");
 
@@ -2208,7 +2211,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				elementQuestionEnCours = dictionnaireQuizEnCours.getNextElementFromLearningProfile(dejaVus, userLearningProfile);
 				// elementQuestionEnCours = dictionnaireQuizEnCours.getRandomElement(dejaVus);
-				vueElementQuestionEnCours = VueElement.genererVueElement(elementQuestionEnCours, USE_ROMAJI);
+				vueElementQuestionEnCours = VueElement.genererVueElement(elementQuestionEnCours);
 			}
 			catch (DictionaryNoMoreElementException e1)
 			{

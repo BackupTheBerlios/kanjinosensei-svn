@@ -25,18 +25,25 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
+import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.utils.MyUtils.BadStringFormatException;
+import epsofts.KanjiNoSensei.vue.Config;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
+import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizQuestionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizSolutionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.VueDetaillePanel;
-
 
 /**
  * @author Axan
@@ -52,6 +59,8 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private static final int	INFOS_PANEL_H_MARGIN			= 20;
 
 	private static final int	INFOS_PANEL_V_MARGIN			= 5;
+
+	private static final String	DEFAULT_TEMPLATE				= "<label>KanjiVueDetaillePanel.LabelONLectures</label> : <b><vue>getLecturesON</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelKUNLectures</label> : <b><vue>getLecturesKUN</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelMotsExemples</label> : <b><vue>getMotsExemples</vue></b><br>";
 
 	private VueKanji			vue								= null;
 
@@ -102,7 +111,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		this.setMinimumSize(new java.awt.Dimension(400, 100));
 		this.setPreferredSize(new java.awt.Dimension(400, 100));
 		this.setAlignmentX(0.0f);
-		this.setMaximumSize(new java.awt.Dimension(10000, 100));
+		this.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 100));
 		this.add(getJPanelCodeUTF8(), BorderLayout.WEST);
 		this.add(getJScrollPaneInfos(), BorderLayout.CENTER);
 	}
@@ -117,10 +126,14 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	{
 		getJPanelCodeUTF8().setMinimumSize(getJPanelCodeUTF8().getPreferredSize());
 		getJPanelCodeUTF8().setMaximumSize(getJPanelCodeUTF8().getPreferredSize());
-		getJPanelInfos().setMinimumSize(getJPanelInfos().getPreferredSize());
-		getJPanelInfos().setMaximumSize(getJPanelInfos().getPreferredSize());
+		getJInfosEditorPane().setMinimumSize(getJInfosEditorPane().getPreferredSize());
+		getJInfosEditorPane().setMaximumSize(getJInfosEditorPane().getPreferredScrollableViewportSize());
+		/*
+		 * getJPanelInfos().setMinimumSize(getJPanelInfos().getPreferredSize()); getJPanelInfos().setMaximumSize(getJPanelInfos().getPreferredSize());
+		 */
 
-		int minX = getJPanelInfos().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + INFOS_PANEL_H_MARGIN;
+		int minX = getJInfosEditorPane().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + INFOS_PANEL_H_MARGIN;
+		// int minX = getJPanelInfos().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + INFOS_PANEL_H_MARGIN;
 		int minY = 0 + Math.max(getJInfosEditorPane().getPreferredSize().height, getJPanelCodeUTF8().getPreferredSize().height) + getJScrollPaneInfos().getHorizontalScrollBar().getMaximumSize().height + INFOS_PANEL_V_MARGIN * 2;
 
 		int maxX = minX;
@@ -134,39 +147,8 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 	protected void miseAJourInfos()
 	{
-		StringBuilder sb = new StringBuilder();
 		jLabelCodeUTF8.setText(vue.getKanji().getCodeUTF8().toString());
-		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : <b>" + vue.toRomajiIfNeeded(vue.getKanji().getLecturesON()) + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : <b>" + vue.toRomajiIfNeeded(vue.getKanji().getLecturesKUN()) + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : <b>" + vue.getKanji().getSignifications() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelThemes") + " : <b>" + vue.getKanji().getThemes() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-
-		Dictionary dico = KanjiNoSensei.getApp().getDictionnaire();
-		Set<Element> motsExemples = dico.getElementsSelection(new Dictionary.DictionarySorter()
-		{
-
-			@Override
-			public boolean testElement(Element e)
-			{
-				if ( !Word.class.isInstance(e)) return false;
-				Word w = (Word) e;
-				return w.getWord().matches(".*" + vue.getKanji().getCodeUTF8().toString() + ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-
-		});
-
-		StringBuilder listeMotsExemples = new StringBuilder(""); //$NON-NLS-1$
-		Iterator<Element> it = motsExemples.iterator();
-		while (it.hasNext())
-		{
-			Word w = (Word) it.next();
-			if (listeMotsExemples.length() > 0) listeMotsExemples.append("; "); //$NON-NLS-1$
-			listeMotsExemples.append(String.format("%s (%s)", w.getWord(), w.getSignifications())); //$NON-NLS-1$
-		}
-
-		sb.append(Messages.getString("KanjiVueDetaillePanel.LabelMotsExemples") + " : <b>" + listeMotsExemples.toString() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-
-		getJInfosEditorPane().setText(sb.toString());
+		getJInfosEditorPane().setText(VueElement.computeTemplate(Config.getString("KanjiVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
 
 		doLayout();
 		setSizes();
@@ -209,7 +191,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 						{
 							ImgTraceDialog = null; // Force recreate the ImgTraceDialog
 							JDialog imageTraceDialog = getImgTraceDialog();
-							//imageTraceDialog.pack();
+							// imageTraceDialog.pack();
 							Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 							Point loc;
 							if ((imageTraceDialog.getPreferredSize().width >= (screen.width / 2)) || (imageTraceDialog.getPreferredSize().height >= (screen.height / 2)))
@@ -220,7 +202,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 							{
 								loc = new Point(screen.width / 4, screen.height / 4);
 							}
-							
+
 							/*
 							 * Point loc = e.getLocationOnScreen(); loc.translate(20, 20);
 							 */
@@ -254,9 +236,13 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jScrollPaneInfos = new JScrollPane();
 			jScrollPaneInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jScrollPaneInfos.setBorder(BorderFactory.createEmptyBorder(INFOS_PANEL_V_MARGIN, INFOS_PANEL_H_MARGIN, INFOS_PANEL_V_MARGIN, 0));
-			jScrollPaneInfos.setViewportView(getJPanelInfos());
-			jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16));
-			jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
+			jScrollPaneInfos.setViewportView(getJInfosEditorPane());
+			jScrollPaneInfos.setAutoscrolls(true);
+			jScrollPaneInfos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			jScrollPaneInfos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			/*
+			 * jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16)); jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
+			 */
 			jScrollPaneInfos.addMouseListener(vueDetaillePanelMouseAdapter);
 
 		}
@@ -268,18 +254,9 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	 * 
 	 * @return javax.swing.JPanel
 	 */
-	private JPanel getJPanelInfos()
-	{
-		if (jPanelInfos == null)
-		{
-			jPanelInfos = new JPanel();
-			BorderLayout jPanelInfosLayout = new BorderLayout();
-			jPanelInfos.setLayout(jPanelInfosLayout);
-			jPanelInfos.addMouseListener(vueDetaillePanelMouseAdapter);
-			jPanelInfos.add(getJInfosEditorPane(), BorderLayout.CENTER);
-		}
-		return jPanelInfos;
-	}
+	/*
+	 * private JPanel getJPanelInfos() { if (jPanelInfos == null) { jPanelInfos = new JPanel(); BorderLayout jPanelInfosLayout = new BorderLayout(); jPanelInfos.setLayout(jPanelInfosLayout); jPanelInfos.addMouseListener(vueDetaillePanelMouseAdapter); jPanelInfos.add(getJInfosEditorPane(), BorderLayout.CENTER); } return jPanelInfos; }
+	 */
 
 	/**
 	 * This method initializes ImgTraceDialog
@@ -291,7 +268,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		if (ImgTraceDialog == null)
 		{
 			MyUtils.trace(Level.FINEST, "[1] ImgTraceFrame creation"); //$NON-NLS-1$
-			//ImgTraceDialog = new MyModalFrame(KanjiNoSensei.getApp().getJFrame(), true);
+			// ImgTraceDialog = new MyModalFrame(KanjiNoSensei.getApp().getJFrame(), true);
 			ImgTraceDialog = new JDialog();
 			ImgTraceDialog.setTitle(Messages.getString("KanjiVueDetaillePanel.LabelStrokesOrder")); //$NON-NLS-1$
 			ImgTraceDialog.setModal(true);
@@ -305,9 +282,9 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			if ((d.height == 0) && (d.width == 0))
 			{
 				nd = Toolkit.getDefaultToolkit().getScreenSize();
-				//nd = new Dimension(nd.width / 2, nd.height / 2);
-				
-				//ImgTraceDialog.setMinimumSize(nd);
+				// nd = new Dimension(nd.width / 2, nd.height / 2);
+
+				// ImgTraceDialog.setMinimumSize(nd);
 				ImgTraceDialog.setPreferredSize(nd);
 				ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
 			}
@@ -315,13 +292,11 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			{
 				nd = new Dimension(d.width + 20, d.height + 30);
 				MyUtils.assertFalse((d.width <= 10) || (d.height <= 10), "ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
-				
+
 				ImgTraceDialog.setMinimumSize(nd);
 				ImgTraceDialog.setPreferredSize(ImgTraceDialog.getMinimumSize());
 				ImgTraceDialog.setSize(ImgTraceDialog.getPreferredSize());
 			}
-
-			
 
 			final MouseListener closer = new MouseAdapter()
 			{
@@ -370,9 +345,11 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jInfosEditorPane.setEditable(false);
 			jInfosEditorPane.setContentType("text/html");
 			jInfosEditorPane.setText("Loading..");
+			// Dimension d = new Dimension(800, 100);
+			// jInfosEditorPane.setPreferredSize(d);
 
 			jInfosEditorPane.addMouseListener(vueDetaillePanelMouseAdapter);
-			/*
+
 			jInfosEditorPane.addCaretListener(new CaretListener()
 			{
 				public void caretUpdate(CaretEvent evt)
@@ -381,14 +358,14 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 					if ((sel != null) && ( !sel.isEmpty()))
 					{
 						MyUtils.trace(Level.FINE, "Selection '" + sel + "'"); //$NON-NLS-1$ //$NON-NLS-2$
-						Dictionary dictionnaire = vue.getApp().getDictionnaire();
+						Dictionary dictionnaire = KanjiNoSensei.getApp().getDictionnaire();
 
-						Element e = dictionnaire.chercherElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+						Element e = dictionnaire.getElement(new Word(sel, "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 						if (e == null)
 						{
 							KanjiNoSensei.log(Level.WARNING, Messages.getString("KanjiVueDetaillePanel.ErrorMissingWord") + " : \"" + sel.charAt(0) + "(" + sel.substring(1) + ")\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-							e = dictionnaire.chercherElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+							e = dictionnaire.getElement(new Kanji(sel.charAt(0), "", "", "", "", "").getKey()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 						}
 
 						if (e == null)
@@ -406,7 +383,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 						VueElement vueElement = null;
 						try
 						{
-							vueElement = VueElement.genererVueElement(vue.getApp(), e, vue.useRomaji());
+							vueElement = VueElement.genererVueElement(e);
 						}
 						catch (Exception e1)
 						{
@@ -420,9 +397,9 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 						motDetail.setVisible(true);
 					}
 				}
-			});*/
+			});
 		}
+		
 		return jInfosEditorPane;
 	}
-
 }

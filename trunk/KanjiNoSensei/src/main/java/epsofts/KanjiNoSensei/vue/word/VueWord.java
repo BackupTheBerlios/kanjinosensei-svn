@@ -26,9 +26,9 @@ public class VueWord extends VueElement
 	/**
 	 * @param app
 	 */
-	public VueWord(Word mot, boolean useRomaji)
+	public VueWord(Word mot)
 	{
-		super(useRomaji);
+		super();
 		this.mot = mot;
 	}
 

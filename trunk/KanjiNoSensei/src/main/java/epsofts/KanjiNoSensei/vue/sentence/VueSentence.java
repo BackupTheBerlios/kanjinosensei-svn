@@ -26,9 +26,9 @@ public class VueSentence extends VueElement
 	/**
 	 * @param app
 	 */
-	public VueSentence(Sentence phrase, boolean useRomaji)
+	public VueSentence(Sentence phrase)
 	{
-		super(useRomaji);
+		super();
 		this.phrase = phrase;
 	}
 

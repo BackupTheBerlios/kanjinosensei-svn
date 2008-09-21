@@ -157,7 +157,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 						VueElement vueElement = null;
 						try
 						{
-							vueElement = VueElement.genererVueElement(e, vue.useRomaji());
+							vueElement = VueElement.genererVueElement(e);
 						}
 						catch (Exception e1)
 						{

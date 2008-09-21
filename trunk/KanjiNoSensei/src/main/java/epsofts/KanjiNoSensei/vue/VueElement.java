@@ -12,8 +12,11 @@ import java.awt.event.MouseEvent;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -27,7 +30,8 @@ import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.utils.OneStringList;
-
+import epsofts.KanjiNoSensei.utils.MyUtils.BadStringFormatException;
+import epsofts.KanjiNoSensei.utils.MyUtils.BadTaggedStringFormatException;
 
 /**
  * Interface des Vues de tous les types d'éléments pouvant entrer dans le dictionnaire.
@@ -38,23 +42,23 @@ public abstract class VueElement
 {
 
 	/** Full view height. */
-	private static final int		VUE_DETAILLE_HEIGHT	= 100;
-
-	/** Flag to define if Romaji is used instead of Kana. */
-	protected boolean				useRomaji			= false;
+	private static final int	VUE_DETAILLE_HEIGHT	= 100;
 
 	/**
 	 * Return the associated element.
+	 * 
 	 * @return the associated element.
 	 */
 	public abstract Element getElement();
 
 	/**
-	 * Return the VueXXX class associated with the given Element class.
-	 * The VueXXX class must exist as {@code VueElement.class.getPackage().getName)+"."+elementClass.getSimpleName().toLowerCase()+".Vue"+elementClass.getSimpleName()}.
-	 * @param elementClass Element class we need to know the associated Vue class.
+	 * Return the VueXXX class associated with the given Element class. The VueXXX class must exist as {@code VueElement.class.getPackage().getName)+"."+elementClass.getSimpleName().toLowerCase()+".Vue"+elementClass.getSimpleName()}.
+	 * 
+	 * @param elementClass
+	 *            Element class we need to know the associated Vue class.
 	 * @return the VueXXX class associated with the given Element class.
-	 * @throws ClassNotFoundException if VueXXX class can't be found.
+	 * @throws ClassNotFoundException
+	 *             if VueXXX class can't be found.
 	 */
 	@SuppressWarnings("unchecked")//$NON-NLS-1$
 	private static Class<? extends VueElement> getVueClassFromElementClass(Class<? extends Element> elementClass) throws ClassNotFoundException
@@ -65,41 +69,61 @@ public abstract class VueElement
 
 	/**
 	 * Generate a VueXXX class for the given Element.
-	 * @param element Element to generate the Vue class.
-	 * @param useRomaji Specify if Romaji is used instead of Kana.
+	 * 
+	 * @param element
+	 *            Element to generate the Vue class.
+	 * @param useRomaji
+	 *            Specify if Romaji is used instead of Kana.
 	 * @return VueXXX object for the given element.
-	 * @throws ClassNotFoundException If VueXXX class can't be found for this element.
-	 * @throws SecurityException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws NoSuchMethodException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws IllegalArgumentException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws InstantiationException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws IllegalAccessException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws InvocationTargetException If VueXXX class has no expected constructor to be instanciate.
+	 * @throws ClassNotFoundException
+	 *             If VueXXX class can't be found for this element.
+	 * @throws SecurityException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchMethodException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalArgumentException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InstantiationException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalAccessException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InvocationTargetException
+	 *             If VueXXX class has no expected constructor to be instanciate.
 	 */
-	public static VueElement genererVueElement(Element element, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
+	public static VueElement genererVueElement(Element element) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
 	{
 		Class<? extends Element> classElement = element.getClass();
 		Class<?> classeVue = getVueClassFromElementClass(classElement);
-		Constructor<?> constructor = classeVue.getConstructor(classElement, boolean.class);
-		VueElement vue = (VueElement) constructor.newInstance(element, useRomaji);
+		Constructor<?> constructor = classeVue.getConstructor(classElement);
+		VueElement vue = (VueElement) constructor.newInstance(element);
 		return vue;
 	}
 
-	//　TODO: C'est moche.. instancier une VueXXX lié à un objet "BLANK".. parcequ'on a pas trouvé de solution statique..
+	// 　TODO: C'est moche.. instancier une VueXXX lié à un objet "BLANK".. parcequ'on a pas trouvé de solution statique..
 	/**
-	 * Used to generate a blank VueXXX object.
-	 * A blank VueXXX object is associated with the BLANK element of the given elementClass.
-	 * @param elementClass element class for which to generate the VueXXX object.
-	 * @param useRomaji Specify if Romaji is used instead of Kana.
+	 * Used to generate a blank VueXXX object. A blank VueXXX object is associated with the BLANK element of the given elementClass.
+	 * 
+	 * @param elementClass
+	 *            element class for which to generate the VueXXX object.
+	 * @param useRomaji
+	 *            Specify if Romaji is used instead of Kana.
 	 * @return VueXXX object for the BLANK element of the specified Element class.
-	 * @throws ClassNotFoundException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws SecurityException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws NoSuchMethodException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws IllegalArgumentException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws InstantiationException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws IllegalAccessException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws InvocationTargetException If VueXXX class has no expected constructor to be instanciate.
-	 * @throws NoSuchFieldException If elementClass does not define public static field {@code static public final Element BLANK = ...}. 
+	 * @throws ClassNotFoundException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws SecurityException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchMethodException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalArgumentException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InstantiationException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws IllegalAccessException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws InvocationTargetException
+	 *             If VueXXX class has no expected constructor to be instanciate.
+	 * @throws NoSuchFieldException
+	 *             If elementClass does not define public static field {@code static public final Element BLANK = ...}.
 	 */
 	public static VueElement genererVueBlankElement(Class<? extends Element> elementClass, boolean useRomaji) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException
 	{
@@ -107,38 +131,29 @@ public abstract class VueElement
 		Field fieldBlank = elementClass.getDeclaredField("BLANK"); //$NON-NLS-1$
 		ClassLoader.getSystemClassLoader().loadClass(elementClass.getCanonicalName());
 		Element blank = (Element) fieldBlank.get(null);
-		Constructor<?> constructor = classeVue.getConstructor(elementClass, boolean.class);
-		VueElement vue = (VueElement) constructor.newInstance(blank, useRomaji);
+		Constructor<?> constructor = classeVue.getConstructor(elementClass);
+		VueElement vue = (VueElement) constructor.newInstance(blank);
 		return vue;
 	}
 
 	/**
-	 * Constructor, define if Romaji is used instead of Kana.
-	 * @param useRomaji
+	 * Empty constructor.
 	 */
-	protected VueElement(boolean useRomaji)
+	protected VueElement()
 	{
-		this.useRomaji = useRomaji;
+		
 	}
 
 	/**
-	 * Return the current useRomaji flag state.
-	 * @return true if Romaji are used instead of Kana, false if not.
-	 */
-	public boolean useRomaji()
-	{
-		return useRomaji;
-	}
-
-	/**
-	 * Convert the subject to Romaji if the useRomaji flag is set.
-	 * Do nothing if useRomaji flag is not set.
-	 * @param subject String to process.
+	 * Convert the subject to Romaji if the useRomaji flag is set. Do nothing if useRomaji flag is not set.
+	 * 
+	 * @param subject
+	 *            String to process.
 	 * @return Romaji converted subject if useRomaji flag is set, subject if not.
 	 */
-	public String toRomajiIfNeeded(String subject)
+	public static String toRomajiIfNeeded(String subject)
 	{
-		if (useRomaji)
+		if (KanjiNoSensei.USE_ROMAJI)
 		{
 			return MyUtils.kanaToRomaji(subject);
 		}
@@ -155,6 +170,7 @@ public abstract class VueElement
 	{
 		/**
 		 * This method must return the complete view displayable JPanel.
+		 * 
 		 * @return displayable JPanel.
 		 */
 		public JPanel getPanel();
@@ -170,12 +186,14 @@ public abstract class VueElement
 	{
 		/**
 		 * This method must return the last edited element.
+		 * 
 		 * @return last edited element.
 		 */
 		public Element getElementEdite();
 
 		/**
 		 * Display the edition dialog.
+		 * 
 		 * @return true if an element was edited, false if not.
 		 * @see getElementEdite()
 		 */
@@ -198,7 +216,7 @@ public abstract class VueElement
 		public JPanel getPanel();
 
 		/**
-		 * This method must be called to validate the configuration panel. 
+		 * This method must be called to validate the configuration panel.
 		 */
 		public void valider();
 
@@ -220,7 +238,9 @@ public abstract class VueElement
 
 		/**
 		 * Constructor which specify the display mode that was not supported.
-		 * @param typeAff Display mode that was not supported.
+		 * 
+		 * @param typeAff
+		 *            Display mode that was not supported.
 		 */
 		public NoAffException(String typeAff)
 		{
@@ -238,7 +258,9 @@ public abstract class VueElement
 
 		/**
 		 * Constructor which specify the non supported input mode.
-		 * @param typeSaisie Non supported input mode.
+		 * 
+		 * @param typeSaisie
+		 *            Non supported input mode.
 		 */
 		public NoSaisieException(String typeSaisie)
 		{
@@ -255,6 +277,7 @@ public abstract class VueElement
 	{
 		/**
 		 * Must return a displayable question panel.
+		 * 
 		 * @return a displayable question panel.
 		 */
 		JPanel getPanel();
@@ -269,12 +292,14 @@ public abstract class VueElement
 	{
 		/**
 		 * Must return a displayable answer input panel.
+		 * 
 		 * @return a displayable answer input panel.
 		 */
 		JPanel getPanel();
 
 		/**
 		 * Must test if the given answer was correct or not.
+		 * 
 		 * @return true if the answer was correct, false if not.
 		 */
 		boolean getResultat();
@@ -289,6 +314,7 @@ public abstract class VueElement
 	{
 		/**
 		 * Must return a displayable solution panel.
+		 * 
 		 * @return a displayable solution panel.
 		 */
 		JPanel getPanel();
@@ -296,40 +322,46 @@ public abstract class VueElement
 
 	/**
 	 * Return the element complete view.
+	 * 
 	 * @return the element complete view.
 	 */
 	public abstract VueDetaillePanel getVueDetaillePanel();
 
 	/**
 	 * Return the edition dialog of this element.
+	 * 
 	 * @return the edition dialog of this element.
 	 */
 	public abstract EditionDialog getEditionDialog();
 
 	/**
 	 * Return the configuration panel of this element class.
+	 * 
 	 * @return the configuration panel of this element class.
 	 */
 	public abstract QuizConfigPanel getQuizConfigPanel();
 
 	/**
 	 * Return the quizz question panel with the current question display mode (chosen with configuration panel).
+	 * 
 	 * @see getQuizConfigPanel
-	 * @throws NoAffException If element can't be displayed in the current question display mode.
+	 * @throws NoAffException
+	 *             If element can't be displayed in the current question display mode.
 	 */
 	public abstract QuizQuestionPanel getQuizQuestionPanel() throws NoAffException;
 
 	/**
 	 * Return the quizz answer panel with the current answer input mode (chosen with configuration panel).
+	 * 
 	 * @see getQuizConfigPanel
-	 * @throws NoSaisieException If element can't be displayed in the current answer input mode.
+	 * @throws NoSaisieException
+	 *             If element can't be displayed in the current answer input mode.
 	 */
 	public abstract QuizSaisieReponsePanel getQuizSaisieReponsePanel() throws NoSaisieException;
 
-	/** SUIS LA
-	 * Return the quizz solution panel with the current solution display mode (chosen with configuration panel).
-	 * If current solution display mode can't be rendered, the solution panel must fall back in a supported one.
-	 * If newCopy is true, the method must return a new copy of the panel.
+	/**
+	 * SUIS LA Return the quizz solution panel with the current solution display mode (chosen with configuration panel). If current solution display mode can't be rendered, the solution panel must fall back in a supported one. If newCopy is true, the method must return a new copy of the panel.
+	 * 
 	 * @see getQuizConfigPanel
 	 * @param newCopy
 	 */
@@ -484,5 +516,107 @@ public abstract class VueElement
 		component.add(jConsigne, BorderLayout.NORTH);
 		component.add(jSaisie, BorderLayout.CENTER);
 		component.doLayout();
+	}
+
+	public static String computeTemplate(String template, final VueElement vue)
+	{
+		String tagLabels = "label";
+		String tagMethod = "method";
+		String tagVueMethod = "vue";
+		String content = template;
+
+		final Element element = vue.getElement();
+		
+		try
+		{
+			content = MyUtils.parseTaggedString(content, "<" + tagLabels + ">", "</" + tagLabels + ">", new MyUtils.ITaggedStringParseListener()
+			{
+
+				@Override
+				public String processTag(String tagValue)
+				{
+					if (tagValue.indexOf("</") >= 0)
+					{
+						tagValue = tagValue+"";
+					}
+					return Messages.getString(tagValue);
+				}
+			});
+		}
+		catch (BadTaggedStringFormatException e)
+		{
+			KanjiNoSensei.log(Level.SEVERE, "VueElement.computeTemplate: Error: "+e.getMessage());
+			content = e.getParsedString();
+		}
+		
+		try
+		{
+			content = MyUtils.parseTaggedString(content, "<" + tagMethod + ">", "</" + tagMethod + ">", new MyUtils.ITaggedStringParseListener()
+			{
+
+				@Override
+				public String processTag(String tagValue) throws Exception
+				{
+					try
+					{
+						Method method = element.getClass().getMethod(tagValue);
+						if (Modifier.isStatic(method.getModifiers()))
+						{
+							return method.invoke(null).toString();
+						}
+						else
+						{
+							return method.invoke(element).toString();
+						}
+					}
+					catch (Exception e)
+					{
+						String errMsg = "Can't use method \"" + tagValue + "\" on Element subclass \"" + element.getClass().getName() + "\"";
+						throw new Exception(errMsg, e);
+					}
+				}
+			});
+		}
+		catch (BadTaggedStringFormatException e)
+		{
+			KanjiNoSensei.log(Level.SEVERE, "VueElement.computeTemplate: Error: "+e.getMessage());
+			content = e.getParsedString();
+		}
+		
+		try
+		{
+			content = MyUtils.parseTaggedString(content, "<" + tagVueMethod + ">", "</" + tagVueMethod + ">", new MyUtils.ITaggedStringParseListener()
+			{
+
+				@Override
+				public String processTag(String tagValue) throws Exception
+				{
+					try
+					{
+						Method method = vue.getClass().getMethod(tagValue);
+						if (Modifier.isStatic(method.getModifiers()))
+						{
+							return method.invoke(null).toString();
+						}
+						else
+						{
+							return method.invoke(vue).toString();
+						}
+					}
+					catch (Exception e)
+					{
+						String errMsg = "Can't use method \"" + tagValue + "\" on VueElement subclass \"" + vue.getClass().getName() + "\"";
+						throw new Exception(errMsg, e);
+					}
+				}
+			});
+		}
+		catch (BadTaggedStringFormatException e)
+		{
+			KanjiNoSensei.log(Level.SEVERE, "VueElement.computeTemplate: Error: "+e.getMessage());
+			content = e.getParsedString();
+		}
+
+		return content;
 	}
 }

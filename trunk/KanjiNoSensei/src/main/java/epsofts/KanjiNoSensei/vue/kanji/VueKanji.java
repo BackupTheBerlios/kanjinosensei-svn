@@ -7,14 +7,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
+import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg;
+import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;
 import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
@@ -67,9 +72,9 @@ public class VueKanji extends VueElement
 		return strokeOrdersFont;
 	}
 
-	public VueKanji(Kanji kanji, boolean useRomaji)
+	public VueKanji(Kanji kanji)
 	{
-		super(useRomaji);
+		super();
 		this.kanji = kanji;
 	}
 
@@ -312,5 +317,43 @@ public class VueKanji extends VueElement
 		}
 
 		return jPanelStrokeOrders;
+	}
+	
+	public String getLecturesON()
+	{
+		return toRomajiIfNeeded(kanji.getLecturesON());
+	}
+	
+	public String getLecturesKUN()
+	{
+		return toRomajiIfNeeded(kanji.getLecturesKUN());
+	}
+	
+	public String getMotsExemples()
+	{
+		Dictionary dico = KanjiNoSensei.getApp().getDictionnaire();
+		Set<Element> motsExemples = dico.getElementsSelection(new Dictionary.DictionarySorter()
+		{
+
+			@Override
+			public boolean testElement(Element e)
+			{
+				if ( !Word.class.isInstance(e)) return false;
+				Word w = (Word) e;
+				return w.getWord().matches(".*" + kanji.getCodeUTF8().toString() + ".*"); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+
+		});
+
+		StringBuilder listeMotsExemples = new StringBuilder(""); //$NON-NLS-1$
+		Iterator<Element> it = motsExemples.iterator();
+		while (it.hasNext())
+		{
+			Word w = (Word) it.next();
+			if (listeMotsExemples.length() > 0) listeMotsExemples.append("; "); //$NON-NLS-1$
+			listeMotsExemples.append(String.format("%s (%s)", w.getWord(), w.getSignifications())); //$NON-NLS-1$
+		}
+
+		return listeMotsExemples.toString();
 	}
 }

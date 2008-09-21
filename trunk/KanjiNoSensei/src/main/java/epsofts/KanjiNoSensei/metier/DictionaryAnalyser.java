@@ -472,7 +472,7 @@ public class DictionaryAnalyser implements IDictionaryAnalyser
 				
 				try
 				{
-					final VueElement vue = VueElement.genererVueElement(element, false);
+					final VueElement vue = VueElement.genererVueElement(element);
 					final Element[] newElementRef = new Element[]{null};
 					
 					MyUtils.InvokeAndWaitEDT(new Runnable()
