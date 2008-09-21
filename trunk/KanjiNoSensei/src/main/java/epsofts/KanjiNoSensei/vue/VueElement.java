@@ -23,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import epsofts.KanjiNoSensei.RefactoringInfos;
-import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.utils.MyUtils;

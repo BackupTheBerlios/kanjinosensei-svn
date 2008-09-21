@@ -76,6 +76,8 @@ TODO List
 	
 	* Réfléchir à un nouveau type pour l'étude de la grammaire (particules, fonctions, ...)
 	
+	* En quizz, avoir accès à une fonction "signaler erreur". Celle-ci note l'élément courant dans un liste "erreurs", puis, à la fermeture ou au lancement de l'appli propose à l'utilisateur de soumettre la liste au rapport de bug en ligne (ex: passer par un script php qui s'occupe d'envoyer un mail, ou bien même de générer tout seul un rapport de bug sur GoogleCode).
+	
 ** Bugs
 	
 	* Détection de version de la JRE: si la version de la JRE n'est pas celle attendue, le programme crash avant de pouvoir faire le contrôle et afficher un message d'erreur décent.

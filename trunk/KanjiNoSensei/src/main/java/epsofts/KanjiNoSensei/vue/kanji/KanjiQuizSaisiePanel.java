@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
-import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.VueElement.NoSaisieException;

@@ -6,19 +6,10 @@
 package epsofts.KanjiNoSensei.utils;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.Stack;
-import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Level;
-
-import org.junit.matchers.SubstringMatcher;
-
-import epsofts.KanjiNoSensei.utils.MyUtils.BadStringFormatException;
 
 /**
  * This class represent a list of elements which support "one string format" input/output. This class extends Vector&lt;String&gt; so each element is unique on the list.
@@ -34,9 +25,6 @@ public class OneStringList extends Vector<String>
 
 	/** Separator used in one string list format. */
 	private final String		SEPARATOR;
-
-	/** Flag specifying if SEPARATOR are ignored while between braces. */
-	private final Boolean		SKIP_BRACES;
 
 	/** Allowed braces. */
 	private final String[]		ALLOWED_BRACES;
@@ -79,7 +67,6 @@ public class OneStringList extends Vector<String>
 	{
 		ALLOWED_SEPARATOR = new String[] {", "};
 		SEPARATOR = ALLOWED_SEPARATOR[0];
-		SKIP_BRACES = true;
 		ALLOWED_BRACES = MyUtils.braces;
 		STARTING_BRACES = new String[ALLOWED_BRACES.length / 2];
 		ENDING_BRACES = new String[ALLOWED_BRACES.length / 2];
@@ -97,7 +84,6 @@ public class OneStringList extends Vector<String>
 		super(oneStringList);
 		ALLOWED_SEPARATOR = oneStringList.ALLOWED_SEPARATOR;
 		SEPARATOR = oneStringList.SEPARATOR;
-		SKIP_BRACES = true;
 		ALLOWED_BRACES = MyUtils.braces;
 		STARTING_BRACES = new String[ALLOWED_BRACES.length / 2];
 		ENDING_BRACES = new String[ALLOWED_BRACES.length / 2];
@@ -114,7 +100,6 @@ public class OneStringList extends Vector<String>
 	{
 		ALLOWED_SEPARATOR = new String[] {separator};
 		SEPARATOR = ALLOWED_SEPARATOR[0];
-		SKIP_BRACES = true;
 		ALLOWED_BRACES = MyUtils.braces;
 		STARTING_BRACES = new String[ALLOWED_BRACES.length / 2];
 		ENDING_BRACES = new String[ALLOWED_BRACES.length / 2];
@@ -131,7 +116,6 @@ public class OneStringList extends Vector<String>
 	{
 		ALLOWED_SEPARATOR = allowedSeparators;
 		SEPARATOR = ALLOWED_SEPARATOR[0];
-		SKIP_BRACES = true;
 		ALLOWED_BRACES = MyUtils.braces;
 		STARTING_BRACES = new String[ALLOWED_BRACES.length / 2];
 		ENDING_BRACES = new String[ALLOWED_BRACES.length / 2];

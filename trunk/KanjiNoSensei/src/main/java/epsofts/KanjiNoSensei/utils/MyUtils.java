@@ -1,6 +1,5 @@
 package epsofts.KanjiNoSensei.utils;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
@@ -12,25 +11,16 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.management.BadStringOperationException;
 import javax.naming.OperationNotSupportedException;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.LookAndFeel;
@@ -41,8 +31,6 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
-
-import nl.jj.swingx.gui.modal.JModalFrame;
 
 /**
  * Utilities class, provide lot of functions.
@@ -62,8 +50,12 @@ public abstract class MyUtils
 
 	static public class BadStringFormatException extends Exception
 	{
+		/** Serialization version. */
+		private static final long	serialVersionUID	= 1L;
+
 		/**
-		 * 
+		 * Message constructor.
+		 * @param msg Message.
 		 */
 		public BadStringFormatException(String msg)
 		{
@@ -982,6 +974,7 @@ public abstract class MyUtils
 		return bestMatch;
 	}
 
+	/*
 	private String withoutEndingBracedSubstring(String s)
 	{
 		int lastClose = s.lastIndexOf(')');
@@ -993,6 +986,7 @@ public abstract class MyUtils
 		String ws = s.substring(0, lastOpen) + s.substring(lastClose + 1);
 		return (ws.isEmpty() ? s : ws);
 	}
+	*/
 
 	/**
 	 * Replace all searches substring in the subject with it's corresponding replace string.<br>

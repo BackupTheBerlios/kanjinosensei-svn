@@ -8,25 +8,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.logging.Level;
 
 import javax.media.Manager;
 
-import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
-
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.advanced.AdvancedPlayer;
+import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 
 /**
  * Util class used for sound playing. This class must be used via static methods playSound, stopSounds. This class maps severals libraries to play severals sounds format. Library to use is detected with the file extension. Listener can be added to this class to be fired on player control events.

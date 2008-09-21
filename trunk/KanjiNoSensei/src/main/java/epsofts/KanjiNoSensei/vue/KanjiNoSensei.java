@@ -16,7 +16,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -27,8 +26,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -39,33 +36,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.rmi.UnexpectedException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.print.attribute.standard.JobName;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,7 +70,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -96,7 +85,6 @@ import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 
 import epsofts.KanjiNoSensei.metier.Dictionary;
-import epsofts.KanjiNoSensei.metier.DictionaryAnalyser;
 import epsofts.KanjiNoSensei.metier.LearningProfile;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.Dictionary.DictionaryElementAlreadyPresentException;
@@ -106,11 +94,11 @@ import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyCheckBoxTree;
+import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeEvent;
 import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeListener;
 import epsofts.KanjiNoSensei.utils.MyUtils.DoItToThisComponent;
-import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.vue.VueElement.NoAffException;
 import epsofts.KanjiNoSensei.vue.VueElement.NoSaisieException;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizConfigPanel;
@@ -435,8 +423,6 @@ public class KanjiNoSensei implements PropertyChangeListener
 	private LearningProfile	userLearningProfile			= null;
 
 	private File			ficPresets;
-
-	private JList			jListElements;
 
 	private static Vector<Class<? extends Element>> listPluginsClasses()
 	{
@@ -2921,7 +2907,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 	public synchronized void propertyChange(PropertyChangeEvent evt)
 	{
 		Object swingWorker = evt.getSource().getClass().getName();
-		boolean doesWork = (workingSwingWorker.get(swingWorker) == null)?false:workingSwingWorker.get(swingWorker);
+		//boolean doesWork = (workingSwingWorker.get(swingWorker) == null)?false:workingSwingWorker.get(swingWorker);
 		
 		if ("state".equals(evt.getPropertyName()))
 		{

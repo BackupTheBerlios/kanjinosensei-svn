@@ -1,13 +1,7 @@
 package epsofts.KanjiNoSensei.vue;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
@@ -17,7 +11,6 @@ import java.util.logging.Level;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 
 /**
@@ -59,16 +52,6 @@ public class JPanelImageBg extends JComponent implements ImageObserver
 	// private TexturePaint texture = null;
 	/** Buffered image. */
 	private BufferedImage		bufferedImage		= null;
-
-	/** Image. */
-	private Image				sourceImage			= null;
-
-	/**
-	 * Display mode: CENTER, paint the loaded image. TEXTURE, paint the loaded texture. NONE, paint nothing.
-	 */
-	/*
-	 * public static enum eImageDisplayMode { CENTER, TEXTURE, NONE }
-	 */
 
 	/**
 	 * Constructor, define image filename and display mode.

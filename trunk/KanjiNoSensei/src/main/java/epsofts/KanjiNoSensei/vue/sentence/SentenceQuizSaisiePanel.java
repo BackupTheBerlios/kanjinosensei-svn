@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.VueElement.NoSaisieException;

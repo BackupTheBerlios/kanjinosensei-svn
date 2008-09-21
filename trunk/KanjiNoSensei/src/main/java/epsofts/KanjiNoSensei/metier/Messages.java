@@ -9,7 +9,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
-import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 
 

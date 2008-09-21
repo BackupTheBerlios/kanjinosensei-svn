@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
-import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;

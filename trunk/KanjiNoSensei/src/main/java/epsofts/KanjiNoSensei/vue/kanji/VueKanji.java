@@ -4,25 +4,17 @@
 package epsofts.KanjiNoSensei.vue.kanji;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
-import epsofts.KanjiNoSensei.metier.Dictionary;
-import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg;
-import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;
 import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
@@ -227,15 +219,6 @@ public class VueKanji extends VueElement
 	{
 		return kanji;
 	}
-
-	/**
-	 * This method initializes jPanelImageBg
-	 * 
-	 * @return vue.JPanelImageBg
-	 */
-	private JPanelImageBg	jPanelImageBg			= null;
-
-	private JPanel			jPanelStrokeOrdersFont	= null;
 
 	private JPanel			jPanelStrokeOrders		= null;
 

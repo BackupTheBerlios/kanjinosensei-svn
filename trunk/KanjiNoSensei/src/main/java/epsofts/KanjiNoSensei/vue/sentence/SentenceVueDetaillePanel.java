@@ -3,22 +3,15 @@ package epsofts.KanjiNoSensei.vue.sentence;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 
-import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
-import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
@@ -28,7 +21,6 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
 import epsofts.KanjiNoSensei.metier.elements.Word;
-import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.JPanelSonBtn;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
@@ -52,8 +44,6 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	private VueSentence			vue								= null;
 
 	private JScrollPane			jScrollPaneInfos;
-
-	private JTextArea			jTextPane;
 
 	private JToggleButton		jButtonJouerSon;
 

@@ -12,8 +12,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,24 +22,17 @@ import java.util.logging.Level;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 
 import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.metier.elements.Element;
-import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
-import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
-import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizQuestionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizSolutionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.VueDetaillePanel;
@@ -75,12 +66,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private JPanel				jPanelInfos						= null;
 
 	private JDialog				ImgTraceDialog					= null;
-
-	private JPanel				ImgTraceContentPane				= null;
-
-	// private JPanelImageBg jPanelImageBg = null;
-
-	// private JPanel jPanelStrokeOrdersFont = null;
 
 	private final MouseAdapter	vueDetaillePanelMouseAdapter	= new MouseAdapter()
 																{
@@ -126,16 +111,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 	private void dynamicInitialize()
 	{
 		miseAJourInfos();
-	}
-
-	private static void traceSizes(Component c)
-	{
-		MyUtils.trace(Level.FINEST, "trace Sizes component [" + c + "]");
-		MyUtils.trace(Level.FINEST, "getBounds()\t" + c.getBounds());
-		MyUtils.trace(Level.FINEST, "getMaximumSize()\t" + c.getMaximumSize());
-		MyUtils.trace(Level.FINEST, "getMinimumSize()\t" + c.getMinimumSize());
-		MyUtils.trace(Level.FINEST, "getPreferredSize()\t" + c.getPreferredSize());
-		MyUtils.trace(Level.FINEST, "getSize()\t" + c.getSize());
 	}
 
 	protected void setSizes()
@@ -375,23 +350,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 		}
 		return ImgTraceDialog;
-	}
-
-	/**
-	 * This method initializes ImgTraceContentPane
-	 * 
-	 * @return javax.swing.JPanel
-	 */
-	private JPanel getImgTraceContentPane()
-	{
-		if (ImgTraceContentPane == null)
-		{
-			MyUtils.trace(Level.FINEST, "[2] ImgTraceContentPane creation"); //$NON-NLS-1$
-			ImgTraceContentPane = new JPanel();
-			ImgTraceContentPane.setLayout(new BorderLayout());
-			ImgTraceContentPane.add(vue.getStrokeOrdersPanel(), BorderLayout.CENTER);
-		}
-		return ImgTraceContentPane;
 	}
 
 	/*

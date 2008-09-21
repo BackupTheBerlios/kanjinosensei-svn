@@ -175,7 +175,7 @@ public class DictionaryAnalyser implements IDictionaryAnalyser
 																				throw new RuntimeException(e);
 																			}
 
-																			return (int) (j.getSimilarity(wo1, wo2) * 100);
+																			return (int) (jw.getSimilarity(wo1, wo2) * 100);
 																		}
 																	};
 

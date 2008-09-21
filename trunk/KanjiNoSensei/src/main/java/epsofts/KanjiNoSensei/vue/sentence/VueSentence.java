@@ -3,10 +3,8 @@
  */
 package epsofts.KanjiNoSensei.vue.sentence;
 
-import epsofts.KanjiNoSensei.metier.Dictionary;
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
-import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.sentence.SentenceQuizConfigPanel.ETypeAff;
 

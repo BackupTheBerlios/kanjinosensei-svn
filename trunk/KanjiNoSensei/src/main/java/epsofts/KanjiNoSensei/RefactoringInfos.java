@@ -8,7 +8,6 @@ package epsofts.KanjiNoSensei;
 import java.util.HashMap;
 import java.util.Map;
 
-import epsofts.KanjiNoSensei.metier.LearningProfile;
 import epsofts.KanjiNoSensei.utils.RefactoredClassNameTolerantObjectInputStream;
 
 /**

@@ -5,11 +5,7 @@
  */
 package epsofts.KanjiNoSensei.utils;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Window;
-
-import javax.swing.JButton;
 
 import nl.jj.swingx.gui.modal.JModalFrame;
 
