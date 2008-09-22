@@ -1,6 +1,8 @@
 package epsofts.KanjiNoSensei.vue.word;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -89,6 +91,21 @@ class WordQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel, 
 			{
 				addSon(son);
 			}
+			
+			int panelWidth = 0;
+			int panelHeight = 0;
+			for(Component c: getComponents())
+			{
+				panelWidth = Math.max(panelWidth, c.getPreferredSize().width);
+				panelHeight += c.getPreferredSize().height;
+			}
+			Dimension panelDim = new Dimension(panelWidth, panelHeight);
+			
+			setMinimumSize(panelDim);
+			setPreferredSize(getMinimumSize());
+			setMaximumSize(getMinimumSize());
+			
+			setAlignmentX(0);
 			// </NoJigloo>
 		}
 	}

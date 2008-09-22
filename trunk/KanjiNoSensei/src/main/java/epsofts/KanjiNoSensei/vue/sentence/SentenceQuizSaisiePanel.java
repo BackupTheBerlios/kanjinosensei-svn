@@ -69,19 +69,19 @@ class SentenceQuizSaisiePanel extends javax.swing.JPanel implements QuizSaisieRe
 		
 			case Kanji:
 			{
-				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Kanji"), solution, this, solution.getPhrase().getSentence()); //$NON-NLS-1$
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Kanji"), solution, this, solution.getSentence().getSentence()); //$NON-NLS-1$
 				break;
 			}
 			
 			case Lecture:
 			{
-				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Lecture"), solution, this, solution.getPhrase().getLecture()); //$NON-NLS-1$
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Lecture"), solution, this, solution.getSentence().getLecture()); //$NON-NLS-1$
 				break;
 			}
 			
 			case Signification:
 			{
-				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Signification"), solution, this, solution.getPhrase().getSignificationsSet(), saisieReponseComplete); //$NON-NLS-1$
+				VueElement.addInputMethodTextField(Messages.getString("SentenceQuizSaisiePanel.IM.Signification"), solution, this, solution.getSentence().getSignificationsSet(), saisieReponseComplete); //$NON-NLS-1$
 				break;
 			}
 			

@@ -10,16 +10,7 @@ TODO List
 * Work flow en cours.
 	
 ** Interface
-	
-	* Revoir l'affichage "détails" des éléments
-		agrandir la police des champs susceptibles de contenir des kanji,
-		retour à la ligne (exemples de mots),
-		centrage hors cadre; faire que les panels de chaque éléments dans la liste de partagent pas la même largeur.
-		
-		* Gérer le dépassement horizontal pour les phrases, intégrer des scroll bars et WordWrap à MyAutoResizingText.
-		
-		* En "Quiz", les boutons "Bon/Mauvais" ne devraient pas se centrer avec la zone réponse, les fixer à gauche au pire.
-		
+			
 	* CheckBoxTree :
 		On coche une feuille: on l'ajoute au thèmes sélectionnés.
 		On décoche une feuille: on la retire des thèmes sélectionnés.
@@ -28,18 +19,29 @@ TODO List
 		On décoche un noeud:	on retire toutes les feuilles filtrées par le filtre courant
 								on retire le noeud seulement s'il ne reste plus aucune feuille (y compris hors filtre).
 
+	* Ajouter une option setWordWrap(boolean) à MyAutoResizingText qui calcule la meilleure taille de fonte et la meilleure découpe de mot en fonction de la taille disponible.
+	
 	* Dans le "Quiz", afficher le type de l'élément en question.
 	
 	* Changer les algorithmes de trie des chaînes de caractères pour l'affichage de la liste de thèmes, forcer "Leçon 5" à être inférieur à "Leçon 10" (par exemple, utiliser une chaîne modifiée pour le test, "Leçon 00005"?"Leçon 00010").
 	
 	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quiz".
 	
+	* Vérifier que la taille des boites de dialogues soit définie correctement lorsqu'on spawn une boite de dialogue avec uniquement un VueXXXDetaillePanel (par défaut, elle risque d'être trop large).
+	
+	* En quiz, les zones du splitter se redimensionnent mal (pas) lorsqu'on bouge le splitter.
+	
 	* Faire s'afficher le tracé plus grand dans le quiz Tracé+Details
+	
+	* La zone question sur un élément Kanji dépasse le ViewPort (les scroll bars s'affichent) alors qu'elle n'affique qu'un mot.
+		* De manière générale, la zone question ne se redimensionnent pas avec la zone parente.
 	
 ** Permanent, récurent
 
 	* Optimiser le chargement et l'affichage général de la liste (ne charger que les éléments à afficher ?)
 		Faire des tests de performance pour voir ce qui prend le plus de temps.
+		
+		* Plutôt que de vider la liste, utiliser la visibilité (cacher/ré-afficher).
 	
 	* Revoir les labels sur l'ihm, internationaliser.
 	

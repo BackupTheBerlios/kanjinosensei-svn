@@ -57,8 +57,8 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	/** Scrollbar min size. */
 	private static final int		SCROLLBAR_MIN_SIZE			= 1;
-	
-	private Boolean					hideScrollBars = false;
+
+	private Boolean					hideScrollBars				= false;
 
 	/** Inset width margin. */
 	private final float				WIDTH_MARGIN_PERCENT;
@@ -515,36 +515,45 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		{
 			centerScrollBars();
 		}
-		
-		setScrollBarsVisibles(!hideScrollBars);
+		else
+		{
+			updateScrollBarsVisibility();
+		}
 
 		MyUtils.refreshComponentAndSubs(this);
-		/*
-		 * } }, 200);
-		 */
 	}
 
 	public void setScrollBarsVisibility(boolean visibles)
 	{
 		hideScrollBars = !visibles;
 	}
-	
-	private void setScrollBarsVisibles(boolean visibles)
+
+	private void updateScrollBarsVisibility()
 	{
-		getHorizontalScrollBar().setVisible(visibles);
-		getVerticalScrollBar().setVisible(visibles);
-		
-		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		getHorizontalScrollBar().setVisible(!hideScrollBars);
+		getVerticalScrollBar().setVisible(!hideScrollBars);
+
+		if (!hideScrollBars)
+		{
+			setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		}
+		else
+		{
+			setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		}
 	}
-	
+
 	public void centerScrollBars()
 	{
 		setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+
 		getVerticalScrollBar().setValue((getVerticalScrollBar().getMaximum() + getVerticalScrollBar().getVisibleAmount()) / getVerticalScrollBar().getBlockIncrement());
 		getHorizontalScrollBar().setValue((getHorizontalScrollBar().getMaximum() + getHorizontalScrollBar().getVisibleAmount()) / getHorizontalScrollBar().getBlockIncrement());
+		
+		updateScrollBarsVisibility();
 	}
 
 	public static void main(String[] args)
@@ -616,12 +625,12 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 		{
 			jAutoResizingJLabelOneChar = create(JLabel.class, min, Float.POSITIVE_INFINITY, 0, (float) -0.5);
 			jAutoResizingJLabelOneChar.setScrollBarsVisibility(false);
-			
+
 			jAutoResizingJLabel = create(JLabel.class, min);
 			jAutoResizingJTextPane = create(JTextPane.class, min);
 			jAutoResizingJTextField = create(JTextField.class, min);
 			jAutoResizingJTextArea = create(JTextArea.class, min);
-			
+
 			jAutoResizingJEditorPane = create(JEditorPane.class, min);
 			JEditorPane editorPane = jAutoResizingJEditorPane.getJComponent();
 			editorPane.setContentType("text/html");

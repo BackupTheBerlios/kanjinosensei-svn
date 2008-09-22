@@ -17,7 +17,7 @@ public class VueWord extends VueElement
 
 	public static final float	FONT_MAX_SIZE	= 50;
 	public static final float	FONT_MIN_SIZE	= 11;
-	private Word					mot					= null;
+	private Word					word					= null;
 	private WordEditionDialog	jEditionDialog		= null;
 	private QuizQuestionPanel	jQuizQuestionPanel	= null;
 	private QuizSolutionPanel	jQuizSolutionPanel	= null;
@@ -29,7 +29,7 @@ public class VueWord extends VueElement
 	public VueWord(Word mot)
 	{
 		super();
-		this.mot = mot;
+		this.word = mot;
 	}
 
 	/*
@@ -151,7 +151,7 @@ public class VueWord extends VueElement
 
 	protected Word getMot()
 	{
-		return mot;
+		return word;
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class VueWord extends VueElement
 	 */
 	protected void setMot(Word mot)
 	{
-		this.mot = mot;
+		this.word = mot;
 	}
 
 	/*
@@ -181,7 +181,11 @@ public class VueWord extends VueElement
 	@Override
 	public Element getElement()
 	{
-		return mot;
+		return word;
 	}
 
+	public String getLecture()
+	{
+		return toRomajiIfNeeded(word.getLecture());
+	}
 }

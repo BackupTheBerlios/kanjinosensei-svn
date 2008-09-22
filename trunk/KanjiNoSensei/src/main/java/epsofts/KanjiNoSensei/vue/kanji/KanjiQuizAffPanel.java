@@ -1,13 +1,19 @@
 package epsofts.KanjiNoSensei.vue.kanji;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.logging.Level;
 
+import javax.swing.BorderFactory;
 import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import epsofts.KanjiNoSensei.metier.Messages;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
+import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;
@@ -48,17 +54,16 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 		this.setLayout(thisLayout);
 		this.setBackground(new java.awt.Color(255, 255, 255));
 		
-		this.add(compute(typeAff), BorderLayout.CENTER);
+		compute(typeAff, this);
 		this.doLayout();
 	}
 
-	private JPanel compute(ETypeAff typeAff) throws NoAffException
+	private void compute(ETypeAff typeAff, JPanel jPanel) throws NoAffException
 	{
 		// <NoJigloo>
 		String texte = "", image = ""; //$NON-NLS-1$ //$NON-NLS-2$
 		int taille_fonte = -1;
-
-		JPanel jPanel = new JPanel(new BorderLayout(0, 0));
+		boolean useHTML = false;
 		
 		switch (typeAff)
 		{
@@ -66,6 +71,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			{
 				texte = vue.getKanji().getCodeUTF8().toString();
 				taille_fonte = 50;
+				useHTML = false;
 				break;
 			}
 	
@@ -73,6 +79,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			{
 				texte = vue.toRomajiIfNeeded(vue.getKanji().getLecturesON());
 				taille_fonte = 16;
+				useHTML = false;
 				break;
 			}
 	
@@ -80,12 +87,14 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			{
 				texte = vue.toRomajiIfNeeded(vue.getKanji().getLecturesKUN());
 				taille_fonte = 16;
+				useHTML = false;
 				break;
 			}
 	
 			case ImageTrace:
 			{
 				image = vue.getKanji().getStrokeOrderPicture();
+				useHTML = false;
 				break;
 			}
 	
@@ -93,6 +102,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			{
 				texte = vue.getKanji().getSignifications();
 				taille_fonte = 16;
+				useHTML = false;
 				break;
 			}
 	
@@ -100,7 +110,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			{
 				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>"; //$NON-NLS-1$ //$NON-NLS-2$
 				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelSignifications") + " : " + vue.getKanji().getSignifications() + "</font></td></tr></table>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				// taille_fonte = 100;
+				useHTML = true;
 				break;
 			}
 	
@@ -109,19 +119,19 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 				texte = "<table border=\"0\"><tr><td><font style=\"font-size: 50pt\">" + vue.getKanji().getCodeUTF8().toString() + "</font></td>"; //$NON-NLS-1$ //$NON-NLS-2$
 				texte += "<td><font style=\"font-size: 16pt\">" + Messages.getString("KanjiVueDetaillePanel.LabelONLectures") + " : " + vue.getKanji().getLecturesON() + "<br/>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				texte += Messages.getString("KanjiVueDetaillePanel.LabelKUNLectures") + " : " + vue.getKanji().getLecturesKUN() + "</font></td></tr></table>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				// taille_fonte = 12;
+				useHTML = true;
 				break;
 			}
 			
 			case ImageTraceEtDetaille:
 			{
-				JPanel imgTrace = compute(ETypeAff.ImageTrace);
+				JPanel imgTrace = new JPanel(new BorderLayout());
+				compute(ETypeAff.ImageTrace, imgTrace);
 				JPanel detaille = vue.getVueDetaillePanel();
 				jPanel.add(imgTrace, BorderLayout.WEST);
 				jPanel.add(detaille, BorderLayout.CENTER);
 				jPanel.doLayout();
-				
-				return jPanel;
+				return;
 			}
 		}
 
@@ -132,8 +142,7 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 
 		if ( !texte.isEmpty())
 		{
-			addJLabel(jPanel, texte, taille_fonte);
-			// setPanelSize(panel_w, panel_h);
+			addLabel(jPanel, texte, taille_fonte, useHTML, (image.isEmpty()?BorderLayout.CENTER:BorderLayout.NORTH));
 		}
 
 		if ( !image.isEmpty())
@@ -141,33 +150,40 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			addImage(jPanel, image);
 		}
 		
+		int panelPrefWidth = 0, panelPrefHeight = 0, panelMinWidth = 0, panelMinHeight = 0; 
+		for(Component c: jPanel.getComponents())
+		{
+			panelMinWidth = Math.max(panelMinWidth, c.getMinimumSize().width);
+			panelMinHeight += c.getMinimumSize().height;
+			
+			panelPrefWidth = Math.max(panelPrefWidth, c.getPreferredSize().width);
+			panelPrefHeight += c.getPreferredSize().height;
+		}
+		
+		MyUtils.fixComponentSizes(jPanel, panelMinWidth, panelMinHeight, panelPrefWidth, panelPrefHeight);
+		
 		jPanel.doLayout();
-		return jPanel;
+		return;
 		// </NoJigloo>
 	}
 
 	// <JiglooProtected>
 
-	private void addJLabel(JPanel panel, String text, int taille)
+	private void addLabel(JPanel panel, String text, int taille, boolean useHTML, String borderLayout)
 	{
-		MyAutoResizingText<JEditorPane> jAutoSizeEditorPane = MyAutoResizingText.createSafely(JEditorPane.class, taille, VueKanji.FONT_MAX_SIZE);
-		jEditorPane = jAutoSizeEditorPane.getJComponent();
-
-		jEditorPane.setContentType("text/html");
-		//HTMLEditorKit htmlEditoKit = (HTMLEditorKit) jEditorPane.getEditorKit();
-
-		if (taille > 0)
+		if (useHTML)
 		{
-			// jEditorPane.setFont(new java.awt.Font("SimSun", 0, taille)); //$NON-NLS-1$
-			text = "<font style=\"font-size: " + taille + "pt\">" + text + "</font>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			JEditorPane jEditorPane = new JEditorPane("text/html", text);
+			jEditorPane.setEditable(false);
+			panel.add(jEditorPane, borderLayout);
 		}
-
-		jEditorPane.setText(text);
-		jEditorPane.setEditable(false);
-
-		
-		
-		panel.add(jAutoSizeEditorPane, BorderLayout.NORTH);
+		else
+		{
+			MyAutoResizingText<JLabel> jAutoSizeLabel = MyAutoResizingText.createSafely(JLabel.class, taille, VueKanji.FONT_MAX_SIZE);
+			jAutoSizeLabel.setText(text);
+			jAutoSizeLabel.setScrollBarsVisibility(true);
+			panel.add(jAutoSizeLabel, borderLayout);
+		}
 	}
 
 	private void addImage(JPanel panel, String source)

@@ -2255,10 +2255,14 @@ public class KanjiNoSensei implements PropertyChangeListener
 		} while ((panelQuestion == null) || (panelSaisieReponse == null));
 		MyUtils.trace(Level.INFO, "</Boucle getNextElementFromLearningProfile(...)>");
 
+		MyUtils.fixComponentSizes(panelQuestion, panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelQuestion.getMinimumSize().height + 1);
+		MyUtils.fixComponentSizes(panelSaisieReponse, panelSaisieReponse.getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1);
+		
 		getJPanelQuizAffElement().add(panelQuestion, BorderLayout.CENTER);
 
 		getJPanelQuizSaisieReponse().removeAll();
 		panelSaisieReponse.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
+		
 		getJPanelQuizSaisieReponse().add(panelSaisieReponse, BorderLayout.CENTER);
 
 		getJPanelQuizAffReponse().removeAll();

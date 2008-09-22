@@ -110,7 +110,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		// this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 		this.setMinimumSize(new java.awt.Dimension(400, 100));
 		this.setPreferredSize(new java.awt.Dimension(400, 100));
-		this.setAlignmentX(0.0f);
+		this.setAlignmentX(0);
 		this.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, 100));
 		this.add(getJPanelCodeUTF8(), BorderLayout.WEST);
 		this.add(getJScrollPaneInfos(), BorderLayout.CENTER);
@@ -240,9 +240,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jScrollPaneInfos.setAutoscrolls(true);
 			jScrollPaneInfos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			jScrollPaneInfos.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-			/*
-			 * jScrollPaneInfos.getHorizontalScrollBar().setPreferredSize(new java.awt.Dimension(0, 16)); jScrollPaneInfos.getHorizontalScrollBar().setMinimumSize(new java.awt.Dimension(0, 16));
-			 */
 			jScrollPaneInfos.addMouseListener(vueDetaillePanelMouseAdapter);
 
 		}

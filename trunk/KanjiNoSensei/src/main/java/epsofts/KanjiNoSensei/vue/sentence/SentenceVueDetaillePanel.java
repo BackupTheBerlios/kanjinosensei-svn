@@ -5,6 +5,7 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.ref.PhantomReference;
 import java.util.logging.Level;
 
 import javax.swing.JDialog;
@@ -22,6 +23,7 @@ import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.vue.Config;
 import epsofts.KanjiNoSensei.vue.JPanelSonBtn;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
@@ -40,6 +42,8 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
+	
+	private static final String DEFAULT_TEMPLATE = "<b><center><method>getSentence</method></center></b><label>SentenceVueDetaillePanel.LabelLecture</label> : <b><vue>getLecture</vue></b><br><label>SentenceVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br><label>SentenceVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>";
 
 	private VueSentence			vue								= null;
 
@@ -93,7 +97,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	{
 		if (jButtonJouerSon == null)
 		{
-			jButtonJouerSon = new JPanelSonBtn(vue.getPhrase().getSoundFile(), false);
+			jButtonJouerSon = new JPanelSonBtn(vue.getSentence().getSoundFile(), false);
 			jButtonJouerSon.setText(Messages.getString("SentenceVueDetaillePanel.ButtonPlaySound")); //$NON-NLS-1$
 			jButtonJouerSon.setSize(35, 20);
 		}
@@ -200,16 +204,7 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	
 	private void dynamicInitialize()
 	{
-		Sentence phrase = vue.getPhrase();
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<b><center>" + phrase.getSentence() + "</center></b>");
-		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelLecture") + " : <b>" + vue.toRomajiIfNeeded(phrase.getLecture()) + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelSignifications") + " : <b>" + phrase.getSignifications() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("SentenceVueDetaillePanel.LabelThemes") + " : <b>" + phrase.getThemes() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-
-		getJEditorPane().setText(sb.toString());
-		
+		getJEditorPane().setText(VueElement.computeTemplate(Config.getString("SentenceVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
 		doLayout();
 		setSizes();
 	}

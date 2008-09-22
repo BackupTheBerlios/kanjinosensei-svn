@@ -1,6 +1,8 @@
 package epsofts.KanjiNoSensei.vue.sentence;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -49,14 +51,14 @@ class SentenceQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPan
 			
 				case Kanji:
 				{
-					texte = vue.getPhrase().getSentence();
+					texte = vue.getSentence().getSentence();
 					taille_fonte = 40;
 					break;
 				}
 
 				case Lecture:
 				{
-					texte = vue.toRomajiIfNeeded(vue.getPhrase().getLecture());
+					texte = vue.toRomajiIfNeeded(vue.getSentence().getLecture());
 					taille_fonte = 16;
 					break;
 				}
@@ -64,13 +66,13 @@ class SentenceQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPan
 
 				case Son:
 				{
-					son = vue.getPhrase().getSoundFile();
+					son = vue.getSentence().getSoundFile();
 					break;
 				}
 
 				case Signification:
 				{
-					texte = vue.getPhrase().getSignifications();
+					texte = vue.getSentence().getSignifications();
 					taille_fonte = 16;
 					break;
 				}
@@ -92,6 +94,21 @@ class SentenceQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPan
 			{
 				addSon(son);
 			}
+			
+			int panelWidth = 0;
+			int panelHeight = 0;
+			for(Component c: getComponents())
+			{
+				panelWidth = Math.max(panelWidth, c.getPreferredSize().width);
+				panelHeight += c.getPreferredSize().height;
+			}
+			Dimension panelDim = new Dimension(panelWidth, panelHeight);
+			
+			setMinimumSize(panelDim);
+			setPreferredSize(getMinimumSize());
+			setMaximumSize(getMinimumSize());
+			
+			setAlignmentX(0);
 			// </NoJigloo>
 		}
 	}

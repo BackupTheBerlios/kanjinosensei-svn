@@ -21,6 +21,7 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyUtils;
+import epsofts.KanjiNoSensei.vue.Config;
 import epsofts.KanjiNoSensei.vue.JPanelSonBtn;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
@@ -39,6 +40,8 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
+	
+	private static final String DEFAULT_TEMPLATE = "<b><center><method>getWord</method></center></b><label>WordVueDetaillePanel.LabelLecture</label> : <b><vue>getLecture</vue></b><br><label>WordVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br><label>WordVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>";
 
 	private VueWord				vue								= null;
 
@@ -196,14 +199,7 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	private void dynamicInitialize()
 	{
 		Word mot = vue.getMot();
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<b><center>" + mot.getWord() + "</center></b>");
-		sb.append(Messages.getString("WordVueDetaillePanel.LabelLecture") + " : <b>" + vue.toRomajiIfNeeded(mot.getLecture()) + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("WordVueDetaillePanel.LabelSignifications") + " : <b>" + mot.getSignifications() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		sb.append(Messages.getString("WordVueDetaillePanel.LabelThemes") + " : <b>" + mot.getThemes() + "</b><br>"); //$NON-NLS-1$ //$NON-NLS-2$
-
-		getJEditorPane().setText(sb.toString());
+		getJEditorPane().setText(VueElement.computeTemplate(Config.getString("WordVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
 
 		doLayout();
 		setSizes();

@@ -280,7 +280,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 			}
 			
 			//<NoJigloo>
-			Sentence phrase = vue.getPhrase();
+			Sentence phrase = vue.getSentence();
 			if (phrase != null)
 			{
 				jTextFieldPhrase.setText(phrase.getSentence());
@@ -320,7 +320,7 @@ class SentenceEditionDialog extends javax.swing.JDialog implements EditionDialog
 	@Override
 	public Element getElementEdite()
 	{
-		return vue.getPhrase();
+		return vue.getSentence();
 	}
 
 }

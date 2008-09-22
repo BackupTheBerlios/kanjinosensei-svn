@@ -1,7 +1,9 @@
 package epsofts.KanjiNoSensei.utils;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.OperationNotSupportedException;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.LookAndFeel;
@@ -1543,5 +1547,23 @@ public abstract class MyUtils
 	{
 		double[] minmax = minmax(values);
 		return String.format("Min: %f\tMax: %f\tSum: %f\tE: %f\tV: %f\tð: %f", minmax[0], minmax[1], sum(values), esperence(values), variance(values), ecartType(values));
+	}
+	
+	public static void fixComponentSizes(JComponent c, int width, int heiht)
+	{
+		fixComponentSizes(c, width, heiht, width, heiht);
+	}
+	
+	public static void fixComponentSizes(JComponent c, int minWidth, int minHeight, int prefWidth, int prefHeight)
+	{
+		c.setAlignmentX(Component.LEFT_ALIGNMENT);
+		c.setMinimumSize(new Dimension(minWidth, minHeight));
+		c.setPreferredSize(new Dimension(prefWidth, prefHeight));
+	}
+	
+	public static void addDebugColor(JComponent c, Color color)
+	{
+		c.setBackground(color);
+		c.setBorder(BorderFactory.createLineBorder(color));
 	}
 }

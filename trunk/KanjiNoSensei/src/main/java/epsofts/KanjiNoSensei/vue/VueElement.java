@@ -396,6 +396,8 @@ public abstract class VueElement
 			consigne = Messages.getString("VueElement.ClickWaitDirective"); //$NON-NLS-1$
 		}
 
+		final JLabel jConsigne = new JLabel(consigne);
+		
 		component.addMouseListener(new MouseAdapter()
 		{
 
@@ -407,6 +409,7 @@ public abstract class VueElement
 					e.consume();
 
 					component.removeMouseListener(this);
+					component.remove(jConsigne);
 
 					JButton jButtonBON = new JButton(Messages.getString("VueElement.ButtonCorrect")); //$NON-NLS-1$
 					jButtonBON.addActionListener(new ActionListener()
@@ -449,7 +452,6 @@ public abstract class VueElement
 
 		});
 
-		JLabel jConsigne = new JLabel(consigne);
 		component.add(jConsigne, BorderLayout.NORTH);
 		component.doLayout();
 	}

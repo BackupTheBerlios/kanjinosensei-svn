@@ -17,7 +17,7 @@ public class VueSentence extends VueElement
 
 	public static final float	FONT_MAX_SIZE	= 50;
 	public static final float	FONT_MIN_SIZE	= 11;
-	private Sentence					phrase				= null;
+	private Sentence					sentence				= null;
 	private SentenceEditionDialog		jEditionDialog		= null;
 	private QuizQuestionPanel		jQuizQuestionPanel	= null;
 	private QuizSolutionPanel		jQuizSolutionPanel	= null;
@@ -29,7 +29,7 @@ public class VueSentence extends VueElement
 	public VueSentence(Sentence phrase)
 	{
 		super();
-		this.phrase = phrase;
+		this.sentence = phrase;
 	}
 
 	/*
@@ -151,9 +151,14 @@ public class VueSentence extends VueElement
 		return jVueDetaillePanel;
 	}
 
-	protected Sentence getPhrase()
+	protected Sentence getSentence()
 	{
-		return phrase;
+		return sentence;
+	}
+	
+	public String getLecture()
+	{
+		return toRomajiIfNeeded(sentence.getLecture());
 	}
 
 	/**
@@ -161,7 +166,7 @@ public class VueSentence extends VueElement
 	 */
 	protected void setPhrase(Sentence phrase)
 	{
-		this.phrase = phrase;
+		this.sentence = phrase;
 	}
 
 	/*
@@ -183,7 +188,7 @@ public class VueSentence extends VueElement
 	@Override
 	public Element getElement()
 	{
-		return phrase;
+		return sentence;
 	}
 
 }
