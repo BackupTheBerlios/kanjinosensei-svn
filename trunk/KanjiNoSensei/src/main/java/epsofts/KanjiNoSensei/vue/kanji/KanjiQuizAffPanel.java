@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.logging.Level;
 
 import javax.swing.BorderFactory;
@@ -124,12 +128,29 @@ class KanjiQuizAffPanel extends javax.swing.JPanel implements QuizQuestionPanel,
 			}
 			
 			case ImageTraceEtDetaille:
-			{
-				JPanel imgTrace = new JPanel(new BorderLayout());
+			{	
+				GridBagConstraints consImg = new GridBagConstraints();
+				consImg.anchor = GridBagConstraints.CENTER;
+				consImg.fill = GridBagConstraints.BOTH;
+				consImg.weightx = 30;
+				consImg.weighty = 100;
+				consImg.gridheight = GridBagConstraints.REMAINDER;
+				
+				GridBagConstraints consDetaille = new GridBagConstraints();
+				consDetaille.anchor = GridBagConstraints.CENTER;
+				consDetaille.fill = GridBagConstraints.BOTH;
+				consDetaille.weightx = 70;
+				consDetaille.weighty = 100;
+				consDetaille.gridheight = GridBagConstraints.REMAINDER;
+				
+				JPanel imgTrace = new JPanel();
 				compute(ETypeAff.ImageTrace, imgTrace);
 				JPanel detaille = vue.getVueDetaillePanel();
-				jPanel.add(imgTrace, BorderLayout.WEST);
-				jPanel.add(detaille, BorderLayout.CENTER);
+				
+				jPanel.setLayout(new GridBagLayout());
+				jPanel.add(imgTrace, consImg);
+				jPanel.add(detaille, consDetaille);
+				
 				jPanel.doLayout();
 				return;
 			}

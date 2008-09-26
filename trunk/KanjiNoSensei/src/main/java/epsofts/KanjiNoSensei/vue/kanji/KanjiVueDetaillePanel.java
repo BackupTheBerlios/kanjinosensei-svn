@@ -44,6 +44,7 @@ import epsofts.KanjiNoSensei.vue.VueElement;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizQuestionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizSolutionPanel;
 import epsofts.KanjiNoSensei.vue.VueElement.VueDetaillePanel;
+import epsofts.KanjiNoSensei.vue.kanji.VueKanji.eStrokeOrdersType;
 
 /**
  * @author Axan
@@ -273,10 +274,10 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			ImgTraceDialog.setUndecorated(false);
 			ImgTraceDialog.setBackground(Color.black);
 
-			Dimension d = vue.getStrokeOrdersPanel().getPreferredSize();
+			eStrokeOrdersType type = eStrokeOrdersType.valueOf(vue.getStrokeOrdersPanel().getName());
 			Dimension nd;
 
-			if ((d.height == 0) && (d.width == 0))
+			if (type == eStrokeOrdersType.FONT)
 			{
 				nd = Toolkit.getDefaultToolkit().getScreenSize();
 				// nd = new Dimension(nd.width / 2, nd.height / 2);
@@ -287,6 +288,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			}
 			else
 			{
+				Dimension d = vue.getStrokeOrdersPanel().getPreferredSize();
 				nd = new Dimension(d.width + 20, d.height + 30);
 				MyUtils.assertFalse((d.width <= 10) || (d.height <= 10), "ImgTraceDialog.windowOpened : incorrect image dimension"); //$NON-NLS-1$
 

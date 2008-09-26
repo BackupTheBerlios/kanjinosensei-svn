@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.media.Effect;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -30,12 +31,12 @@ import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
  */
 public class VueKanji extends VueElement
 {
-	private static enum StrokeOrdersType
+	public static enum eStrokeOrdersType
 	{
-		FONT, IMG
+		FONT, IMG, NONE
 	};
 
-	static private final StrokeOrdersType	STROKE_ORDERS_TYPE			= StrokeOrdersType.FONT;
+	static private final eStrokeOrdersType	STROKE_ORDERS_TYPE			= eStrokeOrdersType.FONT;
 
 	static private final Boolean			STROKE_ORDERS_TYPE_FALLBACK	= true;
 
@@ -249,8 +250,8 @@ public class VueKanji extends VueElement
 		jLabelStrokeFont.setText(getKanji().getCodeUTF8().toString());
 		jLabelStrokeFont.setHorizontalAlignment(JLabel.CENTER);
 
+		jAutoSizeLabelStrokeFont.setPreferredSize(new Dimension(75, 100));
 		panel.add(jAutoSizeLabelStrokeFont, BorderLayout.CENTER);
-		panel.setPreferredSize(new Dimension(0, 0));
 	}
 
 	protected JPanel getStrokeOrdersPanel()
@@ -268,12 +269,14 @@ public class VueKanji extends VueElement
 					try
 					{
 						addStrokeOrderFontToPanel(jPanelStrokeOrders);
+						jPanelStrokeOrders.setName(eStrokeOrdersType.FONT.toString());
 					}
 					catch (Exception e)
 					{
 						if (STROKE_ORDERS_TYPE_FALLBACK)
 						{
 							addStrokeOrderImgToPanel(jPanelStrokeOrders);
+							jPanelStrokeOrders.setName(eStrokeOrdersType.IMG.toString());
 						}
 						else
 						{
@@ -287,12 +290,14 @@ public class VueKanji extends VueElement
 					try
 					{
 						addStrokeOrderImgToPanel(jPanelStrokeOrders);
+						jPanelStrokeOrders.setName(eStrokeOrdersType.IMG.toString());
 					}
 					catch (Exception e)
 					{
 						if (STROKE_ORDERS_TYPE_FALLBACK)
 						{
 							addStrokeOrderFontToPanel(jPanelStrokeOrders);
+							jPanelStrokeOrders.setName(eStrokeOrdersType.FONT.toString());
 						}
 						else
 						{
@@ -311,6 +316,7 @@ public class VueKanji extends VueElement
 			{
 				String errMsg = (STROKE_ORDERS_TYPE_FALLBACK?"Aucun tracé disponible.":"Tracé ("+STROKE_ORDERS_TYPE+") introuvable.");
 				jPanelStrokeOrders.add(new JLabel("Erreur: "+errMsg), BorderLayout.CENTER);
+				jPanelStrokeOrders.setName(eStrokeOrdersType.NONE.toString());
 			}
 
 			jPanelStrokeOrders.doLayout();

@@ -102,4 +102,5 @@ TODO List
 	* Rédiger les tests unitaires.
 	
 ** Notes (brouillon)  
-		
+	
+	* Mettre une taille max à la fonte des textes à afficher en Question de quiz, la taille max devrait ne devrait pas être trop grosse, car c'est laid.

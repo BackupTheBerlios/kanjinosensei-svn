@@ -93,12 +93,11 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Sentence;
 import epsofts.KanjiNoSensei.metier.elements.Word;
-import epsofts.KanjiNoSensei.utils.MyCheckBoxTree;
 import epsofts.KanjiNoSensei.utils.MyModalFrame;
 import epsofts.KanjiNoSensei.utils.MyUtils;
-import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeEvent;
-import epsofts.KanjiNoSensei.utils.MyCheckBoxTree.MyCheckBoxTreeListener;
 import epsofts.KanjiNoSensei.utils.MyUtils.DoItToThisComponent;
+import epsofts.KanjiNoSensei.utils.myCheckBoxTree.MyCheckBoxTree;
+import epsofts.KanjiNoSensei.utils.myCheckBoxTree.MyCheckBoxTree.MyCheckBoxTreeEvent;
 import epsofts.KanjiNoSensei.vue.VueElement.NoAffException;
 import epsofts.KanjiNoSensei.vue.VueElement.NoSaisieException;
 import epsofts.KanjiNoSensei.vue.VueElement.QuizConfigPanel;
@@ -512,9 +511,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 	{
 		if (jMyCheckBoxTree == null)
 		{
-			jMyCheckBoxTree = new MyCheckBoxTree();
+			jMyCheckBoxTree = new MyCheckBoxTree(epsofts.KanjiNoSensei.utils.Messages.getString("MyCheckBoxTree.RootName"));
 
-			jMyCheckBoxTree.setTreeListener(new MyCheckBoxTreeListener()
+			jMyCheckBoxTree.setTreeListener(new MyCheckBoxTree.MyCheckBoxTreeListener()
 			{
 				/*
 				 * (non-Javadoc)
@@ -543,7 +542,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 						MyUtils.trace(Level.FINE, "'" + e.itemPath + "' ajouté"); //$NON-NLS-1$ //$NON-NLS-2$
 						themesSelectionnes.add(e.itemPath);
 					}
-					else
+					else if (e.itemPath != null)
 					{
 						if (themesSelectionnes.contains(e.itemPath))
 						{
@@ -714,7 +713,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 			MyUtils.trace(Level.INFO, "<GetListeThemesTask.done>");
 			try
 			{
-				getMyCheckBoxTree().setTreeData(get());
+				getMyCheckBoxTree().hideAllNodes();
+				getMyCheckBoxTree().addTreeNodes(get(), true);
 				getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
 				MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData("+themesSelectionnes+")");
 			}
@@ -1257,7 +1257,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 				public void actionPerformed(java.awt.event.ActionEvent e)
 				{
 					MyCheckBoxTree jMyCheckBoxTree = getMyCheckBoxTree();
-					jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), true, Integer.MAX_VALUE);
+					KanjiNoSensei.log(Level.SEVERE, "Must reimplement");
+					//jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), true, Integer.MAX_VALUE);
 
 					//afficherBaseFrameMAJZoneElements();
 				}
@@ -1282,7 +1283,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 				public void actionPerformed(java.awt.event.ActionEvent e)
 				{
 					MyCheckBoxTree jMyCheckBoxTree = getMyCheckBoxTree();
-					jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), false, Integer.MAX_VALUE);
+					KanjiNoSensei.log(Level.SEVERE, "Must reimplement");
+					//jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), false, Integer.MAX_VALUE);
 
 					//afficherBaseFrameMAJZoneElements();
 				}
@@ -2610,6 +2612,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 200));
 			jScrollPane1.setSize(500, 200);
 			jScrollPane1.setViewportView(getMyCheckBoxTree());
+			jScrollPane1.setAutoscrolls(false);
 		}
 		return jScrollPane1;
 	}
@@ -2818,7 +2821,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 						listeThemes.put(theme, true);
 					}
 					
-					getMyCheckBoxTree().addTreeData(listeThemes);
+					getMyCheckBoxTree().addTreeNodes(listeThemes, true);
 
 					// afficherBaseFrameMAJZoneThemes();
 					// afficherBaseFrameMAJZoneElements();

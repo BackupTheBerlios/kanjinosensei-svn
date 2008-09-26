@@ -360,7 +360,7 @@ public abstract class VueElement
 	public abstract QuizSaisieReponsePanel getQuizSaisieReponsePanel() throws NoSaisieException;
 
 	/**
-	 * SUIS LA Return the quizz solution panel with the current solution display mode (chosen with configuration panel). If current solution display mode can't be rendered, the solution panel must fall back in a supported one. If newCopy is true, the method must return a new copy of the panel.
+	 * Return the quizz solution panel with the current solution display mode (chosen with configuration panel). If current solution display mode can't be rendered, the solution panel must fall back in a supported one. If newCopy is true, the method must return a new copy of the panel.
 	 * 
 	 * @see getQuizConfigPanel
 	 * @param newCopy
