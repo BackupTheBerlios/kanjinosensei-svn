@@ -2,6 +2,9 @@ package epsofts.KanjiNoSensei.utils.myCheckBoxTree;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -300,7 +303,7 @@ public class MyCheckBoxTree extends JTree implements TreeSelectionListener
 		root = (DefaultMutableTreeNode) model.getRoot();
 		selectionModel = new MyCheckBoxTreeSelectionModel(model);
 		setCellRenderer(new MyCheckBoxTreeCellRenderer(getCellRenderer(), selectionModel));
-
+		
 		addMouseListener(new MouseAdapter()
 		{
 			/*
@@ -484,6 +487,8 @@ public class MyCheckBoxTree extends JTree implements TreeSelectionListener
 		}
 
 		Enumeration<DefaultMutableTreeNode> children = parentNode.children();
+
+		int newChildIndex = 0;
 		while (children.hasMoreElements())
 		{
 			DefaultMutableTreeNode sub = children.nextElement();
@@ -494,10 +499,15 @@ public class MyCheckBoxTree extends JTree implements TreeSelectionListener
 				addNode(nodesLabels, sub, isSelected, visible);
 				return;
 			}
+			
+			if (((Comparator<String>) MyUtils.PADDED_NUMBERS_COMPARATOR).compare(nodesLabels[0], sub.getUserObject().toString()) >= 0)
+			{
+				++newChildIndex;
+			}
 		}
 
 		DefaultMutableTreeNode sub = new DefaultMutableTreeNode(nodesLabels[0]);
-		parentNode.add(sub);
+		parentNode.insert(sub, newChildIndex);
 		model.reload();
 		nodesLabels = MyUtils.offsetObjectElements(nodesLabels, 1);
 		addNode(nodesLabels, sub, isSelected, visible);

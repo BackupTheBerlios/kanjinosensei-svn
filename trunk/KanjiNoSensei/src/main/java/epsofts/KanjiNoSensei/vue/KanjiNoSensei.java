@@ -35,10 +35,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -53,6 +59,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -70,12 +77,14 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListModel;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ListDataListener;
 import javax.swing.filechooser.FileFilter;
 
 import nl.jj.swingx.gui.modal.JModalConfiguration;
@@ -129,7 +138,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			e.printStackTrace();
 		}
 
-		MyUtils.logMinLevel = (DEV_ACCESS?Level.ALL:Level.WARNING);
+		MyUtils.logMinLevel = (DEV_ACCESS ? Level.ALL : Level.WARNING);
 	}
 
 	private static class Presets
@@ -212,7 +221,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private Presets											presets							= null;
 
-	public final String										KanjiNoSensei_VERSION			= "1.0-SNAPSHOT";																									//$NON-NLS-1$
+	public final String										KanjiNoSensei_VERSION			= "1.0-SNAPSHOT";																							//$NON-NLS-1$
 
 	static boolean											USE_ROMAJI						= Boolean.parseBoolean(Config.getString("GeneralConfig.UseRomaji", "false"));								//$NON-NLS-1$ //$NON-NLS-2$
 
@@ -338,6 +347,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	/** Dictionnaire complet disponible */
 	final private Dictionary								dictionnaire;
+	
+	final private Map<String, JPanel>						selectablesPanels = new TreeMap<String, JPanel>();
 
 	final private Vector<Class<? extends Element>>			plugins;
 
@@ -400,8 +411,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 	private JPanel			jPanelThemesSelection		= null;
 
 	private JList			jListThemesSelectionnes		= null;
-	
-	private int 			nbQuestions					= 0;
+
+	private int				nbQuestions					= 0;
 
 	private int				questionCourante			= 0;
 
@@ -437,11 +448,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 	{
 		return app;
 	}
-	
+
 	private KanjiNoSensei(File fic_config, File fic_dico, File fic_profile, File fic_presets) throws SecurityException, IllegalArgumentException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, IOException
 	{
 		assert (app == null);
-		
+
 		plugins = listPluginsClasses();
 
 		Iterator<Class<? extends Element>> itPlugins = plugins.iterator();
@@ -503,7 +514,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		this.ficPresets = fic_presets;
 		this.dictionnaire = new Dictionary(fic_dico);
 		this.dictionnaireQuiz = this.dictionnaire.clone();
-		
+
 		app = this;
 	}
 
@@ -523,11 +534,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 				@Override
 				public void treeNodesChanged(final MyCheckBoxTreeEvent e)
 				{
-					if (!SwingUtilities.isEventDispatchThread())
+					if ( !SwingUtilities.isEventDispatchThread())
 					{
 						SwingUtilities.invokeLater(new Runnable()
 						{
-						
+
 							@Override
 							public void run()
 							{
@@ -536,7 +547,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 						});
 					}
 					// We are in EDT
-					
+
 					if (e.itemIsSelected)
 					{
 						MyUtils.trace(Level.FINE, "'" + e.itemPath + "' ajouté"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -556,7 +567,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 					{
 						MyUtils.trace(Level.INFO, "CALLING afficherBaseFrameMAJZoneElements FROM MyCheckBoxTreeListener.treeNodesChanged");
 						getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
-						MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData("+themesSelectionnes+")");
+						MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData(" + themesSelectionnes + ")");
 						MyUtils.refreshComponentAndSubs(getJScrollPaneListThemesSelectionnes());
 						afficherBaseFrameMAJZoneElements();
 					}
@@ -622,12 +633,12 @@ public class KanjiNoSensei implements PropertyChangeListener
 			afficherBaseFrame.setMinimumSize(getAfficherBaseContentPane().getMinimumSize());
 			afficherBaseFrame.setMaximumSize(getAfficherBaseContentPane().getMaximumSize());
 			afficherBaseFrame.setPreferredSize(getAfficherBaseContentPane().getPreferredSize());
-			
+
 			Point loc = getJFrame().getLocation();
 			loc.translate(20, 20);
 			afficherBaseFrame.setLocation(loc);
 			afficherBaseFrame.pack();
-			
+
 			// <JiglooProtected>
 			afficherBaseFrame.addComponentListener(new ComponentAdapter()
 			{
@@ -638,8 +649,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 					getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif);
 					getJTextFieldElementsFiltre().setText(filtreElementsTxt);
 					getJCheckBoxElementsFiltre().setSelected(filtreElementsActif);
-					
-					//TODO: Eviter d'apeller ces méthodes lorsque le contenu n'as pas de raison d'avoir changé (lorsqu'on a validé avec "Valider").
+
+					// TODO: Eviter d'apeller ces méthodes lorsque le contenu n'as pas de raison d'avoir changé (lorsqu'on a validé avec "Valider").
 					afficherBaseFrameMAJZoneThemes();
 					afficherBaseFrameMAJZoneElements();
 				}
@@ -647,22 +658,10 @@ public class KanjiNoSensei implements PropertyChangeListener
 			// <JiglooProtected>
 
 			/*
-			afficherBaseFrame.addWindowListener(new WindowAdapter()
-			{
-				// </JiglooProtected>
-				public void windowOpened(WindowEvent e)
-				{
-					getJTextFieldThemesFiltre().setText(filtreThemesTxt);
-					getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif);
-					getJTextFieldElementsFiltre().setText(filtreElementsTxt);
-					getJCheckBoxElementsFiltre().setSelected(filtreElementsActif);
-					afficherBaseFrame.doLayout();
-
-					afficherBaseFrameMAJZoneThemes();
-					afficherBaseFrameMAJZoneElements();
-				}
-			});
-			*/
+			 * afficherBaseFrame.addWindowListener(new WindowAdapter() { // </JiglooProtected> public void windowOpened(WindowEvent e) { getJTextFieldThemesFiltre().setText(filtreThemesTxt); getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif); getJTextFieldElementsFiltre().setText(filtreElementsTxt); getJCheckBoxElementsFiltre().setSelected(filtreElementsActif); afficherBaseFrame.doLayout();
+			 * 
+			 * afficherBaseFrameMAJZoneThemes(); afficherBaseFrameMAJZoneElements(); } });
+			 */
 		}
 
 		return afficherBaseFrame;
@@ -672,7 +671,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 	{
 
 		private final String	filtreTheme;
-		
+
 		/**
 		 * @return the filtreTheme
 		 */
@@ -716,9 +715,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 				getMyCheckBoxTree().hideAllNodes();
 				getMyCheckBoxTree().addTreeNodes(get(), true);
 				getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
-				MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData("+themesSelectionnes+")");
+				MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData(" + themesSelectionnes + ")");
 			}
-			catch(CancellationException c)
+			catch (CancellationException c)
 			{
 				MyUtils.trace(Level.INFO, "</GetListeThemesTask.done canceled>");
 				return;
@@ -728,12 +727,13 @@ public class KanjiNoSensei implements PropertyChangeListener
 				log(Level.SEVERE, "Unexpected GUI exception: " + e.getMessage());
 				e.printStackTrace();
 			}
-			
+
 			MyUtils.trace(Level.INFO, "</GetListeThemesTask.done>");
 		}
 	};
 
-	private GetListeThemesTask getListeThemesTask = null;
+	private GetListeThemesTask	getListeThemesTask	= null;
+
 	private synchronized void afficherBaseFrameMAJZoneThemes()
 	{
 		if ( !SwingUtilities.isEventDispatchThread())
@@ -761,39 +761,36 @@ public class KanjiNoSensei implements PropertyChangeListener
 		if (getListeThemesTask != null)
 		{
 			/*
-			String lastFiltreTheme = getListeThemesTask.getFiltreTheme();
-			
-			if (MyUtils.compareNullableStrings(lastFiltreTheme, filtreTheme))
-			{
-				return;
-			}
-			*/
-			
+			 * String lastFiltreTheme = getListeThemesTask.getFiltreTheme();
+			 * 
+			 * if (MyUtils.compareNullableStrings(lastFiltreTheme, filtreTheme)) { return; }
+			 */
+
 			getListeThemesTask.cancel(true);
 		}
-		
+
 		getListeThemesTask = new GetListeThemesTask(filtreTheme);
 		getListeThemesTask.addPropertyChangeListener(this);
 		getListeThemesTask.execute();
 	}
 
-	static class GetListeElementsTask extends SwingWorker<SortedMap<Element, JPanel>, JPanel>
+	static class GetListeElementsTask extends SwingWorker<SortedMap<String, JPanel>, JPanel>
 	{
 
-		final String	filtreElement;
-		
-		final static MouseWheelListener listedElementMouseWheelListener = new MouseWheelListener()
-		{
+		final String					filtreElement;
 
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e)
-			{
-				MyUtils.trace(Level.FINEST, "mouseWheelMoved : " + e); //$NON-NLS-1$
-				KanjiNoSensei.app.getJScrollPaneElements().dispatchEvent(e);
-			}
+		final static MouseWheelListener	listedElementMouseWheelListener	= new MouseWheelListener()
+																		{
 
-		};
-		
+																			@Override
+																			public void mouseWheelMoved(MouseWheelEvent e)
+																			{
+																				MyUtils.trace(Level.FINEST, "mouseWheelMoved : " + e); //$NON-NLS-1$
+																				KanjiNoSensei.app.getJScrollPaneElements().dispatchEvent(e);
+																			}
+
+																		};
+
 		/**
 		 * @return the filtreElement
 		 */
@@ -816,17 +813,17 @@ public class KanjiNoSensei implements PropertyChangeListener
 		 * @see javax.swing.SwingWorker#doInBackground()
 		 */
 		@Override
-		protected SortedMap<Element, JPanel> doInBackground() throws Exception
-		{	
+		protected SortedMap<String, JPanel> doInBackground() throws Exception
+		{
 			MyUtils.trace(Level.INFO, "<GetListeElementsTask.doInBackground>");
-			
+
 			MyUtils.trace(Level.INFO, "</System.gc()>");
 			System.gc();
-			
+
 			KanjiNoSensei.app.sousDictionnaire = KanjiNoSensei.app.dictionnaire.getSubDictionary(KanjiNoSensei.app.themesSelectionnes);
 			Set<Element> listeElementsFiltre = KanjiNoSensei.app.sousDictionnaire.getElementsList(filtreElement);
 
-			SortedMap<Element, JPanel> elementsPanels = new TreeMap<Element, JPanel>();
+			SortedMap<String, JPanel> elementsPanels = new TreeMap<String, JPanel>();
 
 			Iterator<Element> itElements = listeElementsFiltre.iterator();
 			Element element = null;
@@ -837,6 +834,16 @@ public class KanjiNoSensei implements PropertyChangeListener
 				++i;
 				MyUtils.trace(Level.FINE, "<Nouvel Element id=" + i + ">");
 				element = itElements.next();
+				String key = element.getKey();
+
+				if (KanjiNoSensei.getApp().selectablesPanels.containsKey(key))
+				{
+					JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
+					panel.setVisible(true);
+					elementsPanels.put(key, panel);
+					continue;
+				}
+
 				try
 				{
 					final VueElement vueElement = VueElement.genererVueElement(element);
@@ -849,12 +856,12 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 					MyUtils.trace(Level.FINE, "<InvokeLater:selectablePanel sizing for Element id=" + i + ">");
 					int margin = 4;
-				
+
 					selectablePanel.setMinimumSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getMinimumSize().width, vueElementDetaillePanel.getMinimumSize().height + margin));
 					selectablePanel.setPreferredSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getPreferredSize().width, selectablePanel.getMinimumSize().height));
-					
-					//selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
-					//selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
+
+					// selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
+					// selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
 
 					MyUtils.trace(Level.FINE, "</InvokeLater:selectablePanel sizing for Element id=" + i + ">");
 
@@ -922,8 +929,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 						}
 
 					}, true);
-
-					elementsPanels.put(element, selectablePanel);
+					
+					KanjiNoSensei.getApp().selectablesPanels.put(key, selectablePanel);
+					elementsPanels.put(key, selectablePanel);
 				}
 				catch (Exception e)
 				{
@@ -947,15 +955,16 @@ public class KanjiNoSensei implements PropertyChangeListener
 		protected void done()
 		{
 			MyUtils.trace(Level.INFO, "<GetListeElementsTask.done>");
-			KanjiNoSensei.app.getJPanelElementsListe().removeAll();
+			
+			//KanjiNoSensei.app.getJPanelElementsListe().removeAll();
 
-			SortedMap<Element, JPanel> elementsPanels = null;
+			SortedMap<String, JPanel> elementsPanels = null;
 
 			try
 			{
 				elementsPanels = get();
 			}
-			catch(CancellationException c)
+			catch (CancellationException c)
 			{
 				MyUtils.trace(Level.INFO, "</GetListeElements.done>");
 				return;
@@ -967,23 +976,38 @@ public class KanjiNoSensei implements PropertyChangeListener
 			}
 
 			if (elementsPanels != null)
-			{
-				for (Element e : elementsPanels.keySet())
+			{	
+				KanjiNoSensei.getApp().selectablesPanels.putAll(elementsPanels);
+				
+				Iterator<String> itSelectablesPanals = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
+				while(itSelectablesPanals.hasNext())
 				{
-					JPanel panel = elementsPanels.get(e);
-					KanjiNoSensei.app.getJPanelElementsListe().add(panel);
+					String key = itSelectablesPanals.next();
+					KanjiNoSensei.getApp().selectablesPanels.get(key).setVisible(elementsPanels.containsKey(key));
+				}
+				
+				Vector<Component> knownComponents = MyUtils.arrayToVector(KanjiNoSensei.getApp().getJPanelElementsListe().getComponents());
+				Iterator<String> it = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
+				while(it.hasNext())
+				{
+					String key = it.next();
+					JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
+					if (!knownComponents.contains(KanjiNoSensei.getApp().selectablesPanels.get(key)))
+					{
+						KanjiNoSensei.getApp().getJPanelElementsListe().add(panel);
+					}
 				}
 			}
-			
-			int incMin = 10, incMax = 100; 
+
+			int incMin = 10, incMax = 100;
 			KanjiNoSensei.app.getJScrollPaneElements().getVerticalScrollBar().setUnitIncrement(Math.max(incMin, Math.min(incMax, (KanjiNoSensei.app.getJPanelElementsListe().getComponentCount() * 1))));
 			MyUtils.refreshComponentAndSubs(KanjiNoSensei.app.getAfficherBaseContentPane());
 			MyUtils.trace(Level.INFO, "</GetListeElements.done>");
 		}
 	}
 
-	private GetListeElementsTask getListeElementsTask = null;
-	
+	private GetListeElementsTask	getListeElementsTask	= null;
+
 	private synchronized void afficherBaseFrameMAJZoneElements()
 	{
 		if ( !SwingUtilities.isEventDispatchThread())
@@ -1011,16 +1035,12 @@ public class KanjiNoSensei implements PropertyChangeListener
 		if (getListeElementsTask != null)
 		{
 			/*
-			String lastFiltreElements = getListeElementsTask.getFiltreElement();
-			if (MyUtils.compareNullableStrings(lastFiltreElements, filtreElement))
-			{
-				return;
-			}
-			*/
-			
+			 * String lastFiltreElements = getListeElementsTask.getFiltreElement(); if (MyUtils.compareNullableStrings(lastFiltreElements, filtreElement)) { return; }
+			 */
+
 			getListeElementsTask.cancel(true);
 		}
-		
+
 		getListeElementsTask = new GetListeElementsTask(filtreElement);
 		getListeElementsTask.addPropertyChangeListener(this);
 		getListeElementsTask.execute();
@@ -1043,7 +1063,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			return;
 		}
 		// We are in EDT
-		
+
 		boolean deselectionner = false, selectionner = false;
 
 		for (int i = 0; i < getJPanelElementsListe().getComponentCount(); ++i)
@@ -1258,9 +1278,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 				{
 					MyCheckBoxTree jMyCheckBoxTree = getMyCheckBoxTree();
 					KanjiNoSensei.log(Level.SEVERE, "Must reimplement");
-					//jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), true, Integer.MAX_VALUE);
+					// jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), true, Integer.MAX_VALUE);
 
-					//afficherBaseFrameMAJZoneElements();
+					// afficherBaseFrameMAJZoneElements();
 				}
 			});
 		}
@@ -1284,9 +1304,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 				{
 					MyCheckBoxTree jMyCheckBoxTree = getMyCheckBoxTree();
 					KanjiNoSensei.log(Level.SEVERE, "Must reimplement");
-					//jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), false, Integer.MAX_VALUE);
+					// jMyCheckBoxTree.setSubTreeSelected(jMyCheckBoxTree.getSelectionPath(), false, Integer.MAX_VALUE);
 
-					//afficherBaseFrameMAJZoneElements();
+					// afficherBaseFrameMAJZoneElements();
 				}
 			});
 		}
@@ -1651,7 +1671,28 @@ public class KanjiNoSensei implements PropertyChangeListener
 	{
 		if (jListThemesSelectionnes == null)
 		{
-			jListThemesSelectionnes = new JList();
+			jListThemesSelectionnes = new JList()
+			{
+				/* (non-Javadoc)
+				 * @see javax.swing.JList#setListData(java.lang.Object[])
+				 */
+				@Override
+				public void setListData(Object[] listData)
+				{
+					Collections.sort(Arrays.asList(listData), (Comparator<Object>) MyUtils.PADDED_NUMBERS_COMPARATOR);
+					super.setListData(listData);
+				}
+				
+				/* (non-Javadoc)
+				 * @see javax.swing.JList#setListData(java.util.Vector)
+				 */
+				@Override
+				public void setListData(Vector<?> arg0)
+				{
+					Collections.sort((Vector<Object>) arg0, (Comparator<Object>) MyUtils.PADDED_NUMBERS_COMPARATOR);
+					super.setListData(arg0);
+				}
+			};
 			jListThemesSelectionnes.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jListThemesSelectionnes.setFocusable(false);
 		}
@@ -1723,7 +1764,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			}
 			args = MyUtils.offsetObjectElements(args, 2);
 		}
-		
+
 		KanjiNoSensei.log(Level.INFO, Messages.getString("KanjiNoSensei.Info.WorkingDirectory") + " : \"" + System.getProperty("KanjiNoSenseiWorkingDirectory") + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 		if (args.length > 0)
@@ -2239,7 +2280,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			}
 			catch (NoAffException e)
 			{
-				MyUtils.trace(Level.INFO, "NoAffException: "+e.getMessage());
+				MyUtils.trace(Level.INFO, "NoAffException: " + e.getMessage());
 				panelQuestion = null;
 				panelSaisieReponse = null;
 				dejaVus.add(elementQuestionEnCours);
@@ -2247,7 +2288,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			}
 			catch (NoSaisieException e)
 			{
-				MyUtils.trace(Level.INFO, "NoSaisieException: "+e.getMessage());
+				MyUtils.trace(Level.INFO, "NoSaisieException: " + e.getMessage());
 				panelQuestion = null;
 				panelSaisieReponse = null;
 				dejaVus.add(elementQuestionEnCours);
@@ -2259,12 +2300,15 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 		MyUtils.fixComponentSizes(panelQuestion, panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelQuestion.getMinimumSize().height + 1);
 		MyUtils.fixComponentSizes(panelSaisieReponse, panelSaisieReponse.getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1);
-		
+
+		JLabel labelQuestion = new JLabel(MyUtils.firstCharacterToUpperCase(Messages.getString(elementQuestionEnCours.getClass().getSimpleName())), JLabel.LEFT);
+
+		getJPanelQuizAffElement().add(labelQuestion, BorderLayout.NORTH);
 		getJPanelQuizAffElement().add(panelQuestion, BorderLayout.CENTER);
 
 		getJPanelQuizSaisieReponse().removeAll();
 		panelSaisieReponse.setBorder(BorderFactory.createLineBorder(Color.yellow, 2));
-		
+
 		getJPanelQuizSaisieReponse().add(panelSaisieReponse, BorderLayout.CENTER);
 
 		getJPanelQuizAffReponse().removeAll();
@@ -2277,7 +2321,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 		MyUtils.InvokeNoEDT(new Runnable()
 		{
-		
+
 			@Override
 			public void run()
 			{
@@ -2293,12 +2337,12 @@ public class KanjiNoSensei implements PropertyChangeListener
 				}
 			}
 		});
-		
+
 	}
 
 	private void miseAJourQuizTitle()
 	{
-		getJQuizFrame().setTitle(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante +"; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "/"+ nbQuestions + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+		getJQuizFrame().setTitle(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante + "; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "/" + nbQuestions + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 		getJQuizFrame().setTitle(getJQuizFrame().getTitle() + "   " + "Stats [" + userLearningProfile.getElementStats(elementQuestionEnCours.getKey()) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
@@ -2360,7 +2404,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 		jPanelQuizAffReponse.add(buttonContinuer, BorderLayout.SOUTH);
 		buttonContinuer.grabFocus();
-		
+
 		MyUtils.refreshComponent(getJQuizFrame());
 		getJQuizFrame().setVisible(true);
 	}
@@ -2548,7 +2592,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 							File fic = fc.getSelectedFile();
 							try
 							{
-								//TODO: SwingWorker + progress bar ?
+								// TODO: SwingWorker + progress bar ?
 								dictionnaire.exportFile(fic);
 							}
 							catch (IOException e1)
@@ -2656,19 +2700,19 @@ public class KanjiNoSensei implements PropertyChangeListener
 				{
 					MyUtils.InvokeNoEDT(new Runnable()
 					{
-					
+
 						@Override
 						public void run()
 						{
-							String[] browsers = {"firefox", "iexplore", "netscape", "opera"};					
-							
-							for(int i=0; i < browsers.length; ++i)
+							String[] browsers = {"firefox", "iexplore", "netscape", "opera"};
+
+							for (int i = 0; i < browsers.length; ++i)
 							{
 								try
 								{
-									Runtime.getRuntime().exec(browsers[i] + " "+jLabelLien.getText());
+									Runtime.getRuntime().exec(browsers[i] + " " + jLabelLien.getText());
 								}
-								catch(IOException e)
+								catch (IOException e)
 								{
 									if (i < browsers.length)
 									{
@@ -2680,11 +2724,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 										return;
 									}
 								}
-								
+
 								return;
-							}					
+							}
 						}
-					});					
+					});
 				}
 
 				public void mouseExited(MouseEvent evt)
@@ -2815,12 +2859,12 @@ public class KanjiNoSensei implements PropertyChangeListener
 					MyUtils.trace(Level.FINEST, "jButtonCharger.actionPerformed, event=" + evt); //$NON-NLS-1$
 					Vector<String> themes = presets.getPreset(getJComboBoxPresets().getSelectedItem().toString());
 					Map<String, Boolean> listeThemes = new HashMap<String, Boolean>();
-					
-					for(String theme : themes)
+
+					for (String theme : themes)
 					{
 						listeThemes.put(theme, true);
 					}
-					
+
 					getMyCheckBoxTree().addTreeNodes(listeThemes, true);
 
 					// afficherBaseFrameMAJZoneThemes();
@@ -2910,36 +2954,38 @@ public class KanjiNoSensei implements PropertyChangeListener
 		return jScrollPaneListThemesSelectionnes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
 	 */
 	@Override
 	public synchronized void propertyChange(PropertyChangeEvent evt)
 	{
 		Object swingWorker = evt.getSource().getClass().getName();
-		//boolean doesWork = (workingSwingWorker.get(swingWorker) == null)?false:workingSwingWorker.get(swingWorker);
-		
+		// boolean doesWork = (workingSwingWorker.get(swingWorker) == null)?false:workingSwingWorker.get(swingWorker);
+
 		if ("state".equals(evt.getPropertyName()))
 		{
-			switch(((SwingWorker.StateValue) evt.getNewValue()))
+			switch (((SwingWorker.StateValue) evt.getNewValue()))
 			{
 			case STARTED:
 			{
-				//MyUtils.assertFalse(doesWork, swingWorker+" already in work");
+				// MyUtils.assertFalse(doesWork, swingWorker+" already in work");
 				workingSwingWorker.put(swingWorker, true);
 				break;
 			}
 			case DONE:
 			{
-				//MyUtils.assertTrue(doesWork, swingWorker+" was not working");
+				// MyUtils.assertTrue(doesWork, swingWorker+" was not working");
 				workingSwingWorker.put(swingWorker, false);
 				break;
 			}
 			}
 		}
-		
+
 		int cur = Cursor.DEFAULT_CURSOR;
-		for(Boolean work: workingSwingWorker.values())
+		for (Boolean work : workingSwingWorker.values())
 		{
 			if (work == true)
 			{
@@ -2947,10 +2993,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 				break;
 			}
 		}
-		
-		MyUtils.trace(Level.INFO, swingWorker+" "+evt.getNewValue()+"; workingSwingWorker: "+workingSwingWorker);
+
+		MyUtils.trace(Level.INFO, swingWorker + " " + evt.getNewValue() + "; workingSwingWorker: " + workingSwingWorker);
 		getAfficherBaseFrame().setCursor(Cursor.getPredefinedCursor(cur));
 	}
-	private HashMap<Object, Boolean> workingSwingWorker = new HashMap<Object, Boolean>();
-	
+
+	private HashMap<Object, Boolean>	workingSwingWorker	= new HashMap<Object, Boolean>();
+
 }

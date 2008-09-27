@@ -22,6 +22,8 @@ import java.util.TreeMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.naming.OperationNotSupportedException;
 import javax.swing.BorderFactory;
@@ -1548,22 +1550,82 @@ public abstract class MyUtils
 		double[] minmax = minmax(values);
 		return String.format("Min: %f\tMax: %f\tSum: %f\tE: %f\tV: %f\tð: %f", minmax[0], minmax[1], sum(values), esperence(values), variance(values), ecartType(values));
 	}
-	
+
 	public static void fixComponentSizes(JComponent c, int width, int heiht)
 	{
 		fixComponentSizes(c, width, heiht, width, heiht);
 	}
-	
+
 	public static void fixComponentSizes(JComponent c, int minWidth, int minHeight, int prefWidth, int prefHeight)
 	{
 		c.setAlignmentX(Component.LEFT_ALIGNMENT);
 		c.setMinimumSize(new Dimension(minWidth, minHeight));
 		c.setPreferredSize(new Dimension(prefWidth, prefHeight));
 	}
-	
+
 	public static void addDebugColor(JComponent c, Color color)
 	{
 		c.setBackground(color);
 		c.setBorder(BorderFactory.createLineBorder(color));
+	}
+
+	public static String firstCharacterToUpperCase(String subject)
+	{
+		return subject.substring(0, 1).toUpperCase() + subject.substring(1);
+	}
+
+	/**
+	 * Pad string left. Pad length can be more than one character, so the final padded string length can vary from (fixedLenth) to (fixedLength + pad.length() - 1).
+	 * 
+	 * @param subject
+	 * @param pad
+	 * @param fixedLength
+	 * @return
+	 */
+	public static String padString(String subject, String pad, int fixedLength)
+	{
+		if (pad.length() > fixedLength) throw new RuntimeException("\"" + pad + "\".length() > " + fixedLength);
+
+		StringBuilder sb = new StringBuilder();
+		while ((subject.length() + sb.length()) < fixedLength)
+		{
+			sb.append(pad);
+		}
+		return sb.toString() + subject;
+	}
+
+	public static final Comparator<? extends Object>	PADDED_NUMBERS_COMPARATOR	= new Comparator<? extends Object>()
+																					{
+
+																						@Override
+																						public int compare(Object arg0, Object arg1)
+																						{
+																							String s0 = padNumbers(arg0.toString(), 10);
+																							String s1 = padNumbers(arg1.toString(), 10);
+
+																							return s0.compareToIgnoreCase(s1);
+																						}
+																					};
+
+	public static String padNumbers(String subject, int nbDigits)
+	{
+		int lastEnd = 0;
+		Matcher matcher = Pattern.compile("([0-9]+)").matcher(subject);
+		StringBuilder result = new StringBuilder();
+		
+		while (matcher.find())
+		{
+			int start = matcher.start();
+			int end = matcher.end();
+			String group = matcher.group();
+
+			result.append(subject.substring(lastEnd, start));
+			result.append(padString(group, "0", nbDigits));
+			lastEnd = end;
+		}
+
+		if (result.toString().isEmpty()) return subject;
+		
+		return result.toString();
 	}
 }

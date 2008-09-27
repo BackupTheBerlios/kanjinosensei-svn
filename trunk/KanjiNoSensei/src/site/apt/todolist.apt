@@ -10,20 +10,10 @@ TODO List
 * Work flow en cours.
 	
 ** Interface
-			
-	* CheckBoxTree :
-		On coche une feuille: on l'ajoute au thèmes sélectionnés.
-		On décoche une feuille: on la retire des thèmes sélectionnés.
-		On coche un noeud:	on ajoute toutes les feuilles filtrées par le filtre courant
-							on ajoute le noeud seulement si toutes les feuilles sont cochées (y compris hors filtre).
-		On décoche un noeud:	on retire toutes les feuilles filtrées par le filtre courant
-								on retire le noeud seulement s'il ne reste plus aucune feuille (y compris hors filtre).
+				
+	* Attention: Tout éléments devrait être lié à au moins un thème "noeud". Ceci n'est pas vérifié par MyCheckBoxTree et devrait l'être par KanjiNoSensei au moment de charger le dictionnaire.
 
 	* Ajouter une option setWordWrap(boolean) à MyAutoResizingText qui calcule la meilleure taille de fonte et la meilleure découpe de mot en fonction de la taille disponible.
-	
-	* Dans le "Quiz", afficher le type de l'élément en question.
-	
-	* Changer les algorithmes de trie des chaînes de caractères pour l'affichage de la liste de thèmes, forcer "Leçon 5" à être inférieur à "Leçon 10" (par exemple, utiliser une chaîne modifiée pour le test, "Leçon 00005"?"Leçon 00010").
 	
 	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quiz".
 	
@@ -104,3 +94,6 @@ TODO List
 ** Notes (brouillon)  
 	
 	* Mettre une taille max à la fonte des textes à afficher en Question de quiz, la taille max devrait ne devrait pas être trop grosse, car c'est laid.
+	
+	* Écran base, trier les éléments par leur premier thèmes (de sorte à avoir un ordre ressemblant à celui du modèle dico.csv)
+	

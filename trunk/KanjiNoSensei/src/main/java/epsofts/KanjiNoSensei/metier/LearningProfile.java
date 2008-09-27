@@ -397,12 +397,12 @@ public class LearningProfile implements Serializable
 		Statistics stats = statistics.get(elementUID);
 		if (stats == null) return null;
 
-		StringBuilder sb = new StringBuilder(String.format("%d/%d = %f\t", stats.getNbGoodAnswers(), stats.getNbQuestions(), stats.getSuccessRate())); //$NON-NLS-1$
+		StringBuilder sb = new StringBuilder(String.format("%d/%d = %.2f\t", stats.getNbGoodAnswers(), stats.getNbQuestions(), stats.getSuccessRate())); //$NON-NLS-1$
 
 		long time = stats.getLastQuestionAge();
 
-		sb.append(MyUtils.timeToString(time) + "\t"); //$NON-NLS-1$
-		sb.append(String.format(Messages.getString("LearningProfile.LearningProfile.Label.NeedScore") + " : %f", stats.getNeedScore())); //$NON-NLS-1$ //$NON-NLS-2$
+		sb.append("Age : "+MyUtils.timeToString(time) + "\t"); //$NON-NLS-1$
+		sb.append(String.format(Messages.getString("LearningProfile.LearningProfile.Label.NeedScore") + " : %.2f", stats.getNeedScore())); //$NON-NLS-1$ //$NON-NLS-2$
 
 		return sb.toString();
 	}

@@ -306,6 +306,7 @@ public abstract class Element implements Serializable, Comparable<Element>
 		{
 			themes.add(Messages.getString(this.getClass().getSimpleName()));
 		}
+		
 	}
 
 	/**
