@@ -20,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -63,8 +66,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -77,6 +82,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JViewport;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneLayout;
 import javax.swing.SwingConstants;
@@ -229,8 +235,6 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private Set<String>										themesSelectionnes				= new TreeSet<String>();																					// @jve:decl-index=0:
 
-	private JFrame											jConfigModalFrame;
-
 	private JMenuItem										ConfigMenuItem;
 
 	static private FileFilter								fileFilterDictionnaire			= MyUtils.generateFileFilter(Messages.getString("KanjiNoSensei.DictionaryFileFilterName"), "kjd");			//$NON-NLS-1$ //$NON-NLS-2$
@@ -259,7 +263,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private JLabel											aboutVersionLabel				= null;
 
-	private JFrame											afficherBaseFrame				= null;																									// @jve:decl-index=0:visual-constraint="23,536"
+	// private MyModalFrame afficherBaseFrame = null; // @jve:decl-index=0:visual-constraint="23,536"
 
 	private JPanel											afficherBaseContentPane			= null;
 
@@ -309,6 +313,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private JMenuItem										lancerQuizMenuItem;
 
+	private JMenuItem										restartQuizMenuItem;
+
 	private JPanel											jPanelConfigGenerale;
 
 	private JPanel											jPanelQuizSaisieReponse;
@@ -331,8 +337,6 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private JButton											jButtonSupprimer;
 
-	private JFrame											jFrameQuizz;
-
 	private JButton											jButtonBaseConnaissanceAnnuler;
 
 	private JButton											jButtonValider;
@@ -347,8 +351,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	/** Dictionnaire complet disponible */
 	final private Dictionary								dictionnaire;
-	
-	final private Map<String, JPanel>						selectablesPanels = new TreeMap<String, JPanel>();
+
+	final private Map<String, JPanel>						selectablesPanels				= new TreeMap<String, JPanel>();
 
 	final private Vector<Class<? extends Element>>			plugins;
 
@@ -617,56 +621,56 @@ public class KanjiNoSensei implements PropertyChangeListener
 	 * 
 	 * @return javax.swing.JFrame
 	 */
-	private JFrame getAfficherBaseFrame()
-	{
-		if (afficherBaseFrame == null)
-		{
-			afficherBaseFrame = new JFrame();
-			// <NoJigloo>
-			afficherBaseFrame = new MyModalFrame(getJFrame(), true);
-			// </NoJigloo>
-			afficherBaseFrame.setTitle(Messages.getString("KanjiNoSensei.Base.Title")); //$NON-NLS-1$
-			afficherBaseFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			afficherBaseFrame.setName("Base de connaissance"); //$NON-NLS-1$
-			afficherBaseFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			afficherBaseFrame.setContentPane(getAfficherBaseContentPane());
-			afficherBaseFrame.setMinimumSize(getAfficherBaseContentPane().getMinimumSize());
-			afficherBaseFrame.setMaximumSize(getAfficherBaseContentPane().getMaximumSize());
-			afficherBaseFrame.setPreferredSize(getAfficherBaseContentPane().getPreferredSize());
-
-			Point loc = getJFrame().getLocation();
-			loc.translate(20, 20);
-			afficherBaseFrame.setLocation(loc);
-			afficherBaseFrame.pack();
-
-			// <JiglooProtected>
-			afficherBaseFrame.addComponentListener(new ComponentAdapter()
-			{
-				// </JiglooProtected>
-				public void componentShown(ComponentEvent evt)
-				{
-					getJTextFieldThemesFiltre().setText(filtreThemesTxt);
-					getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif);
-					getJTextFieldElementsFiltre().setText(filtreElementsTxt);
-					getJCheckBoxElementsFiltre().setSelected(filtreElementsActif);
-
-					// TODO: Eviter d'apeller ces méthodes lorsque le contenu n'as pas de raison d'avoir changé (lorsqu'on a validé avec "Valider").
-					afficherBaseFrameMAJZoneThemes();
-					afficherBaseFrameMAJZoneElements();
-				}
-			});
-			// <JiglooProtected>
-
-			/*
-			 * afficherBaseFrame.addWindowListener(new WindowAdapter() { // </JiglooProtected> public void windowOpened(WindowEvent e) { getJTextFieldThemesFiltre().setText(filtreThemesTxt); getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif); getJTextFieldElementsFiltre().setText(filtreElementsTxt); getJCheckBoxElementsFiltre().setSelected(filtreElementsActif); afficherBaseFrame.doLayout();
-			 * 
-			 * afficherBaseFrameMAJZoneThemes(); afficherBaseFrameMAJZoneElements(); } });
-			 */
-		}
-
-		return afficherBaseFrame;
-	}
-
+	// private JFrame getAfficherBaseFrame()
+	// {
+	// if (afficherBaseFrame == null)
+	// {
+	//			
+	// //afficherBaseFrame = new JFrame();
+	// // <NoJigloo>
+	// afficherBaseFrame = new MyModalFrame(getJFrame(), true);
+	// // </NoJigloo>
+	//			afficherBaseFrame.setTitle(Messages.getString("KanjiNoSensei.Base.Title")); //$NON-NLS-1$
+	// afficherBaseFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	//			afficherBaseFrame.setName("Base de connaissance"); //$NON-NLS-1$
+	// afficherBaseFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	// afficherBaseFrame.setContentPane(getAfficherBaseContentPane());
+	// afficherBaseFrame.setMinimumSize(getAfficherBaseContentPane().getMinimumSize());
+	// afficherBaseFrame.setMaximumSize(getAfficherBaseContentPane().getMaximumSize());
+	// afficherBaseFrame.setPreferredSize(getAfficherBaseContentPane().getPreferredSize());
+	//
+	// Point loc = getJFrame().getLocation();
+	// loc.translate(20, 20);
+	// afficherBaseFrame.setLocation(loc);
+	// afficherBaseFrame.pack();
+	//
+	// // <JiglooProtected>
+	// afficherBaseFrame.addComponentListener(new ComponentAdapter()
+	// {
+	// // </JiglooProtected>
+	// public void componentShown(ComponentEvent evt)
+	// {
+	// getJTextFieldThemesFiltre().setText(filtreThemesTxt);
+	// getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif);
+	// getJTextFieldElementsFiltre().setText(filtreElementsTxt);
+	// getJCheckBoxElementsFiltre().setSelected(filtreElementsActif);
+	//
+	// // TODO: Eviter d'apeller ces méthodes lorsque le contenu n'as pas de raison d'avoir changé (lorsqu'on a validé avec "Valider").
+	// afficherBaseFrameMAJZoneThemes();
+	// afficherBaseFrameMAJZoneElements();
+	// }
+	// });
+	// // <JiglooProtected>
+	//
+	// /*
+	// * afficherBaseFrame.addWindowListener(new WindowAdapter() { // </JiglooProtected> public void windowOpened(WindowEvent e) { getJTextFieldThemesFiltre().setText(filtreThemesTxt); getJCheckBoxThemesFiltrer().setSelected(filtreThemesActif); getJTextFieldElementsFiltre().setText(filtreElementsTxt); getJCheckBoxElementsFiltre().setSelected(filtreElementsActif); afficherBaseFrame.doLayout();
+	// *
+	// * afficherBaseFrameMAJZoneThemes(); afficherBaseFrameMAJZoneElements(); } });
+	// */
+	// }
+	//
+	// return afficherBaseFrame;
+	// }
 	class GetListeThemesTask extends SwingWorker<SortedMap<String, Boolean>, String>
 	{
 
@@ -694,6 +698,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 			for (String theme : listeThemesFiltre)
 			{
+				if (isCancelled()) return null;
 				listeThemes.put(theme, themesSelectionnes.contains(theme));
 			}
 
@@ -712,8 +717,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 			MyUtils.trace(Level.INFO, "<GetListeThemesTask.done>");
 			try
 			{
+				SortedMap<String, Boolean> visiblesThemes = get();
 				getMyCheckBoxTree().hideAllNodes();
-				getMyCheckBoxTree().addTreeNodes(get(), true);
+				getMyCheckBoxTree().addTreeNodes(visiblesThemes, true);
 				getJListThemesSelectionnes().setListData(themesSelectionnes.toArray());
 				MyUtils.trace(Level.INFO, "getJListThemesSelectionnes().setListData(" + themesSelectionnes + ")");
 			}
@@ -820,8 +826,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 			MyUtils.trace(Level.INFO, "</System.gc()>");
 			System.gc();
 
-			KanjiNoSensei.app.sousDictionnaire = KanjiNoSensei.app.dictionnaire.getSubDictionary(KanjiNoSensei.app.themesSelectionnes);
-			Set<Element> listeElementsFiltre = KanjiNoSensei.app.sousDictionnaire.getElementsList(filtreElement);
+			KanjiNoSensei.getApp().sousDictionnaire = KanjiNoSensei.app.dictionnaire.getSubDictionary(KanjiNoSensei.getApp().themesSelectionnes);
+			Set<Element> listeElementsFiltre = KanjiNoSensei.getApp().sousDictionnaire.getElementsList(filtreElement);
 
 			SortedMap<String, JPanel> elementsPanels = new TreeMap<String, JPanel>();
 
@@ -831,114 +837,122 @@ public class KanjiNoSensei implements PropertyChangeListener
 			int i = 0;
 			while (itElements.hasNext())
 			{
-				++i;
-				MyUtils.trace(Level.FINE, "<Nouvel Element id=" + i + ">");
-				element = itElements.next();
-				String key = element.getKey();
-
-				if (KanjiNoSensei.getApp().selectablesPanels.containsKey(key))
+				if (isCancelled()) return null;
+				synchronized (KanjiNoSensei.getApp().selectablesPanels)
 				{
-					JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
-					panel.setVisible(true);
-					elementsPanels.put(key, panel);
-					continue;
-				}
+					++i;
+					MyUtils.trace(Level.FINE, "<Nouvel Element id=" + i + ">");
+					element = itElements.next();
+					
+					// Pour trier l'ordre d'affichage des éléments, plutôt que d'utiliser un comparator, on joue avec la clé utilisé pour stcker le panel dans la SortedMap.
+					String key = MyUtils.padNumbers(element.getMainTheme(), 10)+"|"+element.getKey();
 
-				try
-				{
-					final VueElement vueElement = VueElement.genererVueElement(element);
-					final JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
-
-					final JPanel selectablePanel = new JPanel(new BorderLayout(0, 0));
-					selectablePanel.add(vueElementDetaillePanel, BorderLayout.CENTER);
-					selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-					selectablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-					MyUtils.trace(Level.FINE, "<InvokeLater:selectablePanel sizing for Element id=" + i + ">");
-					int margin = 4;
-
-					selectablePanel.setMinimumSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getMinimumSize().width, vueElementDetaillePanel.getMinimumSize().height + margin));
-					selectablePanel.setPreferredSize(new Dimension(KanjiNoSensei.getApp().getAfficherBaseFrame().getPreferredSize().width, selectablePanel.getMinimumSize().height));
-
-					// selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
-					// selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
-
-					MyUtils.trace(Level.FINE, "</InvokeLater:selectablePanel sizing for Element id=" + i + ">");
-
-					MyUtils.doItToAllSubComponents(selectablePanel, new DoItToThisComponent()
+					if (KanjiNoSensei.getApp().selectablesPanels.containsKey(key))
 					{
+						JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
+						panel.setVisible(true);
+						elementsPanels.put(key, panel);
+						continue;
+					}
 
-						@Override
-						public void doIt(Component c)
+					try
+					{
+						final VueElement vueElement = VueElement.genererVueElement(element);
+						final JPanel vueElementDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
+
+						final JPanel selectablePanel = new JPanel(new BorderLayout(0, 0));
+						selectablePanel.add(vueElementDetaillePanel, BorderLayout.CENTER);
+						selectablePanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+						selectablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+						MyUtils.trace(Level.FINE, "<InvokeLater:selectablePanel sizing for Element id=" + i + ">");
+						int margin = 4;
+
+						Dimension min = new Dimension(KanjiNoSensei.getApp().getAfficherBaseContentPane().getMinimumSize().width, vueElementDetaillePanel.getMinimumSize().height + margin);
+						Dimension pref = new Dimension(KanjiNoSensei.getApp().getAfficherBaseContentPane().getPreferredSize().width, selectablePanel.getMinimumSize().height);
+						selectablePanel.setMinimumSize(min);
+						selectablePanel.setPreferredSize(pref);
+
+						// selectablePanel.setMinimumSize(new Dimension(vueElementDetaillePanel.getMinimumSize().width + margin, vueElementDetaillePanel.getMinimumSize().height + margin));
+						// selectablePanel.setPreferredSize(new Dimension(vueElementDetaillePanel.getPreferredSize().width + margin, vueElementDetaillePanel.getPreferredSize().height + margin));
+
+						MyUtils.trace(Level.FINE, "</InvokeLater:selectablePanel sizing for Element id=" + i + ">");
+
+						MyUtils.doItToAllSubComponents(selectablePanel, new DoItToThisComponent()
 						{
-							c.addMouseWheelListener(listedElementMouseWheelListener);
 
-							if (c.getMouseListeners().length > 0)
+							@Override
+							public void doIt(Component c)
 							{
-								// MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
-							}
-							else
-							{
-								c.addMouseListener(new MouseAdapter()
+								c.addMouseWheelListener(listedElementMouseWheelListener);
+
+								if (c.getMouseListeners().length > 0)
 								{
-									@Override
-									public void mouseClicked(MouseEvent e)
+									// MyUtils.trace("Component has already a mouseListener : "+c); //$NON-NLS-1$
+								}
+								else
+								{
+									c.addMouseListener(new MouseAdapter()
 									{
-										MyUtils.trace(Level.FINEST, "mouseClicked : " + e); //$NON-NLS-1$
+										@Override
+										public void mouseClicked(MouseEvent e)
+										{
+											MyUtils.trace(Level.FINEST, "mouseClicked : " + e); //$NON-NLS-1$
 
-										if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 1))
-										{
-											e.consume();
-											KanjiNoSensei.app.afficherBaseDialogMAJSelection(vueElement);
-										}
-										else if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 2))
-										{
-											e.consume();
-											Element ancienElement = vueElement.getElement();
-											Element nouveauElement = vueElement.editerElement();
-											if (nouveauElement != null)
+											if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 1))
 											{
-												KanjiNoSensei.app.dictionnaire.removeElement(ancienElement);
-												try
+												e.consume();
+												KanjiNoSensei.app.afficherBaseDialogMAJSelection(vueElement);
+											}
+											else if ((e.getButton() == MouseEvent.BUTTON1) && (e.getClickCount() == 2))
+											{
+												e.consume();
+												Element ancienElement = vueElement.getElement();
+												Element nouveauElement = vueElement.editerElement();
+												if (nouveauElement != null)
 												{
-													KanjiNoSensei.app.dictionnaire.addElement(nouveauElement);
-												}
-												catch (DictionaryElementAlreadyPresentException e1)
-												{
-													KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+													KanjiNoSensei.app.dictionnaire.removeElement(ancienElement);
 													try
 													{
-														KanjiNoSensei.app.dictionnaire.addElement(ancienElement);
+														KanjiNoSensei.app.dictionnaire.addElement(nouveauElement);
 													}
-													catch (DictionaryElementAlreadyPresentException e2)
+													catch (DictionaryElementAlreadyPresentException e1)
 													{
-														KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.Dictionary.AlreadyExistingElement")); //$NON-NLS-1$
+														KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorElementAlreadyPresent") + " : " + e1.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+														try
+														{
+															KanjiNoSensei.app.dictionnaire.addElement(ancienElement);
+														}
+														catch (DictionaryElementAlreadyPresentException e2)
+														{
+															KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.Dictionary.AlreadyExistingElement")); //$NON-NLS-1$
+														}
 													}
 												}
+
+												KanjiNoSensei.app.afficherBaseFrameMAJZoneElements();
 											}
 
-											KanjiNoSensei.app.afficherBaseFrameMAJZoneElements();
+											super.mouseClicked(e);
 										}
 
-										super.mouseClicked(e);
-									}
+									});
+								}
 
-								});
 							}
 
-						}
+						}, true);
 
-					}, true);
-					
-					KanjiNoSensei.getApp().selectablesPanels.put(key, selectablePanel);
-					elementsPanels.put(key, selectablePanel);
-				}
-				catch (Exception e)
-				{
-					KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				}
+						KanjiNoSensei.getApp().selectablesPanels.put(key, selectablePanel);
+						elementsPanels.put(key, selectablePanel);
+					}
+					catch (Exception e)
+					{
+						KanjiNoSensei.log(Level.SEVERE, Messages.getString("KanjiNoSensei.ErrorViewGeneration") + " : \"" + element.toString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					}
 
-				MyUtils.trace(Level.FINE, "</Nouvel Element id=" + i + ">");
+					MyUtils.trace(Level.FINE, "</Nouvel Element id=" + i + ">");
+				}
 			}
 			MyUtils.trace(Level.FINE, "</Pour Chaque Element>");
 
@@ -955,8 +969,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 		protected void done()
 		{
 			MyUtils.trace(Level.INFO, "<GetListeElementsTask.done>");
-			
-			//KanjiNoSensei.app.getJPanelElementsListe().removeAll();
+
+			// KanjiNoSensei.app.getJPanelElementsListe().removeAll();
 
 			SortedMap<String, JPanel> elementsPanels = null;
 
@@ -976,25 +990,30 @@ public class KanjiNoSensei implements PropertyChangeListener
 			}
 
 			if (elementsPanels != null)
-			{	
-				KanjiNoSensei.getApp().selectablesPanels.putAll(elementsPanels);
-				
-				Iterator<String> itSelectablesPanals = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
-				while(itSelectablesPanals.hasNext())
+			{
+				synchronized (KanjiNoSensei.getApp().selectablesPanels)
 				{
-					String key = itSelectablesPanals.next();
-					KanjiNoSensei.getApp().selectablesPanels.get(key).setVisible(elementsPanels.containsKey(key));
-				}
-				
-				Vector<Component> knownComponents = MyUtils.arrayToVector(KanjiNoSensei.getApp().getJPanelElementsListe().getComponents());
-				Iterator<String> it = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
-				while(it.hasNext())
-				{
-					String key = it.next();
-					JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
-					if (!knownComponents.contains(KanjiNoSensei.getApp().selectablesPanels.get(key)))
+					KanjiNoSensei.getApp().selectablesPanels.putAll(elementsPanels);
+
+					Iterator<String> itSelectablesPanels = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
+					while (itSelectablesPanels.hasNext())
 					{
-						KanjiNoSensei.getApp().getJPanelElementsListe().add(panel);
+						String key = itSelectablesPanels.next();
+						JEditorPane editorPane = (JEditorPane) ((JViewport) ((JScrollPane) ((JPanel) KanjiNoSensei.getApp().selectablesPanels.get(key).getComponent(0)).getComponent(1)).getComponent(0)).getComponent(0);
+						editorPane.getText();
+						KanjiNoSensei.getApp().selectablesPanels.get(key).setVisible(elementsPanels.containsKey(key));
+					}
+
+					Vector<Component> knownComponents = MyUtils.arrayToVector(KanjiNoSensei.getApp().getJPanelElementsListe().getComponents());
+					Iterator<String> it = KanjiNoSensei.getApp().selectablesPanels.keySet().iterator();
+					while (it.hasNext())
+					{
+						String key = it.next();
+						JPanel panel = KanjiNoSensei.getApp().selectablesPanels.get(key);
+						if ( !knownComponents.contains(KanjiNoSensei.getApp().selectablesPanels.get(key)))
+						{
+							KanjiNoSensei.getApp().getJPanelElementsListe().add(panel);
+						}
 					}
 				}
 			}
@@ -1007,6 +1026,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 	}
 
 	private GetListeElementsTask	getListeElementsTask	= null;
+
+	private JPanel					configContentPane;
 
 	private synchronized void afficherBaseFrameMAJZoneElements()
 	{
@@ -1104,6 +1125,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 			afficherBaseContentPane.add(getJSplitPaneCentre(), BorderLayout.CENTER);
 			afficherBaseContentPane.add(getJPanelBaseBtns(), BorderLayout.SOUTH);
 			afficherBaseContentPane.doLayout();
+
+			afficherBaseFrameMAJZoneThemes();
+			afficherBaseFrameMAJZoneElements();
 		}
 		return afficherBaseContentPane;
 	}
@@ -1374,12 +1398,80 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				public void actionPerformed(java.awt.event.ActionEvent e)
 				{
-					JFrame afficherBaseFrame = getAfficherBaseFrame();
-					afficherBaseFrame.setVisible(true);
+					KanjiNoSensei.getApp().afficherBase();
 				}
 			});
 		}
 		return afficherBaseMenuItem;
+	}
+
+	private void afficherConfig()
+	{
+		JFrame mainFrame = getJFrame();
+		mainFrame.setTitle(Messages.getString("KanjiNoSensei.QuizConfiguration.Title")); //$NON-NLS-1$
+		mainFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		mainFrame.setMinimumSize(getConfigContentPane().getMinimumSize());
+		mainFrame.setMaximumSize(getConfigContentPane().getMaximumSize());
+		mainFrame.setPreferredSize(getConfigContentPane().getPreferredSize());
+		mainFrame.setContentPane(getConfigContentPane());
+
+		MyUtils.refreshComponent(mainFrame);
+	}
+
+	private void afficherQuiz()
+	{
+		JFrame mainFrame = getJFrame();
+		miseAJourQuizTitle();
+		mainFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		mainFrame.setMinimumSize(getJSplitPaneTopMiddleBottom().getMinimumSize());
+		mainFrame.setMaximumSize(getJSplitPaneTopMiddleBottom().getMaximumSize());
+		mainFrame.setPreferredSize(getJSplitPaneTopMiddleBottom().getPreferredSize());
+		mainFrame.setContentPane(getJSplitPaneTopMiddleBottom());
+
+		MyUtils.refreshComponent(mainFrame);
+
+		// private JFrame getJQuizFrame()
+		// {
+		// if (jFrameQuizz == null)
+		// {
+		// jFrameQuizz = new JFrame();
+		//
+		// // <NoJigloo>
+		// jFrameQuizz = new MyModalFrame(getJFrame(), true);
+		// // </NoJigloo>
+		// jFrameQuizz.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		// jFrameQuizz.setPreferredSize(new java.awt.Dimension(920, 420));
+		//				jFrameQuizz.setTitle(Messages.getString("KanjiNoSensei.Quizz.Title")); //$NON-NLS-1$
+		//				jFrameQuizz.setName("Quiz"); //$NON-NLS-1$
+		// // <JiglooProtected>
+		// jFrameQuizz.getContentPane().add(getJSplitPaneTopMiddleBottom(), BorderLayout.CENTER);
+		// jFrameQuizz.setSize(920, 420);
+		// }
+		// return jFrameQuizz;
+		// }
+
+	}
+
+	private void afficherVide()
+	{
+		JFrame mainFrame = getJFrame();
+		mainFrame.setTitle(Messages.getString("KanjiNoSensei.Title")); //$NON-NLS-1$
+		mainFrame.setContentPane(getJContentPane());
+
+		MyUtils.refreshComponent(mainFrame);
+	}
+
+	private void afficherBase()
+	{
+		JFrame mainFrame = getJFrame();
+		mainFrame.setTitle(Messages.getString("KanjiNoSensei.Base.Title")); //$NON-NLS-1$
+		mainFrame.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		mainFrame.setMinimumSize(getAfficherBaseContentPane().getMinimumSize());
+		mainFrame.setMaximumSize(getAfficherBaseContentPane().getMaximumSize());
+		mainFrame.setPreferredSize(getAfficherBaseContentPane().getPreferredSize());
+		mainFrame.setContentPane(getAfficherBaseContentPane());
+
+		MyUtils.refreshComponent(mainFrame);
 	}
 
 	/**
@@ -1400,6 +1492,18 @@ public class KanjiNoSensei implements PropertyChangeListener
 			jSplitPaneCentre.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			jSplitPaneCentre.setContinuousLayout(true);
 			jSplitPaneCentre.setOneTouchExpandable(true);
+			jSplitPaneCentre.addComponentListener(new ComponentAdapter()
+			{
+				/* (non-Javadoc)
+				 * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
+				 */
+				@Override
+				public void componentResized(ComponentEvent e)
+				{
+					MyUtils.trace(Level.INFO, "jSplitPaneCentre.componentResized");					
+					super.componentResized(e);
+				}
+			});
 		}
 		return jSplitPaneCentre;
 	}
@@ -1627,11 +1731,23 @@ public class KanjiNoSensei implements PropertyChangeListener
 		if (jSplitPaneThemes == null)
 		{
 			jSplitPaneThemes = new JSplitPane();
-			jSplitPaneThemes.setDividerLocation(600);
+			jSplitPaneThemes.setDividerLocation(.6);
 			jSplitPaneThemes.setOneTouchExpandable(true);
 			jSplitPaneThemes.setContinuousLayout(true);
 			jSplitPaneThemes.setRightComponent(getJPanelThemesSelection());
 			jSplitPaneThemes.setLeftComponent(getJScrollPaneThemes());
+			jSplitPaneThemes.addComponentListener(new ComponentAdapter()
+			{
+				/* (non-Javadoc)
+				 * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
+				 */
+				@Override
+				public void componentResized(ComponentEvent e)
+				{
+					MyUtils.trace(Level.INFO, "SplitPaneThemes.componentResized");
+					super.componentResized(e);
+				}
+			});
 		}
 		return jSplitPaneThemes;
 	}
@@ -1673,7 +1789,9 @@ public class KanjiNoSensei implements PropertyChangeListener
 		{
 			jListThemesSelectionnes = new JList()
 			{
-				/* (non-Javadoc)
+				/*
+				 * (non-Javadoc)
+				 * 
 				 * @see javax.swing.JList#setListData(java.lang.Object[])
 				 */
 				@Override
@@ -1682,8 +1800,10 @@ public class KanjiNoSensei implements PropertyChangeListener
 					Collections.sort(Arrays.asList(listData), (Comparator<Object>) MyUtils.PADDED_NUMBERS_COMPARATOR);
 					super.setListData(listData);
 				}
-				
-				/* (non-Javadoc)
+
+				/*
+				 * (non-Javadoc)
+				 * 
 				 * @see javax.swing.JList#setListData(java.util.Vector)
 				 */
 				@Override
@@ -1861,7 +1981,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				jJMenuBar.add(getEditMenu());
 			}
-			Component[] roots = {getJFrame(), getAboutFrame(), getAfficherBaseFrame(), getJConfigFrame(), getJQuizFrame()};
+			Component[] roots = {getJFrame(), getAboutFrame()/* , getAfficherBaseFrame(), getJConfigFrame(), getJQuizFrame() */};
 			jJMenuBar.add(MyUtils.getUIMenu(roots));
 			jJMenuBar.add(getHelpMenu());
 		}
@@ -1880,16 +2000,16 @@ public class KanjiNoSensei implements PropertyChangeListener
 			fileMenu = new JMenu();
 			fileMenu.setText(Messages.getString("KanjiNoSensei.Menu.File")); //$NON-NLS-1$
 			fileMenu.add(getAfficherBaseMenuItem());
-
+			fileMenu.add(getConfigMenuItem());
+			fileMenu.add(getLancerQuizMenuItem());
 			if (DEV_ACCESS)
 			{
+				fileMenu.addSeparator();
 				fileMenu.add(getSaveDictionnaireMenuItem());
 				fileMenu.add(getExportDicoMenuItem());
 				fileMenu.add(getImportMenuItem());
 			}
-
-			fileMenu.add(getConfigMenuItem());
-			fileMenu.add(getLancerQuizMenuItem());
+			fileMenu.addSeparator();
 			fileMenu.add(getExitMenuItem());
 		}
 		return fileMenu;
@@ -1999,6 +2119,46 @@ public class KanjiNoSensei implements PropertyChangeListener
 		return aboutFrame;
 	}
 
+	private JPanel getConfigContentPane()
+	{
+		if (configContentPane == null)
+		{
+			configContentPane = new JPanel();
+			configContentPane.setLayout(new BorderLayout());
+			configContentPane.setPreferredSize(new java.awt.Dimension(0, 0));
+			configContentPane.setMinimumSize(new java.awt.Dimension(600, 300));
+			configContentPane.addComponentListener(new ComponentAdapter()
+			{
+				// </JiglooProtected>
+				public void componentShown(ComponentEvent evt)
+				{
+					MyUtils.trace(Level.FINEST, "jConfigModalFrame.componentShown"); //$NON-NLS-1$
+					for (Component c : getJConfigFrameTabbedPane().getComponents())
+					{
+						if (VueElement.QuizConfigPanel.class.isInstance(c))
+						{
+							((VueElement.QuizConfigPanel) c).resetDisplay();
+						}
+					}
+
+					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane().getSelectedComponent());
+					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane());
+				}
+			});
+
+			configContentPane.add(getJPanelConfigBtns(), BorderLayout.SOUTH);
+			configContentPane.add(getJConfigFrameTabbedPane(), BorderLayout.CENTER);
+
+			for (Class<? extends Element> c : plugins)
+			{
+				JPanel configPanel = vuesBlank.get(c).getQuizConfigPanel().getPanel();
+				getJConfigFrameTabbedPane().add(c.getSimpleName(), configPanel);
+			}
+		}
+
+		return configContentPane;
+	}
+
 	/**
 	 * This method initializes aboutContentPane
 	 * 
@@ -2043,60 +2203,55 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					jConfigModalFrame = getJConfigFrame();
-					jConfigModalFrame.pack();
-					Point loc = getJFrame().getLocation();
-					loc.translate(20, 20);
-					jConfigModalFrame.setLocation(loc);
-					jConfigModalFrame.setVisible(true);
+					afficherConfig();
 				}
 			});
 		}
 		return ConfigMenuItem;
 	}
 
-	private JFrame getJConfigFrame()
-	{
-		if (jConfigModalFrame == null)
-		{
-			jConfigModalFrame = new JFrame();
-			// <NoJigloo>
-			jConfigModalFrame = new MyModalFrame(getJFrame(), true);
-			// </NoJigloo>
-			jConfigModalFrame.setTitle(Messages.getString("KanjiNoSensei.QuizConfiguration.Title")); //$NON-NLS-1$
-			jConfigModalFrame.setPreferredSize(new java.awt.Dimension(0, 0));
-			jConfigModalFrame.setMinimumSize(new java.awt.Dimension(600, 300));
-			jConfigModalFrame.addComponentListener(new ComponentAdapter()
-			{
-				// </JiglooProtected>
-				public void componentShown(ComponentEvent evt)
-				{
-					MyUtils.trace(Level.FINEST, "jConfigModalFrame.componentShown"); //$NON-NLS-1$
-					for (Component c : getJConfigFrameTabbedPane().getComponents())
-					{
-						if (VueElement.QuizConfigPanel.class.isInstance(c))
-						{
-							((VueElement.QuizConfigPanel) c).resetDisplay();
-						}
-					}
-
-					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane().getSelectedComponent());
-					MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane());
-				}
-			});
-
-			jConfigModalFrame.setSize(704, 178);
-			jConfigModalFrame.getContentPane().add(getJPanelConfigBtns(), BorderLayout.SOUTH);
-			jConfigModalFrame.getContentPane().add(getJConfigFrameTabbedPane(), BorderLayout.CENTER);
-
-			for (Class<? extends Element> c : plugins)
-			{
-				JPanel configPanel = vuesBlank.get(c).getQuizConfigPanel().getPanel();
-				getJConfigFrameTabbedPane().add(c.getSimpleName(), configPanel);
-			}
-		}
-		return jConfigModalFrame;
-	}
+	// private JFrame getJConfigFrame()
+	// {
+	// if (jConfigModalFrame == null)
+	// {
+	// jConfigModalFrame = new JFrame();
+	// // <NoJigloo>
+	// jConfigModalFrame = new MyModalFrame(getJFrame(), true);
+	// // </NoJigloo>
+	//			jConfigModalFrame.setTitle(Messages.getString("KanjiNoSensei.QuizConfiguration.Title")); //$NON-NLS-1$
+	// jConfigModalFrame.setPreferredSize(new java.awt.Dimension(0, 0));
+	// jConfigModalFrame.setMinimumSize(new java.awt.Dimension(600, 300));
+	// jConfigModalFrame.addComponentListener(new ComponentAdapter()
+	// {
+	// // </JiglooProtected>
+	// public void componentShown(ComponentEvent evt)
+	// {
+	//					MyUtils.trace(Level.FINEST, "jConfigModalFrame.componentShown"); //$NON-NLS-1$
+	// for (Component c : getJConfigFrameTabbedPane().getComponents())
+	// {
+	// if (VueElement.QuizConfigPanel.class.isInstance(c))
+	// {
+	// ((VueElement.QuizConfigPanel) c).resetDisplay();
+	// }
+	// }
+	//
+	// MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane().getSelectedComponent());
+	// MyUtils.refreshComponentAndSubs(getJConfigFrameTabbedPane());
+	// }
+	// });
+	//
+	// jConfigModalFrame.setSize(704, 178);
+	// jConfigModalFrame.getContentPane().add(getJPanelConfigBtns(), BorderLayout.SOUTH);
+	// jConfigModalFrame.getContentPane().add(getJConfigFrameTabbedPane(), BorderLayout.CENTER);
+	//
+	// for (Class<? extends Element> c : plugins)
+	// {
+	// JPanel configPanel = vuesBlank.get(c).getQuizConfigPanel().getPanel();
+	// getJConfigFrameTabbedPane().add(c.getSimpleName(), configPanel);
+	// }
+	// }
+	// return jConfigModalFrame;
+	// }
 
 	private JPanel getJPanelConfigBtns()
 	{
@@ -2137,7 +2292,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					getJConfigFrame().dispose();
+					afficherVide();
 				}
 			});
 		}
@@ -2170,7 +2325,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 					Config.setString("GeneralConfig.UseRomaji", Boolean.toString(USE_ROMAJI)); //$NON-NLS-1$
 
 					Config.save();
-					getJConfigFrame().dispose();
+					afficherVide();
 				}
 
 			});
@@ -2191,7 +2346,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 				public void actionPerformed(ActionEvent evt)
 				{
 					dictionnaireQuiz = sousDictionnaire;
-					getAfficherBaseFrame().dispose();
+					afficherVide();
 				}
 			});
 		}
@@ -2209,31 +2364,11 @@ public class KanjiNoSensei implements PropertyChangeListener
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
-					getAfficherBaseFrame().dispose();
+					afficherVide();
 				}
 			});
 		}
 		return jButtonBaseConnaissanceAnnuler;
-	}
-
-	private JFrame getJQuizFrame()
-	{
-		if (jFrameQuizz == null)
-		{
-			jFrameQuizz = new JFrame();
-
-			// <NoJigloo>
-			jFrameQuizz = new MyModalFrame(getJFrame(), true);
-			// </NoJigloo>
-			jFrameQuizz.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			jFrameQuizz.setPreferredSize(new java.awt.Dimension(920, 420));
-			jFrameQuizz.setTitle(Messages.getString("KanjiNoSensei.Quizz.Title")); //$NON-NLS-1$
-			jFrameQuizz.setName("Quiz"); //$NON-NLS-1$
-			// <JiglooProtected>
-			jFrameQuizz.getContentPane().add(getJSplitPaneTopMiddleBottom(), BorderLayout.CENTER);
-			jFrameQuizz.setSize(920, 420);
-		}
-		return jFrameQuizz;
 	}
 
 	/**
@@ -2298,9 +2433,14 @@ public class KanjiNoSensei implements PropertyChangeListener
 		} while ((panelQuestion == null) || (panelSaisieReponse == null));
 		MyUtils.trace(Level.INFO, "</Boucle getNextElementFromLearningProfile(...)>");
 
-		MyUtils.fixComponentSizes(panelQuestion, panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelQuestion.getMinimumSize().height + 1);
+		MyUtils.fixComponentSizes(getJScrollPaneTop(), getJSplitPaneTopMiddle().getSize().width, getJSplitPaneTopMiddle().getLastDividerLocation());
+		MyUtils.fixComponentSizes(getJPanelQuizAffElement(), panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height, getJScrollPaneTop().getSize().width, getJSplitPaneTopMiddle().getLastDividerLocation());
+		MyUtils.fixComponentSizes(panelQuestion, panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height, getJScrollPaneTop().getSize().width, getJSplitPaneTopMiddle().getLastDividerLocation());
+		//MyUtils.fixComponentSizes(panelQuestion, panelQuestion.getMinimumSize().width, panelQuestion.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelQuestion.getMinimumSize().height + 1);
+		
 		MyUtils.fixComponentSizes(panelSaisieReponse, panelSaisieReponse.getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1, getJPanelQuizAffElement().getMinimumSize().width, panelSaisieReponse.getMinimumSize().height + 1);
 
+		
 		JLabel labelQuestion = new JLabel(MyUtils.firstCharacterToUpperCase(Messages.getString(elementQuestionEnCours.getClass().getSimpleName())), JLabel.LEFT);
 
 		getJPanelQuizAffElement().add(labelQuestion, BorderLayout.NORTH);
@@ -2313,11 +2453,14 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 		getJPanelQuizAffReponse().removeAll();
 		getJPanelQuizAffReponse().setBackground(defaultBgColor);
-
+		
 		miseAJourQuizTitle();
 
-		MyUtils.refreshComponent(getJQuizFrame());
-		getJQuizFrame().setVisible(true);
+		ComponentEvent e = new ComponentEvent(panelQuestion, ComponentEvent.COMPONENT_RESIZED);
+		getJScrollPaneTop().dispatchEvent(e);
+		getJPanelQuizAffElement().dispatchEvent(e);
+		
+		afficherQuiz();
 
 		MyUtils.InvokeNoEDT(new Runnable()
 		{
@@ -2342,8 +2485,13 @@ public class KanjiNoSensei implements PropertyChangeListener
 
 	private void miseAJourQuizTitle()
 	{
-		getJQuizFrame().setTitle(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante + "; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "/" + nbQuestions + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
-		getJQuizFrame().setTitle(getJQuizFrame().getTitle() + "   " + "Stats [" + userLearningProfile.getElementStats(elementQuestionEnCours.getKey()) + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String title = Messages.getString("KanjiNoSensei.Quizz.Title") + "  "; //$NON-NLS-1$
+		title += Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " : " + questionCourante + "; " + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " : " + bonnesReponses + "/" + nbQuestions + "; " + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " : " + erreurs; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+		if (elementQuestionEnCours != null)
+		{
+			title += "   " + "Stats [" + userLearningProfile.getElementStats(elementQuestionEnCours.getKey()) + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		getJFrame().setTitle(title);
 	}
 
 	public synchronized void validerReponseQuiz(boolean reponseCorrecte, boolean nextQuestion)
@@ -2405,8 +2553,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		jPanelQuizAffReponse.add(buttonContinuer, BorderLayout.SOUTH);
 		buttonContinuer.grabFocus();
 
-		MyUtils.refreshComponent(getJQuizFrame());
-		getJQuizFrame().setVisible(true);
+		afficherQuiz();
 	}
 
 	protected void finirQuiz()
@@ -2414,7 +2561,7 @@ public class KanjiNoSensei implements PropertyChangeListener
 		String msg = String.format(Messages.getString("KanjiNoSensei.QuizCurrentQuestionNumber") + " :\t%d\n" + Messages.getString("KanjiNoSensei.QuizCorrectsAnswers") + " :\t%d\n" + Messages.getString("KanjiNoSensei.QuizIncorrectsAnswers") + " :\t%d", questionCourante, bonnesReponses, erreurs); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
 
 		JOptionPane.showMessageDialog(null, msg, Messages.getString("KanjiNoSensei.QuizFinished"), JOptionPane.INFORMATION_MESSAGE); //$NON-NLS-1$
-		getJQuizFrame().dispose();
+		afficherVide();
 	}
 
 	/**
@@ -2435,14 +2582,14 @@ public class KanjiNoSensei implements PropertyChangeListener
 		{
 			jSplitPaneTopMiddleBottom = new JSplitPane();
 			jSplitPaneTopMiddleBottom.setOrientation(JSplitPane.VERTICAL_SPLIT);
-			jSplitPaneTopMiddleBottom.setPreferredSize(new java.awt.Dimension(0, 0));
-			jSplitPaneTopMiddleBottom.setDividerLocation(240);
-			jSplitPaneTopMiddleBottom.setSize(0, 0);
-			jSplitPaneTopMiddleBottom.setMinimumSize(new java.awt.Dimension(0, 0));
+			jSplitPaneTopMiddleBottom.setMinimumSize(new java.awt.Dimension(800, 600));
+			jSplitPaneTopMiddleBottom.setPreferredSize(new java.awt.Dimension(800, 600));
+			jSplitPaneTopMiddleBottom.setDividerLocation(400);
 			jSplitPaneTopMiddleBottom.setOneTouchExpandable(true);
 			jSplitPaneTopMiddleBottom.setContinuousLayout(true);
 			jSplitPaneTopMiddleBottom.add(getJSplitPaneTopMiddle(), JSplitPane.TOP);
 			jSplitPaneTopMiddleBottom.add(getJScrollPaneBottom(), JSplitPane.BOTTOM);
+			jSplitPaneTopMiddleBottom.doLayout();
 		}
 		return jSplitPaneTopMiddleBottom;
 	}
@@ -2453,11 +2600,66 @@ public class KanjiNoSensei implements PropertyChangeListener
 		{
 			jSplitPaneTopMiddle = new JSplitPane();
 			jSplitPaneTopMiddle.setOrientation(JSplitPane.VERTICAL_SPLIT);
-			jSplitPaneTopMiddle.setDividerLocation(120);
+			/*
+			jSplitPaneTopMiddle.setMinimumSize(new java.awt.Dimension(800, 400));
+			jSplitPaneTopMiddle.setPreferredSize(new java.awt.Dimension(800, 400));
+			*/
+			jSplitPaneTopMiddle.setDividerLocation(200);
 			jSplitPaneTopMiddle.setContinuousLayout(true);
 			jSplitPaneTopMiddle.setOneTouchExpandable(true);
-			jSplitPaneTopMiddle.add(getJScrollPaneTop(), JSplitPane.TOP);
+			final JPanel panelTop = new JPanel(new BorderLayout());
+			panelTop.add(getJScrollPaneTop(), BorderLayout.CENTER);
+			
+			getJScrollPaneTop().addContainerListener(new ContainerAdapter()
+			{
+				/* (non-Javadoc)
+				 * @see java.awt.event.ContainerAdapter#componentAdded(java.awt.event.ContainerEvent)
+				 */
+				@Override
+				public void componentAdded(ContainerEvent e)
+				{				
+					MyUtils.trace(Level.INFO, "scrollPaneTop.componentAdded");
+					super.componentAdded(e);
+					panelTop.dispatchEvent(new ComponentEvent((Component) e.getSource(), ComponentEvent.COMPONENT_RESIZED));
+				}
+				
+				/* (non-Javadoc)
+				 * @see java.awt.event.ContainerAdapter#componentRemoved(java.awt.event.ContainerEvent)
+				 */
+				@Override
+				public void componentRemoved(ContainerEvent e)
+				{
+					MyUtils.trace(Level.INFO, "scrollPaneTop.componentRemoved");
+					super.componentRemoved(e);
+					panelTop.dispatchEvent(new ComponentEvent((Component) e.getSource(), ComponentEvent.COMPONENT_RESIZED));					
+				}
+			});
+			
+			panelTop.addComponentListener(new ComponentAdapter()
+			{	
+				/* (non-Javadoc)
+				 * @see java.awt.event.ComponentAdapter#componentResized(java.awt.event.ComponentEvent)
+				 */
+				@Override
+				public void componentResized(final ComponentEvent e)
+				{
+					MyUtils.trace(Level.INFO, "panelTop.componentResized");
+					MyUtils.doItToAllSubComponents(panelTop, new MyUtils.DoItToThisComponent()
+					{
+					
+						@Override
+						public void doIt(Component c)
+						{
+							c.dispatchEvent(e);
+						}
+					}, false, Arrays.asList(panelTop));
+					super.componentResized(e);
+				}
+			});
+			
+			jSplitPaneTopMiddle.add(panelTop, JSplitPane.TOP);
 			jSplitPaneTopMiddle.add(getJScrollPaneMiddle(), JSplitPane.BOTTOM);
+			jSplitPaneTopMiddle.doLayout();
 		}
 		return jSplitPaneTopMiddle;
 	}
@@ -2547,25 +2749,54 @@ public class KanjiNoSensei implements PropertyChangeListener
 		if (lancerQuizMenuItem == null)
 		{
 			lancerQuizMenuItem = new JMenuItem();
-			lancerQuizMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.RunQuiz")); //$NON-NLS-1$
+			lancerQuizMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.RestartQuiz")); //$NON-NLS-1$
 			lancerQuizMenuItem.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent evt)
 				{
 					MyUtils.trace(Level.FINEST, "lancerQuizMenuItem.actionPerformed, event=" + evt); //$NON-NLS-1$
+					
+					if (restartQuizMenuItem == null)
+					{
+						int index = 0;
+						for (index = 0; (index < getFileMenu().getItemCount()) && ( !getFileMenu().getItem(index).equals(lancerQuizMenuItem)); ++index);
+						getFileMenu().insert(getRestartQuizMenuItem(), index);
+						lancerQuizMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.RunQuiz"));
+						
+						initialiserQuiz();
+						poserQuestionSuivanteQuiz();
+					}
 
-					jFrameQuizz = getJQuizFrame();
-
-					jFrameQuizz.pack();
-					Point loc = getJFrame().getLocation();
-					loc.translate(20, 20);
-					jFrameQuizz.setLocation(loc);
-					initialiserQuiz();
-					poserQuestionSuivanteQuiz();
+					afficherQuiz();
 				}
 			});
 		}
 		return lancerQuizMenuItem;
+	}
+
+	private JMenuItem getRestartQuizMenuItem()
+	{
+		if (restartQuizMenuItem == null)
+		{
+			restartQuizMenuItem = new JMenuItem();
+			restartQuizMenuItem.setText(Messages.getString("KanjiNoSensei.Menu.RestartQuiz")); //$NON-NLS-1$
+			restartQuizMenuItem.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent evt)
+				{
+					MyUtils.trace(Level.FINEST, "restartQuizMenuItem.actionPerformed, event=" + evt); //$NON-NLS-1$
+
+					if (JOptionPane.showConfirmDialog(getJFrame(), "Êtes-vous sûr(e) de vouloir démarrer un nouveau quiz (du début) ?\nSi vous répondez 'non', l'écran affichera le dernier quiz en cours.", "Démarrer nouveau quiz", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION)
+					{
+						initialiserQuiz();
+						poserQuestionSuivanteQuiz();
+					}
+
+					afficherQuiz();
+				}
+			});
+		}
+		return restartQuizMenuItem;
 	}
 
 	private JMenuItem getExportDicoMenuItem()
@@ -2995,7 +3226,8 @@ public class KanjiNoSensei implements PropertyChangeListener
 		}
 
 		MyUtils.trace(Level.INFO, swingWorker + " " + evt.getNewValue() + "; workingSwingWorker: " + workingSwingWorker);
-		getAfficherBaseFrame().setCursor(Cursor.getPredefinedCursor(cur));
+		getJFrame().setCursor(Cursor.getPredefinedCursor(cur));
+		// getAfficherBaseFrame().setCursor(Cursor.getPredefinedCursor(cur));
 	}
 
 	private HashMap<Object, Boolean>	workingSwingWorker	= new HashMap<Object, Boolean>();

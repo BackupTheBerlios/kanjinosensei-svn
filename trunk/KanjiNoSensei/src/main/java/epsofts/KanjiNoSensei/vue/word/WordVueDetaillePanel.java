@@ -3,6 +3,7 @@ package epsofts.KanjiNoSensei.vue.word;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
@@ -40,8 +41,6 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
-	
-	private static final String DEFAULT_TEMPLATE = "<b><center><method>getWord</method></center></b><label>WordVueDetaillePanel.LabelLecture</label> : <b><vue>getLecture</vue></b><br><label>WordVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br><label>WordVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>";
 
 	private VueWord				vue								= null;
 
@@ -164,7 +163,7 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 						}
 
 						JDialog kanjiDetail = new JDialog((JDialog) null, Messages.getString("WordVueDetaillePanel.Detail") + " : \"" + e.toString() + "\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						kanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
+						kanjiDetail.setContentPane(vueElement.getVueDetaillePanel().getPanel());
 						kanjiDetail.pack();
 						kanjiDetail.setVisible(true);
 					}
@@ -187,19 +186,18 @@ class WordVueDetaillePanel extends javax.swing.JPanel implements VueDetaillePane
 		int minX = getJEditorPane().getPreferredSize().width + getJButtonJouerSon().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width;
 		int minY = getJEditorPane().getPreferredSize().height + getJScrollPaneInfos().getHorizontalScrollBar().getMaximumSize().height;
 
-		int maxX = minX;
-		int maxY = minY;
-		int prefX = minX, prefY = minY;
-
-		setMinimumSize(new Dimension(minX, minY));
-		setMaximumSize(new Dimension(maxX, maxY));
-		setPreferredSize(new Dimension(prefX, prefY));
+		Dimension pref = MyUtils.wrapTextDimension(new Dimension(minX, minY), Toolkit.getDefaultToolkit().getScreenSize(), 50);
+		
+		setMinimumSize(pref);
+		setMaximumSize(pref);
+		setPreferredSize(pref);
 	}
 
 	private void dynamicInitialize()
 	{
 		Word mot = vue.getMot();
-		getJEditorPane().setText(VueElement.computeTemplate(Config.getString("WordVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
+		String text = VueElement.computeTemplate(VueWord.DETAILLE_DEFAULT_TEMPLATE, vue);
+		getJEditorPane().setText(text);
 
 		doLayout();
 		setSizes();

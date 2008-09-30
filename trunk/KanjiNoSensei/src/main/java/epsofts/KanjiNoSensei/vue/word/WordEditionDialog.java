@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -90,6 +91,7 @@ class WordEditionDialog extends javax.swing.JDialog implements EditionDialog
 			this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			this.setMinimumSize(new Dimension(400, 150));
 			this.setPreferredSize(new java.awt.Dimension(390, 200));
+			this.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 			this.setResizable(true);
 			this.setTitle(Messages.getString("WordEditionDialog.Title")); //$NON-NLS-1$
 			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

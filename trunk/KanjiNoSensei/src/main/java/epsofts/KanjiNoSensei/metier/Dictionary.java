@@ -23,6 +23,8 @@ import java.util.logging.Level;
 
 import epsofts.KanjiNoSensei.RefactoringInfos;
 import epsofts.KanjiNoSensei.metier.elements.Element;
+import epsofts.KanjiNoSensei.metier.elements.Kanji;
+import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyUtils;
 import epsofts.KanjiNoSensei.utils.RefactoredClassNameTolerantObjectInputStream;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
@@ -393,15 +395,15 @@ public class Dictionary implements Serializable
 	}
 
 	/**
-	 * List all the elements themes wich start with "beginning" string. If beginning is "" or null, return all themes.
+	 * List all the elements themes wich contains the "pattern" string. If pattern is "" or null, return all themes.
 	 * 
-	 * @param beginning
-	 *            First character of the wanted themes.
+	 * @param pattern
+	 *            Pattern used to filter the wanted themes.
 	 * @return Set of all elements themes wich matches the beginning string.
 	 */
-	public Set<String> getThemesList(String beginning)
+	public Set<String> getThemesList(String pattern)
 	{
-		if (beginning == null) beginning = ""; //$NON-NLS-1$
+		if (pattern == null) pattern = ""; //$NON-NLS-1$
 
 		Set<String> themes = new TreeSet<String>();
 
@@ -409,7 +411,7 @@ public class Dictionary implements Serializable
 		while (itElements.hasNext())
 		{
 			Element element = elements.get(itElements.next());
-			themes.addAll(element.getThemesSet(beginning));
+			themes.addAll(element.getThemesContaining(pattern));
 		}
 
 		return themes;
@@ -441,6 +443,10 @@ public class Dictionary implements Serializable
 		{
 			Element element = elements.get(itElements.next());
 
+			if (Word.class.isInstance(element))
+			{
+				element = element;
+			}
 			if (element.testThemes(themesList))
 			{
 				sousListeElements.put(element.getKey(), element);

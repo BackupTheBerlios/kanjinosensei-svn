@@ -395,10 +395,9 @@ public class MyCheckBoxTree extends JTree implements TreeSelectionListener
 
 	private void hideAllNodes(DefaultMutableTreeNode parentNode, boolean includeParentNode)
 	{
-		Enumeration<DefaultMutableTreeNode> children = parentNode.children();
-		while (children.hasMoreElements())
+		while (parentNode.getChildCount() > 0)
 		{
-			hideAllNodes(children.nextElement(), true);
+			hideAllNodes((DefaultMutableTreeNode) parentNode.getFirstChild(), true);
 		}
 
 		if (includeParentNode)

@@ -15,16 +15,11 @@ TODO List
 
 	* Ajouter une option setWordWrap(boolean) à MyAutoResizingText qui calcule la meilleure taille de fonte et la meilleure découpe de mot en fonction de la taille disponible.
 	
-	* Utiliser la fenêtre principale pour afficher la "Base" et le "Quiz".
-	
-	* Vérifier que la taille des boites de dialogues soit définie correctement lorsqu'on spawn une boite de dialogue avec uniquement un VueXXXDetaillePanel (par défaut, elle risque d'être trop large).
-	
-	* En quiz, les zones du splitter se redimensionnent mal (pas) lorsqu'on bouge le splitter.
-	
 	* Faire s'afficher le tracé plus grand dans le quiz Tracé+Details
 	
-	* La zone question sur un élément Kanji dépasse le ViewPort (les scroll bars s'affichent) alors qu'elle n'affique qu'un mot.
-		* De manière générale, la zone question ne se redimensionnent pas avec la zone parente.
+	* Masquer/Griser le bouton "Lire" lorsqu'aucun fichier son n'est renseigné.
+	
+	* En quiz, le dimensionnement initial de l'élément question est mal géré (il faut forcer un redimensionnement pour que l'afficher correctement).
 	
 ** Permanent, récurent
 
@@ -39,14 +34,14 @@ TODO List
 	
 ** Améliorations
 
+	* Ajouter des options de tris à l'écran base: tri par thème principal, tri naturel (nombres de traits, caractère par caractère), tri alphabétique sur signification
+	
 	* Lors de la sélection de texte, l'algo de recherche doit inclure les éléments possibles en ignorant les parenthèses (et crochets).
 		Améliorer la saisie (tolérance aux éléments entre parenthèses : oui/non ? abc(de) devrait matcher "abc" ou "abcde", et rien d'autre.
 
 	* Ajouter un bouton "Terminer Quiz" qui vide les éléments restants non posé, et ne pose plus que les éléments en erreurs.
 	
 	* Dans le "Quiz", masquer automatiquement la zone sud si elle est non utilisée (pouvoir le détecter).
-	
-	* Masquer/Griser le bouton "Lire" lorsqu'aucun fichier son n'est renseigné.
 	
 	* Revoir la façon dont la priorité des éléments de quiz est calculée. Pour les éléments trop vieux le score ratio de base devrait quand même peser. Pondérer le ratio de base par le nombre de question (ex 1: un ratio 100% n'est pas significatif si l'élément n'est pas sortie plus de 10 fois minimum; ex2: Un ratio de 90% sur un nombre de question > 50 dénote d'un élément bien appris.
 	
@@ -87,13 +82,11 @@ TODO List
 	
 ** Gestion projet
 	
+	* Rédiger doc utilisateur.
+	
 	* Rédiger les commentaires javadoc pour tout le projet.
 	
 	* Rédiger les tests unitaires.
 	
 ** Notes (brouillon)  
-	
-	* Mettre une taille max à la fonte des textes à afficher en Question de quiz, la taille max devrait ne devrait pas être trop grosse, car c'est laid.
-	
-	* Écran base, trier les éléments par leur premier thèmes (de sorte à avoir un ordre ressemblant à celui du modèle dico.csv)
 	

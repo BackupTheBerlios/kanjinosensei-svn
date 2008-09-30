@@ -3,11 +3,13 @@ package epsofts.KanjiNoSensei.vue.sentence;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.ref.PhantomReference;
 import java.util.logging.Level;
 
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
@@ -42,8 +44,6 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 	 * 
 	 */
 	private static final long	serialVersionUID				= 1L;
-	
-	private static final String DEFAULT_TEMPLATE = "<b><center><method>getSentence</method></center></b><label>SentenceVueDetaillePanel.LabelLecture</label> : <b><vue>getLecture</vue></b><br><label>SentenceVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br><label>SentenceVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>";
 
 	private VueSentence			vue								= null;
 
@@ -170,8 +170,11 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 						}
 
 						JDialog motkanjiDetail = new JDialog((JDialog) null, Messages.getString("SentenceVueDetaillePanel.Detail") + " : (" + Messages.getString(e.getClass().getSimpleName()) + ") \"" + e.toString() + "\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-						motkanjiDetail.add(vueElement.getVueDetaillePanel().getPanel());
-						motkanjiDetail.pack();
+						JPanel vueDetaillePanel = vueElement.getVueDetaillePanel().getPanel();
+						motkanjiDetail.setContentPane(vueDetaillePanel);
+						
+						motkanjiDetail.doLayout();
+						motkanjiDetail.pack();						
 						motkanjiDetail.setVisible(true);
 					}
 				}
@@ -193,18 +196,16 @@ class SentenceVueDetaillePanel extends javax.swing.JPanel implements VueDetaille
 		int minX = getJEditorPane().getPreferredSize().width + getJButtonJouerSon().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width;
 		int minY = getJEditorPane().getPreferredSize().height + getJScrollPaneInfos().getHorizontalScrollBar().getMaximumSize().height;
 
-		int maxX = minX;
-		int maxY = minY;
-		int prefX = minX, prefY = minY;
-
-		setMinimumSize(new Dimension(minX, minY));
-		setMaximumSize(new Dimension(maxX, maxY));
-		setPreferredSize(new Dimension(prefX, prefY));
+		Dimension pref = MyUtils.wrapTextDimension(new Dimension(minX, minY), Toolkit.getDefaultToolkit().getScreenSize(), 50);
+		
+		setMinimumSize(pref);
+		setMaximumSize(pref);
+		setPreferredSize(pref);
 	}
 	
 	private void dynamicInitialize()
 	{
-		getJEditorPane().setText(VueElement.computeTemplate(Config.getString("SentenceVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
+		getJEditorPane().setText(VueElement.computeTemplate(VueSentence.DETAILLE_DEFAULT_TEMPLATE, vue));
 		doLayout();
 		setSizes();
 	}

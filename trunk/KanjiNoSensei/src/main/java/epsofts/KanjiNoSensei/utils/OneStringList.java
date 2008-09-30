@@ -181,10 +181,10 @@ public class OneStringList extends Vector<String>
 			sb = maskedStringFormat.indexOf(startBrace, fromIndex);
 			eb = maskedStringFormat.indexOf(endBrace, fromIndex);
 
-			sep = (sep<0)?Integer.MAX_VALUE:sep;
-			sb = (sb<0)?Integer.MAX_VALUE:sb;
-			eb = (eb<0)?Integer.MAX_VALUE:eb;
-			
+			sep = (sep < 0) ? Integer.MAX_VALUE : sep;
+			sb = (sb < 0) ? Integer.MAX_VALUE : sb;
+			eb = (eb < 0) ? Integer.MAX_VALUE : eb;
+
 			if (sep < sb && sep < eb)
 			{
 				if (ib <= 0)
@@ -193,19 +193,19 @@ public class OneStringList extends Vector<String>
 					maskedStringFormat = maskedStringFormat.substring(0, sep) + trueSeparatorMark + maskedStringFormat.substring(sep + separator.length());
 					oneStringFormat = oneStringFormat.substring(0, sep) + trueSeparatorMark + oneStringFormat.substring(sep + separator.length());
 				}
-				
+
 				fromIndex = sep + trueSeparatorMark.length();
 			}
 			else if (sb < sep && sb < eb)
 			{
 				++ib;
-				
+
 				fromIndex = sb + startBrace.length();
 			}
 			else if (eb < sb && eb < sep)
 			{
 				--ib;
-				
+
 				fromIndex = eb + endBrace.length();
 			}
 			else
@@ -227,19 +227,36 @@ public class OneStringList extends Vector<String>
 	}
 
 	/**
-	 * Get all elements which starts with the begenning filter.
+	 * Get all elements which begin with beginning filter.
 	 * 
 	 * @param beginning
+	 *            Beginning filter.
+	 * @return Set of matching elements.
+	 */
+	public OneStringList getElementsBeginningWith(String beginning)
+	{
+		return getElementsByFilter(beginning + ".*");
+	}
+
+	/**
+	 * Get all elements which contains the filter.
+	 * 
+	 * @param pattern
 	 *            filter.
 	 * @return Set of matching elements.
 	 */
-	public OneStringList getElementsBeginWith(String beginning)
+	public OneStringList getElementsContaining(String pattern)
 	{
-		if (beginning == null) beginning = ""; //$NON-NLS-1$
+		return getElementsByFilter(".*" + pattern + ".*");
+	}
+
+	private OneStringList getElementsByFilter(String filter)
+	{
+		if (filter == null) filter = ""; //$NON-NLS-1$
 
 		OneStringList matchingElements = new OneStringList(ALLOWED_SEPARATOR);
 
-		if (beginning.isEmpty())
+		if (filter.isEmpty())
 		{
 			matchingElements.addAll(this);
 			return matchingElements;
@@ -249,7 +266,8 @@ public class OneStringList extends Vector<String>
 		while (it.hasNext())
 		{
 			String element = it.next();
-			if (element.matches(".*" + beginning + ".*")) //$NON-NLS-1$ //$NON-NLS-2$
+
+			if (element.matches(filter)) //$NON-NLS-1$ //$NON-NLS-2$
 			{
 				matchingElements.add(element);
 			}

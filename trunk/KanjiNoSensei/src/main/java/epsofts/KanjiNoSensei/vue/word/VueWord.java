@@ -3,9 +3,14 @@
  */
 package epsofts.KanjiNoSensei.vue.word;
 
+import java.awt.Font;
+
 import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Word;
+import epsofts.KanjiNoSensei.vue.Config;
 import epsofts.KanjiNoSensei.vue.VueElement;
+import epsofts.KanjiNoSensei.vue.Config.ConfigListener;
+import epsofts.KanjiNoSensei.vue.kanji.VueKanji;
 import epsofts.KanjiNoSensei.vue.word.WordQuizConfigPanel.ETypeAff;
 
 /**
@@ -15,13 +20,38 @@ import epsofts.KanjiNoSensei.vue.word.WordQuizConfigPanel.ETypeAff;
 public class VueWord extends VueElement
 {
 
-	public static final float	FONT_MAX_SIZE	= 50;
-	public static final float	FONT_MIN_SIZE	= 11;
-	private Word					word					= null;
-	private WordEditionDialog	jEditionDialog		= null;
-	private QuizQuestionPanel	jQuizQuestionPanel	= null;
-	private QuizSolutionPanel	jQuizSolutionPanel	= null;
+	protected static float		FONT_MAX_SIZE		= 32;
+
+	protected static float		FONT_MIN_SIZE		= 11;
+	
+	protected static String DETAILLE_DEFAULT_TEMPLATE = "<b><center><method>getWord</method></center></b><label>WordVueDetaillePanel.LabelLecture</label> : <b><vue>getLecture</vue></b><br><label>WordVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br><label>WordVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>";
+
+	private Word					word				= null;
+
+	private WordEditionDialog		jEditionDialog		= null;
+
+	private QuizQuestionPanel		jQuizQuestionPanel	= null;
+
+	private QuizSolutionPanel		jQuizSolutionPanel	= null;
+
 	private WordVueDetaillePanel	jVueDetaillePanel	= null;
+
+	private static ConfigListener	configListener		= new Config.ConfigListener()
+														{
+
+															@Override
+															public void onConfigLoaded()
+															{													
+																FONT_MAX_SIZE = Config.getTypedValue("VueWord.FontMaxSize", FONT_MAX_SIZE);
+																FONT_MIN_SIZE = Config.getTypedValue("VueWord.FontMinSize", FONT_MIN_SIZE);
+																DETAILLE_DEFAULT_TEMPLATE = Config.getString("VueWord.DetailleTemplate", DETAILLE_DEFAULT_TEMPLATE);									
+															}
+														};
+
+	static
+	{
+		Config.addListener(configListener);
+	}
 
 	/**
 	 * @param app
@@ -64,8 +94,7 @@ public class VueWord extends VueElement
 			}
 			else
 			{
-				jQuizQuestionPanel = new WordQuizAffPanel(this, WordQuizConfigPanel.getWordQuizConfigPanel()
-						.getAffichageElementQuiz());
+				jQuizQuestionPanel = new WordQuizAffPanel(this, WordQuizConfigPanel.getWordQuizConfigPanel().getAffichageElementQuiz());
 			}
 		}
 		return jQuizQuestionPanel;
@@ -102,7 +131,7 @@ public class VueWord extends VueElement
 		{
 			return getQuizSolutionPanelCopy();
 		}
-		
+
 		if (jQuizSolutionPanel == null)
 		{
 			if (WordQuizConfigPanel.getWordQuizConfigPanel().getAffichageReponseQuiz() == ETypeAff.Detaille)
@@ -113,8 +142,7 @@ public class VueWord extends VueElement
 			{
 				try
 				{
-					jQuizSolutionPanel = new WordQuizAffPanel(this, WordQuizConfigPanel.getWordQuizConfigPanel()
-							.getAffichageReponseQuiz());
+					jQuizSolutionPanel = new WordQuizAffPanel(this, WordQuizConfigPanel.getWordQuizConfigPanel().getAffichageReponseQuiz());
 				}
 				catch (NoAffException e)
 				{

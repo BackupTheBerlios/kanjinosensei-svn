@@ -224,11 +224,21 @@ public abstract class Element implements Serializable, Comparable<Element>
 	 * 
 	 * @param beginning
 	 *            Theme filter.
-	 * @return Set of matching themes.
+	 * @return List of matching themes.
 	 */
-	public List<String> getThemesSet(String beginning)
+	public List<String> getThemesBeginningWith(String beginning)
 	{
-		return themes.getElementsBeginWith(beginning);		
+		return themes.getElementsBeginningWith(beginning);
+	}
+	
+	/**
+	 * Get all elements themes which contains the pattern.
+	 * @param pattern Pattern to search.
+	 * @return List of matching themes.
+	 */
+	public List<String> getThemesContaining(String pattern)
+	{
+		return themes.getElementsContaining(pattern);		
 	}
 
 	/**
@@ -240,6 +250,11 @@ public abstract class Element implements Serializable, Comparable<Element>
 	public String getThemes()
 	{
 		return themes.toString();
+	}
+	
+	public String getMainTheme()
+	{
+		return themes.firstElement();
 	}
 
 	/**

@@ -304,7 +304,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 			/** Flag, mark if VScrollBar was reduced on last call. */
 			private boolean	reducedVScrollBar	= false;
-
+			
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
@@ -530,10 +530,10 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 	private void updateScrollBarsVisibility()
 	{
-		getHorizontalScrollBar().setVisible(!hideScrollBars);
-		getVerticalScrollBar().setVisible(!hideScrollBars);
+		getHorizontalScrollBar().setVisible( !hideScrollBars);
+		getVerticalScrollBar().setVisible( !hideScrollBars);
 
-		if (!hideScrollBars)
+		if ( !hideScrollBars)
 		{
 			setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -552,7 +552,7 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 
 		getVerticalScrollBar().setValue((getVerticalScrollBar().getMaximum() + getVerticalScrollBar().getVisibleAmount()) / getVerticalScrollBar().getBlockIncrement());
 		getHorizontalScrollBar().setValue((getHorizontalScrollBar().getMaximum() + getHorizontalScrollBar().getVisibleAmount()) / getHorizontalScrollBar().getBlockIncrement());
-		
+
 		updateScrollBarsVisibility();
 	}
 
@@ -634,7 +634,11 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 			jAutoResizingJEditorPane = create(JEditorPane.class, min);
 			JEditorPane editorPane = jAutoResizingJEditorPane.getJComponent();
 			editorPane.setContentType("text/html");
-			editorPane.setText("<h1>Titre 1</h1><br>Deuxième ligne</br>");
+			editorPane.setText("<h1>Titre 1</h1><br>Deuxième ligne");
+
+			JTextPane textPane = jAutoResizingJTextPane.getJComponent();
+			textPane.setContentType("text/html");
+			textPane.setText("<h1>Titre 1</h1><br>Deuxième ligne");
 		}
 		catch (Exception e)
 		{
@@ -669,7 +673,10 @@ public class MyAutoResizingText<T extends JComponent> extends JScrollPane
 				{
 					MyAutoResizingText<? extends JComponent> current = it.next();
 
-					current.setText("猫はとてもかわい です;" + current.getJComponent().getClass().getName()); //$NON-NLS-1$
+					if (current.getText().isEmpty())
+					{
+						current.setText("猫はとてもかわい です;" + current.getJComponent().getClass().getName()); //$NON-NLS-1$
+					}
 				}
 			}
 

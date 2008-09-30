@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -1194,7 +1196,12 @@ public abstract class MyUtils
 	 */
 	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt, boolean thisComponentFirst)
 	{
-		if (thisComponentFirst)
+		doItToAllSubComponents(c, doIt, thisComponentFirst, null);
+	}
+	
+	public static void doItToAllSubComponents(Component c, DoItToThisComponent doIt, boolean thisComponentFirst, List<? extends Component> excludes)
+	{
+		if ((excludes == null || !excludes.contains(c)) && thisComponentFirst)
 		{
 			doIt.doIt(c);
 		}
@@ -1215,7 +1222,7 @@ public abstract class MyUtils
 			}
 		}
 
-		if ( !thisComponentFirst)
+		if ((excludes == null || !excludes.contains(c)) && !thisComponentFirst)
 		{
 			doIt.doIt(c);
 		}
@@ -1551,14 +1558,25 @@ public abstract class MyUtils
 		return String.format("Min: %f\tMax: %f\tSum: %f\tE: %f\tV: %f\tð: %f", minmax[0], minmax[1], sum(values), esperence(values), variance(values), ecartType(values));
 	}
 
-	public static void fixComponentSizes(JComponent c, int width, int heiht)
+	public static void fixComponentSizes(JComponent c, int width, int height)
+	{
+		c.setAlignmentX(Component.LEFT_ALIGNMENT);
+		fixComponentSizes(Component.class.cast(c), width, height);
+	}
+	
+	public static void fixComponentSizes(JComponent c, int minWidth, int minHeight, int prefWidth, int prefHeight)
+	{
+		c.setAlignmentX(Component.LEFT_ALIGNMENT);
+		fixComponentSizes(Component.class.cast(c), minWidth, minHeight, prefWidth, prefHeight);
+	}
+	
+	public static void fixComponentSizes(Component c, int width, int heiht)
 	{
 		fixComponentSizes(c, width, heiht, width, heiht);
 	}
 
-	public static void fixComponentSizes(JComponent c, int minWidth, int minHeight, int prefWidth, int prefHeight)
-	{
-		c.setAlignmentX(Component.LEFT_ALIGNMENT);
+	public static void fixComponentSizes(Component c, int minWidth, int minHeight, int prefWidth, int prefHeight)
+	{	
 		c.setMinimumSize(new Dimension(minWidth, minHeight));
 		c.setPreferredSize(new Dimension(prefWidth, prefHeight));
 	}
@@ -1567,6 +1585,33 @@ public abstract class MyUtils
 	{
 		c.setBackground(color);
 		c.setBorder(BorderFactory.createLineBorder(color));
+	}
+	
+	public static Dimension wrapTextDimension(Dimension initial, Dimension max, int margins)
+	{
+		return wrapTextDimension(initial, new Dimension(max.width - margins, max.height - margins));
+	}
+	
+	public static Dimension wrapTextDimension(Dimension initial, Dimension max)
+	{
+		float res = (float) initial.width / (float) initial.height;
+		
+		Dimension result = initial;
+		
+		if (initial.width > max.width && initial.height > max.height)
+		{
+			result = max;
+		}
+		else if (initial.width > max.width)
+		{
+			result = new Dimension(max.width, (int) (initial.height + ((float) (initial.width - max.width) / res)));
+		}
+		else if (initial.height > max.height)
+		{
+			result = new Dimension((int) (initial.width + (initial.height - max.height) * res), max.height);
+		}
+		
+		return result;
 	}
 
 	public static String firstCharacterToUpperCase(String subject)

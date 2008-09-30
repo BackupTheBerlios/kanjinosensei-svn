@@ -19,9 +19,11 @@ import epsofts.KanjiNoSensei.metier.elements.Element;
 import epsofts.KanjiNoSensei.metier.elements.Kanji;
 import epsofts.KanjiNoSensei.metier.elements.Word;
 import epsofts.KanjiNoSensei.utils.MyAutoResizingText;
+import epsofts.KanjiNoSensei.vue.Config;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg;
 import epsofts.KanjiNoSensei.vue.KanjiNoSensei;
 import epsofts.KanjiNoSensei.vue.VueElement;
+import epsofts.KanjiNoSensei.vue.Config.ConfigListener;
 import epsofts.KanjiNoSensei.vue.JPanelImageBg.ImageLoadingException;
 import epsofts.KanjiNoSensei.vue.kanji.KanjiQuizConfigPanel.ETypeAff;
 
@@ -36,25 +38,57 @@ public class VueKanji extends VueElement
 		FONT, IMG, NONE
 	};
 
-	static private final eStrokeOrdersType	STROKE_ORDERS_TYPE			= eStrokeOrdersType.FONT;
+	protected static eStrokeOrdersType	STROKE_ORDERS_TYPE				= eStrokeOrdersType.FONT;
 
-	static private final Boolean			STROKE_ORDERS_TYPE_FALLBACK	= true;
+	protected static Boolean			STROKE_ORDERS_TYPE_FALLBACK		= true;
 
-	public static final float				FONT_MAX_SIZE				= 98;						// 22;
+	protected static float				KANJI_FONT_SIZE					= 50;
 
-	public static final float				FONT_MIN_SIZE				= 11;
+	protected static float				FONT_MAX_SIZE					= 98;
 
-	private static Font						strokeOrdersFont			= null;
+	protected static Font				DEFAULT_FONT_KOCHIMINCHO_MAX	= new Font("Kochi Mincho", Font.PLAIN, (int) VueKanji.KANJI_FONT_SIZE);
 
-	private Kanji							kanji						= null;
+	protected static String				DETAILLE_DEFAULT_TEMPLATE		= "<label>KanjiVueDetaillePanel.LabelONLectures</label> : <b><vue>getLecturesON</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelKUNLectures</label> : <b><vue>getLecturesKUN</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelMotsExemples</label> : <b><vue>getMotsExemples</vue></b><br>";
 
-	private KanjiVueDetaillePanel			jVueDetaillePanel			= null;
+	protected static int				DETAILLE_INFOS_PANEL_H_MARGIN	= 20;
 
-	private KanjiEditionDialog				jEditionDialog				= null;
+	protected static int				DETAILLE_INFOS_PANEL_V_MARGIN	= 5;
 
-	private QuizQuestionPanel				jQuizQuestionPanel			= null;
+	private static ConfigListener		configListener					= new Config.ConfigListener()
+																		{
 
-	private QuizSolutionPanel				jQuizSolutionPanel			= null;
+																			@Override
+																			public void onConfigLoaded()
+																			{
+																				KANJI_FONT_SIZE = Config.getTypedValue("VueKanji.KanjiFontSize", KANJI_FONT_SIZE);
+																				FONT_MAX_SIZE = Config.getTypedValue("VueKanji.FontMaxSize", FONT_MAX_SIZE);
+																				STROKE_ORDERS_TYPE_FALLBACK = Config.getTypedValue("VueKanji.StrokeOrdersTypeFallback", STROKE_ORDERS_TYPE_FALLBACK);
+																				STROKE_ORDERS_TYPE = Config.getEnumValue("VueKanji.StrokeOrdersType", STROKE_ORDERS_TYPE);
+																				DEFAULT_FONT_KOCHIMINCHO_MAX = new Font("Kochi Mincho", Font.PLAIN, (int) VueKanji.KANJI_FONT_SIZE);
+																				DETAILLE_DEFAULT_TEMPLATE = Config.getString("VueKanji.DetailleTemplate", DETAILLE_DEFAULT_TEMPLATE);
+																				DETAILLE_INFOS_PANEL_H_MARGIN = Config.getTypedValue("VueKanji.DetailleInfosHorizontalMargin", DETAILLE_INFOS_PANEL_H_MARGIN);
+																				DETAILLE_INFOS_PANEL_V_MARGIN = Config.getTypedValue("VueKanji.DetailleInfosVerticalMargin", DETAILLE_INFOS_PANEL_V_MARGIN);
+																			}
+																		};
+
+	static
+	{
+		Config.addListener(configListener);
+	}
+
+	public static final float			FONT_MIN_SIZE					= 11;
+
+	private static Font					strokeOrdersFont				= null;
+
+	private Kanji						kanji							= null;
+
+	private KanjiVueDetaillePanel		jVueDetaillePanel				= null;
+
+	private KanjiEditionDialog			jEditionDialog					= null;
+
+	private QuizQuestionPanel			jQuizQuestionPanel				= null;
+
+	private QuizSolutionPanel			jQuizSolutionPanel				= null;
 
 	private static Font getStrokeOrdersFont()
 	{
@@ -226,7 +260,7 @@ public class VueKanji extends VueElement
 		return kanji;
 	}
 
-	private JPanel			jPanelStrokeOrders		= null;
+	private JPanel	jPanelStrokeOrders	= null;
 
 	private void addStrokeOrderImgToPanel(JPanel panel) throws ImageLoadingException
 	{
@@ -243,9 +277,9 @@ public class VueKanji extends VueElement
 
 		MyAutoResizingText<JLabel> jAutoSizeLabelStrokeFont = MyAutoResizingText.createSafely(JLabel.class, 100, Float.POSITIVE_INFINITY, 0, (float) -0.5);
 		jAutoSizeLabelStrokeFont.setScrollBarsVisibility(false);
-		
+
 		JLabel jLabelStrokeFont = jAutoSizeLabelStrokeFont.getJComponent();
-		
+
 		jLabelStrokeFont.setFont(getStrokeOrdersFont());
 		jLabelStrokeFont.setText(getKanji().getCodeUTF8().toString());
 		jLabelStrokeFont.setHorizontalAlignment(JLabel.CENTER);
@@ -314,8 +348,8 @@ public class VueKanji extends VueElement
 			}
 			catch (Exception e)
 			{
-				String errMsg = (STROKE_ORDERS_TYPE_FALLBACK?"Aucun tracé disponible.":"Tracé ("+STROKE_ORDERS_TYPE+") introuvable.");
-				jPanelStrokeOrders.add(new JLabel("Erreur: "+errMsg), BorderLayout.CENTER);
+				String errMsg = (STROKE_ORDERS_TYPE_FALLBACK ? "Aucun tracé disponible." : "Tracé (" + STROKE_ORDERS_TYPE + ") introuvable.");
+				jPanelStrokeOrders.add(new JLabel("Erreur: " + errMsg), BorderLayout.CENTER);
 				jPanelStrokeOrders.setName(eStrokeOrdersType.NONE.toString());
 			}
 
@@ -324,17 +358,17 @@ public class VueKanji extends VueElement
 
 		return jPanelStrokeOrders;
 	}
-	
+
 	public String getLecturesON()
 	{
 		return toRomajiIfNeeded(kanji.getLecturesON());
 	}
-	
+
 	public String getLecturesKUN()
 	{
 		return toRomajiIfNeeded(kanji.getLecturesKUN());
 	}
-	
+
 	public String getMotsExemples()
 	{
 		Dictionary dico = KanjiNoSensei.getApp().getDictionnaire();

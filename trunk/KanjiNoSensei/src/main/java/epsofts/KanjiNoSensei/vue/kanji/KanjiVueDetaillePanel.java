@@ -55,14 +55,6 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 
 	private static final long	serialVersionUID				= 1L;
 
-	private static final Font	DEFAULT_FONT_KOCHIMINCHO_MAX	= new Font("Kochi Mincho", Font.PLAIN, (int) VueKanji.FONT_MAX_SIZE);
-
-	private static final int	INFOS_PANEL_H_MARGIN			= 20;
-
-	private static final int	INFOS_PANEL_V_MARGIN			= 5;
-
-	private static final String	DEFAULT_TEMPLATE				= "<label>KanjiVueDetaillePanel.LabelONLectures</label> : <b><vue>getLecturesON</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelKUNLectures</label> : <b><vue>getLecturesKUN</vue></b><br>" + "<label>KanjiVueDetaillePanel.LabelSignifications</label> : <b><method>getSignifications</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelThemes</label> : <b><method>getThemes</method></b><br>" + "<label>KanjiVueDetaillePanel.LabelMotsExemples</label> : <b><vue>getMotsExemples</vue></b><br>";
-
 	private VueKanji			vue								= null;
 
 	private JPanel				jPanelCodeUTF8					= null;
@@ -133,23 +125,21 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		 * getJPanelInfos().setMinimumSize(getJPanelInfos().getPreferredSize()); getJPanelInfos().setMaximumSize(getJPanelInfos().getPreferredSize());
 		 */
 
-		int minX = getJInfosEditorPane().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + INFOS_PANEL_H_MARGIN;
+		int prefX = getJInfosEditorPane().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + VueKanji.DETAILLE_INFOS_PANEL_H_MARGIN;
 		// int minX = getJPanelInfos().getPreferredSize().width + getJPanelCodeUTF8().getPreferredSize().width + getJScrollPaneInfos().getVerticalScrollBar().getMaximumSize().width + INFOS_PANEL_H_MARGIN;
-		int minY = 0 + Math.max(getJInfosEditorPane().getPreferredSize().height, getJPanelCodeUTF8().getPreferredSize().height) + getJScrollPaneInfos().getHorizontalScrollBar().getMaximumSize().height + INFOS_PANEL_V_MARGIN * 2;
+		int prefY = 0 + Math.max(getJInfosEditorPane().getPreferredSize().height, getJPanelCodeUTF8().getPreferredSize().height) + getJScrollPaneInfos().getHorizontalScrollBar().getMaximumSize().height + VueKanji.DETAILLE_INFOS_PANEL_V_MARGIN * 2;
 
-		int maxX = minX;
-		int maxY = minY;
-		int prefX = minX, prefY = minY;
-
-		setMinimumSize(new Dimension(minX, minY));
-		setMaximumSize(new Dimension(maxX, maxY));
-		setPreferredSize(new Dimension(prefX, prefY));
+		Dimension pref = MyUtils.wrapTextDimension(new Dimension(prefX, prefY), Toolkit.getDefaultToolkit().getScreenSize(), 50);
+		
+		setMinimumSize(pref);
+		setMaximumSize(pref);
+		setPreferredSize(pref);
 	}
 
 	protected void miseAJourInfos()
 	{
 		jLabelCodeUTF8.setText(vue.getKanji().getCodeUTF8().toString());
-		getJInfosEditorPane().setText(VueElement.computeTemplate(Config.getString("KanjiVueDetaillePanel.Template", DEFAULT_TEMPLATE), vue));
+		getJInfosEditorPane().setText(VueElement.computeTemplate(VueKanji.DETAILLE_DEFAULT_TEMPLATE, vue));
 
 		doLayout();
 		setSizes();
@@ -171,7 +161,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 			jLabelCodeUTF8 = new JLabel();
 			jLabelCodeUTF8.setText("猫"); //$NON-NLS-1$
 			jLabelCodeUTF8.setHorizontalAlignment(SwingConstants.LEFT);
-			jLabelCodeUTF8.setFont(DEFAULT_FONT_KOCHIMINCHO_MAX); //$NON-NLS-1$
+			jLabelCodeUTF8.setFont(VueKanji.DEFAULT_FONT_KOCHIMINCHO_MAX); //$NON-NLS-1$
 			jLabelCodeUTF8.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 			jLabelCodeUTF8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
@@ -236,7 +226,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 		{
 			jScrollPaneInfos = new JScrollPane();
 			jScrollPaneInfos.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			jScrollPaneInfos.setBorder(BorderFactory.createEmptyBorder(INFOS_PANEL_V_MARGIN, INFOS_PANEL_H_MARGIN, INFOS_PANEL_V_MARGIN, 0));
+			jScrollPaneInfos.setBorder(BorderFactory.createEmptyBorder(VueKanji.DETAILLE_INFOS_PANEL_V_MARGIN, VueKanji.DETAILLE_INFOS_PANEL_H_MARGIN, VueKanji.DETAILLE_INFOS_PANEL_V_MARGIN, 0));
 			jScrollPaneInfos.setViewportView(getJInfosEditorPane());
 			jScrollPaneInfos.setAutoscrolls(true);
 			jScrollPaneInfos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -391,7 +381,7 @@ class KanjiVueDetaillePanel extends JPanel implements VueDetaillePanel, QuizQues
 						}
 
 						JDialog motDetail = new JDialog((JDialog) null, Messages.getString("SentenceVueDetaillePanel.Detail") + " : (" + Messages.getString(e.getClass().getSimpleName()) + ") \"" + e.toString() + "\"", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-						motDetail.add(vueElement.getVueDetaillePanel().getPanel());
+						motDetail.setContentPane(vueElement.getVueDetaillePanel().getPanel());						
 						motDetail.pack();
 						motDetail.setVisible(true);
 					}
